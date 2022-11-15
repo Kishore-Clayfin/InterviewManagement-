@@ -56,18 +56,18 @@
 	
 				<h1> Feedback Submission</h1>
 	
-				<form th:action="@{/saveFeedback}" method="post" th:object="${feedback}" >
-						 <div class="form-group" >
+				<form th:action="@{/saveFeedback(candidateId=${candidate})}" method="post" th:object="${feedback}" >
+						<!--  <div class="form-group" >
 					 <label class="control-label" for="name">Select Candidate</label>
  						<select class="form-control" id="testOrder" name="testOrder" th:field="*{candidate}" required autofocus="autofocus" >
 							<option value="" selected>--- Select ---</option>
 							<span th:each="Candidate : ${candidate}">
 							<option th:text="${Candidate.candidateName}" th:value="${Candidate.candidateId}" > 	 
-<!-- 								th:text="${candidate.candidateName}"> -->
+								th:text="${candidate.candidateName}">
 								</option>
 								</span>
 						</select>
-					 </div> 
+					 </div>  -->
 					 			
 					
 					<div class="form-group">

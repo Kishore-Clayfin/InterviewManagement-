@@ -35,7 +35,8 @@ public class FeedBackController {
 	private ICandidateService iCandidateService;
 	
 	@GetMapping("/addFeedback")
-	public ModelAndView addFeedback() {
+	public ModelAndView addFeedback(@RequestParam Integer candidateId) 
+	{
 		List<Domain> domain = iDomainService.viewDomainList();
 		List<Candidate> candidate = iCandidateService.viewCandidateList();
 		
@@ -43,12 +44,12 @@ public class FeedBackController {
 		ModelAndView mav = new ModelAndView("feedbackRegister");
 		mav.addObject("feedback",feedback);
 		mav.addObject("domain",domain);
-		mav.addObject("candidate",candidate);
+		mav.addObject("candidate",candidateId);
 		return mav;
 	}
 	
 	@PostMapping("/saveFeedback")
-	public String saveFeedBack(@ModelAttribute Feedback feedback, Model model) 
+	public String saveFeedBack(@ModelAttribute Feedback feedback, Model model,@RequestParam Integer candidateId) 
 	{
 //		Domain domain = feedback.getCandidate().getDomain();
 //		List<DomainCategory> domainCategory = domain.getDomainCategory();
@@ -57,26 +58,30 @@ public class FeedBackController {
 //			String domSubCat = dc.getDomSubCatName();
 //		}
 //		
+		Candidate candidate=new Candidate();
+		candidate.setCandidateId(candidateId);
 		String GENERAL_MSG="";
-		List<Candidate> candidate=null;
+		List<Candidate> candidates=null;
 		try{
+			
+			feedback.setCandidate(candidate);
 			iFeedbackService.saveFeedback(feedback);
 			GENERAL_MSG=FeedbackConstants.FEEDBACK_SUCCESS_MSG;
 		}
 		catch(Exception e)
 		{
 			//System.out.println("in catch");
-			candidate=iCandidateService.viewCandidateList();
+			candidates=iCandidateService.viewCandidateList();
 			//System.out.println(e);
 			GENERAL_MSG="error while adding "+e.getMessage();
 			if(e instanceof DataIntegrityViolationException){
 			//	System.out.println("in if");
-				GENERAL_MSG="data is already added for :: "+candidate.get(0).getCandidateName();
+				GENERAL_MSG="data is already added for :: "+candidates.get(0).getCandidateName();
 			}
 		}
 		model.addAttribute("FB_MSG",GENERAL_MSG);
 		model.addAttribute("feedback",feedback);
-		model.addAttribute("candidate",candidate);
+		model.addAttribute("candidate",candidates);
 		return "redirect:/viewFeedbacks";
 		
 		

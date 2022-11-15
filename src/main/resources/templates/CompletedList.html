@@ -51,7 +51,7 @@
 						<td th:each="candidate : ${schedule.Candidate}" th:text="${candidate.status}" />
 						
 						<td>
-							<a th:href="@{#}" class="btn btn-info">Feedback</a>
+							<a  th:each="candidate : ${schedule.Candidate}"  th:href="@{addFeedback(candidateId=${candidate.candidateId})}" class="btn btn-info">Feedback</a>
 						</td>
 						
 						

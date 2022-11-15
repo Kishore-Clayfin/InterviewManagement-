@@ -67,7 +67,7 @@ public class LoginController {
 			{
 				log.info("going inside the hr home page");
 
-				return"hrHome";
+				return"hrHead";
 			}
 			else 
 			{

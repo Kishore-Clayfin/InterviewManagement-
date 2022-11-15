@@ -3,7 +3,7 @@
         xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
 <meta charset="ISO-8859-1">
-<title>INTERVIEWER HOME</title>
+<title>HR Head HOME</title>
 
 
 <link rel="stylesheet" 
@@ -19,11 +19,13 @@ href="https://cdn.datatables.net/v/bs4/dt-1.10.25/datatables.min.css" />
 		}
 		
 		body {
-  background-image: url('https://cdn3.careeraddict.com/uploads/article/59949/interviews-150-smart-questions.jpg');
+            background-repeat: no-repeat;
+   background-size: cover;
+  background-image: url('https://images.unsplash.com/photo-1521791136064-7986c2920216?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1169&q=80');
 }
 h1{
 
-color:red;
+color:rgb(0, 0, 7);
 
 }
 	</style>
@@ -43,7 +45,7 @@ color:red;
 		<div class = "row">
 			
 				
-				<h1><u>Interviewer Home page</u> </h1>
+				<h1><u>HR Head HOME PAGE</u> </h1>
 
 				<form th:action="@{/login}" method="post">
 

@@ -44,8 +44,10 @@ public class ScheduleController {
 		List<Candidate> Candidate = icandidateService.viewCandidateList();
 		List<User> user = iUserService.viewUserList();
 
-		List<User> list = user.stream().filter(c -> c.getRole().equalsIgnoreCase("interviewer"))
-				.collect(Collectors.toList());
+		
+		  List<User> list = user.stream().filter(c ->
+		  c.getRole().equalsIgnoreCase("interviewer")|| c.getRole().equalsIgnoreCase("hrHead")) .collect(Collectors.toList());
+		 
 
 		ModelAndView mv = new ModelAndView("scheduleRegister");
 		mv.addObject("schedule", Schedule);
@@ -205,12 +207,17 @@ public class ScheduleController {
 //		System.out.println(list);
 		ArrayList<Schedule> a = new ArrayList<Schedule>();
 
-		for (Schedule schedules : list) {
-			for (int i = 0; i < schedules.getCandidate().size(); i++) {
-				if (schedules.getCandidate().get(i).getStatus().equalsIgnoreCase("COMPLETED"))// &&
-				// schedules.getInterviewer().getInterviewerId()==InterviewerId)
+		for (Schedule schedules : list)
+		{
+			for (int i = 0; i < schedules.getCandidate().size(); i++) 
+			{
+				if(schedules.getCandidate().get(i).getStatus()!=null)
 				{
-					a.add(schedules);
+					if (schedules.getCandidate().get(i).getStatus().equalsIgnoreCase("COMPLETED"))// &&
+						// schedules.getInterviewer().getInterviewerId()==InterviewerId)
+						{
+							a.add(schedules);
+						}
 				}
 			}
 		}

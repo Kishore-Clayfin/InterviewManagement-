@@ -25,7 +25,8 @@ import com.cf.service.ICandidateService;
 import com.cf.service.IDomainService;
 
 @Controller
-public class CandidateController {
+public class CandidateController
+{ 
 	@Autowired
 	private ICandidateService iCandidateService;
 	

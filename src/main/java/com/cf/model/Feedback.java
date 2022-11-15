@@ -1,6 +1,8 @@
 package com.cf.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
@@ -18,9 +20,11 @@ import lombok.ToString;
 public class Feedback 
 {
 	@Id
+	@GeneratedValue
 	private Integer feedbackId;
 	private Integer rating;
-	private String feedback;
+	@Column(name = "feedback")
+	private String feed_back;
 	private String interviewerFbStatus;
 	private String hrFbStatus;
 	

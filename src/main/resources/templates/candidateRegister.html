@@ -160,7 +160,7 @@ $(document).ready (function () {
                     <div class="form-group">
 						<label class="control-label" for="marks">Marks in cgpa </label> <input
 							id="marks" class="form-control" th:field="*{cgpa}"
-							required autofocus="autofocus" th:minlength="1" th:maxlength="1" th:min="1"/>
+							required autofocus="autofocus" th:minlength="1" th:maxlength="2" th:min="1"/>
 				   <p class="alert alert-danger" th:if="${#fields.hasErrors('cgpa')}" th:errors="*{cgpa}" />
 				
 					</div>

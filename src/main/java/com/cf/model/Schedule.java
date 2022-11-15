@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
@@ -42,6 +43,6 @@ public class Schedule
 	private User user;
 	
 //	@JoinColumn(name = "candidateId")
-	@OneToMany(cascade = { CascadeType.PERSIST,CascadeType.MERGE})
+	@ManyToMany(cascade = { CascadeType.PERSIST,CascadeType.MERGE})
 	private List<Candidate> candidate;
 }

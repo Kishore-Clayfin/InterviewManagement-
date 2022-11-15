@@ -18,7 +18,8 @@ import com.cf.service.IDomainCategoryService;
 import com.cf.service.IDomainService;
 
 @Controller
-public class DomainController {
+public class DomainController 
+{
 
 	@Autowired
 	private IDomainService iDomainService;

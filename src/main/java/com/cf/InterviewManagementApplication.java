@@ -7,8 +7,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class InterviewManagementApplication {
 
 	public static void main(String[] args) {
-		System.out.println("hii");
+		
 		SpringApplication.run(InterviewManagementApplication.class, args);
+		System.out.println("hii");
 	}
 
 }

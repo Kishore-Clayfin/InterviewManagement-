@@ -1,0 +1,210 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+<style>
+body {
+  font-family: "Lato", sans-serif;
+}
+
+.sidebar {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: rgb(3, 192, 255);
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 60px;
+}
+
+.sidebar a {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 20px;
+  color: #000000;
+  display: block;
+  transition: 0.3s;
+}
+
+.sidebar a:hover {
+  color: #f1f1f1;
+}
+
+.sidebar .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+}
+
+.openbtn {
+  font-size: 20px;
+  cursor: pointer;
+  background-color: rgba(236, 9, 9, 0.972);
+  color: white;
+  padding: 10px 15px;
+  border: none;
+}
+
+.openbtn:hover {
+  background-color: #444;
+}
+
+#main {
+  transition: margin-left .5s;
+  padding: 16px;
+}
+
+/* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
+@media screen and (max-height: 450px) {
+  .sidebar {padding-top: 15px;}
+  .sidebar a {font-size: 18px;}
+}
+
+img.background {
+      position: absolute;
+      left: 0px;
+      top: 0px;
+      z-index: -1;
+      width: 100%;
+      height: 100%;
+      -webkit-filter: blur(5px); /* Safari 6.0 - 9.0 */
+      filter: blur(1.5px);
+      background-repeat: no-repeat;
+   background-size: cover;
+      }
+
+</style>
+</head>
+<body>
+    <img class="background" src="/image/christina-wocintechchat-com-vzfgh3RAPzM-unsplash 1.jpg">
+
+<div id="mySidebar" class="sidebar">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+  <a th:href="@{/addCandidate}"><b>Register Candidate</b></a>
+  <a th:href="@{/viewCandidates}"><b>View  Candidates</b></a>
+  <a th:href="@{/addDomain}"><b>Add Domain</b></a>
+  <a th:href="@{/viewDomains}"><b>View Domain</b></a>
+  <a th:href="@{/viewUsers}"><b>View Users</b></a>
+  <a th:href="@{/addUser}"><b>Register User</b></a>
+  <a th:href="@{/addschedule}"><b>Schedule Interview</b></a>
+  <a th:href="@{/viewschedules}"><b>View Schedules</b></a>
+  <a th:href="@{/viewfeedbacks}"><b>View Feedbacks</b></a>
+</div>
+
+<div id="main">
+  <button class="openbtn" onclick="openNav()">☰ Operations</button>  
+  <!-- <h2>Collapsed Sidebar</h2>
+  <p>Click on the hamburger menu/bar icon to open the sidebar, and push this content to the right.</p> -->
+</div>
+
+<script>
+function openNav() {
+  document.getElementById("mySidebar").style.width = "250px";
+  document.getElementById("main").style.marginLeft = "250px";
+}
+
+function closeNav() {
+  document.getElementById("mySidebar").style.width = "0";
+  document.getElementById("main").style.marginLeft= "0";
+}
+</script>
+   
+</body>
+</html> 
+
+
+
+<!-- <!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+        xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+<meta charset="ISO-8859-1">
+<title>HR HOME</title>
+
+
+<link rel="stylesheet" 
+type="text/css" 
+href="https://cdn.datatables.net/v/bs4/dt-1.10.25/datatables.min.css" />
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+	integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+	crossorigin="anonymous">
+	<style>
+		.CC{
+			width: 150PX;
+		}
+		
+		
+		body {
+  background-image: url('https://cdn-cashy-static-assets.lucidchart.com/marketing/blog/2019Q4/what-does-hr-do/what-does-hr-do-header-2.png');
+}
+
+h1{
+
+color:fuchsia;
+}
+
+
+	</style>
+</head>
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed"
+					data-toggle="collapse" data-target="#navbar" aria-expanded="false"
+					aria-controls="navbar">
+					<span class="sr-only">Toggle navigation</span> <span
+						class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="#" th:href="@{/}">Registration and
+					Login Module</a>
+					
+					<a id="logout" th:href="@{/logoutFromHrHome}" class="btn btn-danger CC">Logout</a>
+			</div>
+		</div>
+	</nav>
+
+	<br>
+	<br>
+	<div class = "container">
+		<div class = "row" align="left">
+			
+				
+				<h1><u> Hr Home page </u></h1>
+			
+
+				<div>
+					<a th:href="@{/addCandidate}" class="btn btn-primary CC">Register Candidate </a>
+
+					<a th:href="@{/viewcandidates}" class="btn btn-info CC">View  Candidates</a><br><br>
+					
+					
+					<a th:href="@{/addDomain}" class="btn btn-primary CC">Add Domain </a>
+
+					<a th:href="@{/viewDomains}" class="btn btn-info CC">View Domain</a><br><br>
+					
+					
+					<a th:href="@{/viewUsers}" class="btn btn-info CC">View Users</a><br><br>
+
+					<a th:href="@{/addUser}" class="btn btn-primary CC">Register User</a><br><br>
+
+				    <a th:href="@{/addschedule}" class="btn btn-primary CC"> Schedule Interview</a>
+
+					<a th:href="@{/viewschedules}" class="btn btn-info CC">View Schedules</a><br><br>
+					
+					<a  th:href="@{/viewfeedbacks}" class="btn btn-success CC">View Feedbacks</a>
+				
+				</div>
+				
+		</div>
+	</div>
+</body>
+</html> -->

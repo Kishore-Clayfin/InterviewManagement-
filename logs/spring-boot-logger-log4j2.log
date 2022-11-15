@@ -1,0 +1,114 @@
+2022-11-15 12:36:03,289 INFO o.s.b.StartupInfoLogger [restartedMain] Starting InterviewManagementApplication using Java 1.8.0_281 on LAPTOP-J00S0K3O with PID 10572 (C:\Users\ROOBINI\git\InterviewManagementSystem\InterviewManagement\target\classes started by ROOBINI in C:\Users\ROOBINI\git\InterviewManagementSystem\InterviewManagement)
+2022-11-15 12:36:03,296 DEBUG o.s.b.StartupInfoLogger [restartedMain] Running with Spring Boot v2.7.5, Spring v5.3.23
+2022-11-15 12:36:03,297 INFO o.s.b.SpringApplication [restartedMain] No active profile set, falling back to 1 default profile: "default"
+2022-11-15 12:36:03,333 INFO o.s.b.l.DeferredLog [restartedMain] Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2022-11-15 12:36:03,333 INFO o.s.b.l.DeferredLog [restartedMain] For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2022-11-15 12:36:03,817 INFO o.s.d.r.c.RepositoryConfigurationDelegate [restartedMain] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2022-11-15 12:36:03,876 INFO o.s.d.r.c.RepositoryConfigurationDelegate [restartedMain] Finished Spring Data repository scanning in 53 ms. Found 7 JPA repository interfaces.
+2022-11-15 12:36:04,336 INFO o.s.b.w.e.t.TomcatWebServer [restartedMain] Tomcat initialized with port(s): 9091 (http)
+2022-11-15 12:36:04,350 INFO o.a.j.l.DirectJDKLog [restartedMain] Initializing ProtocolHandler ["http-nio-9091"]
+2022-11-15 12:36:04,350 INFO o.a.j.l.DirectJDKLog [restartedMain] Starting service [Tomcat]
+2022-11-15 12:36:04,350 INFO o.a.j.l.DirectJDKLog [restartedMain] Starting Servlet engine: [Apache Tomcat/9.0.68]
+2022-11-15 12:36:04,498 INFO o.a.j.l.DirectJDKLog [restartedMain] Initializing Spring embedded WebApplicationContext
+2022-11-15 12:36:04,498 INFO o.s.b.w.s.c.ServletWebServerApplicationContext [restartedMain] Root WebApplicationContext: initialization completed in 1164 ms
+2022-11-15 12:36:04,608 INFO o.h.j.i.u.LogHelper [restartedMain] HHH000204: Processing PersistenceUnitInfo [name: default]
+2022-11-15 12:36:04,648 INFO o.h.Version [restartedMain] HHH000412: Hibernate ORM core version 5.6.12.Final
+2022-11-15 12:36:04,777 INFO o.h.a.c.r.j.JavaReflectionManager [restartedMain] HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2022-11-15 12:36:04,875 INFO c.z.h.HikariDataSource [restartedMain] HikariPool-1 - Starting...
+2022-11-15 12:36:05,191 INFO c.z.h.p.PoolBase [restartedMain] HikariPool-1 - Driver does not support get/set network timeout for connections. (oracle.jdbc.driver.T4CConnection.getNetworkTimeout()I)
+2022-11-15 12:36:05,194 INFO c.z.h.HikariDataSource [restartedMain] HikariPool-1 - Start completed.
+2022-11-15 12:36:05,221 INFO o.h.d.Dialect [restartedMain] HHH000400: Using dialect: org.hibernate.dialect.Oracle10gDialect
+2022-11-15 12:36:05,963 INFO o.h.e.t.j.p.i.JtaPlatformInitiator [restartedMain] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2022-11-15 12:36:05,970 INFO o.s.o.j.AbstractEntityManagerFactoryBean [restartedMain] Initialized JPA EntityManagerFactory for persistence unit 'default'
+2022-11-15 12:36:06,428 WARN o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration [restartedMain] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2022-11-15 12:36:06,691 INFO o.s.b.d.a.OptionalLiveReloadServer [restartedMain] LiveReload server is running on port 35729
+2022-11-15 12:36:06,704 INFO o.a.j.l.DirectJDKLog [restartedMain] Starting ProtocolHandler ["http-nio-9091"]
+2022-11-15 12:36:06,720 INFO o.s.b.w.e.t.TomcatWebServer [restartedMain] Tomcat started on port(s): 9091 (http) with context path ''
+2022-11-15 12:36:06,727 INFO o.s.b.StartupInfoLogger [restartedMain] Started InterviewManagementApplication in 3.795 seconds (JVM running for 4.685)
+2022-11-15 12:36:31,129 INFO o.a.j.l.DirectJDKLog [http-nio-9091-exec-1] Initializing Spring DispatcherServlet 'dispatcherServlet'
+2022-11-15 12:36:31,130 INFO o.s.w.s.FrameworkServlet [http-nio-9091-exec-1] Initializing Servlet 'dispatcherServlet'
+2022-11-15 12:36:31,131 INFO o.s.w.s.FrameworkServlet [http-nio-9091-exec-1] Completed initialization in 1 ms
+2022-11-15 12:36:32,436 INFO c.c.c.LoginController [http-nio-9091-exec-2] send from login pagealok@clayfin.com
+2022-11-15 12:36:32,436 INFO c.c.c.LoginController [http-nio-9091-exec-2] send from login pagealok123
+2022-11-15 12:36:32,599 INFO c.c.c.LoginController [http-nio-9091-exec-2] going inside the hr home page
+2022-11-15 12:44:37,082 INFO o.s.b.d.a.LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener [File Watcher] Restarting due to 1 class path change (0 additions, 0 deletions, 1 modification)
+2022-11-15 12:44:37,165 INFO o.a.j.l.DirectJDKLog [Thread-9] Pausing ProtocolHandler ["http-nio-9091"]
+2022-11-15 12:44:37,165 INFO o.a.j.l.DirectJDKLog [Thread-9] Stopping service [Tomcat]
+2022-11-15 12:44:37,166 INFO o.a.j.l.DirectJDKLog [Thread-9] Destroying Spring FrameworkServlet 'dispatcherServlet'
+2022-11-15 12:44:37,173 INFO o.a.j.l.DirectJDKLog [Thread-9] Stopping ProtocolHandler ["http-nio-9091"]
+2022-11-15 12:44:37,176 INFO o.a.j.l.DirectJDKLog [Thread-9] Destroying ProtocolHandler ["http-nio-9091"]
+2022-11-15 12:44:37,179 INFO o.s.o.j.AbstractEntityManagerFactoryBean [Thread-9] Closing JPA EntityManagerFactory for persistence unit 'default'
+2022-11-15 12:44:37,182 INFO c.z.h.HikariDataSource [Thread-9] HikariPool-1 - Shutdown initiated...
+2022-11-15 12:44:37,189 INFO c.z.h.HikariDataSource [Thread-9] HikariPool-1 - Shutdown completed.
+2022-11-15 12:44:37,371 INFO o.s.b.StartupInfoLogger [restartedMain] Starting InterviewManagementApplication using Java 1.8.0_281 on LAPTOP-J00S0K3O with PID 10572 (C:\Users\ROOBINI\git\InterviewManagementSystem\InterviewManagement\target\classes started by ROOBINI in C:\Users\ROOBINI\git\InterviewManagementSystem\InterviewManagement)
+2022-11-15 12:44:37,372 DEBUG o.s.b.StartupInfoLogger [restartedMain] Running with Spring Boot v2.7.5, Spring v5.3.23
+2022-11-15 12:44:37,373 INFO o.s.b.SpringApplication [restartedMain] No active profile set, falling back to 1 default profile: "default"
+2022-11-15 12:44:37,531 INFO o.s.d.r.c.RepositoryConfigurationDelegate [restartedMain] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2022-11-15 12:44:37,558 INFO o.s.d.r.c.RepositoryConfigurationDelegate [restartedMain] Finished Spring Data repository scanning in 26 ms. Found 7 JPA repository interfaces.
+2022-11-15 12:44:37,654 INFO o.s.b.w.e.t.TomcatWebServer [restartedMain] Tomcat initialized with port(s): 9091 (http)
+2022-11-15 12:44:37,655 INFO o.a.j.l.DirectJDKLog [restartedMain] Initializing ProtocolHandler ["http-nio-9091"]
+2022-11-15 12:44:37,655 INFO o.a.j.l.DirectJDKLog [restartedMain] Starting service [Tomcat]
+2022-11-15 12:44:37,655 INFO o.a.j.l.DirectJDKLog [restartedMain] Starting Servlet engine: [Apache Tomcat/9.0.68]
+2022-11-15 12:44:37,668 INFO o.a.j.l.DirectJDKLog [restartedMain] Initializing Spring embedded WebApplicationContext
+2022-11-15 12:44:37,668 INFO o.s.b.w.s.c.ServletWebServerApplicationContext [restartedMain] Root WebApplicationContext: initialization completed in 293 ms
+2022-11-15 12:44:37,697 INFO o.h.j.i.u.LogHelper [restartedMain] HHH000204: Processing PersistenceUnitInfo [name: default]
+2022-11-15 12:44:37,701 INFO c.z.h.HikariDataSource [restartedMain] HikariPool-2 - Starting...
+2022-11-15 12:44:37,716 INFO c.z.h.p.PoolBase [restartedMain] HikariPool-2 - Driver does not support get/set network timeout for connections. (oracle.jdbc.driver.T4CConnection.getNetworkTimeout()I)
+2022-11-15 12:44:37,718 INFO c.z.h.HikariDataSource [restartedMain] HikariPool-2 - Start completed.
+2022-11-15 12:44:37,719 INFO o.h.d.Dialect [restartedMain] HHH000400: Using dialect: org.hibernate.dialect.Oracle10gDialect
+2022-11-15 12:44:37,893 INFO o.h.e.t.j.p.i.JtaPlatformInitiator [restartedMain] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2022-11-15 12:44:37,894 INFO o.s.o.j.AbstractEntityManagerFactoryBean [restartedMain] Initialized JPA EntityManagerFactory for persistence unit 'default'
+2022-11-15 12:44:38,048 WARN o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration [restartedMain] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2022-11-15 12:44:38,123 INFO o.s.b.d.a.OptionalLiveReloadServer [restartedMain] LiveReload server is running on port 35729
+2022-11-15 12:44:38,131 INFO o.a.j.l.DirectJDKLog [restartedMain] Starting ProtocolHandler ["http-nio-9091"]
+2022-11-15 12:44:38,134 INFO o.s.b.w.e.t.TomcatWebServer [restartedMain] Tomcat started on port(s): 9091 (http) with context path ''
+2022-11-15 12:44:38,139 INFO o.s.b.StartupInfoLogger [restartedMain] Started InterviewManagementApplication in 0.802 seconds (JVM running for 516.098)
+2022-11-15 12:44:38,141 INFO o.s.b.d.a.ConditionEvaluationDeltaLoggingListener [restartedMain] Condition evaluation unchanged
+2022-11-15 12:44:51,421 INFO o.a.j.l.DirectJDKLog [http-nio-9091-exec-1] Initializing Spring DispatcherServlet 'dispatcherServlet'
+2022-11-15 12:44:51,421 INFO o.s.w.s.FrameworkServlet [http-nio-9091-exec-1] Initializing Servlet 'dispatcherServlet'
+2022-11-15 12:44:51,423 INFO o.s.w.s.FrameworkServlet [http-nio-9091-exec-1] Completed initialization in 2 ms
+2022-11-15 12:45:04,817 WARN o.s.w.s.h.AbstractHandlerExceptionResolver [http-nio-9091-exec-2] Resolved [java.lang.NullPointerException]
+2022-11-15 12:45:28,255 WARN o.s.w.s.h.AbstractHandlerExceptionResolver [http-nio-9091-exec-3] Resolved [java.lang.NullPointerException]
+2022-11-15 12:57:06,448 WARN c.z.h.p.HikariPool$HouseKeeper [HikariPool-2 housekeeper] HikariPool-2 - Thread starvation or clock leap detected (housekeeper delta=6m28s516ms154µs800ns).
+2022-11-15 12:58:59,256 INFO o.s.b.d.a.LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener [File Watcher] Restarting due to 1 class path change (0 additions, 0 deletions, 1 modification)
+2022-11-15 12:58:59,336 INFO o.a.j.l.DirectJDKLog [Thread-16] Pausing ProtocolHandler ["http-nio-9091"]
+2022-11-15 12:58:59,336 INFO o.a.j.l.DirectJDKLog [Thread-16] Stopping service [Tomcat]
+2022-11-15 12:58:59,338 INFO o.a.j.l.DirectJDKLog [Thread-16] Destroying Spring FrameworkServlet 'dispatcherServlet'
+2022-11-15 12:58:59,343 INFO o.a.j.l.DirectJDKLog [Thread-16] Stopping ProtocolHandler ["http-nio-9091"]
+2022-11-15 12:58:59,345 INFO o.a.j.l.DirectJDKLog [Thread-16] Destroying ProtocolHandler ["http-nio-9091"]
+2022-11-15 12:58:59,347 INFO o.s.o.j.AbstractEntityManagerFactoryBean [Thread-16] Closing JPA EntityManagerFactory for persistence unit 'default'
+2022-11-15 12:58:59,348 INFO c.z.h.HikariDataSource [Thread-16] HikariPool-2 - Shutdown initiated...
+2022-11-15 12:58:59,356 INFO c.z.h.HikariDataSource [Thread-16] HikariPool-2 - Shutdown completed.
+2022-11-15 12:58:59,519 INFO o.s.b.StartupInfoLogger [restartedMain] Starting InterviewManagementApplication using Java 1.8.0_281 on LAPTOP-J00S0K3O with PID 10572 (C:\Users\ROOBINI\git\InterviewManagementSystem\InterviewManagement\target\classes started by ROOBINI in C:\Users\ROOBINI\git\InterviewManagementSystem\InterviewManagement)
+2022-11-15 12:58:59,520 DEBUG o.s.b.StartupInfoLogger [restartedMain] Running with Spring Boot v2.7.5, Spring v5.3.23
+2022-11-15 12:58:59,520 INFO o.s.b.SpringApplication [restartedMain] No active profile set, falling back to 1 default profile: "default"
+2022-11-15 12:58:59,680 INFO o.s.d.r.c.RepositoryConfigurationDelegate [restartedMain] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2022-11-15 12:58:59,707 INFO o.s.d.r.c.RepositoryConfigurationDelegate [restartedMain] Finished Spring Data repository scanning in 26 ms. Found 7 JPA repository interfaces.
+2022-11-15 12:58:59,812 INFO o.s.b.w.e.t.TomcatWebServer [restartedMain] Tomcat initialized with port(s): 9091 (http)
+2022-11-15 12:58:59,813 INFO o.a.j.l.DirectJDKLog [restartedMain] Initializing ProtocolHandler ["http-nio-9091"]
+2022-11-15 12:58:59,813 INFO o.a.j.l.DirectJDKLog [restartedMain] Starting service [Tomcat]
+2022-11-15 12:58:59,813 INFO o.a.j.l.DirectJDKLog [restartedMain] Starting Servlet engine: [Apache Tomcat/9.0.68]
+2022-11-15 12:58:59,826 INFO o.a.j.l.DirectJDKLog [restartedMain] Initializing Spring embedded WebApplicationContext
+2022-11-15 12:58:59,826 INFO o.s.b.w.s.c.ServletWebServerApplicationContext [restartedMain] Root WebApplicationContext: initialization completed in 303 ms
+2022-11-15 12:58:59,852 INFO o.h.j.i.u.LogHelper [restartedMain] HHH000204: Processing PersistenceUnitInfo [name: default]
+2022-11-15 12:58:59,856 INFO c.z.h.HikariDataSource [restartedMain] HikariPool-3 - Starting...
+2022-11-15 12:58:59,872 INFO c.z.h.p.PoolBase [restartedMain] HikariPool-3 - Driver does not support get/set network timeout for connections. (oracle.jdbc.driver.T4CConnection.getNetworkTimeout()I)
+2022-11-15 12:58:59,873 INFO c.z.h.HikariDataSource [restartedMain] HikariPool-3 - Start completed.
+2022-11-15 12:58:59,874 INFO o.h.d.Dialect [restartedMain] HHH000400: Using dialect: org.hibernate.dialect.Oracle10gDialect
+2022-11-15 12:59:00,049 INFO o.h.e.t.j.p.i.JtaPlatformInitiator [restartedMain] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2022-11-15 12:59:00,050 INFO o.s.o.j.AbstractEntityManagerFactoryBean [restartedMain] Initialized JPA EntityManagerFactory for persistence unit 'default'
+2022-11-15 12:59:00,210 WARN o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration [restartedMain] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2022-11-15 12:59:00,281 INFO o.s.b.d.a.OptionalLiveReloadServer [restartedMain] LiveReload server is running on port 35729
+2022-11-15 12:59:00,289 INFO o.a.j.l.DirectJDKLog [restartedMain] Starting ProtocolHandler ["http-nio-9091"]
+2022-11-15 12:59:00,292 INFO o.s.b.w.e.t.TomcatWebServer [restartedMain] Tomcat started on port(s): 9091 (http) with context path ''
+2022-11-15 12:59:00,296 INFO o.s.b.StartupInfoLogger [restartedMain] Started InterviewManagementApplication in 0.812 seconds (JVM running for 1378.254)
+2022-11-15 12:59:00,297 INFO o.s.b.d.a.ConditionEvaluationDeltaLoggingListener [restartedMain] Condition evaluation unchanged
+2022-11-15 13:26:40,540 WARN c.z.h.p.HikariPool$HouseKeeper [HikariPool-3 housekeeper] HikariPool-3 - Thread starvation or clock leap detected (housekeeper delta=22m10s483ms525µs200ns).
+2022-11-15 13:35:05,152 INFO o.s.b.a.SpringApplicationAdminMXBeanRegistrar$SpringApplicationAdmin [RMI TCP Connection(40)-127.0.0.1] Application shutdown requested.
+2022-11-15 13:35:05,232 INFO o.a.j.l.DirectJDKLog [RMI TCP Connection(40)-127.0.0.1] Pausing ProtocolHandler ["http-nio-9091"]
+2022-11-15 13:35:05,232 INFO o.a.j.l.DirectJDKLog [RMI TCP Connection(40)-127.0.0.1] Stopping service [Tomcat]
+2022-11-15 13:35:05,238 INFO o.a.j.l.DirectJDKLog [RMI TCP Connection(40)-127.0.0.1] Stopping ProtocolHandler ["http-nio-9091"]
+2022-11-15 13:35:05,241 INFO o.a.j.l.DirectJDKLog [RMI TCP Connection(40)-127.0.0.1] Destroying ProtocolHandler ["http-nio-9091"]
+2022-11-15 13:35:05,245 INFO o.s.o.j.AbstractEntityManagerFactoryBean [RMI TCP Connection(40)-127.0.0.1] Closing JPA EntityManagerFactory for persistence unit 'default'
+2022-11-15 13:35:05,246 INFO c.z.h.HikariDataSource [RMI TCP Connection(40)-127.0.0.1] HikariPool-3 - Shutdown initiated...
+2022-11-15 13:35:05,250 INFO c.z.h.HikariDataSource [RMI TCP Connection(40)-127.0.0.1] HikariPool-3 - Shutdown completed.

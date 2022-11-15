@@ -1,0 +1,124 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+	
+	<head>
+		<title>INTERVIEWERS LIST</title>
+		
+		<link rel="stylesheet" 
+			type="text/css" 
+			href="https://cdn.datatables.net/v/bs4/dt-1.10.25/datatables.min.css" />
+		<link rel="stylesheet" 
+			href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" 
+			integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" 
+			crossorigin="anonymous" />
+	</head>
+	
+	<body>
+			
+		<div class="container">
+		
+			<h3>INTERVIEWER LIST</h3>
+			
+			<hr/>
+			
+			<br/><br/>
+			<table class="table table-bordered table-striped" id="doctorTable">
+			<!--
+				private String username;
+	private String password;
+	private String role;
+	private Boolean enabled;
+	private Integer userDetailsId;
+	private String mailId;
+	private Long mobileNumber;
+	private String designation;
+	private String experties;
+			-->
+				<thead>
+					<tr>
+						<th>UserName</th>
+						<th>Password</th>
+						<th>Role</th>
+					 	<th>EmailId</th>
+						<th>Mobile Number</th>
+						<th>Designation</th>
+						<th>Experties</th>
+						<th>Candidates Added</th>
+						<th>Actions</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="user : ${user}">
+						<td th:text="${user.username}" />
+						<td th:text="${user.password}" />
+						<td th:text="${user.role}" />
+						<td th:text="${user.email}" />
+						<!-- <td th:text="${user.enabled}" /> -->
+						<!-- <td>
+							<span th:each="userDetails:${user.userDetails}">
+							<span th:text=${userDetails.getMailId()}></span>							
+							</span>
+							</td> -->
+							<td>
+							<span th:each="userDetails:${user.userDetails}">
+							<span th:text=${userDetails.getMobileNumber()}></span>							
+							</span>
+							</td>
+							<td>
+							<span th:each="userDetails:${user.userDetails}">
+							<span th:text=${userDetails.getDesignation()}></span>							
+							</span>
+							</td>
+							<td>
+							<span th:each="userDetails:${user.userDetails}">
+							<span th:text=${userDetails.getExperties()}></span>							
+							</span>
+							</td>
+							<td>
+							<span th:each="candidate:${user.candidate}">
+							<span th:text="${candidate.getCandidateName()}+','"></span>							
+							</span>
+							</td>
+						 <!-- th:object="userDetails:${user.userDetails}">
+							<td th:text="${userDetails.mailId}" />
+							<td th:text="${userDetails.mobileNumber}" />
+							<td th:text="${userDetails.designation}" />
+							<td th:text="${userDetails.experties}" /> -->
+						
+						
+						
+						
+						<!-- <td th:text="${Interviewer.Designation}" />
+						<td th:text="${Interviewer.Passward}" />
+						<td th:text="${Interviewer.role}" />
+						<td th:text="${Interviewer.Type}" /> -->
+						<!-- <td th:text="${Interviewer.Experties}" /> -->
+						
+						
+						
+						<!-- <td>
+					    <span th:each="oneDoc:${Interviewer.technology}">
+					    	<span th:text=${oneDoc.getTechnologyName()}></span>
+					    	</span>
+					    </td> -->
+						
+						
+						
+						
+						<td style="display: flex;">
+							<a th:href="@{/showUpdateUser(userId=${user.userId})}" class="btn btn-info">Update</a>
+							<!-- 
+							<a th:href="@{/showUpdateUserDetails(userDetailsId=${user.getUserDetails().getUserDetailsId()})}" class="btn btn-info">Update</a>
+							 -->
+							<a th:href="@{/deleteUser(userId=${user.userId})}" class="btn btn-danger ml-2">Delete</a>
+						</td>
+					</tr>
+				</tbody>
+				
+			</table>
+					<a th:href="@{/home}" class="btn btn-danger ml-2">Home</a>
+		</div>
+		
+		
+	</body>
+	
+</html>

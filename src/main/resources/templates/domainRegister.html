@@ -1,0 +1,136 @@
+
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Registration</title>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+	integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+	crossorigin="anonymous">
+
+
+
+<style>
+body {
+	background-image:
+		url('https://s27389.pcdn.co/wp-content/uploads/2021/06/how-can-technology-design-be-made-more-inclusive.jpeg.optimal.jpeg');
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+
+label {
+	color: infobackground;
+}
+</style>
+
+<!-- <link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+	integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l"
+	crossorigin="anonymous" /> -->
+
+
+
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/choices.min.css">
+<script
+	src="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/choices.min.js"></script>
+
+</head>
+<body>
+
+	create navigation bar ( header)
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed"
+					data-toggle="collapse" data-target="#navbar" aria-expanded="false"
+					aria-controls="navbar">
+					<span class="sr-only">Toggle navigation</span> <span
+						class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" th:href="@{/hrHomepage}"> Go To Home
+					Page</a>
+			</div>
+		</div>
+	</nav>
+
+	<br>
+	<br>
+
+	<div class="container">
+		<div class="row">
+			<div class="col-md-6 col-md-offset-3">
+
+
+
+				<h1>Domain Registration</h1>
+
+				<form th:action="@{/saveDomain}" method="post" th:object="${domain}">
+
+
+					<div class="form-group">
+						<label class="control-label" for="name">Domain Name </label> <input
+							id="name" class="form-control" th:field="*{domainName}"
+							autofocus="autofocus" />
+
+						<p class="alert alert-danger"
+							th:if="${#fields.hasErrors('domainName')}"
+							th:errors="*{domainName}" />
+					</div>
+
+					<!-- <div class="row d-flex justify-content-left mt-100"
+						style="width: 1000px;">
+						<h5 style="padding-left: 15px;  color: white;"><b>Select Sub Category </b></h5>
+						<div class="col-md-6">
+							<select id="choices-multiple-remove-button"
+								placeholder="Click And Select Sub Category" multiple
+								th:field="*{domainCategory}">
+
+								<option th:value="${domainCategory.domSubCatId}" th:field="*{domainCategory}"
+									th:each="domainCategory : ${domainCategory}"><label
+										th:text="${domainCategory.domSubCatName}"> </label></option>
+							</select>
+						</div>
+
+					</div> -->
+					
+					<br><br>
+					<h5 style="color: #efff00;"><b>Enter Sub Category List Seperated by ","</b></h5>
+					<input name="category" type="text"></input>
+
+					<br><br>
+					<div class="form-group">
+						<button type="submit" class="btn btn-success">Save</button>
+
+					</div>
+					<input type="hidden" th:field="*{domainId}" />
+
+				</form>
+			</div>
+		</div>
+							<a th:href="@{/home}" class="btn btn-danger ml-2">Home</a>
+		
+	</div>
+	
+	
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script>
+		$(document).ready(
+				function() {
+
+					var multipleCancelButton = new Choices(
+							'#choices-multiple-remove-button', {
+								removeItemButton : true,
+								maxItemCount : 100,
+								searchResultLimit : 100,
+								renderChoiceLimit : 100
+							});
+
+				});
+	</script>
+</body>
+</html>
+
+

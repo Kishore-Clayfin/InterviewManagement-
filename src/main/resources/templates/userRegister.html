@@ -1,0 +1,202 @@
+
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Registration</title>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+	integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+	crossorigin="anonymous">
+	
+	<style type="text/css">
+
+
+
+body{
+
+
+
+ background:
+        linear-gradient(red, transparent),
+        linear-gradient(to top left, lime, transparent),
+        linear-gradient(to top right, blue, transparent);
+    background-blend-mode: screen;
+
+}
+
+
+</style>
+
+
+
+
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.min.js"> </script>  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"> </script>
+	
+		
+	<style>
+	label.error {  
+    color: red;  
+    font-size: 1rem;  
+    display: block;  
+    margin-top: 5px;  
+} </style>
+	<script>  
+	
+	
+	$(function () {
+	    $("#btnSubmit").click(function () {
+	        var password = $("#password").val();
+	        var confirmPassword = $("#confirmpassword").val();
+	        
+	        
+	        
+	        if (password != confirmPassword) {
+	            alert("Passwords do not match.");
+	            return false;
+	        }
+	        return true;
+	    });
+	});
+	
+	
+$(document).ready (function () {  
+  $("#registration").validate ();  
+});  
+</script> 
+	
+	
+</head>
+<body>
+
+	
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+		<div class="container">
+			<div class="navbar-header">
+				
+				<a class="navbar-brand" href="#" th:href="@{/hrHomepage}">
+					Go To Home Page</a>
+			</div>
+		</div>
+	</nav>
+
+	<br>
+	<br>
+	
+	<div class="container">
+		<div class="row">
+			<div class="col-md-6 col-md-offset-3">
+
+				
+
+				<h1> User Registration</h1>
+
+				<form th:action="@{/saveUser}" id="registration" method="post" th:object="${user}">
+					
+
+					<div class="form-group">
+						<label class="control-label" for="name">Name </label> <input
+							id="name" class="form-control" th:field="*{username}"
+							required autofocus="autofocus" th:minlength="4"/>
+					</div>
+
+					
+                  <!-- private String mailId;
+	private Long mobileNumber;
+	private String designation;
+	private String experties; -->
+
+
+
+
+
+				<div class="form-group">
+						<label class="control-label" for="role">Role </label> 
+                        
+                        <select name="role"  id="role" th:field="*{role}" class="form-control" required autofocus="autofocus">
+                            <option  value="" >--- Select ---</option>
+                           
+                            <option th:value="hr" th:text="hr" ></option>
+                            <option th:value="interviewer" th:text="interviewer"></option>
+                            
+                          </select>
+                        
+                      
+              
+					</div> 
+					
+					
+					
+                  
+					
+					<div class="form-group">
+						<label class="control-label" for="Password"> Password </label> <input
+							id="password" class="form-control" 
+							th:field="*{password}" required autofocus="autofocus" th:minlength="6"/>
+					</div>
+					
+					<div class="form-group">
+						<label class="control-label" for="confirmpassword"> Confirm password </label> <input
+							id="confirmpassword" class="form-control" 
+							 required autofocus="autofocus" />
+					</div>
+					
+					<div class="form-group">
+						<label class="control-label" for="name">Company MailId</label> <input
+							id="name" class="form-control" th:field="*{email}"
+							required autofocus="autofocus" th:minlength="4"/>
+					</div>
+					
+					<div class="form-group">
+						<label class="control-label" for="name">Personal EmailId </label> <input
+							id="name" class="form-control" th:field="*{userDetails.personalMailId}"
+							required autofocus="autofocus" th:minlength="4"/>
+					</div>
+					<div class="form-group">
+						<label class="control-label" for="name">Mobile Number </label> <input
+							id="name" class="form-control" th:field="*{userDetails.mobileNumber}"
+							required autofocus="autofocus" th:minlength="4"/>
+					</div>
+					<div class="form-group">
+					<label class="control-label" for="designation">Designation</label> 
+					 <select name="role"  id="role" th:field="*{userDetails.designation}" class="form-control" required autofocus="autofocus">
+                            <option  value="" selected >--- Select ---</option>
+                           
+                            <option th:value="seniorHr" th:text="SeniorHr" ></option>
+                            <option th:value="hr" th:text="hr"></option>
+                             <option th:value="hrHead" th:text="hrHead" ></option>
+                            <option th:value="technicalTrainer" th:text="TechnicalTrainer"></option>
+                             <option th:value="seniorTechnicalTrainer" th:text="seniorTechnicalTrainer"></option>
+                            
+                          </select>
+                          </div>
+                          <label class="control-label" for="experties">Experties</label> 
+                          <div class="form-group">
+                           <select name="role"  id="role" th:field="*{userDetails.experties}" class="form-control" required autofocus="autofocus">
+                            <option  value="" >--- Select ---</option>
+                           
+                            <option th:value="javaFSD" th:text="JavaFSD" ></option>
+                            <option th:value="meanStack" th:text="MeanStack"></option>
+                             <option th:value="reactJs" th:text="reactJs" ></option>
+                            <option th:value="dataScience" th:text="dataScience"></option>
+                             <option th:value="testing" th:text="Testing"></option>
+                            
+                          </select>
+                          </div>
+					<div class="form-group">
+						<button id="btnSubmit"type="submit" class="btn btn-success">Register</button>
+						
+					</div>
+					<input type="hidden" th:field="*{userId}" />
+					<input type="hidden" th:field="*{userDetails.userDetailsId}" />
+					
+				</form>
+			</div>
+		</div>
+					<a th:href="@{/home}" class="btn btn-danger ml-2">Home</a>
+	</div>
+</body>
+</html> 
+
+

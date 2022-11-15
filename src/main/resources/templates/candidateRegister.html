@@ -1,0 +1,244 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Registration</title>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+	integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+	crossorigin="anonymous">
+	<style type="text/css">
+
+
+
+body{
+
+
+
+ background:
+        linear-gradient(red, transparent),
+        linear-gradient(to top left, lime, transparent),
+        linear-gradient(to top right, blue, transparent);
+    background-blend-mode: screen;
+
+}
+
+
+</style>
+	
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.min.js"> </script>  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"> </script>
+	
+		
+	<style>
+	label.error {  
+    color: red;  
+    font-size: 1rem;  
+    display: block;  
+    margin-top: 5px;  
+} </style>
+	<script>  
+$(document).ready (function () {  
+  $("#basic-form").validate ();  
+});  
+</script> 
+
+	<script>  
+	 function alert(){  
+					
+		 alert("Canidate Sucessfully registered!!!!");  
+					 
+			}		    
+					 
+		</script>  
+</head>
+
+
+<body>
+
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+		<div class="container">
+			<div class="navbar-header">
+				
+				<a class="navbar-brand" href="#" th:href="@{/hrHomepage}">
+					Go To Home Page</a>
+			</div>
+		</div>
+	</nav>
+
+	<br>
+	<br>
+	
+	<div class="container">
+		<div class="row">
+			<div class="col-md-6 col-md-offset-3">
+
+				<!--candidateName;
+	private String email;
+	private Long mobileNumber;
+	private String highQualification;
+	private Float cgpa;
+	private String roleAppliedFor;
+	private String alternateEmail;
+	private Float experience;
+	private String resume; 
+	private String status;
+	
+	@JoinColumn(name = "userId")
+	@ManyToOne
+	private User user;
+	
+	@JoinColumn(name = "domainId")
+	@OneToOne
+	private Domain domain;-->
+
+				<h1> Candidate Registration</h1>
+
+				<form th:action="@{/saveCandidate}" id="basic-form" method="post" th:object="${candidate}" enctype='multipart/form-data'>
+					
+
+					<div class="form-group">
+						<label class="control-label" for="name">Name </label> <input
+							id="name" class="form-control" th:field="*{candidateName}"
+							required autofocus="autofocus" th:minlength="4"/>
+							<p class="alert alert-danger" th:if="${#fields.hasErrors('candidateName')}" th:errors="*{candidateName}" />
+					</div>
+
+					<div class="form-group">
+						<label class="control-label" for="email"> Email </label> <input type="email"
+							id="email" class="form-control" th:field="*{email}" required
+							autofocus="autofocus" />
+							<p class="alert alert-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}" />
+					</div>
+					
+					
+					 
+					 <div class="form-group">
+						<label class="control-label" for="alternateEmail">Alternate Email </label> <input type="email"
+							id="alternateEmail" class="form-control" th:field="*{alternateEmail}" required
+							autofocus="autofocus" />
+							<p class="alert alert-danger" th:if="${#fields.hasErrors('alternateEmail')}" th:errors="*{alternateEmail}" />
+							
+					</div>
+
+                    <div class="form-group">
+						<label class="control-label" for="Phone">Phone </label> <input
+							id="Phone" class="form-control" th:field="*{mobileNumber}"
+							required autofocus="autofocus" th:minlength="10" th:maxlength="10" th:min="1"/>
+						<p class="alert alert-danger" th:if="${#fields.hasErrors('mobileNumber')}" th:errors="*{mobileNumber}" />
+					
+					</div>
+
+                   <!--  <div class="form-group">
+						<label class="control-label" for="qualification">Highest Qualification </label> <input
+							id="qualification" class="form-control" th:field="*{highQualification}"
+							required autofocus="autofocus" th:minlength="10" th:maxlength="10" th:min="1"/>
+					</div> -->
+                    
+                    
+                    <div class="form-group">
+						<label class="control-label" for="qualification">Highest Qualification </label> 
+                        
+                        <select name="qualification" id="qualification" th:field="*{highQualification}" class="form-control" required autofocus="autofocus">
+                            <!-- <option  th:value="--- Select ---" th:text="--- Select ---" disabled selected></option> -->
+                            <option value="">--- Select ---</option>
+                            <option th:value="B.Tech" th:text="B.Tech" ></option>
+                            <option th:value="B.Sc" th:text="B.Sc" ></option>
+                            <option th:value="B.A" th:text="B.A"></option>
+                            <option th:value="M.Tech" th:text="M.Tech"></option>
+                            <option th:value="M.Sc" th:text="M.Sc"></option>
+                            
+                            
+                          </select>
+                         <p class="alert alert-danger" th:if="${#fields.hasErrors('highQualification')}" th:errors="*{highQualification}" />
+                          
+                     
+					</div>
+                    
+                    
+                    
+                    
+                    <div class="form-group">
+						<label class="control-label" for="marks">Marks in cgpa </label> <input
+							id="marks" class="form-control" th:field="*{cgpa}"
+							required autofocus="autofocus" th:minlength="1" th:maxlength="1" th:min="1"/>
+				   <p class="alert alert-danger" th:if="${#fields.hasErrors('cgpa')}" th:errors="*{cgpa}" />
+				
+					</div>
+           
+                     
+                    <div class="form-group">
+						<label class="control-label" for="role">Role Applied </label> <input
+							id="role" class="form-control" th:field="*{roleAppliedFor}"
+							required autofocus="autofocus" />
+                        <p class="alert alert-danger" th:if="${#fields.hasErrors('roleAppliedFor')}" th:errors="*{roleAppliedFor}" />
+							
+					</div>
+           
+					
+					
+					 
+					
+					 
+					
+                        <div class="form-group">
+						<label class="control-label" for="Experience">Experience </label> 
+                        
+                        <select name="Experience" id="Experience" th:field="*{experience}" class="form-control" required autofocus="autofocus">
+                            <!-- <option  th:value="--- Select ---" th:text="--- Select ---" disabled selected></option> -->
+                            <option th:value="0">--- Select ---</option>
+                            <option th:value="0" th:text="Fresher" ></option>
+                            <option th:value="0.6" th:text="6months" ></option>
+                            <option th:value="1" th:text="1year"></option>
+                            <option th:value="2" th:text="2year"></option>
+                            <option th:value="3" th:text="3year"></option>
+                            <option th:value="4" th:text="4year"></option>
+                            <option th:value="5" th:text="5year"></option>
+                            <option th:value="6" th:text="6year"></option>
+                            <option th:value="7" th:text="7year"></option>
+                            
+                          </select>
+                     <p class="alert alert-danger" th:if="${#fields.hasErrors('experience')}" th:errors="*{experience}" />
+                     
+					</div>
+					 <!--<div class="form-group">
+						<label class="control-label" for="file">Upload the resume here(in word format) </label> <input type="file"
+							id="file" class="form-control" th:field="*{resume}"
+							required autofocus="autofocus"/>
+					</div>-->
+           
+           <div class="form-group">
+						<label class="control-label" for="resumr">Resume </label> <input type="file"
+							id="role" class="form-control" name="file"
+							required autofocus="autofocus" />
+                        <p class="alert alert-danger" th:if="${#fields.hasErrors('resume')}" th:errors="*{resume}" />
+							
+					</div>
+					
+                    <div class="form-group" >
+                        <label class="control-label" for="name">Domain</label>
+                        <select class="form-control" id="testOrder" name="testOrder" th:field="*{domain}" autofocus="autofocus" >
+                                               <option value="" >---Select---</option>
+                                                   <option th:each="domain : ${domain}" th:value="${domain.domainId}"   
+                                                       th:text="${domain.domainName}"></option>
+                                               </select>
+                                               
+                        </div>
+                       
+                        
+					
+					<div class="form-group">
+						<button type="submit"  class="btn btn-success">Register</button>
+						
+					</div>
+					<input type="hidden" th:field="*{candidateId}" />
+					
+				</form>
+			</div>
+		</div>
+		<a th:href="@{/home}" class="btn btn-danger ml-2">Home</a>
+	</div>
+	
+</body>
+</html> 
+
+

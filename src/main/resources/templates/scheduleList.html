@@ -1,0 +1,159 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<title>SCHEDULE LIST</title>
+
+<link rel="stylesheet" type="text/css"
+	href="https://cdn.datatables.net/v/bs4/dt-1.10.25/datatables.min.css" />
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+	integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l"
+	crossorigin="anonymous" />
+
+
+<style>
+#Table {
+	width: 1300px;
+	align-content: center;
+}
+</style>
+
+
+</head>
+
+<body>
+
+	<div style="padding: 100px;">
+
+		<h3>SCHEDULE LIST</h3>
+
+		<hr />
+
+		<br /> <br />
+		<table class="table table-bordered table-striped" id="Table">
+
+			<thead>
+				<tr>
+					<th>Id</th>
+					<th>Date</th>
+					<th>Time</th>
+					<th>Duration</th>
+					<th>Meeting Link</th>
+					<th>Type</th>
+					<th>Interviewer</th>
+					<th>Candidate</th>
+					<th>Actions</th>
+
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="schedule : ${schedule}">
+					<td th:text="${schedule.scheduleId}" />
+					<td th:text="${schedule.scheduleDate}" />
+					<td th:text="${schedule.scheduleTime}" />
+					<td th:text="${schedule.duration}+' Minutes'" />
+					<td th:text="${schedule.meetingLink}" />
+					<td th:text="${schedule.interviewType}" />
+					<td th:text=${schedule.user.username} />
+
+					<td><span th:each="candidate : ${schedule.candidate}">
+							<span th:text=${candidate.candidateName}> </span>
+					</span></td>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+					<!-- <td><span th:each="oneDoc:${Schedule.Candidate}"> <span
+							th:each="one:${oneDoc.getRoleApplied()}"> <span
+								th:text=${one.getJobRoleName()}></span>
+
+						</span>
+					</span></td>
+					<td><span th:each="oneDoc:${Schedule.Interviewer}"> <span
+							th:text=${oneDoc.getName()}></span>
+					</span></td>
+
+
+
+					<td><span th:each="oneDoc:${Schedule.Candidate}"> <b>candidate
+								Name: </b><br />
+						<span th:text=${oneDoc.getName()}></span><br />
+						<br />
+					</span></td>
+
+					<td><span th:each="oneDoc:${Schedule.Candidate}"> <b>Candidate
+								Id: </b> <span th:text=${oneDoc.getCandidateId()}></span><br />
+						<br />
+					</span></td>
+
+
+
+					<td th:text="${Schedule.meetingLink}" />
+					<td th:text="${Schedule.intreviewDate}" />
+					<td th:text="${Schedule.intreviewTime}" />
+					<td th:text="${Schedule.intreviewDuration}" />
+					<td th:text="${Schedule.type}" />
+
+
+ -->
+
+					<td style="display: flex;"><a
+						th:href="@{/showUpdateSchedule(scheduleId=${schedule.scheduleId})}"
+						class="btn btn-info">Update</a> <a
+						th:href="@{/deleteSchedule(scheduleId=${schedule.scheduleId})}"
+						class="btn btn-danger ml-2">Delete</a> <!-- <a
+						th:each="candidate : ${schedule.candidate}"
+						th:href="@{/updateStatus(candidateId=${candidate.candidateId})}"
+						class="btn btn-success ml-2">Completed</a>
+
+ -->
+						&nbsp;&nbsp;<div class="dropdown">
+							<button type="button" class="btn btn-primary dropdown-toggle"
+								data-toggle="dropdown">Status</button>
+							<div class="dropdown-menu">
+								<a th:each="candidate : ${schedule.candidate}"
+									th:href="@{/updateStatus(candidateId=${candidate.candidateId},status=COMPLETED)}" class="dropdown-item"
+									>Completed</a> <a
+									th:each="candidate : ${schedule.candidate}"
+									th:href="@{/updateStatus(candidateId=${candidate.candidateId},status=INCOMPLETE)}" class="dropdown-item"
+									>InComplete</a>
+							</div>
+						</div></td>
+				</tr>
+			</tbody>
+
+		</table>
+		 <a
+			th:href="@{/giveFeedback}" class="btn btn-success ml-2">Give
+			FeedBack</a>
+			
+			
+								<a th:href="@{/home}" class="btn btn-danger ml-2">Home</a>
+			
+	</div>
+
+	<script
+		src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

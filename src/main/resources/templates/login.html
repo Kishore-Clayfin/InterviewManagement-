@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Login</title>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+	integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+	crossorigin="anonymous">
+	
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<style>
+h1 {
+	text-align: center;
+}
+
+body {
+	background-image:
+		url('https://seekconz.corewebdna.net.au/web_images/blogs/216/6267/2021.053_CAN_X-Ways-to-demonstrate-your-skills-in-an-interview_940x485.jpg');
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+</style>
+
+
+
+
+</head>
+<body>
+
+	<!-- create navigation bar ( header) -->
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+		<div class="container">
+			<div class="navbar-header">
+				<!-- <button type="button" class="navbar-toggle collapsed"
+					data-toggle="collapse" data-target="#navbar" aria-expanded="false"
+					aria-controls="navbar">
+					<span class="sr-only">Toggle navigation</span> <span
+						class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button> -->
+				<a class="navbar-brand" href="#" th:href="@{/}"><b><i>------------------------------------------------WELCOME
+							TO INTERVIEW MANAGEMENT
+							SYSTEM------------------------------------------------</i></b></a>
+
+			</div>
+		</div>
+	</nav>
+
+	<br>
+	<br>
+	<!-- 
+	
+	th:onsubmit="return validateform()"
+	
+	
+	Create HTML registration form -->
+	<div class="container">
+		<div class="row">
+			<div class="col-md-6 col-md-offset-3">
+
+				<!-- <script>  
+					/* function validateform(){  
+					var name=document.myform.name.value;  
+					var password=document.myform.password.value;  
+					  
+					if (name==null || name==""){  
+					  alert("Name can't be blank");  
+					  return false;  
+					}else if(password.length<6){  
+					  alert("Password must be at least 6 characters long.");  
+					  return false;  
+					  }  
+					}   */
+					
+					</script>  
+			 -->
+				<h1>Admin Login</h1>
+				<div th:if="${message!= null}">
+					<div class="alert alert-info" th:text="${message}"></div>
+				</div>
+
+
+
+				<!-- <div th:if=
+				"${message1!= null}">
+					<div class="alert alert-danger" th:text="${message1}"></div>
+				</div> -->
+
+				<div class="alert alert-danger alert-dismissible"
+					th:if="${message1!= null}">
+					<a th:href="@{/login}" class="close" data-dismiss="alert"
+						onclick="$('.alert').hide()" aria-label="close">X</a> <span
+						th:text="${message1}"></span>
+				</div>
+
+
+
+				<form name="myform" th:action="@{/homePage}">
+
+
+					<div class="form-group">
+						<label class="control-label" for="name"> User Email </label> <input
+							id="name" class="form-control" type="text" name="name"
+							autofocus="autofocus" />
+					</div>
+
+
+					<div class="form-group">
+						<label class="control-label" for="password"> Password </label> <input
+							id="password" class="form-control" type="password"
+							name="password" autofocus="autofocus" />
+					</div>
+					<div class="form-group">
+						<button type="submit" class="btn btn-success">Login</button>
+
+						<span>Not registered Yet? <a th:href="@{/addhr}">Register
+								here</a></span>
+					</div>
+
+
+
+
+
+				</form>
+
+			</div>
+		</div>
+							<a th:href="@{/home}" class="btn btn-danger ml-2">Home</a>
+		
+	</div>
+
+</body>
+</html>

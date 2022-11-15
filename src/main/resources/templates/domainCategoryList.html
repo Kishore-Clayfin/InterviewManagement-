@@ -1,0 +1,86 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+	
+	<head>
+		<title>DOMAIN CATEGORY LIST</title>
+		
+		<link rel="stylesheet" 
+			type="text/css" 
+			href="https://cdn.datatables.net/v/bs4/dt-1.10.25/datatables.min.css" />
+		<link rel="stylesheet" 
+			href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" 
+			integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" 
+			crossorigin="anonymous" />
+			
+			<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+	integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+	crossorigin="anonymous">
+			
+			
+			
+	</head>
+	
+	<body>
+	
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+		<div class="container">
+			<div class="navbar-header">
+				
+				<a class="navbar-brand" id="anchor" href="#" th:href="@{/hrHomepage}">
+					Go To Home Page</a>
+						<a class="navbar-brand" id="anchor" href="#" th:href="@{/addDomainCategory}">
+					Add Domain Category</a>
+					
+					
+			</div>
+		</div>
+	</nav>
+
+	<br>
+	<br>
+	<br>
+	<br>
+	
+	
+	
+			
+		<div class="container">
+		
+			<h3>DOMAIN CATEGORY LIST</h3>
+			
+			<hr/>
+			
+			<table class="table table-bordered table-striped" id="Table">
+			
+				<thead>
+					<tr>
+						<th>Id</th>
+						<th>Domain Category Name</th>
+						<th>Actions</th>
+						
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="domainCategory : ${domainCategory}">
+						<td th:text="${domainCategory.domSubCatId}" />
+						<td th:text="${domainCategory.domSubCatName}" />
+						
+						
+						<td>
+							<a th:href="@{/showUpdateDomainCategory(domSubCatId=${domainCategory.domSubCatId})}" class="btn btn-info">Update</a>
+							
+							<a th:href="@{/deleteDomainCategory(domSubCatId=${domainCategory.domSubCatId})}" class="btn btn-danger ml-2">Delete</a>
+						</td>
+					</tr>
+				</tbody>
+				
+			</table>
+			
+								<a th:href="@{/home}" class="btn btn-danger ml-2">Home</a>
+			
+		</div>
+		
+		
+	</body>
+	
+</html>

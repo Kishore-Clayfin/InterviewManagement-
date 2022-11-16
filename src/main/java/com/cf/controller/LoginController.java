@@ -27,9 +27,26 @@ public class LoginController {
 		return "login";
 	}
 	@GetMapping("/home")
-	public String home()
+	public String home(HttpSession session)
 	{
-		return "hrHome";
+		User user=(User) session.getAttribute("loginDetails");
+		
+		if(user.getRole().equalsIgnoreCase("interviewer"))
+		{
+			return "interviewerHome";
+
+		}
+		else if(user.getRole().equalsIgnoreCase("hrHead"))
+		{
+			return "hrHead";
+
+		}
+		else
+		{
+			return "hrHome";
+
+		}
+		
 	}
 	@GetMapping("/homePage")
 	public String hrlogin(HttpSession session,@RequestParam("name") String name , @RequestParam("password") String password) 
@@ -50,6 +67,7 @@ public class LoginController {
 //			    System.out.println(session.getAttribute("details"));
 			    role=user.getRole();
 			    session.setAttribute("loginDetails", user);
+			    session.setAttribute("interviewer", role);
 //			    System.out.println(session.getAttribute("details"));
 		    }
 		  

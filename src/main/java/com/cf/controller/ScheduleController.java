@@ -146,6 +146,10 @@ public class ScheduleController {
 //		ModelAndView mav = new ModelAndView("scheduleList");
 //		mav.addObject("schedule", ischeduleService.viewScheduleList());
 //		return mav;
+		String role= (String) session.getAttribute("interviewer");
+		User user2= new User();
+		user2.setRole(role);
+		
 		
 		User user= (User) session.getAttribute("loginDetails");
 		List<Schedule> scheduleList= ischeduleService.viewScheduleList();
@@ -153,6 +157,7 @@ public class ScheduleController {
 		{
 			ModelAndView mav = new ModelAndView("scheduleList");
 			mav.addObject("schedule", scheduleList);
+			mav.addObject("role", user2);
 			return mav;
 		}
 		else
@@ -160,6 +165,7 @@ public class ScheduleController {
 			List<Schedule> sch= scheduleList.stream().filter(s -> s.getUser().getUserId()==user.getUserId()).collect(Collectors.toList());
 			ModelAndView mav = new ModelAndView("scheduleList");
 			mav.addObject("schedule", sch);
+			mav.addObject("role", user2);
 			return mav;
 		}
 	}

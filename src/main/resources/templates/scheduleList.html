@@ -62,6 +62,48 @@
 
 
 
+					<td style="display: flex;">
+						<!-- <span th:each="role:${role}">
+					<span th:if="${role.getRole()!='hr'}"> -->
+
+
+
+						<div class="dropdown">
+							<button type="button" class="btn btn-primary dropdown-toggle"
+								data-toggle="dropdown">Status</button>
+							<div class="dropdown-menu">
+								<a th:each="candidate : ${schedule.candidate}"
+									th:href="@{/updateStatus(candidateId=${candidate.candidateId},status=COMPLETED)}"
+									class="dropdown-item">Completed</a> <a
+									th:each="candidate : ${schedule.candidate}"
+									th:href="@{/updateStatus(candidateId=${candidate.candidateId},status=INCOMPLETE)}"
+									class="dropdown-item">InComplete</a>
+							</div>
+						</div> </span> </span> <span th:each="role:${role}"> <span
+							th:if="${role.getRole()=='hr'}"> &nbsp;&nbsp;<a
+								th:href="@{/showUpdateSchedule(scheduleId=${schedule.scheduleId})}"
+								class="btn btn-info">Update</a> <a
+								th:href="@{/deleteSchedule(scheduleId=${schedule.scheduleId})}"
+								class="btn btn-danger ml-2">Delete</a>
+					 <!-- &nbsp;&nbsp;<div class="dropdown">
+							<button type="button" class="btn btn-primary dropdown-toggle"
+								data-toggle="dropdown">Status</button>
+						<div class="dropdown-menu">
+							<a th:each="candidate : ${schedule.candidate}"
+									th:href="@{/updateStatus(candidateId=${candidate.candidateId},status=COMPLETED)}" class="dropdown-item"
+									>Completed</a> <a
+									th:each="candidate : ${schedule.candidate}"
+									th:href="@{/updateStatus(candidateId=${candidate.candidateId},status=INCOMPLETE)}" class="dropdown-item"
+									>InComplete</a>
+							</div>
+						</div> -->
+
+						</span>
+					</span>
+
+					</td>
+				</tr>
+			</tbody>
 
 
 
@@ -78,8 +120,7 @@
 
 
 
-
-					<!-- <td><span th:each="oneDoc:${Schedule.Candidate}"> <span
+			<!-- <td><span th:each="oneDoc:${Schedule.Candidate}"> <span
 							th:each="one:${oneDoc.getRoleApplied()}"> <span
 								th:text=${one.getJobRoleName()}></span>
 
@@ -113,16 +154,16 @@
 
  -->
 
-					<td style="display: flex;"><a
+			<!-- <td style="display: flex;"><a
 						th:href="@{/showUpdateSchedule(scheduleId=${schedule.scheduleId})}"
 						class="btn btn-info">Update</a> <a
 						th:href="@{/deleteSchedule(scheduleId=${schedule.scheduleId})}"
-						class="btn btn-danger ml-2">Delete</a> <!-- <a
+						class="btn btn-danger ml-2">Delete</a> <a
 						th:each="candidate : ${schedule.candidate}"
 						th:href="@{/updateStatus(candidateId=${candidate.candidateId})}"
 						class="btn btn-success ml-2">Completed</a>
 
- -->
+
 						&nbsp;&nbsp;<div class="dropdown">
 							<button type="button" class="btn btn-primary dropdown-toggle"
 								data-toggle="dropdown">Status</button>
@@ -136,16 +177,12 @@
 							</div>
 						</div></td>
 				</tr>
-			</tbody>
+			</tbody> -->
 
 		</table>
-		 <a
-			th:href="@{/giveFeedback}" class="btn btn-success ml-2">Give
-			FeedBack</a>
-			
-			
-								<a th:href="@{/home}" class="btn btn-danger ml-2">Home</a>
-			
+		<a th:href="@{/giveFeedback}" class="btn btn-success ml-2">Give
+			FeedBack</a> <a th:href="@{/home}" class="btn btn-danger ml-2">Home</a>
+
 	</div>
 
 	<script

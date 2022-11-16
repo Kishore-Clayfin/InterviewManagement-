@@ -1,6 +1,8 @@
 package com.cf.controller;
 
+import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -20,6 +22,7 @@ import com.cf.model.Feedback;
 import com.cf.service.ICandidateService;
 import com.cf.service.IDomainService;
 import com.cf.service.IFeedbackService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 
 @Controller
@@ -37,14 +40,18 @@ public class FeedBackController {
 	@GetMapping("/addFeedback")
 	public ModelAndView addFeedback(@RequestParam Integer candidateId) 
 	{
-		List<Domain> domain = iDomainService.viewDomainList();
-		List<Candidate> candidate = iCandidateService.viewCandidateList();
-		
+//		List<Domain> domain = iDomainService.viewDomainList();
+//		List<Candidate> candidate = iCandidateService.viewCandidateList();
+		Candidate candidate= iCandidateService.updateCandidate(candidateId);
+		List<DomainCategory> domainCategory=iCandidateService.updateCandidate(candidateId).getDomain().getDomainCategory();
+//		System.out.println(domainCategory);
 		Feedback feedback = new Feedback();
 		ModelAndView mav = new ModelAndView("feedbackRegister");
 		mav.addObject("feedback",feedback);
-		mav.addObject("domain",domain);
-		mav.addObject("candidate",candidateId);
+//		mav.addObject("domain",domain);
+		mav.addObject("candidateId",candidateId);
+		mav.addObject("candidate",candidate);
+		mav.addObject("subCategory", domainCategory);
 		return mav;
 	}
 	
@@ -58,6 +65,33 @@ public class FeedBackController {
 //			String domSubCat = dc.getDomSubCatName();
 //		}
 //		
+		
+		System.out.println(feedback.getDomainRatings());
+		
+		ObjectMapper mapper = new ObjectMapper();
+        String json = feedback.getDomainRatings();
+        Map<String, Integer> map=null;
+        try 
+        {
+
+            // convert JSON string to Map
+            map = mapper.readValue(json, Map.class);
+
+			// it works
+            //Map<String, String> map = mapper.readValue(json, new TypeReference<Map<String, String>>() {});
+            
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+		
+		
+		
+		
+		
+		
+		
+		
 		Candidate candidate=new Candidate();
 		candidate.setCandidateId(candidateId);
 		String GENERAL_MSG="";
@@ -65,6 +99,7 @@ public class FeedBackController {
 		try{
 			
 			feedback.setCandidate(candidate);
+			feedback.setSubDomRatings(map);
 			iFeedbackService.saveFeedback(feedback);
 			GENERAL_MSG=FeedbackConstants.FEEDBACK_SUCCESS_MSG;
 		}

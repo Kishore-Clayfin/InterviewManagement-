@@ -9,6 +9,8 @@
 	crossorigin="anonymous">
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 		<link th:href="@{/css/basic.css}" rel="stylesheet" />
+		<script rel="stylesheet" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/11.0.2/bootstrap-slider.min.js"></script>
+		<link  rel="stylesheet" href='https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/11.0.2/css/bootstrap-slider.min.css'/>
 </head>
 <body>
 
@@ -42,7 +44,7 @@
  		<span th:text=${FB_MSG}></span> -->
 		<!-- <span th:if="${error != null && error.summary != null}" th:text="${error.summary}">Static summary</span>
 	    <span th:text="${error?.summary}">Static summary</span>
-	</div> --> -->
+	</div> --> 
 	
 	   <div class="alert alert-danger alert-dismissible"
 					th:if="${FB_MSG != null && FB_MSG.FEEDBACK_SUCCESS_MSG != null}" >
@@ -56,7 +58,7 @@
 	
 				<h1> Feedback Submission</h1>
 	
-				<form th:action="@{/saveFeedback(candidateId=${candidate})}" method="post" th:object="${feedback}" >
+				<form th:action="@{/saveFeedback(candidateId=${candidateId})}" method="post" th:object="${feedback}" >
 						<!--  <div class="form-group" >
 					 <label class="control-label" for="name">Select Candidate</label>
  						<select class="form-control" id="testOrder" name="testOrder" th:field="*{candidate}" required autofocus="autofocus" >
@@ -83,10 +85,31 @@
     						</span>
   							</fieldset>
 					</div>
+					
+					<h3 th:object="${fcandidate}" style="color: blue;" ><b th:text="${candidate.domain.getDomainName()}" ></b></h3>
+					<!-- <div class="form-group" th:each="domSub : ${subCategory}"  >
+						<label class="control-label" for="name" th:text="${domSub.getDomSubCatName()}"  ></label>
+						<fieldset>
+   							 <span class="star-cb-group" >
+      						 <input type="radio" id="rating-5" name="r1" th:field="${feedback.domainRatings.subRatingValue}"  th:value="5" /><label for="rating-5" >5</label>
+      						 <input type="radio" id="rating-4" name="r1" th:field="${feedback.domainRatings.subRatingValue}"  th:value="4" checked="checked" /><label for="rating-4">4</label>
+      						 <input type="radio" id="rating-3"  th:field="${feedback.domainRatings.subRatingValue}"  th:value="3" /><label for="rating-3">3</label>
+      						 <input type="radio" id="rating-2"  th:field="${feedback.domainRatings.subRatingValue}"   th:value="2" /><label for="rating-2">2</label>
+      						 <input type="radio" id="rating-1"  th:field="${feedback.domainRatings.subRatingValue}"   th:value="1" /><label for="rating-1">1</label>
+    						</span>
+  							</fieldset>
+					</div>
+					th:field="${feedback.domainRatings.subRatingValue}"
 
 					
-                    <div class="form-group">
-			
+                    -->
+			 <div class="form-group mt-3" th:each="domSub : ${subCategory}" >
+                        <input th:id="${domSub.getDomSubCatName()}" type="text" th:text="${domSub.getDomSubCatName()}"  data-slider-min="1" data-slider-max="10"
+                               data-slider-step="1"
+                               data-slider-value="1" class="skill"/>
+                        <span th:class="${domSub.getDomSubCatName()}" >1</span>
+                    </div>
+                    <div class="form-group"> 
 				<div class="rating">
 					<label>	Please update the status of candidate....</label> <br>
 					<br>
@@ -186,7 +209,7 @@
 					<span class="shadow-input1"></span>
 				    </div>
                     
-                    
+                    <input th:field="${feedback.domainRatings}" th:value='#{feedback.domainRatings}' th:id='myInput' type='text'/>
                     
     
 					<div class="form-group">
@@ -208,4 +231,28 @@
 	
 	
 </body>
+
+
+
+<script>
+let map1 = new Map();
+    $(".skill").slider();
+    $(".skill").on("slide", function (slideEvt) {
+        $("#" + slideEvt.target.id ).text(slideEvt.value);
+       // console.log(slideEvt.target.id);
+    });
+    $(".skill").on("change", function (slideEvt) {
+        $("." + slideEvt.target.id ).text(slideEvt.value.newValue);
+        var d=slideEvt.value.newValue;
+      //  console.log(slideEvt)
+      //  console.log(d);
+        var t=slideEvt.target.id.toString();
+       // var obj={t,d};
+        map1.set(t,d)
+        
+        const obj = Object.fromEntries(map1);
+        console.log(JSON.stringify(obj));
+        $("#myInput").val(JSON.stringify(obj));
+    });
+</script>
 </html> 

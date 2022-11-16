@@ -22,7 +22,7 @@ public class LoginController {
 	@Autowired
 	private IUserService iUserService;
 
-	@GetMapping("/login")
+	@GetMapping({"/login","/"})
 	public String login() {
 		return "login";
 	}

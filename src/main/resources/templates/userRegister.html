@@ -61,7 +61,7 @@ body{
 	});
 	
 	
-$(document).ready (function () {  
+ $(document).ready (function () {  
   $("#registration").validate ();  
 });  
 </script> 
@@ -99,6 +99,8 @@ $(document).ready (function () {
 						<label class="control-label" for="name">Name </label> <input
 							id="name" class="form-control" th:field="*{username}"
 							required autofocus="autofocus" th:minlength="4"/>
+	                 <p class="alert alert-danger" th:if="${#fields.hasErrors('username')}" th:errors="*{username}" />
+							
 					</div>
 
 					
@@ -124,6 +126,7 @@ $(document).ready (function () {
                           </select>
                         
                       
+              	   <p class="alert alert-danger" th:if="${#fields.hasErrors('role')}" th:errors="*{role}" />
               
 					</div> 
 					
@@ -132,14 +135,16 @@ $(document).ready (function () {
                   
 					
 					<div class="form-group">
-						<label class="control-label" for="Password"> Password </label> <input
+						<label class="control-label" for="Password"> Password </label> <input type="email"
 							id="password" class="form-control" 
 							th:field="*{password}" required autofocus="autofocus" th:minlength="6"/>
+						 <p class="alert alert-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}" />
+							
 					</div>
 					
 					<div class="form-group">
 						<label class="control-label" for="confirmpassword"> Confirm password </label> <input
-							id="confirmpassword" class="form-control" 
+							id="confirmpassword" class="form-control" type="email"
 							 required autofocus="autofocus" />
 					</div>
 					
@@ -147,17 +152,23 @@ $(document).ready (function () {
 						<label class="control-label" for="name">Company MailId</label> <input
 							id="name" class="form-control" th:field="*{email}"
 							required autofocus="autofocus" th:minlength="4"/>
+						 <p class="alert alert-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}" />
+							
 					</div>
 					
 					<div class="form-group">
 						<label class="control-label" for="name">Personal EmailId </label> <input
 							id="name" class="form-control" th:field="*{userDetails.personalMailId}"
 							required autofocus="autofocus" th:minlength="4"/>
+						 <p class="alert alert-danger" th:if="${#fields.hasErrors('userDetails.personalMailId')}" th:errors="*{userDetails.personalMailId}" />
+							
 					</div>
 					<div class="form-group">
 						<label class="control-label" for="name">Mobile Number </label> <input
 							id="name" class="form-control" th:field="*{userDetails.mobileNumber}"
 							required autofocus="autofocus" th:minlength="4"/>
+						 <p class="alert alert-danger" th:if="${#fields.hasErrors('userDetails.mobileNumber')}" th:errors="*{userDetails.mobileNumber}" />
+							
 					</div>
 					<div class="form-group">
 					<label class="control-label" for="designation">Designation</label> 
@@ -171,6 +182,8 @@ $(document).ready (function () {
                              <option th:value="seniorTechnicalTrainer" th:text="seniorTechnicalTrainer"></option>
                             
                           </select>
+                          <p class="alert alert-danger" th:if="${#fields.hasErrors('userDetails.designation')}" th:errors="*{userDetails.designation}" />
+                          
                           </div>
                           <label class="control-label" for="experties">Experties</label> 
                           <div class="form-group">
@@ -184,6 +197,8 @@ $(document).ready (function () {
                              <option th:value="testing" th:text="Testing"></option>
                             
                           </select>
+                        <p class="alert alert-danger" th:if="${#fields.hasErrors('userDetails.experties')}" th:errors="*{userDetails.experties}" />
+                          
                           </div>
 					<div class="form-group">
 						<button id="btnSubmit"type="submit" class="btn btn-success">Register</button>

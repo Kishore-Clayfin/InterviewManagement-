@@ -4,8 +4,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -39,7 +42,7 @@ public class DomainController
 	}
 	
 	@PostMapping("/saveDomain")
-	public String saveDomain(@ModelAttribute Domain domain, @RequestParam String category) 
+	public String saveDomain(@Valid @ModelAttribute Domain domain,BindingResult result, @RequestParam String category) 
 	{
 		List<DomainCategory> arr=new ArrayList<DomainCategory>();
 		category= category.toUpperCase();
@@ -55,6 +58,16 @@ public class DomainController
 		}
 		domain.setDomainCategory(arr);
 		System.out.println(arr);
+		
+		
+
+		if(result.hasErrors()) 
+		{
+			return "domainRegister";
+			
+		}
+		
+		
 		iDomainService.saveDomain(domain);
 		return "redirect:/viewDomains";
 	}

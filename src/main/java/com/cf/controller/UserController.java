@@ -2,8 +2,11 @@ package com.cf.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -44,13 +47,19 @@ public class UserController
 	}
 	
 	@PostMapping("/saveUser")
-	public String saveUser(@ModelAttribute User user) {
+	public String saveUser(@Valid@ModelAttribute User user,BindingResult result) {
 //		UserDetails userDetails=iUserDetailsService.findUserDetails(userDetailsId);
 //		
 //		log.info("Iddddd"+userDetailsId);
 //		log.info("userDetails"+userDetails);
 //		user.setUserDetails(userDetails);
 		user.setEnabled(true);
+
+		if(result.hasErrors()) 
+		{
+			return "userRegister";
+			
+		}
 		iUserService.saveUser(user);
 		//UserDetails userDetails=user1.getUserDetails();
 //		userId=user1.getUserId();

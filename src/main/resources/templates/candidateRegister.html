@@ -36,11 +36,11 @@ body{
     display: block;  
     margin-top: 5px;  
 } </style>
-	<script>  
+ 	<script>  
 $(document).ready (function () {  
   $("#basic-form").validate ();  
 });  
-</script> 
+</script>  
 
 	<script>  
 	 function alert(){  
@@ -72,24 +72,7 @@ $(document).ready (function () {
 		<div class="row">
 			<div class="col-md-6 col-md-offset-3">
 
-				<!--candidateName;
-	private String email;
-	private Long mobileNumber;
-	private String highQualification;
-	private Float cgpa;
-	private String roleAppliedFor;
-	private String alternateEmail;
-	private Float experience;
-	private String resume; 
-	private String status;
-	
-	@JoinColumn(name = "userId")
-	@ManyToOne
-	private User user;
-	
-	@JoinColumn(name = "domainId")
-	@OneToOne
-	private Domain domain;-->
+			
 
 				<h1> Candidate Registration</h1>
 
@@ -100,46 +83,46 @@ $(document).ready (function () {
 						<label class="control-label" for="name">Name </label> <input
 							id="name" class="form-control" th:field="*{candidateName}"
 							required autofocus="autofocus" th:minlength="4"/>
+							 
+							 
+							 
+							 
+							 
 							<p class="alert alert-danger" th:if="${#fields.hasErrors('candidateName')}" th:errors="*{candidateName}" />
 					</div>
 
 					<div class="form-group">
 						<label class="control-label" for="email"> Email </label> <input type="email"
-							id="email" class="form-control" th:field="*{email}" required
-							autofocus="autofocus" />
+							id="email" class="form-control" th:field="*{email}" 
+							autofocus="autofocus" required/>
 							<p class="alert alert-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}" />
 					</div>
 					
 					
 					 
 					 <div class="form-group">
-						<label class="control-label" for="alternateEmail">Alternate Email </label> <input type="email"
-							id="alternateEmail" class="form-control" th:field="*{alternateEmail}" required
-							autofocus="autofocus" />
+						<label class="control-label" for="alternateEmail">Alternate Email </label> <input 
+							id="alternateEmail" class="form-control" th:field="*{alternateEmail}" type="email"
+							required autofocus="autofocus" />
 							<p class="alert alert-danger" th:if="${#fields.hasErrors('alternateEmail')}" th:errors="*{alternateEmail}" />
 							
 					</div>
 
                     <div class="form-group">
-						<label class="control-label" for="Phone">Phone </label> <input
-							id="Phone" class="form-control" th:field="*{mobileNumber}"
-							required autofocus="autofocus" th:minlength="10" th:maxlength="10" th:min="1"/>
+						<label class="control-label" for="Phone">Phone </label> <input 
+							id="Phone" class="form-control" th:field="*{mobileNumber}" required
+							 autofocus="autofocus"  th:minlength="10" th:maxlength="10" th:min="1"/>
 						<p class="alert alert-danger" th:if="${#fields.hasErrors('mobileNumber')}" th:errors="*{mobileNumber}" />
 					
 					</div>
 
-                   <!--  <div class="form-group">
-						<label class="control-label" for="qualification">Highest Qualification </label> <input
-							id="qualification" class="form-control" th:field="*{highQualification}"
-							required autofocus="autofocus" th:minlength="10" th:maxlength="10" th:min="1"/>
-					</div> -->
+                 
                     
                     
                     <div class="form-group">
 						<label class="control-label" for="qualification">Highest Qualification </label> 
                         
-                        <select name="qualification" id="qualification" th:field="*{highQualification}" class="form-control" required autofocus="autofocus">
-                            <!-- <option  th:value="--- Select ---" th:text="--- Select ---" disabled selected></option> -->
+                        <select name="qualification" id="qualification" th:field="*{highQualification}" class="form-control"  required autofocus="autofocus">
                             <option value="">--- Select ---</option>
                             <option th:value="B.Tech" th:text="B.Tech" ></option>
                             <option th:value="B.Sc" th:text="B.Sc" ></option>
@@ -160,7 +143,7 @@ $(document).ready (function () {
                     <div class="form-group">
 						<label class="control-label" for="marks">Marks in cgpa </label> <input
 							id="marks" class="form-control" th:field="*{cgpa}"
-							required autofocus="autofocus" th:minlength="1" th:maxlength="3" th:min="1"/>
+							 autofocus="autofocus" required th:minlength="1" th:maxlength="3" th:min="1"/>
 				   <p class="alert alert-danger" th:if="${#fields.hasErrors('cgpa')}" th:errors="*{cgpa}" />
 				
 					</div>
@@ -169,7 +152,7 @@ $(document).ready (function () {
                     <div class="form-group">
 						<label class="control-label" for="role">Role Applied </label> <input
 							id="role" class="form-control" th:field="*{roleAppliedFor}"
-							required autofocus="autofocus" />
+							required autofocus="autofocus"  />
                         <p class="alert alert-danger" th:if="${#fields.hasErrors('roleAppliedFor')}" th:errors="*{roleAppliedFor}" />
 							
 					</div>
@@ -183,9 +166,8 @@ $(document).ready (function () {
                         <div class="form-group">
 						<label class="control-label" for="Experience">Experience </label> 
                         
-                        <select name="Experience" id="Experience" th:field="*{experience}" class="form-control" required autofocus="autofocus">
-                            <!-- <option  th:value="--- Select ---" th:text="--- Select ---" disabled selected></option> -->
-                            <option th:value="0">--- Select ---</option>
+                        <select name="Experience" id="Experience" th:field="*{experience}"  class="form-control"  autofocus="autofocus">
+                            <option value="">--- Select ---</option>
                             <option th:value="0" th:text="Fresher" ></option>
                             <option th:value="0.6" th:text="6months" ></option>
                             <option th:value="1" th:text="1year"></option>
@@ -200,23 +182,17 @@ $(document).ready (function () {
                      <p class="alert alert-danger" th:if="${#fields.hasErrors('experience')}" th:errors="*{experience}" />
                      
 					</div>
-					 <!--<div class="form-group">
-						<label class="control-label" for="file">Upload the resume here(in word format) </label> <input type="file"
-							id="file" class="form-control" th:field="*{resume}"
-							required autofocus="autofocus"/>
-					</div>-->
+					
            
            <div class="form-group">
 						<label class="control-label" for="resumr">Resume </label> <input type="file"
-							id="role" class="form-control" name="file"
-							required autofocus="autofocus" />
-                        <p class="alert alert-danger" th:if="${#fields.hasErrors('resume')}" th:errors="*{resume}" />
-							
-					</div>
+							id="role" class="form-control" name="file" 
+							required autofocus="autofocus"  />
+			</div>
 					
                     <div class="form-group" >
                         <label class="control-label" for="name">Domain</label>
-                        <select class="form-control" id="testOrder" name="testOrder" th:field="*{domain}" autofocus="autofocus" >
+                        <select class="form-control" id="testOrder" name="testOrder" th:field="*{domain}" required autofocus="autofocus" >
                                                <option value="" >---Select---</option>
                                                    <option th:each="domain : ${domain}" th:value="${domain.domainId}"   
                                                        th:text="${domain.domainName}"></option>

@@ -6,6 +6,7 @@ import java.util.List;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -65,8 +66,9 @@ public class CandidateController
 //	}
 	
 	@PostMapping("/saveCandidate")
-	public String saveCandidate(@ModelAttribute Candidate candidate,@RequestParam("file") MultipartFile file,BindingResult result,Model mav,HttpSession session) throws IOException 
+	public String saveCandidate(@Valid @ModelAttribute Candidate candidate,BindingResult result,@RequestParam("file") MultipartFile file,Model mav,HttpSession session) throws IOException 
 	{
+		
 		User obj=(User) session.getAttribute("loginDetails");
 		User user=new User();
 
@@ -74,17 +76,20 @@ public class CandidateController
 		
 		mav.addAttribute("domain",domain);
 		
-		if(result.hasErrors()) 
-		{
-			return "candidateRegister";
-			
-		}
+		boolean b=result.hasErrors();
+		System.err.println(b);
 		
 		String name=file.getOriginalFilename();
 		
 		System.err.println("hiiiiiii"+name);
  
-  
+    
+		
+		if(result.hasErrors()) 
+		{
+			return "candidateRegister";
+			
+		}
 		candidate.setResume(file.getBytes());
 		user.setUserId(obj.getUserId());
 		candidate.setUser(user);

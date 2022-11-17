@@ -34,7 +34,9 @@
 						<th>Domain</th>
 						<th>Experience</th>
 						<th>Status</th>
-						<th>Actions</th>
+						<div th:object="${role}" th:if="${role=='interviewer'||role=='hrHead'}" >
+							<th>Actions</th>
+						</div>
 						
 					</tr>
 				</thead>
@@ -50,9 +52,11 @@
 						<td th:each="candidate : ${schedule.Candidate}" th:text="${candidate.experience}" />
 						<td th:each="candidate : ${schedule.Candidate}" th:text="${candidate.status}" />
 						
-						<td>
+						<div th:object="${role}" th:if="${role=='interviewer'||role=='hrHead'}">
+							<td>
 							<a  th:each="candidate : ${schedule.Candidate}"  th:href="@{addFeedback(candidateId=${candidate.candidateId})}" class="btn btn-info">Feedback</a>
 						</td>
+						</div>
 						
 						
 						<!-- <td th:text="${Candidate.name}" />

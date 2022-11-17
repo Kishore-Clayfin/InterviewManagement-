@@ -1,13 +1,14 @@
 package com.cf.controller;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -42,7 +43,20 @@ public class ScheduleController {
 	
 
 	@GetMapping("/addschedule")
-	public ModelAndView addhr() {
+	public ModelAndView addschedule(HttpSession session,HttpServletResponse redirect) 
+	{
+		User checkUser=(User)session.getAttribute("loginDetails");
+		if(!checkUser.getRole().equals("hr"))
+		{
+			try {
+				redirect.sendRedirect("/login");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+
 		Schedule Schedule = new Schedule();
 		List<Candidate> Candidate = icandidateService.viewCandidateList();
 		List<User> user = iUserService.viewUserList();
@@ -60,8 +74,20 @@ public class ScheduleController {
 	}
 
 	@PostMapping("/saveschedule")
-	public String saveschedule(@Valid @ModelAttribute Schedule schedule,BindingResult result, Model model,RedirectAttributes ra) 
+	public String saveschedule(@Valid @ModelAttribute Schedule schedule,BindingResult result, Model model,RedirectAttributes ra,HttpSession session,HttpServletResponse redirect) 
 	{
+		User checkUser=(User)session.getAttribute("loginDetails");
+		if(!checkUser.getRole().equals("hr"))
+		{
+			try {
+				redirect.sendRedirect("/login");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+
 		List<Candidate> candidateList=schedule.getCandidate();
 		
 		List<Schedule> schedules = ischeduleService.viewScheduleList();
@@ -212,8 +238,20 @@ public class ScheduleController {
 	}
 
 	@GetMapping({ "/viewschedules" })
-	public ModelAndView getAllschedules(HttpSession session) 
+	public ModelAndView getAllschedules(HttpSession session,HttpServletResponse redirect) 
 	{
+		User checkUser=(User)session.getAttribute("loginDetails");
+		if(!(checkUser.getRole().equals("hr")||checkUser.getRole().equals("interviewer")||checkUser.getRole().equals("hrHead")))
+		{
+			try {
+				redirect.sendRedirect("/login");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+
 		// @ModelAttribute("todos") List<Candidate> li) {
 //		System.out.println(session.getAttribute("data"));
 //		ModelAndView mav = new ModelAndView("scheduleList");
@@ -244,8 +282,20 @@ public class ScheduleController {
 	}
 //
 	@GetMapping("/showUpdateSchedule")
-	public ModelAndView showUpdateSchedule(@RequestParam Integer scheduleId) 
+	public ModelAndView showUpdateSchedule(@RequestParam Integer scheduleId,HttpSession session,HttpServletResponse redirect) 
 	{
+		User checkUser=(User)session.getAttribute("loginDetails");
+		if(!checkUser.getRole().equals("hr"))
+		{
+			try {
+				redirect.sendRedirect("/login");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+
 //		Schedule s =new Schedule();
 //		User user1=new User();
 		
@@ -271,14 +321,38 @@ public class ScheduleController {
 	
 
 	@GetMapping("/deleteSchedule")
-	public String deleteSchedule(@RequestParam Integer scheduleId) {
+	public String deleteSchedule(@RequestParam Integer scheduleId,HttpSession session,HttpServletResponse redirect) {
+		User checkUser=(User)session.getAttribute("loginDetails");
+		if(!checkUser.getRole().equals("hr"))
+		{
+			try {
+				redirect.sendRedirect("/login");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+
 		ischeduleService.deleteSchedule(scheduleId);
 		return "redirect:/viewschedules";
 	}
 
 	@GetMapping("/giveFeedback")
-	public ModelAndView getfeedback(HttpSession session)// (@RequestParam Integer InterviewerId)
+	public ModelAndView getfeedback(HttpSession session,HttpServletResponse redirect)// (@RequestParam Integer InterviewerId)
 	{
+		User checkUser=(User)session.getAttribute("loginDetails");
+		if(!(checkUser.getRole().equals("hr")||checkUser.getRole().equals("interviewer")||checkUser.getRole().equals("hrHead")))
+		{
+			try {
+				redirect.sendRedirect("/login");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+
 		User user= (User) session.getAttribute("loginDetails");
 		ModelAndView mav = new ModelAndView("CompletedList");
 
@@ -326,6 +400,7 @@ public class ScheduleController {
 //		System.out.println(a);
 
 		mav.addObject("schedule", a);
+		mav.addObject("role",checkUser.getRole());
 
 //		List<Candidate> can = IcandidateService.viewCandidateList();
 //		

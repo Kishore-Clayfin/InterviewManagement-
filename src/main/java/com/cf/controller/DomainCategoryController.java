@@ -1,5 +1,9 @@
 package com.cf.controller;
 
+import java.io.IOException;
+
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,8 +14,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.cf.model.DomainCategory;
+import com.cf.model.User;
 import com.cf.service.IDomainCategoryService;
 
 @Controller
@@ -21,7 +27,18 @@ public class DomainCategoryController {
 	private IDomainCategoryService iDomainCategoryService;
 	
 	@GetMapping("/addDomainCategory")
-	public ModelAndView addDomainCategory() {
+	public ModelAndView addDomainCategory(HttpSession session,HttpServletResponse redirect)
+	{
+		User user=(User)session.getAttribute("loginDetails");
+		if(!user.getRole().equals("hr"))
+		{
+			try {
+				redirect.sendRedirect("/login");//("http://localhost:9091/login");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 		DomainCategory domainCategory = new DomainCategory();
 		ModelAndView mav = new ModelAndView("domainCategoryRegister");
 		mav.addObject("domainCategory",domainCategory);
@@ -29,8 +46,20 @@ public class DomainCategoryController {
 	}
 	
 	@PostMapping("/saveDomainCategory")
-	public String saveDomainCategory(@Valid @ModelAttribute DomainCategory domainCategory,BindingResult result ) 
+	public String saveDomainCategory(@Valid @ModelAttribute DomainCategory domainCategory,BindingResult result,HttpSession session,HttpServletResponse redirect ) 
 	{
+		User user=(User)session.getAttribute("loginDetails");
+		if(!user.getRole().equals("hr"))
+		{
+			try {
+				redirect.sendRedirect("/login");//("http://localhost:9091/login");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+
 		if(result.hasErrors())
 		{
 			return "domainCategoryRegister";
@@ -40,14 +69,38 @@ public class DomainCategoryController {
 	}
 	
 	@GetMapping("/viewDomainCategories")
-	public ModelAndView getAllDomainCategories() {
+	public ModelAndView getAllDomainCategories(HttpSession session,HttpServletResponse redirect) {
+		User user=(User)session.getAttribute("loginDetails");
+		if(!user.getRole().equals("hr"))
+		{
+			try {
+				redirect.sendRedirect("/login");//("http://localhost:9091/login");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+
 		ModelAndView mav = new ModelAndView("domainCategoryList");
 		mav.addObject("domainCategory", iDomainCategoryService.viewDomainCategoryList());
 		return mav;
 	}
 	
 	@GetMapping("/showUpdateDomainCategory")
-	public ModelAndView showUpdateDomainCategory(@RequestParam Integer domSubCatId) {
+	public ModelAndView showUpdateDomainCategory(@RequestParam Integer domSubCatId,HttpSession session,HttpServletResponse redirect) {
+		User user=(User)session.getAttribute("loginDetails");
+		if(!user.getRole().equals("hr"))
+		{
+			try {
+				redirect.sendRedirect("/login");//("http://localhost:9091/login");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+
 		ModelAndView mav = new ModelAndView("domainCategoryRegister");
 		DomainCategory domainCategory = iDomainCategoryService.updateDomainCategory(domSubCatId);
 		mav.addObject("domainCategory", domainCategory);
@@ -55,7 +108,19 @@ public class DomainCategoryController {
 	}
 	
 	@GetMapping("/deleteDomainCategory")
-	public String deleteDomainCategory(@RequestParam Integer domSubCatId) {
+	public String deleteDomainCategory(@RequestParam Integer domSubCatId,HttpSession session,HttpServletResponse redirect) {
+		User user=(User)session.getAttribute("loginDetails");
+		if(!user.getRole().equals("hr"))
+		{
+			try {
+				redirect.sendRedirect("/login");//("http://localhost:9091/login");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+
 		iDomainCategoryService.deleteDomainCategory(domSubCatId);
 		return "redirect:/viewDomainCategories";
 	}

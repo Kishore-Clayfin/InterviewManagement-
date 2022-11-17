@@ -1,7 +1,10 @@
 package com.cf.controller;
 
+import java.io.IOException;
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +37,19 @@ public class UserController
 	private ICandidateService iCandidateService;
 	
 	@GetMapping("/addUser")
-	public ModelAndView addUser() {
+	public ModelAndView addUser(HttpSession session,HttpServletResponse redirect) {
+		User checkUser=(User)session.getAttribute("loginDetails");
+		if(!checkUser.getRole().equals("hr"))
+		{
+			try {
+				redirect.sendRedirect("/login");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+
 		List<UserDetails> userDetails = iUserDetailsService.viewUserDetailsList();
 		List<Candidate> candidate = iCandidateService.viewCandidateList();
 		
@@ -47,7 +62,19 @@ public class UserController
 	}
 	
 	@PostMapping("/saveUser")
-	public String saveUser(@Valid@ModelAttribute User user,BindingResult result) {
+	public String saveUser(@Valid@ModelAttribute User user,BindingResult result,HttpSession session,HttpServletResponse redirect) {
+		User checkUser=(User)session.getAttribute("loginDetails");
+		if(!checkUser.getRole().equals("hr"))
+		{
+			try {
+				redirect.sendRedirect("/login");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+
 //		UserDetails userDetails=iUserDetailsService.findUserDetails(userDetailsId);
 //		
 //		log.info("Iddddd"+userDetailsId);
@@ -67,7 +94,19 @@ public class UserController
 	}
 	
 	@GetMapping("/viewUsers")
-	public ModelAndView getAllUsers() {
+	public ModelAndView getAllUsers(HttpSession session,HttpServletResponse redirect) {
+		User user=(User)session.getAttribute("loginDetails");
+		if(!user.getRole().equals("hr"))
+		{
+			try {
+				redirect.sendRedirect("/login");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+
 		ModelAndView mav = new ModelAndView("userList");
 		mav.addObject("user", iUserService.viewUserList());
 		//mav.addObject("userDetails", iUserDetailsService.viewUserDetailsList());
@@ -75,7 +114,19 @@ public class UserController
 	}
 	
 	@GetMapping("/showUpdateUser")
-	public ModelAndView showUpdateUser(@RequestParam Integer userId) {
+	public ModelAndView showUpdateUser(@RequestParam Integer userId,HttpSession session,HttpServletResponse redirect) {
+		User checkUser=(User)session.getAttribute("loginDetails");
+		if(!checkUser.getRole().equals("hr"))
+		{
+			try {
+				redirect.sendRedirect("/login");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+
 //		List<UserDetails> userDetails = iUserDetailsService.viewUserDetailsList();
 //		List<Candidate> candidate = iCandidateService.viewCandidateList();
 //		
@@ -88,7 +139,19 @@ public class UserController
 	}
 	
 	@GetMapping("/deleteUser")
-	public String deleteUser(@RequestParam Integer userId) {
+	public String deleteUser(@RequestParam Integer userId,HttpSession session,HttpServletResponse redirect) {
+		User user=(User)session.getAttribute("loginDetails");
+		if(!user.getRole().equals("hr"))
+		{
+			try {
+				redirect.sendRedirect("/login");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+
 		iUserService.deleteUser(userId);
 		return "redirect:/viewUsers";
 	}

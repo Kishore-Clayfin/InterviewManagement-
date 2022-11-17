@@ -1,9 +1,12 @@
 package com.cf.controller;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +20,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.cf.model.Domain;
 import com.cf.model.DomainCategory;
+import com.cf.model.User;
 import com.cf.service.IDomainCategoryService;
 import com.cf.service.IDomainService;
 
@@ -31,7 +35,18 @@ public class DomainController
 	private IDomainCategoryService iDomainCategoryService;
 	
 	@GetMapping("/addDomain")
-	public ModelAndView addDomain() {
+	public ModelAndView addDomain(HttpSession session,HttpServletResponse redirect) {
+		User user=(User)session.getAttribute("loginDetails");
+		if(!user.getRole().equals("hr"))
+		{
+			try {
+				redirect.sendRedirect("/login");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
 		List<DomainCategory> domainCategory = iDomainCategoryService.viewDomainCategoryList();
 		
 		Domain domain = new Domain();
@@ -42,8 +57,19 @@ public class DomainController
 	}
 	
 	@PostMapping("/saveDomain")
-	public String saveDomain(@Valid @ModelAttribute Domain domain,BindingResult result, @RequestParam String category) 
+	public String saveDomain(@Valid @ModelAttribute Domain domain,BindingResult result, @RequestParam String category,HttpSession session,HttpServletResponse redirect) 
 	{
+		User user=(User)session.getAttribute("loginDetails");
+		if(!user.getRole().equals("hr"))
+		{
+			try {
+				redirect.sendRedirect("/login");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
 		List<DomainCategory> arr=new ArrayList<DomainCategory>();
 		category= category.toUpperCase();
 		String[]  s=category.split(",");
@@ -73,14 +99,36 @@ public class DomainController
 	}
 	
 	@GetMapping("/viewDomains")
-	public ModelAndView getAllDomains() {
+	public ModelAndView getAllDomains(HttpSession session,HttpServletResponse redirect) {
+		User user=(User)session.getAttribute("loginDetails");
+		if(!user.getRole().equals("hr"))
+		{
+			try {
+				redirect.sendRedirect("/login");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
 		ModelAndView mav = new ModelAndView("domainList");
 		mav.addObject("domain", iDomainService.viewDomainList());
 		return mav;
 	}
 	
 	@GetMapping("/showUpdateDomain")
-	public ModelAndView showUpdateDomain(@RequestParam Integer domainId) {
+	public ModelAndView showUpdateDomain(@RequestParam Integer domainId,HttpSession session,HttpServletResponse redirect) {
+		User user=(User)session.getAttribute("loginDetails");
+		if(!user.getRole().equals("hr"))
+		{
+			try {
+				redirect.sendRedirect("/login");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
 		List<DomainCategory> domainCategory = iDomainCategoryService.viewDomainCategoryList();
 		
 		ModelAndView mav = new ModelAndView("domainRegister");
@@ -91,7 +139,18 @@ public class DomainController
 	}
 	
 	@GetMapping("/deleteDomain")
-	public String deleteDomain(@RequestParam Integer domainId) {
+	public String deleteDomain(@RequestParam Integer domainId,HttpSession session,HttpServletResponse redirect) {
+		User user=(User)session.getAttribute("loginDetails");
+		if(!user.getRole().equals("hr"))
+		{
+			try {
+				redirect.sendRedirect("/login");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
 		iDomainService.deleteDomain(domainId);
 		return "redirect:/viewDomains";
 	}

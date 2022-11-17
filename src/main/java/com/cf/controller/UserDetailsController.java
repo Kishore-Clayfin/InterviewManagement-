@@ -1,5 +1,9 @@
 package com.cf.controller;
 
+import java.io.IOException;
+
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.cf.model.User;
 import com.cf.model.UserDetails;
 import com.cf.service.IUserDetailsService;
 
@@ -22,7 +27,17 @@ public class UserDetailsController {
 	private IUserDetailsService iUserDetailsService;
 	
 	@GetMapping("/addUserDetails")
-	public ModelAndView addUserDetails() {
+	public ModelAndView addUserDetails(HttpSession session,HttpServletResponse redirect) {
+		User checkUser=(User)session.getAttribute("loginDetails");
+		if(!checkUser.getRole().equals("hr"))
+		{
+			try {
+				redirect.sendRedirect("/login");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 		UserDetails userDetails = new UserDetails();
 		ModelAndView mav = new ModelAndView("userDetailsRegister");
 		mav.addObject("userDetails",userDetails);
@@ -30,8 +45,18 @@ public class UserDetailsController {
 	}
 	
 	@PostMapping("/saveUserDetails")
-	public String saveUserDetails(@Valid @ModelAttribute UserDetails userDetails,BindingResult result) 
+	public String saveUserDetails(@Valid @ModelAttribute UserDetails userDetails,BindingResult result,HttpSession session,HttpServletResponse redirect) 
 	{
+		User checkUser=(User)session.getAttribute("loginDetails");
+		if(!checkUser.getRole().equals("hr"))
+		{
+			try {
+				redirect.sendRedirect("/login");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 		if(result.hasErrors())
 		{
 			return "userDetailsRegister";
@@ -41,14 +66,34 @@ public class UserDetailsController {
 	}
 	
 	@GetMapping("/viewUserDetails")
-	public ModelAndView getAllUserDetails() {
+	public ModelAndView getAllUserDetails(HttpSession session,HttpServletResponse redirect) {
+		User checkUser=(User)session.getAttribute("loginDetails");
+		if(!checkUser.getRole().equals("hr"))
+		{
+			try {
+				redirect.sendRedirect("/login");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 		ModelAndView mav = new ModelAndView("userDetailsList");
 		mav.addObject("userDetails", iUserDetailsService.viewUserDetailsList());
 		return mav;
 	}
 	
 	@GetMapping("/showUpdateUserDetails")
-	public ModelAndView showUpdateUserDetails(@RequestParam Integer userDetailsId) {
+	public ModelAndView showUpdateUserDetails(@RequestParam Integer userDetailsId,HttpSession session,HttpServletResponse redirect) {
+		User checkUser=(User)session.getAttribute("loginDetails");
+		if(!checkUser.getRole().equals("hr"))
+		{
+			try {
+				redirect.sendRedirect("/login");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 		ModelAndView mav = new ModelAndView("userDetailsRegister");
 		UserDetails userDetails = iUserDetailsService.updateUserDetails(userDetailsId);
 		mav.addObject("userDetails", userDetails);
@@ -56,7 +101,17 @@ public class UserDetailsController {
 	}
 	
 	@GetMapping("/deleteUserDetails")
-	public String deleteUserDetails(@RequestParam Integer userDetailsId) {
+	public String deleteUserDetails(@RequestParam Integer userDetailsId,HttpSession session,HttpServletResponse redirect) {
+		User checkUser=(User)session.getAttribute("loginDetails");
+		if(!checkUser.getRole().equals("hr"))
+		{
+			try {
+				redirect.sendRedirect("/login");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 		iUserDetailsService.deleteUserDetails(userDetailsId);
 		return "redirect:/viewUserDetails";
 	}

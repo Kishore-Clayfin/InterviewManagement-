@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -43,9 +44,19 @@ public class FeedBackController {
 	private ICandidateService iCandidateService;
 	
 	@GetMapping("/addFeedback")
-	public ModelAndView addFeedback(@RequestParam Integer candidateId ,HttpSession session) 
+	public ModelAndView addFeedback(@RequestParam Integer candidateId ,HttpSession session,HttpServletResponse redirect) 
 	{
-		
+		User checkUser=(User)session.getAttribute("loginDetails");
+		if(!(checkUser.getRole().equals("interviewer")||checkUser.getRole().equals("hrHead")))
+		{
+			try {
+				redirect.sendRedirect("/login");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
 		User user= (User) session.getAttribute("loginDetails");
 //		List<Domain> domain = iDomainService.viewDomainList();
 //		List<Candidate> candidate = iCandidateService.viewCandidateList();
@@ -64,8 +75,19 @@ public class FeedBackController {
 	}
 	
 	@PostMapping("/saveFeedback")
-	public String saveFeedBack(@Valid @ModelAttribute Feedback feedback,BindingResult result, Model model,@RequestParam Integer candidateId) 
+	public String saveFeedBack(@Valid @ModelAttribute Feedback feedback,BindingResult result, Model model,@RequestParam Integer candidateId,HttpSession session,HttpServletResponse redirect) 
 	{
+		User checkUser=(User)session.getAttribute("loginDetails");
+		if(!(checkUser.getRole().equals("interviewer")||checkUser.getRole().equals("hrHead")))
+		{
+			try {
+				redirect.sendRedirect("/login");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
 //		Domain domain = feedback.getCandidate().getDomain();
 //		List<DomainCategory> domainCategory = domain.getDomainCategory();
 //		
@@ -137,15 +159,38 @@ public class FeedBackController {
 	}
 	
 	@GetMapping("/viewFeedbacks")
-	public ModelAndView getAllFeedbacks() {	
-		
+	public ModelAndView getAllFeedbacks(HttpSession session,HttpServletResponse redirect) 
+	{	
+		User checkUser=(User)session.getAttribute("loginDetails");
+		if(!(checkUser.getRole().equals("hr")||checkUser.getRole().equals("interviewer")||checkUser.getRole().equals("hrHead")))
+		{
+			try {
+				redirect.sendRedirect("/login");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
 		ModelAndView mav = new ModelAndView("feedbackList");
 		mav.addObject("feedback", iFeedbackService.viewFeedbackList());
 		return mav;
 	}
 	
 	@GetMapping("/showUpdateFeedback")
-	public ModelAndView showUpdateFeedback(@RequestParam Integer feedbackId) {
+	public ModelAndView showUpdateFeedback(@RequestParam Integer feedbackId,HttpSession session,HttpServletResponse redirect) 
+	{
+		User checkUser=(User)session.getAttribute("loginDetails");
+		if(!(checkUser.getRole().equals("hr")||checkUser.getRole().equals("interviewer")||checkUser.getRole().equals("hrHead")))
+		{
+			try {
+				redirect.sendRedirect("/login");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
 		List<Domain> domain = iDomainService.viewDomainList();
 		List<Candidate> candidate = iCandidateService.viewCandidateList();
 		
@@ -158,7 +203,19 @@ public class FeedBackController {
 	}
 	
 	@GetMapping("/deleteFeedback")
-	public String deleteFeedback(@RequestParam Integer feedbackId) {
+	public String deleteFeedback(@RequestParam Integer feedbackId,HttpSession session,HttpServletResponse redirect) 
+	{
+		User checkUser=(User)session.getAttribute("loginDetails");
+		if(!(checkUser.getRole().equals("hr")||checkUser.getRole().equals("interviewer")||checkUser.getRole().equals("hrHead")))
+		{
+			try {
+				redirect.sendRedirect("/login");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
 		iFeedbackService.deleteFeedback(feedbackId);
 		return "redirect:/viewFeedbacks";
 	}

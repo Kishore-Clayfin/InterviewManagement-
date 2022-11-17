@@ -222,7 +222,7 @@ public class CandidateController
 	@GetMapping("/updateStatus")
 	public String updateCandidateStatus(@RequestParam Integer candidateId, @RequestParam String status,HttpSession session,HttpServletResponse redirect) {
 		User checkUser=(User)session.getAttribute("loginDetails");
-		if(!checkUser.getRole().equals("hr"))
+		if(!(checkUser.getRole().equals("hr")||checkUser.getRole().equals("hrHead")||checkUser.getRole().equals("interviewer")))
 		{
 			try {
 				redirect.sendRedirect("/login");

@@ -1,7 +1,10 @@
 package com.cf.controller;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,7 +29,12 @@ public class DomainCategoryController {
 	}
 	
 	@PostMapping("/saveDomainCategory")
-	public String saveDomainCategory(@ModelAttribute DomainCategory domainCategory) {
+	public String saveDomainCategory(@Valid @ModelAttribute DomainCategory domainCategory,BindingResult result ) 
+	{
+		if(result.hasErrors())
+		{
+			return "domainCategoryRegister";
+		}
 		iDomainCategoryService.saveDomainCategory(domainCategory);
 		return "redirect:/viewDomainCategories";
 	}

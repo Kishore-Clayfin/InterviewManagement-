@@ -5,11 +5,13 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -62,7 +64,7 @@ public class FeedBackController {
 	}
 	
 	@PostMapping("/saveFeedback")
-	public String saveFeedBack(@ModelAttribute Feedback feedback, Model model,@RequestParam Integer candidateId) 
+	public String saveFeedBack(@Valid @ModelAttribute Feedback feedback,BindingResult result, Model model,@RequestParam Integer candidateId) 
 	{
 //		Domain domain = feedback.getCandidate().getDomain();
 //		List<DomainCategory> domainCategory = domain.getDomainCategory();
@@ -104,6 +106,10 @@ public class FeedBackController {
 		List<Candidate> candidates=null;
 		try{
 			
+			if(result.hasErrors())
+			{
+				return "feedbackRegister";
+			}
 			feedback.setCandidate(candidate);
 			feedback.setSubDomRatings(map);
 			iFeedbackService.saveFeedback(feedback);

@@ -7,6 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 
 import lombok.Getter;
@@ -28,6 +29,7 @@ public class Domain
 	@NotBlank(message = "Domain Name cannot be empty.")
 	private String domainName;
 	
+	@Valid
 	//@JoinColumn(name = "domainSubCategId")
 	@JoinTable(name = "domainSubCategoryId")
 	@ManyToMany

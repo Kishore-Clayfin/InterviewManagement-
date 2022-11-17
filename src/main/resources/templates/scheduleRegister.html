@@ -59,7 +59,7 @@
 
 
 						</select>
-
+<p class="alert alert-danger" th:if="${#fields.hasErrors('interviewType')}" th:errors="*{interviewType}" />
 					</div>
 
 					<div class="form-group">
@@ -71,6 +71,7 @@
 								th:value="${interviewer.getUserId}"
 								th:text="${interviewer.getUsername+' - '+interviewer.getRole()}"></option>
 						</select>
+						<p class="alert alert-danger" th:if="${#fields.hasErrors('user')}" th:errors="*{user}" />
 					</div>
 
 					<div class="form-group">
@@ -82,6 +83,7 @@
 								th:value="${candidate.getCandidateId}"
 								th:text="${candidate.getCandidateName+' with id '+candidate.getCandidateId}"></option>
 						</select>
+							<p class="alert alert-danger" th:if="${#fields.hasErrors('candidate')}" th:errors="*{candidate}" />
 					</div>
 
 
@@ -124,7 +126,7 @@
 
 
 						</select>
-
+							<p class="alert alert-danger" th:if="${#fields.hasErrors('duration')}" th:errors="*{duration}" />
 					</div>
 
 

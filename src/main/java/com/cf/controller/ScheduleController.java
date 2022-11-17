@@ -8,10 +8,12 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -57,7 +59,7 @@ public class ScheduleController {
 	}
 
 	@PostMapping("/saveschedule")
-	public String saveschedule(@ModelAttribute Schedule schedule)//, Model model) 
+	public String saveschedule(@Valid @ModelAttribute Schedule schedule,BindingResult result)//, Model model) 
 	{
 		List<Schedule> schedules = ischeduleService.viewScheduleList();
 		int id=schedule.getUser().getUserId();
@@ -132,7 +134,10 @@ public class ScheduleController {
 		  schedule.getScheduleTime());
 		  
 //		  System.out.println(schedule);
-		 
+		 if(result.hasErrors())
+		 {
+			 return "scheduleRegister";
+		 }
 		ischeduleService.saveSchedule(schedule);
 
 		return "redirect:/viewschedules";

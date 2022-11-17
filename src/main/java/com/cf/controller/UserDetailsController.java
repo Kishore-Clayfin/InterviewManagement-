@@ -1,7 +1,10 @@
 package com.cf.controller;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,7 +30,12 @@ public class UserDetailsController {
 	}
 	
 	@PostMapping("/saveUserDetails")
-	public String saveUserDetails(@ModelAttribute UserDetails userDetails) {
+	public String saveUserDetails(@Valid @ModelAttribute UserDetails userDetails,BindingResult result) 
+	{
+		if(result.hasErrors())
+		{
+			return "userDetailsRegister";
+		}
 		iUserDetailsService.saveUserDetails(userDetails);
 		return "redirect:/viewUserDetails";
 	}

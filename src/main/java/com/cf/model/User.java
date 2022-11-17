@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.validation.Valid;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
@@ -50,6 +51,7 @@ public class User
 	@Column(unique = true)
 	private String email;
 	
+	@Valid
 	@JoinColumn(name = "userDetailsId")
 	@OneToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
 	private UserDetails userDetails;

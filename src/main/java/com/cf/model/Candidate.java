@@ -46,15 +46,14 @@ public class Candidate
 	private String email;
 	//@Pattern(regexp="^[+]91[6789]\\d{9}$",message="Candidate's mobile no should start with +91 and should be 10digits ")
     @Min(value=1,message=" mobile number can't be -ve ")
-
-    
-
+    @NotNull(message = "Mobile Number can't be empty")
 	private  Long mobileNumber;
 	@NotBlank(message = "Candidates's qualification Should n't be empty.")
 
 	private String highQualification;
 	@NotNull(message = "Candidate's marks cannot be empty.")
 	@Min(value=1,message="cgpa can't be -ve ")
+	@Max(value = 10,message = "cgpa should be below 10")
 	private Float cgpa;
 	@NotBlank(message = "Candidates's position Should n't be empty.")
 	

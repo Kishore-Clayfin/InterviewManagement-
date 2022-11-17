@@ -17,8 +17,9 @@ public class ScheduleServiceImpl implements IScheduleService {
 	private EmailService email;
     
 	@Override
-	public void saveSchedule(Schedule schedule) 
+	public Schedule saveSchedule(Schedule schedule) 
 	{
+		
 		Schedule s= iScheduleDao.save(schedule);
 		String to="";
 		String text;
@@ -40,6 +41,7 @@ public class ScheduleServiceImpl implements IScheduleService {
 		
 		
 		System.out.println("Mail sent");
+		return s;
 	}
 
 	@Override

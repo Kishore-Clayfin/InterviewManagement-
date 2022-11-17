@@ -6,5 +6,6 @@ import com.cf.model.Schedule;
 
 public interface IScheduleDao extends JpaRepository<Schedule, Integer>
 {
+	
 
 }

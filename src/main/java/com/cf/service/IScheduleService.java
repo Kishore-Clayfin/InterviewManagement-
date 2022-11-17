@@ -6,7 +6,7 @@ import com.cf.model.Schedule;
 
 public interface IScheduleService {
 
-	void saveSchedule(Schedule schedule);
+	Schedule saveSchedule(Schedule schedule);
 //	Schedule findById(int id);
 //	Schedule save(Schedule schedule);
 //	void deleteById(int id);

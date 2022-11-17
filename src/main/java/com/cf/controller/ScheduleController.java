@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -19,11 +20,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.cf.model.Candidate;
 import com.cf.model.Schedule;
 import com.cf.model.User;
-import com.cf.repository.IScheduleDao;
 import com.cf.service.ICandidateService;
 import com.cf.service.IScheduleService;
 import com.cf.service.IUserService;
@@ -59,8 +60,10 @@ public class ScheduleController {
 	}
 
 	@PostMapping("/saveschedule")
-	public String saveschedule(@Valid @ModelAttribute Schedule schedule,BindingResult result)//, Model model) 
+	public String saveschedule(@Valid @ModelAttribute Schedule schedule,BindingResult result, Model model,RedirectAttributes ra) 
 	{
+		List<Candidate> candidateList=schedule.getCandidate();
+		
 		List<Schedule> schedules = ischeduleService.viewScheduleList();
 		int id=schedule.getUser().getUserId();
 		List<Schedule> interviewer=schedules.stream().filter(x -> x.getUser().getUserId()==id).collect(Collectors.toList());
@@ -82,7 +85,7 @@ public class ScheduleController {
 		/**********     ------------  ******************/
 		if(schedule.getScheduleDate().isBefore(dateNow)||((schedule.getScheduleDate().isEqual(dateNow))&&(inputTime.isBefore(timeNow)) ))
 		{
-			System.out.println("u can't schedule the interview for the past date or time");
+			ra.addAttribute("errorMessage","u can't schedule the interview for the past date or time");
 			
 			return "redirect:/addschedule";
 		}
@@ -113,8 +116,8 @@ public class ScheduleController {
 				  {
 					  
 					  System.out.println("u can't schedule the interview at this time");
-//					  model.addAttribute("errorMessage",
-//							  "u can't schedule the interview at this time"); 
+					  ra.addAttribute("errorMessage",
+							  "u can't schedule the interview at this time"); 
 					  return "redirect:/addschedule"; 
 				  } 
 //				  else if(sc.getScheduleDate().equals(schedule.getScheduleDate()) && sc.getScheduleTime().equals(schedule.getScheduleTime()) ) 
@@ -138,7 +141,72 @@ public class ScheduleController {
 		 {
 			 return "scheduleRegister";
 		 }
-		ischeduleService.saveSchedule(schedule);
+		int size=schedule.getCandidate().size();
+	//	ArrayList list=null;//new ArrayList();
+		if(size==1)
+		{
+			System.out.println("entering if");
+			ischeduleService.saveSchedule(schedule);
+		}
+//		for (int i=0;i<size;i++)
+//		{
+//			list.add(candidateList.get(i));
+//			System.out.println(list);
+//			
+//			Schedule schedule1=new Schedule();
+//			schedule1.setCandidate(list);
+//			schedule1.setDuration(schedule.getDuration());
+//			schedule1.setInterviewType(schedule.getInterviewType());
+//			schedule1.setMeetingLink(schedule.getMeetingLink());
+//			schedule1.setScheduleDate(schedule.getScheduleDate());
+//			schedule1.setScheduleId(null);
+//			schedule1.setScheduleTime(schedule.getScheduleTime());
+//			schedule1.setUser(schedule.getUser());
+//			
+////			System.out.println(list);
+////			schedule.setCandidate(list);
+////			System.out.println(schedule1.getScheduleId());
+//			Schedule sch= ischeduleService.saveSchedule(schedule1);
+////			System.out.println("Schedule => "+sch);
+//			list.clear();
+//		}
+		else
+		{
+			int tempDuration=schedule.getDuration();
+			String temp=schedule.getScheduleTime();
+			LocalTime tempTime= LocalTime.parse(temp);
+//			Schedule schedule1=schedule;
+//			List<Schedule> li=new ArrayList<Schedule>();
+//			System.out.println("entering else");
+			for (int i=0;i<size;i++)
+			{
+			//	list=new ArrayList()
+				ArrayList list=new ArrayList();
+				Schedule schedule1=new Schedule();
+//				schedule1.setCandidate(list);
+				schedule1.setDuration(schedule.getDuration());
+				schedule1.setInterviewType(schedule.getInterviewType());
+				schedule1.setMeetingLink(schedule.getMeetingLink());
+				schedule1.setScheduleDate(schedule.getScheduleDate());
+				//schedule1.setScheduleId(null);
+				schedule1.setScheduleTime(tempTime.toString());
+				schedule1.setUser(schedule.getUser());
+				
+				list.add(candidateList.get(i));
+				//System.out.println(list);
+				schedule1.setCandidate(list);
+			//	System.out.println(schedule1);
+//				li.add(schedule1);
+//				System.out.println(li);
+				Schedule sch= ischeduleService.saveSchedule(schedule1);
+				tempTime=tempTime.plusMinutes(tempDuration);
+				//System.out.println(schedule1.getCandidate());
+//				System.out.println("Schedule => "+sch);
+				//list.clear();
+			}
+			
+			
+		}
 
 		return "redirect:/viewschedules";
 	}

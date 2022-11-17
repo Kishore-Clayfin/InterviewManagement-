@@ -135,7 +135,7 @@ body{
                   
 					
 					<div class="form-group">
-						<label class="control-label" for="Password"> Password </label> <input type="email"
+						<label class="control-label" for="Password"> Password </label> <input 
 							id="password" class="form-control" 
 							th:field="*{password}" required autofocus="autofocus" th:minlength="6"/>
 						 <p class="alert alert-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}" />
@@ -144,7 +144,7 @@ body{
 					
 					<div class="form-group">
 						<label class="control-label" for="confirmpassword"> Confirm password </label> <input
-							id="confirmpassword" class="form-control" type="email"
+							id="confirmpassword" class="form-control" 
 							 required autofocus="autofocus" />
 					</div>
 					

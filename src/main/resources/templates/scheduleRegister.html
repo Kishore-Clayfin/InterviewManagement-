@@ -40,12 +40,14 @@
 
 
 				<h1>Interview Schedule</h1>
-
-
+<br>
+<span style='color:red' class="alert alert-info" th:text="${param.errorMessage}">err</span>
+<br>
+<br>	
 
 				<form th:action="@{/saveschedule}" method="post"
 					th:object="${schedule}">
-
+		
 
 					<div class="form-group">
 						<label class="control-label" for="intreviewDuration">Interview
@@ -61,7 +63,7 @@
 						</select>
 <p class="alert alert-danger" th:if="${#fields.hasErrors('interviewType')}" th:errors="*{interviewType}" />
 					</div>
-
+					
 					<div class="form-group">
 						<label class="control-label" for="name">Interviewer</label> <select
 							class="form-control" id="tes" name="test"
@@ -119,10 +121,10 @@
 							autofocus="autofocus">
 							<!-- <option  th:value="--- Select ---" th:text="--- Select ---" disabled selected></option> -->
 							<option th:value="0" selected="selected">--- Select ---</option>
+							<option th:value="15" th:text="15-minutes"></option>
 							<option th:value="30" th:text="30-minutes"></option>
 							<option th:value="45" th:text="45-minutes"></option>
-							<option th:value="60" th:text="One-hour"></option>
-							<option th:value="90" th:text="One-and-half-hour"></option>
+
 
 
 						</select>

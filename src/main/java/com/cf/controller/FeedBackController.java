@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
@@ -19,6 +21,7 @@ import com.cf.model.Candidate;
 import com.cf.model.Domain;
 import com.cf.model.DomainCategory;
 import com.cf.model.Feedback;
+import com.cf.model.User;
 import com.cf.service.ICandidateService;
 import com.cf.service.IDomainService;
 import com.cf.service.IFeedbackService;
@@ -38,8 +41,10 @@ public class FeedBackController {
 	private ICandidateService iCandidateService;
 	
 	@GetMapping("/addFeedback")
-	public ModelAndView addFeedback(@RequestParam Integer candidateId) 
+	public ModelAndView addFeedback(@RequestParam Integer candidateId ,HttpSession session) 
 	{
+		
+		User user= (User) session.getAttribute("loginDetails");
 //		List<Domain> domain = iDomainService.viewDomainList();
 //		List<Candidate> candidate = iCandidateService.viewCandidateList();
 		Candidate candidate= iCandidateService.updateCandidate(candidateId);
@@ -52,6 +57,7 @@ public class FeedBackController {
 		mav.addObject("candidateId",candidateId);
 		mav.addObject("candidate",candidate);
 		mav.addObject("subCategory", domainCategory);
+		mav.addObject("role",user.getRole());
 		return mav;
 	}
 	

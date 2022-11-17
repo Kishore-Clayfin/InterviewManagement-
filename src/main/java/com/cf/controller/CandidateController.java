@@ -6,6 +6,7 @@ import java.util.List;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -120,6 +121,7 @@ public class CandidateController
 		return mav;
 	}
 	
+	@Transactional
 	@GetMapping("/updateStatus")
 	public String updateCandidateStatus(@RequestParam Integer candidateId ,@RequestParam String status)
 	{

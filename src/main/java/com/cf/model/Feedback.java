@@ -36,9 +36,9 @@ public class Feedback
 	@Column(name = "feedback")
 	@NotBlank(message = "Feedback can't be empty")
 	private String feed_back;
-	@NotBlank(message = "Interviewer Status can't be empty")
+//	@NotBlank(message = "Interviewer Status can't be empty")
 	private String interviewerFbStatus;
-	@NotBlank(message = "Hr Status can't be empty")
+//	@NotBlank(message = "Hr Status can't be empty")
 	private String hrFbStatus;
 	
 	@Column(nullable = true)

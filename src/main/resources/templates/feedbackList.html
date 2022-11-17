@@ -28,7 +28,7 @@
 
 <body>
 
-	<div class="container">
+	<div style="padding: 10px;">
 
 		<div class="card" id="makepdf">
 
@@ -52,8 +52,8 @@
 						<th>HrFbStatus</th>
 
 						<th>DomainName</th>
-						<th>Sub Ratings</th>
-						
+							<th>Sub Category Ratings</th>
+							
 						<th>Actions</th>
 
 
@@ -102,7 +102,7 @@
 
 							</span>
 						</span></td>
-						<td th:text="${Feedback.domainRatings}" />
+						<td th:text="${Feedback.subDomRatings}" />
 
 						<td><a
 							th:href="@{/deleteFeedback(feedbackId=${Feedback.feedbackId})}"

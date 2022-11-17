@@ -41,8 +41,10 @@ public class CandidateServiceImpl implements ICandidateService {
 	@Override
 	public Candidate updateCandidateStatus(Integer id,String status)
 	{
+		
 		Candidate candidate= iCandidateDao.findById(id).orElseThrow(null);
 		candidate.setStatus(status);
+		
 		Candidate c=iCandidateDao.save(candidate);
 		return c;
 	}

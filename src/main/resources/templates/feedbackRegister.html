@@ -85,7 +85,7 @@
     						</span>
   							</fieldset>
 					</div>
-					
+					<div th:object="${role}" th:if="${role=='interviewer'}">
 					<h3 th:object="${fcandidate}" style="color: blue;" ><b th:text="${candidate.domain.getDomainName()}" ></b></h3>
 					<!-- <div class="form-group" th:each="domSub : ${subCategory}"  >
 						<label class="control-label" for="name" th:text="${domSub.getDomSubCatName()}"  ></label>
@@ -109,37 +109,38 @@
                                data-slider-value="1" class="skill"/>
                         <span th:class="${domSub.getDomSubCatName()}" >1</span>
                     </div>
+                    </div>
                     <div class="form-group"> 
-				<div class="rating">
+				<div class="rating" th:object="${role}" th:if="${role=='interviewer'}">
 					<label>	Please update the status of candidate....</label> <br>
 					<br>
 					<p>
 						<label class="radio-inline">
-						<input type="radio"  class="control-label" id="radio_experience"th:field="*{interviewerFbStatus}" th:value="selected" required
+						<input type="radio"  class="control-label" id="radio_experience"th:field="${feedback.interviewerFbStatus}" th:value="selected" required
 							autofocus="autofocus">
 						selected
 						</label>
 						<label class="radio-inline">
-							<input type="radio" name="experience" id="radio_experience" th:field="*{interviewerFbStatus}" th:value="waiting" required
+							<input type="radio" name="experience" id="radio_experience" th:field="${feedback.interviewerFbStatus}" th:value="waiting" required
 							autofocus="autofocus" >
 							waiting
 							</label>
 		
 							<label class="radio-inline">
-							<input type="radio" name="experience" id="radio_experience" th:field="*{interviewerFbStatus}" required
+							<input type="radio" name="experience" id="radio_experience" th:field="${feedback.interviewerFbStatus}" required
 							autofocus="autofocus" value="rejected" >
 							rejected
 							</label>							
 							
 							<label class="radio-inline">
-							<input type="radio" name="experience" id="radio_experience" th:field="*{interviewerFbStatus}" required
+							<input type="radio" name="experience" id="radio_experience" th:field="${feedback.interviewerFbStatus}" required
 							autofocus="autofocus" value="disconnected" >
 							disconnected
 							</label>
 							
 							
 						<label class="radio-inline">
-							<input type="radio" name="experience" id="radio_experience" th:field="*{interviewerFbStatus}" required
+							<input type="radio" name="experience" id="radio_experience" th:field="${feedback.interviewerFbStatus}" required
 							autofocus="autofocus" value="notAttended" >
 							notAttended
 							</label>
@@ -155,36 +156,36 @@
                     
                     <div class="form-group">
 			
-				<div class="rating">
+				<div class="rating" th:object="${role}" th:if="${role=='hrHead'}">
 					<label>	HrFbStatus : Please update the status of candidate....</label> <br>
 					<br>
 					<p>
 						<label class="radio-inline">
-						<input type="radio"  class="control-label" id="radio_experience"th:field="*{hrFbStatus}" th:value="selected" required
+						<input type="radio"  class="control-label" id="radio_experience"th:field="${feedback.hrFbStatus}" th:value="selected" required
 							autofocus="autofocus">
 						selected
 						</label>
 						<label class="radio-inline">
-							<input type="radio" name="experience" id="radio_experience" th:field="*{hrFbStatus}" th:value="waiting" required
+							<input type="radio" name="experience" id="radio_experience" th:field="${feedback.hrFbStatus}" th:value="waiting" required
 							autofocus="autofocus" >
 							waiting
 							</label>
 		
 							<label class="radio-inline">
-							<input type="radio" name="experience" id="radio_experience" th:field="*{hrFbStatus}" required
+							<input type="radio" name="experience" id="radio_experience" th:field="${feedback.hrFbStatus}" required
 							autofocus="autofocus" value="rejected" >
 							rejected
 							</label>							
 							
 							<label class="radio-inline">
-							<input type="radio" name="experience" id="radio_experience" th:field="*{hrFbStatus}" required
+							<input type="radio" name="experience" id="radio_experience" th:field="${feedback.hrFbStatus}" required
 							autofocus="autofocus" value="disconnected" >
 							disconnected
 							</label>
 							
 							
 						<label class="radio-inline">
-							<input type="radio" name="experience" id="radio_experience" th:field="*{hrFbStatus}" required
+							<input type="radio" name="experience" id="radio_experience" th:field="${feedback.hrFbStatus}" required
 							autofocus="autofocus" value="notAttended" >
 							notAttended
 							</label>
@@ -209,7 +210,7 @@
 					<span class="shadow-input1"></span>
 				    </div>
                     
-                    <input th:field="${feedback.domainRatings}" th:value='#{feedback.domainRatings}' th:id='myInput' type='text'/>
+                    <input th:field="${feedback.domainRatings}" th:value='#{feedback.domainRatings}' th:id='myInput' type='hidden'/>
                     
     
 					<div class="form-group">

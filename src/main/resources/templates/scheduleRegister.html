@@ -69,7 +69,7 @@
 							<option value="" selected>--- Select ---</option>
 							<option th:each="interviewer : ${interviewer}"
 								th:value="${interviewer.getUserId}"
-								th:text="${interviewer.getUsername+' with id '+interviewer.getUserId}"></option>
+								th:text="${interviewer.getUsername+' - '+interviewer.getRole()}"></option>
 						</select>
 					</div>
 

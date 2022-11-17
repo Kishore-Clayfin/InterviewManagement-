@@ -204,12 +204,21 @@ public class ScheduleController {
 	}
 
 	@GetMapping("/giveFeedback")
-	public ModelAndView getfeedback()// (@RequestParam Integer InterviewerId)
+	public ModelAndView getfeedback(HttpSession session)// (@RequestParam Integer InterviewerId)
 	{
+		User user= (User) session.getAttribute("loginDetails");
 		ModelAndView mav = new ModelAndView("CompletedList");
 
-		List<Schedule> list = ischeduleService.viewScheduleList();
-
+		List<Schedule> scheduleList = ischeduleService.viewScheduleList();
+		List<Schedule> list=null;
+		if(user.getRole().equals("hr"))
+		{
+			 list = ischeduleService.viewScheduleList();
+		}
+		else
+		{
+			 list= scheduleList.stream().filter(s -> s.getUser().getUserId()==user.getUserId()).collect(Collectors.toList());
+		}
 //		System.out.println(list);
 		ArrayList<Schedule> a = new ArrayList<Schedule>();
 
@@ -227,6 +236,20 @@ public class ScheduleController {
 				}
 			}
 		}
+		
+
+//		if(user.getRole().equalsIgnoreCase("hr"))
+//		{
+//			mav.addObject("schedule", a);
+//			return mav;
+//		}
+//		else
+//		{
+//			List<Schedule> sch= a.stream().filter(s -> s.getUser().getUserId()==user.getUserId()).collect(Collectors.toList());
+//			
+//			mav.addObject("role", sch);
+//			return mav;
+//		}
 //		System.out.println(a);
 
 		mav.addObject("schedule", a);

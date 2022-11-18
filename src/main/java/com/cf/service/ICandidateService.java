@@ -22,4 +22,6 @@ public interface ICandidateService {
 	Candidate updateCandidateStatus(Integer id,String status);
 
 	Candidate findResumeCandidate(Integer candidateId);
+	
+	List<Candidate> bulkSaveCandidate(List<Candidate> candidateList);
 }

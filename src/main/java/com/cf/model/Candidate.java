@@ -73,7 +73,7 @@ public class Candidate
 	@ManyToOne
 	private User user;
 	@JoinColumn(name = "domainId")
-	@OneToOne(cascade  = CascadeType.PERSIST)
+	@OneToOne
 	private Domain domain;
 
 	@Override

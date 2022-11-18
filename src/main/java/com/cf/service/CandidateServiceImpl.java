@@ -2,6 +2,7 @@ package com.cf.service;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -52,5 +53,13 @@ public class CandidateServiceImpl implements ICandidateService {
 	@Override
 	public Candidate findResumeCandidate(Integer candidateId) {
 		return iCandidateDao.findById(candidateId).get();
+	}
+
+	@Override
+	@Transactional
+	public List<Candidate> bulkSaveCandidate(List<Candidate> candidateList) {
+		// TODO Auto-generated method stub
+		List<Candidate> candList=iCandidateDao.saveAllAndFlush(candidateList);
+		return candList;
 	}
 }

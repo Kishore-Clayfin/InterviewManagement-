@@ -131,9 +131,6 @@ body{
 					</div> 
 					
 					
-					
-                  
-					
 					<div class="form-group">
 						<label class="control-label" for="Password"> Password </label> <input 
 							id="password" class="form-control" 
@@ -153,6 +150,14 @@ body{
 							id="name" class="form-control" th:field="*{email}"
 							required autofocus="autofocus" th:minlength="4"/>
 						 <p class="alert alert-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}" />
+						
+						
+						<div class="alert alert-danger alert-dismissible"
+							th:if="${param.mailError!= null}">
+							<a th:href="@{/addUser}" class="close" data-dismiss="alert"
+								onclick="$('.alert').hide()" aria-label="close">X</a> <span
+								th:text="${param.mailError}"></span>
+						</div>	
 							
 					</div>
 					
@@ -168,7 +173,12 @@ body{
 							id="name" class="form-control" th:field="*{userDetails.mobileNumber}"
 							required autofocus="autofocus" th:minlength="4"/>
 						 <p class="alert alert-danger" th:if="${#fields.hasErrors('userDetails.mobileNumber')}" th:errors="*{userDetails.mobileNumber}" />
-							
+						<div class="alert alert-danger alert-dismissible"
+							th:if="${param.numberError!= null}">
+							<a th:href="@{/addUser}" class="close" data-dismiss="alert"
+								onclick="$('.alert').hide()" aria-label="close">X</a> <span
+								th:text="${param.numberError}"></span>
+						</div>	
 					</div>
 					<div class="form-group">
 					<label class="control-label" for="designation">Designation</label> 

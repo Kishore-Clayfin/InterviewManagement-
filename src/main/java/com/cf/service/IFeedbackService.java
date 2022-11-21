@@ -19,4 +19,10 @@ public interface IFeedbackService {
 	Feedback updateFeedback(Integer feedbackId);
 
 	void deleteFeedback(Integer feedbackId);
+	
+	
+Feedback getDetailsById(Integer id);
+	
+	List<Feedback> getAllFeedback();
+	
 }

@@ -34,4 +34,19 @@ public class FeedbackServiceImpl implements IFeedbackService {
 		iFeedbackDao.deleteById(feedbackId);
 	}
 
+	@Override
+	public Feedback getDetailsById(Integer id) {
+		Feedback feedback=iFeedbackDao.findById(id).orElseThrow();
+
+		return feedback;
+	}
+
+	@Override
+	public List<Feedback> getAllFeedback() {
+
+		return iFeedbackDao.findAll();
+	}
+	
+	
+
 }

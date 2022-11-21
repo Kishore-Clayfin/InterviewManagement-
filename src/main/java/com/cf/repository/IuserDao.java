@@ -9,4 +9,6 @@ public interface IuserDao extends JpaRepository<User, Integer>
 	
 	boolean existsUserByEmailAndPassword(String name,String password);
 	User findByEmail(String name);
+	boolean existsUserByEmail(String email);
+	
 }

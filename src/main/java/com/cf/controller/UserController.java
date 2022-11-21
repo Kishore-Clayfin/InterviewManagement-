@@ -2,6 +2,7 @@ package com.cf.controller;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.cf.model.Candidate;
 import com.cf.model.User;
@@ -38,58 +40,102 @@ public class UserController
 	
 	@GetMapping("/addUser")
 	public ModelAndView addUser(HttpSession session,HttpServletResponse redirect) {
+		
+		
+		
 		User checkUser=(User)session.getAttribute("loginDetails");
 		if(!checkUser.getRole().equals("hr"))
 		{
 			try {
 				redirect.sendRedirect("/login");
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
 
 
-		List<UserDetails> userDetails = iUserDetailsService.viewUserDetailsList();
-		List<Candidate> candidate = iCandidateService.viewCandidateList();
 		
+		User errUser= (User) session.getAttribute("user");
+
 		User user = new User();
 		ModelAndView mav = new ModelAndView("userRegister");
-		mav.addObject("user",user);
-		//mav.addObject("details",userDetails);
-		//mav.addObject("candidate",candidate);
+		
+		
+		
+		
+		if(errUser!=null)
+		{
+
+			mav.addObject("user", errUser);
+			
+		}
+		else
+		{
+			mav.addObject("user",user);
+		}
+		
+		
+		
 		return mav;
 	}
 	
 	@PostMapping("/saveUser")
-	public String saveUser(@Valid@ModelAttribute User user,BindingResult result,HttpSession session,HttpServletResponse redirect) {
+	public String saveUser(@Valid@ModelAttribute User user,BindingResult result,HttpSession session,HttpServletResponse redirect,RedirectAttributes attributes) {
+		
+		String mail=user.getEmail();
+		
+		String mob;
 		User checkUser=(User)session.getAttribute("loginDetails");
 		if(!checkUser.getRole().equals("hr"))
 		{
 			try {
 				redirect.sendRedirect("/login");
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
+
 				e.printStackTrace();
 			}
 		}
 
 
-//		UserDetails userDetails=iUserDetailsService.findUserDetails(userDetailsId);
-//		
-//		log.info("Iddddd"+userDetailsId);
-//		log.info("userDetails"+userDetails);
-//		user.setUserDetails(userDetails);
-		user.setEnabled(true);
+
 
 		if(result.hasErrors()) 
 		{
 			return "userRegister";
 			
 		}
+		
+		if(iUserService.existsUserByEmail(mail)) 
+		{
+			
+			
+			
+			attributes.addAttribute("mailError", "Mail is already registerd please enter another mail!!!");
+			session.setAttribute("user", user);
+			
+			return "redirect:/addUser";
+			
+		}
+	
+       mob = user.getUserDetails().getMobileNumber().toString();
+		
+		
+
+		boolean mobv = Pattern.matches("^[9876]\\d{9}$", mob);
+		if (!mobv == true) 
+		{
+			attributes.addAttribute("numberError", "Please enter a valid mobile number");
+			
+			session.setAttribute("user", user);
+			
+
+			
+
+			return "redirect:/addUser";
+		}
+
 		iUserService.saveUser(user);
-		//UserDetails userDetails=user1.getUserDetails();
-//		userId=user1.getUserId();
+		
 		return "redirect:/viewUsers";
 	}
 	

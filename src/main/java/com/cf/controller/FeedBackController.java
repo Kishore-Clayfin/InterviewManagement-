@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.cf.FeedbackConstants;
+import com.cf.PdfUtilHelper;
 import com.cf.model.Candidate;
 import com.cf.model.Domain;
 import com.cf.model.DomainCategory;
@@ -219,4 +220,33 @@ public class FeedBackController {
 		iFeedbackService.deleteFeedback(feedbackId);
 		return "redirect:/viewFeedbacks";
 	}
+	
+	
+	
+	@GetMapping("/generatePdfFile")
+	   public void generatePdfFile(HttpServletResponse response, @RequestParam(value="feedbackId") Integer feedbackId) throws IOException 
+	{
+		Feedback feedback1= iFeedbackService.getDetailsById(feedbackId);
+		System.out.println(feedbackId);
+	  System.out.println(feedback1);
+	  PdfUtilHelper export=new PdfUtilHelper();
+	  export.export(response, feedback1);
+			
+	 }
+	@GetMapping("/generateAllPdfFile")
+	   public void generateAllPdfFile(HttpServletResponse response) throws IOException 
+	{
+		List<Feedback> feedback2= iFeedbackService.getAllFeedback();
+	  PdfUtilHelper export=new PdfUtilHelper();
+	  
+	  
+	  
+	   export.exportAll(response, feedback2);
+			
+	 }
+	
+	
+	
+	
+	
 }

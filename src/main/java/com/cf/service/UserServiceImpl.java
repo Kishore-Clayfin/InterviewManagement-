@@ -65,6 +65,14 @@ public class UserServiceImpl implements IUserService {
 		return iUserDao.findByEmail(name);
 	}
 
+
+
+	@Override
+	public boolean existsUserByEmail(String email) {
+		// TODO Auto-generated method stub
+		return iUserDao.existsUserByEmail(email);
+	}
+
 //	@Override
 //	public User login(String userName, String password) {
 //		// TODO Auto-generated method stub

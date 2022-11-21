@@ -48,7 +48,7 @@ public class ExcelController
 //		Domain dom=new Domain();
 //		dom.setDomainId(13);
 //		
-		
+		int count=0;
     	List<Candidate> tempStudentList = new ArrayList<Candidate>();
 		try {
 //		

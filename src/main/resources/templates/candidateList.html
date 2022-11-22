@@ -1,48 +1,71 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-	
-	<head>
-		<title>CANDIDATES LIST</title>
-		
-		<link rel="stylesheet" 
-			type="text/css" 
-			href="https://cdn.datatables.net/v/bs4/dt-1.10.25/datatables.min.css" />
-		<link rel="stylesheet" 
-			href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" 
-			integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" 
-			crossorigin="anonymous" />
-	</head>
-	
-	<body>
-			
-		<div style="padding: 50px ;">
-		
-			<h3>CANDIDATES LIST</h3>
-			
-			<hr/>
-			<br/><br/>
-			<table class="table table-bordered table-striped" id="doctorTable">
-		
-				<thead>
-					<tr>
-						<th>candidateName</th>
-						<th>email</th>
-						<th>mobileNumber</th>
-					 	<th>highQualification</th>
-						
-						<th>cgpa</th>
-						<th>roleAppliedFor</th>
-						<th>alternateEmail</th>
-                        <th>experience</th>
-						<th>status</th>
-						<th>Created By</th>
-                        <th>domain</th>
-                        <th>Resume</th>
-                        <th>Actions</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr th:each="candidate : ${candidate}">
-                        <!--@Id
+
+<head>
+<title>CANDIDATES LIST</title>
+
+<link rel="stylesheet" type="text/css"
+	href="https://cdn.datatables.net/v/bs4/dt-1.10.25/datatables.min.css" />
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+	integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l"
+	crossorigin="anonymous" />
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+	integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+	crossorigin="anonymous">
+
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"
+	integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA=="
+	crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+</head>
+
+<body>
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+		<div class="container">
+			<div class="navbar-header"
+				style="font-family: sans-serif; font-style: normal;">
+				<a class="navbar-brand" href="#" th:href="@{/login}"
+					style="padding-left: 940px; color: white;"><b><i style="font-family: sans-serif;   font-style: normal;">
+							Home</i></b></a> <a class="navbar-brand"
+					style="font-family: sans-serif; padding-left: 25px; color: white;"
+					href="https://www.clayfin.com;"><b><i style="font-family: sans-serif;   font-style: normal;"> Logout </i></b></a>
+
+			</div>
+		</div>
+	</nav>
+
+	<div style="padding: 50px;">
+
+		<h3>CANDIDATES LIST</h3>
+
+		<hr />
+		<br />
+		<br />
+		<table class="table table-bordered table-striped" id="doctorTable">
+
+			<thead>
+				<tr>
+					<th>Schedule</th>
+					<th>candidateName</th>
+					<th>email</th>
+					<th>mobileNumber</th>
+					<th>highQualification</th>
+					<th>cgpa</th>
+					<th>roleAppliedFor</th>
+					<th>alternateEmail</th>
+					<th>experience</th>
+					<th>status</th>
+					<th>Created By</th>
+					<th>domain</th>
+					<th>Resume</th>
+					<th>Actions</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="candidate : ${candidate}">
+					<!--@Id
 	private Integer candidateId;
 	private String candidateName;
 	private String email;
@@ -62,34 +85,77 @@
 	@JoinColumn(name = "domainId")
 	@OneToOne
 	private Domain domain;-->
-						<td th:text="${candidate.candidateName}" />
-						<td th:text="${candidate.email}" />
-						<td th:text="${candidate.mobileNumber}" />
-                        <td th:text="${candidate.highQualification}" />
-						<td th:text="${candidate.cgpa}" />
-						<td th:text="${candidate.roleAppliedFor}" />
-						<td th:text="${candidate.alternateEmail}" />
-						<td th:text="${candidate.experience}" />
-						<td th:text="${candidate.status}" />
-						<td th:text="${candidate.user.getUsername()}" /> 
-                        <td th:text="${candidate.domain.domainName}" />
-                        
-                        <td  >
-							<a th:href="@{/downloadFile(candidateId=${candidate.candidateId})}" class="btn btn-success">Download</a>
-							</td>
-						<td style="display: flex;">
-							<a th:href="@{/showUpdateCandidate(candidateId=${candidate.candidateId})}" class="btn btn-info">Update</a>
-							
-							<a th:href="@{/deleteCandidate(candidateId=${candidate.candidateId})}" class="btn btn-danger ml-2">Delete</a>
-						</td>
-					</tr>
-				</tbody>
+					<td><input name="selector[]" id="ad_Checkbox1"class="ads_Checkbox" type="checkbox"
+						th:value="${candidate.getCandidateId}"></td>
+					<td th:text="${candidate.candidateName}" />
+					<td th:text="${candidate.email}" />
+					<td th:text="${candidate.mobileNumber}" />
+					<td th:text="${candidate.highQualification}" />
+					<td th:text="${candidate.cgpa}" />
+					<td th:text="${candidate.roleAppliedFor}" />
+					<td th:text="${candidate.alternateEmail}" />
+					<td th:text="${candidate.experience}" />
+					<td th:text="${candidate.status}" />
+					<td th:text="${candidate.user.getUsername()}" />
+					<td th:text="${candidate.domain.domainName}" />
+
+					<td><a
+						th:href="@{/downloadFile(candidateId=${candidate.candidateId})}"
+						class="btn btn-success">Download</a></td>
+					<td style="display: flex;"><a
+						th:href="@{/showUpdateCandidate(candidateId=${candidate.candidateId})}"
+						class="btn btn-info">Update</a> <a
+						th:href="@{/deleteCandidate(candidateId=${candidate.candidateId})}"
+						class="btn btn-danger ml-2">Delete</a></td>
+				</tr>
+			</tbody>
+
+		</table>
+		<a th:href="@{/home}" class="btn btn-danger ml-2">Home</a>
+		<a id="save_value" class="btn btn-primary"  href=" /addschedule">Scheduled</a>
+
+
+	</div>
+	<script>
+		$(function() {
+			$('#save_value').click(function() {
 				
-			</table>
-			<a th:href="@{/home}" class="btn btn-danger ml-2">Home</a>
-		</div>
+				var val = [];
+				$(':checkbox:checked').each(function(i) {
+					val.push($(this).val());
+				});
+				val1 = JSON.stringify(val);
+				console.log(val1);
+				
+				$.ajax({
+
+					url : "http://localhost:9091/ajaxPost",
+
+					type : "POST",
+
+					data : JSON.stringify(val),
+
+					dataType : "json",
+
+					contentType : "application/json; charset=utf-8",
+
+					mimeType : 'application/json',
+
+					success : function(data) {
+
+						console.log(data);
+
+						return false;
+
+					}
+
+				});
+			});
+			
+		});
 		
-		
-	</body>
-	
+	</script>
+
+</body>
+
 </html>

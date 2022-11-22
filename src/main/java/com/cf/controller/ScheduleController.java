@@ -19,6 +19,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -26,6 +27,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.cf.model.Candidate;
 import com.cf.model.Schedule;
 import com.cf.model.User;
+import com.cf.repository.ICandidateDao;
 import com.cf.service.ICandidateService;
 import com.cf.service.IFeedbackService;
 import com.cf.service.IScheduleService;
@@ -36,6 +38,9 @@ import lombok.extern.log4j.Log4j2;
 @Controller
 //@SessionAttributes("todos")
 public class ScheduleController {
+	
+	@Autowired
+	private ICandidateDao candidateDao;
 
 	@Autowired
 	private IFeedbackService iFeedbackService;
@@ -46,37 +51,40 @@ public class ScheduleController {
 	@Autowired
 	private IUserService iUserService;
 	
-
-	@GetMapping("/addschedule")
-	public ModelAndView addschedule(HttpSession session,HttpServletResponse redirect) 
+	@PostMapping("/ajaxPost")
+	public String ajaxPostMethod(@RequestBody List<Integer> list1, HttpSession session)
 	{
-		User checkUser=(User)session.getAttribute("loginDetails");
-		if(!checkUser.getRole().equals("hr"))
-		{
-			try {
-				redirect.sendRedirect("/login");
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
+		session.setAttribute("ajax", list1);
+	//	System.out.println(list1);
+	
+		return "redirect:/addschedule";
+	}
 
-
+	
+	@GetMapping("/addschedule")
+	public ModelAndView addhr( HttpSession session ) {
+		List li1=(List) session.getAttribute("ajax");
+		//	System.out.println(list1);
+		List<Candidate> li=candidateDao.findAllById(li1);
+	//	System.out.println(li);
+		
 		Schedule Schedule = new Schedule();
 		List<Candidate> Candidate = icandidateService.viewCandidateList();
 		List<User> user = iUserService.viewUserList();
 
 		
-		  List<User> list = user.stream().filter(c ->
-		  c.getRole().equalsIgnoreCase("interviewer")|| c.getRole().equalsIgnoreCase("hrHead")) .collect(Collectors.toList());
-		 
+  List<User> list = user.stream().filter(c ->
+  c.getRole().equalsIgnoreCase("interviewer")|| c.getRole().equalsIgnoreCase("hrHead")) .collect(Collectors.toList());
+ 
 
 		ModelAndView mv = new ModelAndView("scheduleRegister");
 		mv.addObject("schedule", Schedule);
-		mv.addObject("candidate", Candidate);
+//		mv.addObject("candidate", Candidate);
+		mv.addObject("candidate", li);
 		mv.addObject("interviewer", list);
 		return mv;
 	}
+
 	
 	
 	
@@ -122,7 +130,7 @@ public class ScheduleController {
 	
 
 	@PostMapping("/saveschedule")
-	public String saveschedule(@Valid @ModelAttribute Schedule schedule,BindingResult result, Model model,@RequestParam Integer candidateId,RedirectAttributes ra,HttpSession session,HttpServletResponse redirect) 
+	public String saveschedule(@Valid @ModelAttribute Schedule schedule,BindingResult result, Model model,RedirectAttributes ra,HttpSession session,HttpServletResponse redirect) 
 	{
 		User checkUser=(User)session.getAttribute("loginDetails");
 		if(!checkUser.getRole().equals("hr"))

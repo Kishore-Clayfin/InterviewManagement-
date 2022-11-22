@@ -56,6 +56,9 @@
 					<th>roleAppliedFor</th>
 					<th>alternateEmail</th>
 					<th>experience</th>
+					<th>Expected Ctc</th>
+					<th>Current Ctc</th>
+					<th>Alternate Mobilenumber</th>
 					<th>status</th>
 					<th>Created By</th>
 					<th>domain</th>
@@ -95,6 +98,9 @@
 					<td th:text="${candidate.roleAppliedFor}" />
 					<td th:text="${candidate.alternateEmail}" />
 					<td th:text="${candidate.experience}" />
+					<td th:text="${candidate.expectedCtc}" />
+					<td th:text="${candidate.currentCtc}" />
+					<td th:text="${candidate.alternateMobileNumber}" />
 					<td th:text="${candidate.status}" />
 					<td th:text="${candidate.user.getUsername()}" />
 					<td th:text="${candidate.domain.domainName}" />

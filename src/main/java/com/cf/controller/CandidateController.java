@@ -138,7 +138,12 @@ public class CandidateController
 			return "redirect:/addCandidate";
 
 		}
-
+		if((candidate.getExperience()==null))
+		{
+			candidate.setExpectedCtc(0.0f);
+			candidate.setCurrentCtc(0.0f);
+			
+		}
 		candidate.setResume(file.getBytes());
 		user.setUserId(obj.getUserId());
 		candidate.setUser(user);

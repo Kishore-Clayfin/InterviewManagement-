@@ -70,9 +70,9 @@ public class Candidate
 	private byte[] resume;
 	private String status;
 	
-	@Min(value=1,message="ctc can't be -ve ")
+	@Min(value=0,message="ctc can't be -ve ")
 	private Float expectedCtc;
-	@Min(value=1,message="ctc can't be -ve ")
+	@Min(value=0,message="ctc can't be -ve ")
 	private Float currentCtc;
 	
 	@Min(value=1,message=" mobile number can't be -ve ")

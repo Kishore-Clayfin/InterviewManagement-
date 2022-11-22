@@ -25,7 +25,8 @@ body {
 	src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js">
 	
 </script>
-
+<script type="text/javascript"
+	src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 
 <style>
 label.error {
@@ -35,11 +36,11 @@ label.error {
 	margin-top: 5px;
 }
 </style>
-<script>
+<!-- <script>
 	$(document).ready(function() {
 		$("#basic-form").validate();
 	});
-</script>
+</script> -->
 
 <script>
 	function alert() {
@@ -218,14 +219,14 @@ label.error {
 					<div class="form-group">
 						<label class="control-label" for="Phone">Current CTC </label> <input
 							id="ctc" class="form-control" th:field="*{currentCtc}" required
-							autofocus="autofocus" />
+							autofocus="autofocus" placeholder="Enter Ctc if Experienced"/>
 
 					</div>
 
 					<div class="form-group">
 						<label class="control-label" for="Phone">Expected CTC </label> <input
-							id="ctc" class="form-control" th:field="*{expectedCtc}"
-							required autofocus="autofocus" />
+							id="ectc" class="form-control" th:field="*{expectedCtc}"
+							required autofocus="autofocus" placeholder="Enter Ctc if Experienced"/>
 
 					</div>
 
@@ -268,27 +269,30 @@ label.error {
 	</div>
 
 	<script type="text/javascript">
-		//$( document ).ready(function() {
+	//$( document ).ready(function() {
 
-		// $(function () {
+	// $(function () {
 
-		$("#type").on('change', function() {
-			console.log("ready!");
-			console.log($(this).val());
-			if (($(this).val() == 'Fresher')) {
-				console.log('in walkin');
-				$("#ctc").attr("readonly", "readonly");
-// 				$("#testOrder").removeAttr("multiple");
-				//  $("#txtOther").focus();
-			} /* else if (($(this).val() == 'Online')) {
-				console.log('in online');
-				$("#email").removeAttr("readonly");
-				$("#testOrder").attr("multiple", "multiple");
-				//  $("#txtOther").focus();
-			} */
-		});
-		//  }); });
-	</script>
+	$("#Experience").on('change', function() {
+		console.log("ready!"); 
+		console.log($(this).val());
+		if (($(this).val() == 0)) {
+			console.log('in walkin');
+			$("#ctc").attr("readonly", "readonly");
+			$("#ectc").attr("readonly", "readonly");
+			//$("#testOrder").removeAttr("multiple");
+			//  $("#txtOther").focus();
+		} else 
+		{
+			console.log('in online');
+			$("#ctc").removeAttr("readonly");
+			$("#ectc").removeAttr("readonly");
+// 			$("#testOrder").attr("multiple", "multiple");
+			//  $("#txtOther").focus();
+		}
+	});
+	//  }); });
+</script>
 </body>
 </html>
 

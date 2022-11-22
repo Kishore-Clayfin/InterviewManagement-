@@ -9,7 +9,14 @@
 	href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
 	integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l"
 	crossorigin="anonymous" />
+<script data-require="jquery@2.0.3" data-semver="2.0.3" src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
 
+<script
+		src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
 <style>
 #button {
 	background-color: #4caf50;
@@ -17,6 +24,22 @@
 	margin-left: 650px;
 	margin-bottom: 5px;
 	color: white;
+}
+
+table thead tr th{
+  /* background-color : gray; */
+  min-width : 100px;
+  position: relative;
+}
+
+.filter{
+  position:absolute;
+  border: solid 1px;
+  top : 20px;
+  background-color : white;
+  width:100px;
+  right:0;
+  display:none;
 }
 </style>
 
@@ -38,23 +61,36 @@
 
 			<br />
 			<br />
-			<table class="table table-bordered table-striped" id="Table">
+			<table class="table table-bordered table-striped" id="table">
 
 				<thead>
 					<tr>
 						
-						<th>candidateId</th>
-						<th>candidateName</th>
-						<th>Overall Rating</th>
-						<th>Feedback</th>
-						<th>InterviewerFbStatus</th>
-
-						<th>HrFbStatus</th>
-
-						<th>DomainName</th>
-							<th>Sub Category Ratings</th>
-							
-						<th>Actions</th>
+						 <th index=0>candidateId 
+              <div class="filter"></div>
+            </th>
+            <th index=1>candidateName
+              <div class="filter"></div>
+            </th>
+            <th index=2>OverallRating
+              <div class="filter"></div>
+            </th>
+            <th index=3>Feedback
+              <div class="filter"></div>
+            </th>
+            <th index=4>InterviewerFbStatus
+              <div class="filter"></div>
+            </th>
+            <th index=5>HrHeadFBStatus
+              <div class="filter"></div>
+            </th>
+            <th index=6>DomainName
+              <div class="filter"></div>
+            </th>
+            <th index=7>Sub Category Ratings
+              <div class="filter"></div>
+            </th>
+            <th>Actions</th>
 
 
 					</tr>
@@ -97,20 +133,57 @@
 					    	
 					    </td> -->
 
-						<td><span th:each="oneDoc:${Feedback.candidate}"> <span
+						<td><span th:each="oneDoc:${Feedback.candidate}"> <span id="inner"
 								th:text="${oneDoc.domain.getDomainName()}"> <!-- 					    	<span th:text=${one.getMobileNumber()}></span> -->
 
 							</span>
 						</span></td>
 						<td th:text="${Feedback.subDomRatings}" />
 
-						<td><a
+						<td>
+						
+						
+						<span
+							th:if="${Feedback.getInterviewerFbStatus()=='selected' || Feedback.getInterviewerFbStatus()=='rejected' }">
+						
+						
+						<a
 							th:href="@{/deleteFeedback(feedbackId=${Feedback.feedbackId})}"
 							class="btn btn-danger ml-2">Delete</a>
 							
 							<a
 							th:href="@{/generatePdfFile(feedbackId=${Feedback.feedbackId})} " class="btn btn-primary ml-2">Print</a>
+							</span>
+								
+						<span
+							th:if="${Feedback.getInterviewerFbStatus()!='selected' && Feedback.getInterviewerFbStatus()!='rejected'}">
+						
+						
+						
+						<span class="dropdown">
+							<button type="button" class="btn btn-primary dropdown-toggle"
+								data-toggle="dropdown">InterviewerFbStatus</button>
+							<span class="dropdown-menu">
+								<a 
 							
+								
+								
+									th:href="@{/updateInterviewerFbStatus(feedbackId=${Feedback.feedbackId},interviewerFbStatus=selected)}"
+									
+								
+									
+									class="dropdown-item">Selected</a> <a
+									
+									
+									
+									th:href="@{/updateInterviewerFbStatus(feedbackId=${Feedback.feedbackId},interviewerFbStatus=rejected)}"
+									class="dropdown-item">Rejected</a>
+							</span>
+						</span>
+						
+						
+						
+							</span>
 							</td>
 
 					</tr>
@@ -122,7 +195,7 @@
 		
 		
 		
-		<a th:href="@{/generateAllPdfFile} " class="btn btn-primary ml-2">PrintAll</a>
+		<a th:href="@{/generateAllPdfFile} " target="_blank" class="btn btn-primary ml-2">PrintAll</a>
 		
 
 		<!-- <button id="button">Generate PDF</button> -->
@@ -153,7 +226,7 @@
 		<script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.25/datatables.min.js"></script>
 		<script>
 			$(document).ready(function() {
-				$("#Table").DataTable({
+				$("#table").DataTable({
 						'aoColumnDefs': [{
         				'bSortable': false,
         				'aTargets': [-1] /* 1st one, start by the right */
@@ -161,6 +234,114 @@
 				});
 			})
 		</script>
+		
+		<script>
+
+    // Code goes here
+
+/* $(document).ready(function(){
+
+$("#table thead th").click(function(){
+showFilterOption(this);
+});
+
+});
+
+var arrayMap = new set();
+
+function showFilterOption(tdObject){
+var filterGrid = $(tdObject).find(".filter");
+console.log(filterGrid.find(".grid-item"));
+if (filterGrid.is(":visible")){
+filterGrid.hide();
+return;
+}
+
+$(".filter").hide();
+
+var index = 0;
+filterGrid.empty();
+var allSelected = true;
+filterGrid.append('<div><input id="all" type="checkbox" checked>Select All</div>');
+
+var $rows = $(tdObject).parents("table").find("tbody tr");
+
+
+$rows.each(function(ind, ele){
+	
+	
+	
+var currentTd = $(ele).children()[$(tdObject).attr("index")];
+//console.log(currentTd.innerHTML);
+console.log($(tdObject))
+var div = document.createElement("div");
+div.classList.add("grid-item")
+var str = $(ele).is(":visible") ? '':'';//'checked' : '';
+ //var elements=jQuery.unique(ele)
+//console.log(ele)
+if ($(ele).is(":hidden")){
+allSelected = false;
+}
+ // 	console.log(currentTd)
+ 
+div.innerHTML = '<input type="checkbox" '+str+' >'+currentTd.innerHTML;
+filterGrid.append(div);
+arrayMap[index] = ele;
+index++;
+});
+
+if (!allSelected){
+filterGrid.find("#all").removeAttr("checked");
+}
+
+filterGrid.append('<div><input id="close" type="button" value="Close"/><input id="ok" type="button" value="Ok"/></div>');
+filterGrid.show();
+
+var $closeBtn = filterGrid.find("#close");
+var $okBtn = filterGrid.find("#ok");
+var $checkElems = filterGrid.find("input[type='checkbox']");
+var $gridItems = filterGrid.find(".grid-item");
+var $all = filterGrid.find("#all");
+
+$closeBtn.click(function(){
+filterGrid.hide();
+return false;
+});
+
+$okBtn.click(function(){
+filterGrid.find(".grid-item").each(function(ind,ele){
+	console.log(ele);	
+if ($(ele).find("input").is(":checked")){
+$(arrayMap[ind]).show();
+}else{
+$(arrayMap[ind]).hide();
+}
+});
+filterGrid.hide();
+return false;
+});
+
+$checkElems.click(function(event){
+event.stopPropagation();
+});
+
+$gridItems.click(function(event){
+var chk = $(this).find("input[type='checkbox']");
+$(chk).prop("checked",!$(chk).is(":checked"));
+});
+
+$all.change(function(){
+var chked = $(this).is(":checked");
+filterGrid.find(".grid-item [type='checkbox']").prop("checked",chked);
+})
+
+filterGrid.click(function(event){
+event.stopPropagation();
+});
+
+return filterGrid;
+} */
+</script>
 </body>
 
 </html>

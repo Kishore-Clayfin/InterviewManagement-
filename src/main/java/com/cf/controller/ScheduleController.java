@@ -27,13 +27,18 @@ import com.cf.model.Candidate;
 import com.cf.model.Schedule;
 import com.cf.model.User;
 import com.cf.service.ICandidateService;
+import com.cf.service.IFeedbackService;
 import com.cf.service.IScheduleService;
 import com.cf.service.IUserService;
 
+import lombok.extern.log4j.Log4j2;
+@Log4j2
 @Controller
 //@SessionAttributes("todos")
 public class ScheduleController {
 
+	@Autowired
+	private IFeedbackService iFeedbackService;
 	@Autowired
 	private ICandidateService icandidateService;
 	@Autowired
@@ -72,9 +77,52 @@ public class ScheduleController {
 		mv.addObject("interviewer", list);
 		return mv;
 	}
+	
+	
+	
+	@GetMapping("/addschedule2")
+	public ModelAndView addschedule2(@RequestParam Integer candidateId,HttpSession session,HttpServletResponse redirect) 
+	{
+		User checkUser=(User)session.getAttribute("loginDetails");
+		if(!checkUser.getRole().equals("hr"))
+		{
+			try {
+				redirect.sendRedirect("/login");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+
+		Schedule Schedule = new Schedule();
+		
+	
+		
+		
+		
+		Candidate candidate = icandidateService.findResumeCandidate(candidateId);
+		List<User> user = iUserService.viewUserList();
+
+		
+		  List<User> list = user.stream().filter(c ->
+		   c.getRole().equalsIgnoreCase("hrHead")) .collect(Collectors.toList());
+		 
+
+		ModelAndView mv = new ModelAndView("hrRoundScheduleRegistration");
+		mv.addObject("schedule", Schedule);
+		
+		mv.addObject("candidateId", candidateId);
+		mv.addObject("candidate", candidate);
+		mv.addObject("interviewer", list);
+		return mv;
+	}
+	
+	
+	
 
 	@PostMapping("/saveschedule")
-	public String saveschedule(@Valid @ModelAttribute Schedule schedule,BindingResult result, Model model,RedirectAttributes ra,HttpSession session,HttpServletResponse redirect) 
+	public String saveschedule(@Valid @ModelAttribute Schedule schedule,BindingResult result, Model model,@RequestParam Integer candidateId,RedirectAttributes ra,HttpSession session,HttpServletResponse redirect) 
 	{
 		User checkUser=(User)session.getAttribute("loginDetails");
 		if(!checkUser.getRole().equals("hr"))
@@ -89,6 +137,10 @@ public class ScheduleController {
 
 
 		List<Candidate> candidateList=schedule.getCandidate();
+		
+		
+		
+		
 		
 		List<Schedule> schedules = ischeduleService.viewScheduleList();
 		int id=schedule.getUser().getUserId();
@@ -171,7 +223,9 @@ public class ScheduleController {
 	//	ArrayList list=null;//new ArrayList();
 		if(size==1)
 		{
+			
 			System.out.println("entering if");
+			
 			ischeduleService.saveSchedule(schedule);
 		}
 //		for (int i=0;i<size;i++)
@@ -232,10 +286,189 @@ public class ScheduleController {
 			}
 			
 			
+			
+			
+			
+			
+			
+			
 		}
 
 		return "redirect:/viewschedules";
 	}
+	
+	
+	
+	
+	
+	@PostMapping("/saveschedule2")
+	public String saveschedule2(@Valid @ModelAttribute Schedule schedule,BindingResult result, Model model,@RequestParam Integer candidateId,RedirectAttributes ra,HttpSession session,HttpServletResponse redirect) 
+	{
+		User checkUser=(User)session.getAttribute("loginDetails");
+		if(!checkUser.getRole().equals("hr"))
+		{
+			try {
+				redirect.sendRedirect("/login");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+
+		List<Candidate> candidateList=new ArrayList<Candidate>();
+		
+		
+//		log.info("list"+candidateList);
+		Candidate candidate=icandidateService.updateCandidate(candidateId);
+		
+		
+		candidateList.add(candidate);
+		log.info("list"+candidateList);
+		
+		
+		List<Schedule> schedules = ischeduleService.viewScheduleList();
+		int id=schedule.getUser().getUserId();
+		List<Schedule> interviewer=schedules.stream().filter(x -> x.getUser().getUserId()==id).collect(Collectors.toList());
+		
+		/********      Timing Validation        **********/
+		LocalDate dateNow=LocalDate.now();
+		LocalTime time=LocalTime.now();
+		LocalTime timeNow=time.truncatedTo(ChronoUnit.MINUTES);
+		
+		
+		String s=schedule.getScheduleTime();
+		String stTime=null;
+		LocalTime inputTime= LocalTime.parse(s);
+		
+		int duration=0;
+		LocalTime startTime= null;
+		LocalTime endTime=null;
+		
+		/**********     ------------  ******************/
+		if(schedule.getScheduleDate().isBefore(dateNow)||((schedule.getScheduleDate().isEqual(dateNow))&&(inputTime.isBefore(timeNow)) ))
+		{
+			ra.addAttribute("errorMessage","u can't schedule the interview for the past date or time");
+			
+			return "redirect:/addschedule2";
+		}
+		
+		
+//		for (Schedule schedule2 : trainer)
+//		{
+//			System.out.println(schedule2);
+//		}
+//		schedule.getUser().getUserId();
+//		 schedules.stream().filter(schedule.getIntreviewTime())
+//		 Model mv= new Model;
+
+//		schedule.getUser().getRole().equals("interviewer");
+		
+		  if(interviewer!=null)
+		  {
+			  for (Schedule sc : interviewer) 
+			  { 
+				  duration=sc.getDuration();
+				  stTime= sc.getScheduleTime();
+				  startTime= LocalTime.parse(stTime);
+				  endTime=startTime.plusMinutes(duration);
+				  
+				  
+				  
+				  if(  ( !((inputTime.isAfter(startTime)&&inputTime.isAfter(endTime))||((inputTime.isBefore(startTime)&&inputTime.isBefore(endTime))))  )  && sc.getScheduleDate().equals(schedule.getScheduleDate())  ) 
+				  {
+					  
+					  System.out.println("u can't schedule the interview at this time");
+					  ra.addAttribute("errorMessage",
+							  "u can't schedule the interview at this time"); 
+					  return "redirect:/addschedule2"; 
+				  } 
+//				  else if(sc.getScheduleDate().equals(schedule.getScheduleDate()) && sc.getScheduleTime().equals(schedule.getScheduleTime()) ) 
+//				  {
+//					  System.out.println("u can't schedule the interview at this time");
+////					  model.addAttribute("errorMessage","u can't schedule the interview at this time");  
+//					  return  "redirect:/addschedule"; 
+//							  
+//				  }
+			  
+			  }
+		  }
+		  
+		  if (schedule.getInterviewType().equals("Walk-in")) schedule.setMeetingLink( "hi " +
+		  schedule.getCandidate().get(0).getCandidateName() + " your " +
+		  "interview is scheduled on " + schedule.getScheduleDate() + " at " +
+		  schedule.getScheduleTime());
+		  
+//		  System.out.println(schedule);
+		 if(result.hasErrors())
+		 {
+			 return "hrRoundScheduleRegister";
+		 }
+		
+		
+		if(candidateId!=null)
+		{
+			schedule.setCandidate(candidateList);
+			ischeduleService.saveSchedule(schedule);
+			
+		}
+		
+		
+		
+		
+//		for (int i=0;i<size;i++)
+//		{
+//			list.add(candidateList.get(i));
+//			System.out.println(list);
+//			
+//			Schedule schedule1=new Schedule();
+//			schedule1.setCandidate(list);
+//			schedule1.setDuration(schedule.getDuration());
+//			schedule1.setInterviewType(schedule.getInterviewType());
+//			schedule1.setMeetingLink(schedule.getMeetingLink());
+//			schedule1.setScheduleDate(schedule.getScheduleDate());
+//			schedule1.setScheduleId(null);
+//			schedule1.setScheduleTime(schedule.getScheduleTime());
+//			schedule1.setUser(schedule.getUser());
+//			
+////			System.out.println(list);
+////			schedule.setCandidate(list);
+////			System.out.println(schedule1.getScheduleId());
+//			Schedule sch= ischeduleService.saveSchedule(schedule1);
+////			System.out.println("Schedule => "+sch);
+//			list.clear();
+//		}
+		else
+		{
+			int tempDuration=schedule.getDuration();
+			String temp=schedule.getScheduleTime();
+			LocalTime tempTime= LocalTime.parse(temp);
+//			Schedule schedule1=schedule;
+//			List<Schedule> li=new ArrayList<Schedule>();
+//			System.out.println("entering else");
+			
+			
+			
+			
+			
+			
+			
+			
+			
+		}
+
+		return "redirect:/showInterviewCompleted";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+
+	
 
 	@GetMapping({ "/viewschedules" })
 	public ModelAndView getAllschedules(HttpSession session,HttpServletResponse redirect) 
@@ -338,8 +571,35 @@ public class ScheduleController {
 		return "redirect:/viewschedules";
 	}
 
-	@GetMapping("/giveFeedback")
+	@GetMapping("/showInterviewCompleted")
 	public ModelAndView getfeedback(HttpSession session,HttpServletResponse redirect)// (@RequestParam Integer InterviewerId)
+	{
+		User checkUser=(User)session.getAttribute("loginDetails");
+		if(!(checkUser.getRole().equals("hr")||checkUser.getRole().equals("interviewer")||checkUser.getRole().equals("hrHead")))
+		{
+			try {
+				redirect.sendRedirect("/login");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+
+		ModelAndView mav = new ModelAndView("InterviewCompletedList");
+		mav.addObject("feedback", iFeedbackService.viewFeedbackList());
+		return mav;
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	@GetMapping("/giveFeedback")
+	public ModelAndView givefeedback(HttpSession session,HttpServletResponse redirect)// (@RequestParam Integer InterviewerId)
 	{
 		User checkUser=(User)session.getAttribute("loginDetails");
 		if(!(checkUser.getRole().equals("hr")||checkUser.getRole().equals("interviewer")||checkUser.getRole().equals("hrHead")))
@@ -426,5 +686,8 @@ public class ScheduleController {
 
 		return mav;
 	}
+	
+	
+	
 
 }

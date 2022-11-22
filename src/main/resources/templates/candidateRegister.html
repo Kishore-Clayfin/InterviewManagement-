@@ -6,6 +6,8 @@
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
 	integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
 	crossorigin="anonymous">
+	<script type="text/javascript"
+	src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 <style type="text/css">
 body {
 	background: linear-gradient(red, transparent),
@@ -112,7 +114,7 @@ label.error {
 					</div>
 
 					<div class="form-group">
-						<label class="control-label" for="Phone">Phone </label> <input
+						<label class="control-label" for="Phone">Phone Number</label> <input
 							id="Phone" class="form-control" th:field="*{mobileNumber}"
 							required autofocus="autofocus" th:minlength="10"
 							th:maxlength="10" th:min="1" />
@@ -125,6 +127,15 @@ label.error {
 								onclick="$('.alert').hide()" aria-label="close">X</a> <span
 								th:text="${param.numberError}"></span>
 						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="control-label" for="Phone">Alternate Phone
+							Number </label> <input id="Phone" class="form-control"
+							th:field="*{alternateMobileNumber}" required
+							autofocus="autofocus" th:minlength="10" th:maxlength="10"
+							th:min="1" />
+
 					</div>
 
 
@@ -204,6 +215,20 @@ label.error {
 
 					</div>
 
+					<div class="form-group">
+						<label class="control-label" for="Phone">Current CTC </label> <input
+							id="ctc" class="form-control" th:field="*{currentCtc}" required
+							autofocus="autofocus" />
+
+					</div>
+
+					<div class="form-group">
+						<label class="control-label" for="Phone">Expected CTC </label> <input
+							id="ctc" class="form-control" th:field="*{expectedCtc}"
+							required autofocus="autofocus" />
+
+					</div>
+
 
 					<div class="form-group">
 						<label class="control-label" for="resumr">Resume </label> <input
@@ -242,6 +267,28 @@ label.error {
 		<a th:href="@{/home}" class="btn btn-danger ml-2">Home</a>
 	</div>
 
+	<script type="text/javascript">
+		//$( document ).ready(function() {
+
+		// $(function () {
+
+		$("#type").on('change', function() {
+			console.log("ready!");
+			console.log($(this).val());
+			if (($(this).val() == 'Fresher')) {
+				console.log('in walkin');
+				$("#ctc").attr("readonly", "readonly");
+// 				$("#testOrder").removeAttr("multiple");
+				//  $("#txtOther").focus();
+			} /* else if (($(this).val() == 'Online')) {
+				console.log('in online');
+				$("#email").removeAttr("readonly");
+				$("#testOrder").attr("multiple", "multiple");
+				//  $("#txtOther").focus();
+			} */
+		});
+		//  }); });
+	</script>
 </body>
 </html>
 

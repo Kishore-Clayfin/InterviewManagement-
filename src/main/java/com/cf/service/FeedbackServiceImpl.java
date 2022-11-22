@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.cf.model.Candidate;
 import com.cf.model.Feedback;
 import com.cf.repository.IFeedbackDao;
 
@@ -48,5 +49,20 @@ public class FeedbackServiceImpl implements IFeedbackService {
 	}
 	
 	
+	
+	
+	
+	
+	@Override
+	public Feedback updateInterviewerFbStatus(Integer id,String status)
+	{
+		
+		Feedback feedback= iFeedbackDao.findById(id).orElseThrow(null);
+		feedback.setInterviewerFbStatus(status);
+		
+		Feedback f=iFeedbackDao.save(feedback);
+		return f;
+	}
+
 
 }

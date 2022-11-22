@@ -3,6 +3,7 @@ package com.cf.model;
 import java.sql.Blob;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -68,6 +69,16 @@ public class Candidate
 	@Lob
 	private byte[] resume;
 	private String status;
+	
+	@Min(value=1,message="ctc can't be -ve ")
+	private Float expectedCtc;
+	@Min(value=1,message="ctc can't be -ve ")
+	private Float currentCtc;
+	
+	@Min(value=1,message=" mobile number can't be -ve ")
+    @NotNull(message = "Mobile Number can't be empty")
+//	@Column(nullable = false)
+	private  Long alternateMobileNumber;
 	
 	@JoinColumn(name = "userId")
 	@ManyToOne

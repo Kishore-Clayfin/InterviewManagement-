@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.cf.model.Candidate;
 import com.cf.model.Feedback;
+import com.cf.model.Schedule;
 
 public interface IFeedbackService {
 
@@ -24,5 +25,10 @@ public interface IFeedbackService {
 Feedback getDetailsById(Integer id);
 	
 	List<Feedback> getAllFeedback();
+	
+	
+	
+	
+	Feedback updateInterviewerFbStatus(Integer id,String status);
 	
 }

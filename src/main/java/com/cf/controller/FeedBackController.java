@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,6 +71,8 @@ public class FeedBackController {
 //		mav.addObject("domain",domain);
 		mav.addObject("candidateId",candidateId);
 		mav.addObject("candidate",candidate);
+		for(DomainCategory dc:candidate.getDomain().getDomainCategory())
+			System.out.println(dc.getDomSubCatName().length());
 		mav.addObject("subCategory", domainCategory);
 		mav.addObject("role",user.getRole());
 		return mav;
@@ -246,7 +249,23 @@ public class FeedBackController {
 	 }
 	
 	
-	
+	@Transactional
+	@GetMapping("/updateInterviewerFbStatus")
+	public String updateInterviewerFbStatus(@RequestParam Integer feedbackId, @RequestParam String interviewerFbStatus,HttpSession session,HttpServletResponse redirect) {
+		User checkUser=(User)session.getAttribute("loginDetails");
+		if(!(checkUser.getRole().equals("hr")||checkUser.getRole().equals("hrHead")||checkUser.getRole().equals("interviewer")))
+		{
+			try {
+				redirect.sendRedirect("/login");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+		Feedback fb = iFeedbackService.updateInterviewerFbStatus(feedbackId, interviewerFbStatus);
+		return "redirect:/viewFeedbacks";
+	}
 	
 	
 }

@@ -1,5 +1,6 @@
 package com.cf.controller;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,9 +23,40 @@ public class LoginController {
 	@Autowired
 	private IUserService iUserService;
 
+//	@GetMapping({"/login","/"})
+//	public String login() {
+//		return "login";
+//	}
+//	@GetMapping({"/login","/"})
+//	public String login(HttpSession session) {
+//		//HttpSession session = request.getSession();
+//		String url1;
+//		url1=(String)session.getAttribute("url");
+//		//session.isNew()||
+//		if (url1==null) {
+//
+//		return "login";
+//		} else {
+//		
+//		System.out.println(url1);
+//		return url1;
+//		}
+//		
+//	}
+	
 	@GetMapping({"/login","/"})
-	public String login() {
-		return "login";
+	public String login(HttpSession session,HttpServletRequest request) {
+		//HttpSession session = request.getSession();
+		HttpSession session1 = request.getSession(false);
+		if (session1 == null || !request.isRequestedSessionIdValid()) {
+		    //comes here when session is invalid. 
+			return "login";
+		} else {
+			String url =(String)session.getAttribute("url");
+			System.out.println(url);
+		    return url;
+		}
+		
 	}
 	@GetMapping("/home")
 	public String home(HttpSession session)
@@ -33,17 +65,23 @@ public class LoginController {
 		
 		if(user.getRole().equalsIgnoreCase("interviewer"))
 		{
-			return "interviewerHome";
+			String currentUrl="interviewerHome";
+			session.setAttribute("url", currentUrl);
+			return currentUrl;
 
 		}
 		else if(user.getRole().equalsIgnoreCase("hrHead"))
 		{
-			return "hrHead";
+			String currentUrl="hrHead";
+			session.setAttribute("url", currentUrl);
+			return currentUrl;
 
 		}
 		else
 		{
-			return "hrHome";
+			String currentUrl="hrHome";
+			session.setAttribute("url", currentUrl);
+			return currentUrl;
 
 		}
 		
@@ -73,30 +111,37 @@ public class LoginController {
 		  
 		   if((login==true)&&(role.equals("hr"))) {
 				log.info("going inside the hr home page");
-				return"hrHome";
+				String currentUrl="hrHome";
+				session.setAttribute("url", currentUrl);
+				return currentUrl;
 			}
 			else if((login==true)&&(role.equals("interviewer")))
 			{
 				log.info("going inside the interviewer home page");
-
-				return"interviewerHome";
+  
+				String currentUrl="interviewerHome";
+				session.setAttribute("url", currentUrl);
+				return currentUrl;
+			
 			}
 			else if((login==true)&&(role.equals("hrHead")))
 			{
 				log.info("going inside the hr home page");
 
-				return"hrHead";
+				String currentUrl="hrHead";
+				session.setAttribute("url", currentUrl);
+				return currentUrl;
 			}
 			else 
 			{
 				log.info("Invalid useremail and password");
-				
-				return "redirect:/login2";	
+				String url="redirect:/login2";
+				return url;	
 			}
 			
 			
 			
-			}
+	}
 
 	@GetMapping("/login2")
 	public ModelAndView login2() {

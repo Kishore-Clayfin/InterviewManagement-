@@ -9,14 +9,15 @@
 	href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
 	integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l"
 	crossorigin="anonymous" />
-<script data-require="jquery@2.0.3" data-semver="2.0.3" src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
+<script data-require="jquery@2.0.3" data-semver="2.0.3"
+	src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
 
 <script
-		src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
-	<script
-		src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-	<script
-		src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
+	src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
+<script
+	src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
 <style>
 #button {
 	background-color: #4caf50;
@@ -26,20 +27,20 @@
 	color: white;
 }
 
-table thead tr th{
-  /* background-color : gray; */
-  min-width : 100px;
-  position: relative;
+table thead tr th {
+	/* background-color : gray; */
+	min-width: 100px;
+	position: relative;
 }
 
-.filter{
-  position:absolute;
-  border: solid 1px;
-  top : 20px;
-  background-color : white;
-  width:100px;
-  right:0;
-  display:none;
+.filter {
+	position: absolute;
+	border: solid 1px;
+	top: 20px;
+	background-color: white;
+	width: 100px;
+	right: 0;
+	display: none;
 }
 </style>
 
@@ -59,38 +60,37 @@ table thead tr th{
 
 			<hr />
 
-			<br />
-			<br />
+			<br /> <br />
 			<table class="table table-bordered table-striped" id="table">
 
 				<thead>
 					<tr>
-						
-						 <th index=0>candidateId 
-              <div class="filter"></div>
-            </th>
-            <th index=1>candidateName
-              <div class="filter"></div>
-            </th>
-            <th index=2>OverallRating
-              <div class="filter"></div>
-            </th>
-            <th index=3>Feedback
-              <div class="filter"></div>
-            </th>
-            <th index=4>InterviewerFbStatus
-              <div class="filter"></div>
-            </th>
-            <th index=5>HrHeadFBStatus
-              <div class="filter"></div>
-            </th>
-            <th index=6>DomainName
-              <div class="filter"></div>
-            </th>
-            <th index=7>Sub Category Ratings
-              <div class="filter"></div>
-            </th>
-            <th>Actions</th>
+
+						<th index=0>candidateId
+							<div class="filter"></div>
+						</th>
+						<th index=1>candidateName
+							<div class="filter"></div>
+						</th>
+						<th index=2>OverallRating
+							<div class="filter"></div>
+						</th>
+						<th index=3>Feedback
+							<div class="filter"></div>
+						</th>
+						<th index=4>InterviewerFbStatus
+							<div class="filter"></div>
+						</th>
+						<th index=5>HrHeadFBStatus
+							<div class="filter"></div>
+						</th>
+						<th index=6>DomainName
+							<div class="filter"></div>
+						</th>
+						<th index=7>Sub Category Ratings
+							<div class="filter"></div>
+						</th>
+						<th>Actions</th>
 
 
 					</tr>
@@ -133,76 +133,58 @@ table thead tr th{
 					    	
 					    </td> -->
 
-						<td><span th:each="oneDoc:${Feedback.candidate}"> <span id="inner"
-								th:text="${oneDoc.domain.getDomainName()}"> <!-- 					    	<span th:text=${one.getMobileNumber()}></span> -->
+						<td><span th:each="oneDoc:${Feedback.candidate}"> <span
+								id="inner" th:text="${oneDoc.domain.getDomainName()}"> <!-- 					    	<span th:text=${one.getMobileNumber()}></span> -->
 
 							</span>
 						</span></td>
 						<td th:text="${Feedback.subDomRatings}" />
 
-						<td>
-						
-						
-						<span
+						<td><span
 							th:if="${Feedback.getInterviewerFbStatus()=='selected' || Feedback.getInterviewerFbStatus()=='rejected' }">
-						
-						
-						<a
-							th:href="@{/deleteFeedback(feedbackId=${Feedback.feedbackId})}"
-							class="btn btn-danger ml-2">Delete</a>
-							
-							<a
-							th:href="@{/generatePdfFile(feedbackId=${Feedback.feedbackId})} " class="btn btn-primary ml-2">Print</a>
-							</span>
-								
-						<span
+
+
+								<a
+								th:href="@{/deleteFeedback(feedbackId=${Feedback.feedbackId})}"
+								class="btn btn-danger ml-2">Delete</a> <a
+								th:href="@{/generatePdfFile(feedbackId=${Feedback.feedbackId})} "
+								class="btn btn-primary ml-2">Print</a>
+						</span> <span
 							th:if="${Feedback.getInterviewerFbStatus()!='selected' && Feedback.getInterviewerFbStatus()!='rejected'}">
-						
-						
-						
-						<span class="dropdown">
-							<button type="button" class="btn btn-primary dropdown-toggle"
-								data-toggle="dropdown">InterviewerFbStatus</button>
-							<span class="dropdown-menu">
-								<a 
-							
-								
-								
-									th:href="@{/updateInterviewerFbStatus(feedbackId=${Feedback.feedbackId},interviewerFbStatus=selected)}"
-									
-								
-									
-									class="dropdown-item">Selected</a> <a
-									
-									
-									
-									th:href="@{/updateInterviewerFbStatus(feedbackId=${Feedback.feedbackId},interviewerFbStatus=rejected)}"
-									class="dropdown-item">Rejected</a>
+
+
+
+								<span class="dropdown">
+									<button type="button" class="btn btn-primary dropdown-toggle"
+										data-toggle="dropdown">InterviewerFbStatus</button> <span
+									class="dropdown-menu"> <a
+										th:href="@{/updateInterviewerFbStatus(feedbackId=${Feedback.feedbackId},interviewerFbStatus=selected)}"
+										class="dropdown-item">Selected</a> <a
+										th:href="@{/updateInterviewerFbStatus(feedbackId=${Feedback.feedbackId},interviewerFbStatus=rejected)}"
+										class="dropdown-item">Rejected</a>
+								</span>
 							</span>
-						</span>
-						
-						
-						
-							</span>
-							</td>
+
+
+
+						</span></td>
 
 					</tr>
 				</tbody>
 
 			</table>
 		</div>
-		
-		
-		
-		
-		<a th:href="@{/generateAllPdfFile} " target="_blank" class="btn btn-primary ml-2">PrintAll</a>
-		
+
+
+
+
+		<a th:href="@{/generateAllPdfFile} " target="_blank"
+			class="btn btn-primary ml-2">PrintAll</a>
+
 
 		<!-- <button id="button">Generate PDF</button> -->
 
-		<br>
-		<br>
-		<a th:href="@{/home}" class="btn btn-danger ml-2">Home</a>
+		<br> <br> <a th:href="@{/home}" class="btn btn-danger ml-2">Home</a>
 	</div>
 	<!-- <script>
 		var button = document.getElementById("button");
@@ -222,9 +204,11 @@ table thead tr th{
 			return true;
 		});
 	</script> -->
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-		<script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.25/datatables.min.js"></script>
-		<script>
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script type="text/javascript"
+		src="https://cdn.datatables.net/v/bs4/dt-1.10.25/datatables.min.js"></script>
+	<script>
 			$(document).ready(function() {
 				$("#table").DataTable({
 						'aoColumnDefs': [{
@@ -234,12 +218,12 @@ table thead tr th{
 				});
 			})
 		</script>
-		
-		<script>
+
+	<script>
 
     // Code goes here
 
-/* $(document).ready(function(){
+$(document).ready(function(){
 
 $("#table thead th").click(function(){
 showFilterOption(this);
@@ -247,11 +231,11 @@ showFilterOption(this);
 
 });
 
-var arrayMap = new set();
+var arrayMap = {};
 
 function showFilterOption(tdObject){
 var filterGrid = $(tdObject).find(".filter");
-console.log(filterGrid.find(".grid-item"));
+
 if (filterGrid.is(":visible")){
 filterGrid.hide();
 return;
@@ -262,39 +246,53 @@ $(".filter").hide();
 var index = 0;
 filterGrid.empty();
 var allSelected = true;
-filterGrid.append('<div><input id="all" type="checkbox" checked>Select All</div>');
+filterGrid.append('<div><input id="all" type="checkbox">Select All</div>');
 
 var $rows = $(tdObject).parents("table").find("tbody tr");
 
+var values=[];
 
 $rows.each(function(ind, ele){
-	
-	
-	
-var currentTd = $(ele).children()[$(tdObject).attr("index")];
-//console.log(currentTd.innerHTML);
-console.log($(tdObject))
-var div = document.createElement("div");
-div.classList.add("grid-item")
-var str = $(ele).is(":visible") ? '':'';//'checked' : '';
- //var elements=jQuery.unique(ele)
-//console.log(ele)
-if ($(ele).is(":hidden")){
-allSelected = false;
-}
- // 	console.log(currentTd)
- 
-div.innerHTML = '<input type="checkbox" '+str+' >'+currentTd.innerHTML;
-filterGrid.append(div);
-arrayMap[index] = ele;
-index++;
-});
+	var currentTd = $(ele).children()[$(tdObject).attr("index")];
+	var div = document.createElement("div");
+	div.classList.add("grid-item")
+	var str = $(ele).is(":visible") ? 'checked' : '';
+	if ($(ele).is(":hidden")){
+	allSelected = false;
+	}
+	div.innerHTML = '<input type="checkbox" '+str+' >'+currentTd.innerHTML;
+	filterGrid.append(div);
+	arrayMap[index] = ele;
+	index++;
+	});
+
+/* $rows.each(function(ind, ele) {
+    if (ind > 0) {
+      var currentTd = $(ele).children()[$(tdObject).attr("index")];
+    //  if (!values.includes(currentTd.innerHTML)) {
+    //    values.push(currentTd.innerHTML);
+        
+        var div = document.createElement("div");
+        div.classList.add("grid-item");
+        var str = $(ele).is(":visible") ? " " : "";
+        if ($(ele).is(":hidden")) {
+          allSelected = false;
+        }
+        div.innerHTML =
+          '<br><input type="checkbox" ' + str + " >" + currentTd.innerHTML;
+        filterGrid.append(div);
+        arrayMap[index] = ele;
+        index++;
+        console.log("select")
+      //}
+    }
+  }); */
 
 if (!allSelected){
 filterGrid.find("#all").removeAttr("checked");
 }
 
-filterGrid.append('<div><input id="close" type="button" value="Close"/><input id="ok" type="button" value="Ok"/></div>');
+filterGrid.append('<br/><div><input id="close" type="button" value="Close"/><input id="ok" type="button" value="Ok"/></div>');
 filterGrid.show();
 
 var $closeBtn = filterGrid.find("#close");
@@ -310,7 +308,7 @@ return false;
 
 $okBtn.click(function(){
 filterGrid.find(".grid-item").each(function(ind,ele){
-	console.log(ele);	
+  console.log(ele)
 if ($(ele).find("input").is(":checked")){
 $(arrayMap[ind]).show();
 }else{
@@ -340,7 +338,7 @@ event.stopPropagation();
 });
 
 return filterGrid;
-} */
+}
 </script>
 </body>
 

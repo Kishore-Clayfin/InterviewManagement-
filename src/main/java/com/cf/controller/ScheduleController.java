@@ -85,7 +85,21 @@ public class ScheduleController {
 		return mv;
 	}
 
-	
+	@GetMapping("/scheduleInterview") 
+	public ModelAndView addhr() {
+		Schedule Schedule = new Schedule();
+		List<Candidate> Candidate = icandidateService.viewCandidateList();
+		List<User> user = iUserService.viewUserList();
+
+		List<User> list = user.stream().filter(c -> c.getRole().equalsIgnoreCase("interviewer"))
+				.collect(Collectors.toList());
+
+		ModelAndView mv = new ModelAndView("scheduleRegister");
+		mv.addObject("schedule", Schedule);
+		mv.addObject("candidate", Candidate);
+		mv.addObject("interviewer", list);
+		return mv;
+	}
 	
 	
 	@GetMapping("/addschedule2")

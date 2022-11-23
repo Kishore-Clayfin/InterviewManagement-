@@ -47,13 +47,26 @@ public class LoginController {
 	@GetMapping({"/login","/"})
 	public String login(HttpSession session,HttpServletRequest request) {
 		//HttpSession session = request.getSession();
-		HttpSession session1 = request.getSession(false);
-		if (session1 == null || !request.isRequestedSessionIdValid()) {
+//		HttpSession session1 = request.getSession(false);
+//		if (session1 == null || !request.isRequestedSessionIdValid() ) {
+//		    //comes here when session is invalid. 
+//			return "login";
+//		} 
+//		else {
+//			String url =(String)session.getAttribute("url");
+//			System.out.println(url);
+//		    return url;
+//		}
+		User user=(User) session.getAttribute("loginDetails");
+		if (user == null  )
+		{
 		    //comes here when session is invalid. 
 			return "login";
-		} else {
+		} 
+		else 
+		{
 			String url =(String)session.getAttribute("url");
-			System.out.println(url);
+//			System.out.println(url);
 		    return url;
 		}
 		

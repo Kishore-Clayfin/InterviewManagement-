@@ -91,7 +91,7 @@ public class ScheduleController {
 		List<Candidate> Candidate = icandidateService.viewCandidateList();
 		List<User> user = iUserService.viewUserList();
 
-		List<User> list = user.stream().filter(c -> c.getRole().equalsIgnoreCase("interviewer"))
+		List<User> list = user.stream().filter(c -> c.getRole().equalsIgnoreCase("interviewer")|| c.getRole().equalsIgnoreCase("hrHead"))
 				.collect(Collectors.toList());
 
 		ModelAndView mv = new ModelAndView("scheduleRegister");

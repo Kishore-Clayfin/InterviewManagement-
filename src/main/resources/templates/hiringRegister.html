@@ -1,0 +1,159 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Registration</title>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+	integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+	crossorigin="anonymous">
+	
+	<style type="text/css">
+
+
+
+body{
+
+
+
+ background:
+        linear-gradient(red, transparent),
+        linear-gradient(to top left, lime, transparent),
+        linear-gradient(to top right, blue, transparent);
+    background-blend-mode: screen;
+
+}
+
+
+</style>
+
+
+
+
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.min.js"> </script>  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"> </script>
+	
+		
+	<style>
+	label.error {  
+    color: red;  
+    font-size: 1rem;  
+    display: block;  
+    margin-top: 5px;  
+} </style>
+	<script>  
+	
+	
+// 	$(function () {
+// 	    $("#btnSubmit").click(function () {
+// 	        var password = $("#password").val();
+// 	        var confirmPassword = $("#confirmpassword").val();
+	        
+	        
+	        
+// 	        if (password != confirmPassword) {
+// 	            alert("Passwords do not match.");
+// 	            return false;
+// 	        }
+// 	        return true;
+// 	    });
+// 	});
+	
+	
+// $(document).ready (function () {  
+//   $("#registration").validate ();  
+// });  
+</script> 
+	
+	
+</head>
+<body>
+
+	
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+		<div class="container">
+			<div class="navbar-header">
+				
+				<a class="navbar-brand" href="#" th:href="@{/hrHomepage}">
+					Go To Home Page</a>
+			</div>
+		</div>
+	</nav>
+
+	<br>
+	<br>
+	
+	<div class="container">
+		<div class="row">
+			<div class="col-md-6 col-md-offset-3">
+			
+	<!-- 		private String recruiter;
+	
+	private String hiringManager;
+	
+	private LocalDate hiringStartDate;
+	
+	private LocalDate hiringClosureDate;
+	
+	@OneToOne
+	private Domain domain; -->
+
+				<h1> Hiring Registration</h1>
+
+				<form th:action="@{/saveHiring}" id="registration" method="post" th:object="${hiring}">
+					
+
+					<div class="form-group">
+						<label class="control-label" for="name">Hiring Manager</label> <input
+							id="name" class="form-control" th:field="*{hiringManager}"
+							required autofocus="autofocus" th:minlength="4"/>
+					</div>
+					
+					<div class="form-group">
+						<label class="control-label" for="name">Recruiter</label> <select
+							class="form-control" id="tes" name="test"
+							th:field="*{user}" required autofocus="autofocus">
+							<option value="" selected>--- Select ---</option>
+							<option th:each="interviewer : ${user}"
+								th:value="${interviewer.getUserId}"
+								th:text="${interviewer.getUsername+' - '+interviewer.getRole()}"></option>
+						</select>
+						<!-- <p class="alert alert-danger" th:if="${#fields.hasErrors('user')}" th:errors="*{user}" /> -->
+					</div>
+						
+						 <div class="form-group">
+						<label class="control-label" for="date">Schedule Closure</label> <input
+							type="date" id="date" class="form-control"
+							th:field="*{hiringStartDate}" required autofocus="autofocus" />
+						</div>
+						
+                   		 <div class="form-group">
+						<label class="control-label" for="date">Schedule Closure</label> <input
+							type="date" id="date" class="form-control"
+							th:field="*{hiringClosureDate}" required autofocus="autofocus" />
+						</div>
+						<div class="form-group">
+						<label class="control-label" for="name">Domain</label> <select
+							class="form-control" id="testOrder" name="testOrder"
+							th:field="*{domain}" required autofocus="autofocus">
+							<option value="">---Select---</option>
+							<option th:each="domain : ${domain}"
+								th:value="${domain.getDomainId}" th:text="${domain.domainName}"></option>
+						</select>
+
+					</div>
+
+					<div class="form-group">
+						<button id="btnSubmit" type="submit" class="btn btn-success">Register</button>
+						
+					</div>
+					<input type="hidden" th:field="*{hiringId}" />
+					
+				</form>
+			</div>
+		</div>
+					<a th:href="@{/home}" class="btn btn-danger ml-2">Home</a>
+	</div>
+</body>
+</html> 
+

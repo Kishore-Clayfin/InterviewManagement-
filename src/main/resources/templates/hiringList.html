@@ -1,0 +1,130 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+	
+	<head>
+		<title>HIRING LIST</title>
+		
+		<link rel="stylesheet" 
+			type="text/css" 
+			href="https://cdn.datatables.net/v/bs4/dt-1.10.25/datatables.min.css" />
+		<link rel="stylesheet" 
+			href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" 
+			integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" 
+			crossorigin="anonymous" />
+	</head>
+	
+	<body>
+			
+		<div style="padding: 15PX;">
+		
+			<h3>HIRING LIST</h3>
+			
+			<hr/>
+			
+			<br/><br/>
+			<table class="table table-bordered table-striped" id="doctorTable">
+			
+	<!-- 		private Integer hiringId;
+	
+	private String recruiter;
+	
+	private String hiringManager;
+	
+	private LocalDate hiringStartDate;
+	
+	private LocalDate hiringClosureDate;
+	
+	@OneToOne(cascade = {CascadeType.PERSIST,CascadeType.MERGE})
+	private Domain domain; -->
+	
+				<thead>
+					<tr>
+						<th>Recruiter</th>
+						<th>HiringManager</th>
+						<th>HiringStartDate</th>
+					 	<th>HiringClosureDate</th>
+						<th>Domain</th>
+						<!-- <th>Designation</th>
+						<th>Experties</th>
+						<th>Candidates Added</th> -->
+						<th>Actions</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="hiring : ${hiring}">
+						<td th:text="${hiring.user.getUsername()}" />
+						<td th:text="${hiring.hiringManager}" />
+						<td th:text="${hiring.hiringStartDate}" />
+						<td th:text="${hiring.hiringClosureDate}" />
+						<!-- <td th:text="${user.enabled}" /> -->
+						<!-- <td>
+							<span th:each="userDetails:${user.userDetails}">
+							<span th:text=${userDetails.getMailId()}></span>							
+							</span>
+							</td> -->
+							
+							<td>
+							<span th:each="hiring:${hiring.domain}">
+							<span th:text=${hiring.getDomainName()}></span>							
+							</span>
+							</td>
+							
+							<!-- <td>
+							<span th:each="userDetails:${user.userDetails}">
+							<span th:text=${userDetails.getDesignation()}></span>							
+							</span>
+							</td>
+							<td>
+							<span th:each="userDetails:${user.userDetails}">
+							<span th:text=${userDetails.getExperties()}></span>							
+							</span>
+							</td>
+							<td>
+							<span th:each="candidate:${user.candidate}">
+							<span th:text="${candidate.getCandidateName()}+','"></span>							
+							</span>
+							</td> -->
+							
+							
+						 <!-- th:object="userDetails:${user.userDetails}">
+							<td th:text="${userDetails.mailId}" />
+							<td th:text="${userDetails.mobileNumber}" />
+							<td th:text="${userDetails.designation}" />
+							<td th:text="${userDetails.experties}" /> -->
+						
+						
+						
+						
+						<!-- <td th:text="${Interviewer.Designation}" />
+						<td th:text="${Interviewer.Passward}" />
+						<td th:text="${Interviewer.role}" />
+						<td th:text="${Interviewer.Type}" /> -->
+						<!-- <td th:text="${Interviewer.Experties}" /> -->
+						
+						
+						
+						<!-- <td>
+					    <span th:each="oneDoc:${Interviewer.technology}">
+					    	<span th:text=${oneDoc.getTechnologyName()}></span>
+					    	</span>
+					    </td> -->
+						
+						
+						
+						
+						<td style="display: flex;">
+							<a th:href="@{/showUpdateHiring(hiringId=${hiring.hiringId})}" class="btn btn-info">Update</a>
+							<!-- 
+							<a th:href="@{/showUpdateUserDetails(userDetailsId=${user.getUserDetails().getUserDetailsId()})}" class="btn btn-info">Update</a>
+							 -->
+							<a th:href="@{/deleteHiring(hiringId=${hiring.hiringId})}" class="btn btn-danger ml-2">Delete</a>
+						</td>
+					</tr>
+				</tbody>
+				
+			</table>
+		</div>
+		
+		
+	</body>
+	
+</html>

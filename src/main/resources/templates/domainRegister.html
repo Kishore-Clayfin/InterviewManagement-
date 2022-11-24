@@ -8,17 +8,13 @@
 	integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
 	crossorigin="anonymous">
 
+<link rel="stylesheet" type="text/css" th:href="@{~/css/home.css}">
 
 <script
 	src="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/choices.min.js"></script>
 	
 <style type="text/css">
-body {
-	background-image:
-		url('https://s27389.pcdn.co/wp-content/uploads/2021/06/how-can-technology-design-be-made-more-inclusive.jpeg.optimal.jpeg');
-	background-repeat: no-repeat;
-	background-size: cover;
-}
+
 
 label {
 	color: infobackground;
@@ -30,8 +26,14 @@ label.error {
     } 
     h5{
     color:yellow;}
-</style>
 
+	#anchor
+   {
+        padding-left: 400;
+        font-weight: bold;
+      color: white;
+  }
+	</style>
 
 	<script>  
 $(document).ready (function () {  
@@ -48,21 +50,18 @@ $(document).ready (function () {
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.min.js"> </script>  
 	
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"> </script>
-<body>
+<body class="background2">
 
-	create navigation bar ( header)
-	<nav class="navbar navbar-inverse navbar-fixed-top">
+<nav class="navbar navbar-inverse navbar-fixed-top">
 		<div class="container">
-			<div class="navbar-header">
-				<button type="button" class="navbar-toggle collapsed"
-					data-toggle="collapse" data-target="#navbar" aria-expanded="false"
-					aria-controls="navbar">
-					<span class="sr-only">Toggle navigation</span> <span
-						class="icon-bar"></span> <span class="icon-bar"></span> <span
-						class="icon-bar"></span>
-				</button>
-				<a class="navbar-brand" th:href="@{/hrHomepage}"> Go To Home
-					Page</a>
+			<div class="navbar-header"
+				style="font-family: sans-serif; font-style: normal;">
+				<a class="navbar-brand" href="#" th:href="@{/login}"
+					style="padding-left: 1000px; color: white;"><b><i style="font-family: sans-serif;   font-style: normal;">
+							Home</i></b></a> <a class="navbar-brand"
+					style="font-family: sans-serif; color: white;"
+					href="https://www.clayfin.com;"><b><i style="font-family: sans-serif; font-style: normal;padding-left: 1	0px"> Logout </i></b></a>
+
 			</div>
 		</div>
 	</nav>
@@ -76,7 +75,7 @@ $(document).ready (function () {
 
 
 
-				<h1>Domain Registration</h1>
+				<h1 style="color:white; text-align:center; margin-top:0px">Domain Registration</h1>
 
 				<form th:action="@{/saveDomain}" id="basic-form" method="post" th:object="${domain}">
 
@@ -95,12 +94,12 @@ $(document).ready (function () {
 					
 					
 					<br><br>
-					<h5 ><b>Enter Sub Category List Seperated by ","</b></h5>
-					<input name="category" type="text"  required autofocus="autofocus"></input>
+					<h5 ><b style="color:white">Enter Sub Category List Seperated by ","</b></h5>
+					<input name="category" type="text" class="form-control"  required autofocus="autofocus" ></input>
 
 					<br><br>
 					<div class="form-group">
-						<button type="submit" class="btn btn-success">Save</button>
+						<button type="submit" class="btn btn-success" style="background-color:black">Register</button>
 
 					</div>
 					<input type="hidden" th:field="*{domainId}" />
@@ -108,7 +107,7 @@ $(document).ready (function () {
 				</form>
 			</div>
 		</div>
-							<a th:href="@{/home}" class="btn btn-danger ml-2">Home</a>
+							
 		
 	</div>
 	

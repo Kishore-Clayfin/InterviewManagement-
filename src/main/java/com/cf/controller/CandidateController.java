@@ -182,9 +182,9 @@ public class CandidateController
 	}
 
 	@GetMapping("/viewCandidates")
-	public ModelAndView getAllCandidates(HttpSession session,HttpServletResponse redirect) {
-		User checkUser=(User)session.getAttribute("loginDetails");
-		if(!checkUser.getRole().equals("hr"))
+	public ModelAndView getAllCandidates(HttpSession session,HttpServletResponse redirect)
+	{
+		if(LoginController.checkUser==null)
 		{
 			try {
 				redirect.sendRedirect("/login");
@@ -193,6 +193,19 @@ public class CandidateController
 				e.printStackTrace();
 			}
 		}
+		
+		
+		User checkUser=(User)session.getAttribute("loginDetails");
+		if((!checkUser.getRole().equals("hr")))
+		{
+			try {
+				redirect.sendRedirect("/login");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
 
 //		System.out.println(session.getAttribute("details"));
 //		System.out.println(user);

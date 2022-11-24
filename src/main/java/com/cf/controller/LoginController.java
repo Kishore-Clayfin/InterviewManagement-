@@ -1,5 +1,6 @@
 package com.cf.controller;
 
+import javax.mail.Session;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -23,6 +24,11 @@ public class LoginController {
 	@Autowired
 	private IUserService iUserService;
 
+
+	
+    public static User checkUser=null;
+	
+	
 //	@GetMapping({"/login","/"})
 //	public String login() {
 //		return "login";
@@ -112,12 +118,12 @@ public class LoginController {
 		   
 		   if(login==true)
 			{
-			   User user= iUserService.findUsername(name);
+			    checkUser= iUserService.findUsername(name);
 
 			   
 //			    System.out.println(session.getAttribute("details"));
-			    role=user.getRole();
-			    session.setAttribute("loginDetails", user);
+			    role=checkUser.getRole();
+			    session.setAttribute("loginDetails", checkUser);
 			    session.setAttribute("interviewer", role);
 //			    System.out.println(session.getAttribute("details"));
 		    }

@@ -23,9 +23,13 @@ body{
     background-blend-mode: screen;
 
 }
-
-
-</style>
+	#anchor
+   {
+        padding-left: 400;
+        font-weight: bold;
+      color: white;
+  }
+	</style>
 
 
 
@@ -74,9 +78,12 @@ body{
 	<nav class="navbar navbar-inverse navbar-fixed-top">
 		<div class="container">
 			<div class="navbar-header">
-				
-				<a class="navbar-brand" href="#" th:href="@{/hrHomepage}">
-					Go To Home Page</a>
+
+				<a class="navbar-brand" id="anchor" th:href="@{/home}"> Go
+					To Home Page</a> <a class="navbar-brand" id="anchor"
+					th:href="@{/logout}">Logout </a>
+
+					
 			</div>
 		</div>
 	</nav>

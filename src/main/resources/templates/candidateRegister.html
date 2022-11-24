@@ -15,6 +15,12 @@ body {
 		linear-gradient(to top right, blue, transparent);
 	background-blend-mode: screen;
 }
+#anchor
+   {
+        padding-left: 400;
+        font-weight: bold;
+      color: white;
+  }
 </style>
 
 <script
@@ -58,8 +64,11 @@ label.error {
 		<div class="container">
 			<div class="navbar-header">
 
-				<a class="navbar-brand" href="#" th:href="@{/hrHomepage}"> Go To
-					Home Page</a>
+				<a class="navbar-brand" id="anchor" th:href="@{/home}"> Go
+					To Home Page</a> <a class="navbar-brand" id="anchor"
+					th:href="@{/logout}">Logout </a>
+
+					
 			</div>
 		</div>
 	</nav>

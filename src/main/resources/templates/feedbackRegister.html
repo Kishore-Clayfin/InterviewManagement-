@@ -16,22 +16,26 @@
 	src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/11.0.2/bootstrap-slider.min.js"></script>
 <link rel="stylesheet"
 	href='https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/11.0.2/css/bootstrap-slider.min.css' />
+	<style>
+	#anchor
+   {
+        padding-left: 400;
+        font-weight: bold;
+      color: white;
+  }
+	</style>
 </head>
 <body>
 
-	create navigation bar ( header)
 	<nav class="navbar navbar-inverse navbar-fixed-top">
 		<div class="container">
 			<div class="navbar-header">
-				<button type="button" class="navbar-toggle collapsed"
-					data-toggle="collapse" data-target="#navbar" aria-expanded="false"
-					aria-controls="navbar">
-					<span class="sr-only">Toggle navigation</span> <span
-						class="icon-bar"></span> <span class="icon-bar"></span> <span
-						class="icon-bar"></span>
-				</button>
-				<a class="navbar-brand" href="#" th:href="@{/}">Registration and
-					Login Module</a>
+
+				<a class="navbar-brand" id="anchor" th:href="@{/home}"> Go
+					To Home Page</a> <a class="navbar-brand" id="anchor"
+					th:href="@{/logout}">Logout </a>
+
+					
 			</div>
 		</div>
 	</nav>

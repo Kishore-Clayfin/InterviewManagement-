@@ -44,6 +44,17 @@ public class HiringController {
 
 	@GetMapping("/addHiring")
 	public ModelAndView addHiring(HttpSession session,HttpServletResponse redirect) {
+		
+		if(LoginController.checkUser==null)
+		{
+			try {
+				redirect.sendRedirect("/login");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
 		List<Domain> domain = iDomainService.viewDomainList();
 		
 		User checkUser=(User)session.getAttribute("loginDetails");
@@ -75,6 +86,17 @@ public class HiringController {
 	@PostMapping("/saveHiring")
 	public String saveHiring( @ModelAttribute Hiring hiring ,HttpSession session,HttpServletResponse redirect) 
 	{
+		
+		if(LoginController.checkUser==null)
+		{
+			try {
+				redirect.sendRedirect("/login");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
 		User checkUser=(User)session.getAttribute("loginDetails");
 		if(!checkUser.getRole().equals("hr"))
 		{
@@ -92,6 +114,17 @@ public class HiringController {
 	
 	@GetMapping("/viewHirings")
 	public ModelAndView getAllHirings(HttpSession session,HttpServletResponse redirect) {
+		
+		if(LoginController.checkUser==null)
+		{
+			try {
+				redirect.sendRedirect("/login");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
 		User checkUser=(User)session.getAttribute("loginDetails");
 		if(!checkUser.getRole().equals("hr"))
 		{
@@ -122,6 +155,17 @@ public class HiringController {
 	@GetMapping("/showUpdateHiring")
 	public ModelAndView showUpdateHiring(@RequestParam Integer hiringId,HttpSession session,HttpServletResponse redirect) {
 		
+		if(LoginController.checkUser==null)
+		{
+			try {
+				redirect.sendRedirect("/login");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		
 		List<Domain> domain = iDomainService.viewDomainList();
 		List<User> user = iUserService.viewUserList();
 
@@ -148,6 +192,17 @@ public class HiringController {
 	
 	@GetMapping("/deleteHiring")
 	public String deleteHiring(@RequestParam Integer hiringId,HttpSession session,HttpServletResponse redirect) {
+		
+		if(LoginController.checkUser==null)
+		{
+			try {
+				redirect.sendRedirect("/login");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
 		User user=(User)session.getAttribute("loginDetails");
 		if(!user.getRole().equals("hr"))
 		{

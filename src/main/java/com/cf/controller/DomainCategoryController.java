@@ -29,6 +29,17 @@ public class DomainCategoryController {
 	@GetMapping("/addDomainCategory")
 	public ModelAndView addDomainCategory(HttpSession session,HttpServletResponse redirect)
 	{
+		
+		if(LoginController.checkUser==null)
+		{
+			try {
+				redirect.sendRedirect("/login");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
 		User user=(User)session.getAttribute("loginDetails");
 		if(!user.getRole().equals("hr"))
 		{
@@ -48,6 +59,17 @@ public class DomainCategoryController {
 	@PostMapping("/saveDomainCategory")
 	public String saveDomainCategory(@Valid @ModelAttribute DomainCategory domainCategory,BindingResult result,HttpSession session,HttpServletResponse redirect ) 
 	{
+		
+		if(LoginController.checkUser==null)
+		{
+			try {
+				redirect.sendRedirect("/login");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
 		User user=(User)session.getAttribute("loginDetails");
 		if(!user.getRole().equals("hr"))
 		{
@@ -70,6 +92,17 @@ public class DomainCategoryController {
 	
 	@GetMapping("/viewDomainCategories")
 	public ModelAndView getAllDomainCategories(HttpSession session,HttpServletResponse redirect) {
+		
+		if(LoginController.checkUser==null)
+		{
+			try {
+				redirect.sendRedirect("/login");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
 		User user=(User)session.getAttribute("loginDetails");
 		if(!user.getRole().equals("hr"))
 		{
@@ -89,6 +122,17 @@ public class DomainCategoryController {
 	
 	@GetMapping("/showUpdateDomainCategory")
 	public ModelAndView showUpdateDomainCategory(@RequestParam Integer domSubCatId,HttpSession session,HttpServletResponse redirect) {
+		
+		if(LoginController.checkUser==null)
+		{
+			try {
+				redirect.sendRedirect("/login");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
 		User user=(User)session.getAttribute("loginDetails");
 		if(!user.getRole().equals("hr"))
 		{
@@ -109,6 +153,17 @@ public class DomainCategoryController {
 	
 	@GetMapping("/deleteDomainCategory")
 	public String deleteDomainCategory(@RequestParam Integer domSubCatId,HttpSession session,HttpServletResponse redirect) {
+		
+		if(LoginController.checkUser==null)
+		{
+			try {
+				redirect.sendRedirect("/login");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
 		User user=(User)session.getAttribute("loginDetails");
 		if(!user.getRole().equals("hr"))
 		{

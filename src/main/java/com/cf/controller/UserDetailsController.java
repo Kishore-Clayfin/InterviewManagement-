@@ -28,6 +28,17 @@ public class UserDetailsController {
 	
 	@GetMapping("/addUserDetails")
 	public ModelAndView addUserDetails(HttpSession session,HttpServletResponse redirect) {
+		
+		if(LoginController.checkUser==null)
+		{
+			try {
+				redirect.sendRedirect("/login");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
 		User checkUser=(User)session.getAttribute("loginDetails");
 		if(!checkUser.getRole().equals("hr"))
 		{
@@ -47,6 +58,17 @@ public class UserDetailsController {
 	@PostMapping("/saveUserDetails")
 	public String saveUserDetails(@Valid @ModelAttribute UserDetails userDetails,BindingResult result,HttpSession session,HttpServletResponse redirect) 
 	{
+		if(LoginController.checkUser==null)
+		{
+			try {
+				redirect.sendRedirect("/login");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		
 		User checkUser=(User)session.getAttribute("loginDetails");
 		if(!checkUser.getRole().equals("hr"))
 		{
@@ -67,6 +89,17 @@ public class UserDetailsController {
 	
 	@GetMapping("/viewUserDetails")
 	public ModelAndView getAllUserDetails(HttpSession session,HttpServletResponse redirect) {
+		
+		if(LoginController.checkUser==null)
+		{
+			try {
+				redirect.sendRedirect("/login");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
 		User checkUser=(User)session.getAttribute("loginDetails");
 		if(!checkUser.getRole().equals("hr"))
 		{
@@ -84,6 +117,17 @@ public class UserDetailsController {
 	
 	@GetMapping("/showUpdateUserDetails")
 	public ModelAndView showUpdateUserDetails(@RequestParam Integer userDetailsId,HttpSession session,HttpServletResponse redirect) {
+		
+		if(LoginController.checkUser==null)
+		{
+			try {
+				redirect.sendRedirect("/login");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
 		User checkUser=(User)session.getAttribute("loginDetails");
 		if(!checkUser.getRole().equals("hr"))
 		{
@@ -102,6 +146,17 @@ public class UserDetailsController {
 	
 	@GetMapping("/deleteUserDetails")
 	public String deleteUserDetails(@RequestParam Integer userDetailsId,HttpSession session,HttpServletResponse redirect) {
+		
+		if(LoginController.checkUser==null)
+		{
+			try {
+				redirect.sendRedirect("/login");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
 		User checkUser=(User)session.getAttribute("loginDetails");
 		if(!checkUser.getRole().equals("hr"))
 		{

@@ -36,6 +36,17 @@ public class DomainController
 	
 	@GetMapping("/addDomain")
 	public ModelAndView addDomain(HttpSession session,HttpServletResponse redirect) {
+		
+		if(LoginController.checkUser==null)
+		{
+			try {
+				redirect.sendRedirect("/login");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
 		User user=(User)session.getAttribute("loginDetails");
 		if(!user.getRole().equals("hr"))
 		{
@@ -59,6 +70,17 @@ public class DomainController
 	@PostMapping("/saveDomain")
 	public String saveDomain(@Valid @ModelAttribute Domain domain,BindingResult result, @RequestParam String category,HttpSession session,HttpServletResponse redirect) 
 	{
+		
+		if(LoginController.checkUser==null)
+		{
+			try {
+				redirect.sendRedirect("/login");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
 		User user=(User)session.getAttribute("loginDetails");
 		if(!user.getRole().equals("hr"))
 		{
@@ -100,6 +122,17 @@ public class DomainController
 	
 	@GetMapping("/viewDomains")
 	public ModelAndView getAllDomains(HttpSession session,HttpServletResponse redirect) {
+		
+		if(LoginController.checkUser==null)
+		{
+			try {
+				redirect.sendRedirect("/login");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
 		User user=(User)session.getAttribute("loginDetails");
 		if(!user.getRole().equals("hr"))
 		{
@@ -118,6 +151,17 @@ public class DomainController
 	
 	@GetMapping("/showUpdateDomain")
 	public ModelAndView showUpdateDomain(@RequestParam Integer domainId,HttpSession session,HttpServletResponse redirect) {
+		
+		if(LoginController.checkUser==null)
+		{
+			try {
+				redirect.sendRedirect("/login");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
 		User user=(User)session.getAttribute("loginDetails");
 		if(!user.getRole().equals("hr"))
 		{
@@ -140,6 +184,17 @@ public class DomainController
 	
 	@GetMapping("/deleteDomain")
 	public String deleteDomain(@RequestParam Integer domainId,HttpSession session,HttpServletResponse redirect) {
+		
+		if(LoginController.checkUser==null)
+		{
+			try {
+				redirect.sendRedirect("/login");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
 		User user=(User)session.getAttribute("loginDetails");
 		if(!user.getRole().equals("hr"))
 		{

@@ -41,6 +41,16 @@ public class UserController
 	@GetMapping("/addUser")
 	public ModelAndView addUser(HttpSession session,HttpServletResponse redirect) {
 		
+		if(LoginController.checkUser==null)
+		{
+			try {
+				redirect.sendRedirect("/login");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
 		
 		
 		User checkUser=(User)session.getAttribute("loginDetails");
@@ -81,6 +91,17 @@ public class UserController
 	
 	@PostMapping("/saveUser")
 	public String saveUser(@Valid@ModelAttribute User user,BindingResult result,HttpSession session,HttpServletResponse redirect,RedirectAttributes attributes) {
+		
+		if(LoginController.checkUser==null)
+		{
+			try {
+				redirect.sendRedirect("/login");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
 		
 		String mail=user.getEmail();
 		
@@ -141,6 +162,17 @@ public class UserController
 	
 	@GetMapping("/viewUsers")
 	public ModelAndView getAllUsers(HttpSession session,HttpServletResponse redirect) {
+		
+		if(LoginController.checkUser==null)
+		{
+			try {
+				redirect.sendRedirect("/login");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
 		User user=(User)session.getAttribute("loginDetails");
 		if(!user.getRole().equals("hr"))
 		{
@@ -161,6 +193,17 @@ public class UserController
 	
 	@GetMapping("/showUpdateUser")
 	public ModelAndView showUpdateUser(@RequestParam Integer userId,HttpSession session,HttpServletResponse redirect) {
+		
+		if(LoginController.checkUser==null)
+		{
+			try {
+				redirect.sendRedirect("/login");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
 		User checkUser=(User)session.getAttribute("loginDetails");
 		if(!checkUser.getRole().equals("hr"))
 		{
@@ -186,6 +229,17 @@ public class UserController
 	
 	@GetMapping("/deleteUser")
 	public String deleteUser(@RequestParam Integer userId,HttpSession session,HttpServletResponse redirect) {
+		
+		if(LoginController.checkUser==null)
+		{
+			try {
+				redirect.sendRedirect("/login");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
 		User user=(User)session.getAttribute("loginDetails");
 		if(!user.getRole().equals("hr"))
 		{

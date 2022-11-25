@@ -52,8 +52,18 @@ public class ScheduleController {
 	private IUserService iUserService;
 	
 	@PostMapping("/ajaxPost")
-	public String ajaxPostMethod(@RequestBody List<Integer> list1, HttpSession session)
+	public String ajaxPostMethod(@RequestBody List<Integer> list1, HttpSession session,HttpServletResponse redirect)
 	{
+		if(LoginController.checkUser==null)
+		{
+			try {
+				redirect.sendRedirect("/login");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
 		session.setAttribute("ajax", list1);
 	//	System.out.println(list1);
 	
@@ -62,7 +72,18 @@ public class ScheduleController {
 
 	
 	@GetMapping("/addschedule")
-	public ModelAndView addhr( HttpSession session ) {
+	public ModelAndView addhr( HttpSession session ,HttpServletResponse redirect) {
+		
+		if(LoginController.checkUser==null)
+		{
+			try {
+				redirect.sendRedirect("/login");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
 		List li1=(List) session.getAttribute("ajax");
 		//	System.out.println(list1);
 		List<Candidate> li=candidateDao.findAllById(li1);
@@ -86,7 +107,18 @@ public class ScheduleController {
 	}
 
 	@GetMapping("/scheduleInterview") 
-	public ModelAndView addhr() {
+	public ModelAndView addhr(HttpServletResponse redirect) {
+		
+		if(LoginController.checkUser==null)
+		{
+			try {
+				redirect.sendRedirect("/login");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
 		Schedule Schedule = new Schedule();
 		List<Candidate> Candidate = icandidateService.viewCandidateList();
 		List<User> user = iUserService.viewUserList();
@@ -105,6 +137,17 @@ public class ScheduleController {
 	@GetMapping("/addschedule2")
 	public ModelAndView addschedule2(@RequestParam Integer candidateId,HttpSession session,HttpServletResponse redirect) 
 	{
+		
+		if(LoginController.checkUser==null)
+		{
+			try {
+				redirect.sendRedirect("/login");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
 		User checkUser=(User)session.getAttribute("loginDetails");
 		if(!checkUser.getRole().equals("hr"))
 		{
@@ -146,6 +189,17 @@ public class ScheduleController {
 	@PostMapping("/saveschedule")
 	public String saveschedule(@Valid @ModelAttribute Schedule schedule,BindingResult result, Model model,RedirectAttributes ra,HttpSession session,HttpServletResponse redirect) 
 	{
+		if(LoginController.checkUser==null)
+		{
+			try {
+				redirect.sendRedirect("/login");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		
 		User checkUser=(User)session.getAttribute("loginDetails");
 		if(!checkUser.getRole().equals("hr"))
 		{
@@ -326,6 +380,17 @@ public class ScheduleController {
 	@PostMapping("/saveschedule2")
 	public String saveschedule2(@Valid @ModelAttribute Schedule schedule,BindingResult result, Model model,@RequestParam Integer candidateId,RedirectAttributes ra,HttpSession session,HttpServletResponse redirect) 
 	{
+		
+		if(LoginController.checkUser==null)
+		{
+			try {
+				redirect.sendRedirect("/login");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
 		User checkUser=(User)session.getAttribute("loginDetails");
 		if(!checkUser.getRole().equals("hr"))
 		{
@@ -495,6 +560,17 @@ public class ScheduleController {
 	@GetMapping({ "/viewschedules" })
 	public ModelAndView getAllschedules(HttpSession session,HttpServletResponse redirect) 
 	{
+		
+		if(LoginController.checkUser==null)
+		{
+			try {
+				redirect.sendRedirect("/login");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
 		User checkUser=(User)session.getAttribute("loginDetails");
 		if(!(checkUser.getRole().equals("hr")||checkUser.getRole().equals("interviewer")||checkUser.getRole().equals("hrHead")))
 		{
@@ -539,6 +615,17 @@ public class ScheduleController {
 	@GetMapping("/showUpdateSchedule")
 	public ModelAndView showUpdateSchedule(@RequestParam Integer scheduleId,HttpSession session,HttpServletResponse redirect) 
 	{
+		
+		if(LoginController.checkUser==null)
+		{
+			try {
+				redirect.sendRedirect("/login");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
 		User checkUser=(User)session.getAttribute("loginDetails");
 		if(!checkUser.getRole().equals("hr"))
 		{
@@ -577,6 +664,17 @@ public class ScheduleController {
 
 	@GetMapping("/deleteSchedule")
 	public String deleteSchedule(@RequestParam Integer scheduleId,HttpSession session,HttpServletResponse redirect) {
+		
+		if(LoginController.checkUser==null)
+		{
+			try {
+				redirect.sendRedirect("/login");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
 		User checkUser=(User)session.getAttribute("loginDetails");
 		if(!checkUser.getRole().equals("hr"))
 		{
@@ -596,6 +694,17 @@ public class ScheduleController {
 	@GetMapping("/showInterviewCompleted")
 	public ModelAndView getfeedback(HttpSession session,HttpServletResponse redirect)// (@RequestParam Integer InterviewerId)
 	{
+		
+		if(LoginController.checkUser==null)
+		{
+			try {
+				redirect.sendRedirect("/login");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
 		User checkUser=(User)session.getAttribute("loginDetails");
 		if(!(checkUser.getRole().equals("hr")||checkUser.getRole().equals("interviewer")||checkUser.getRole().equals("hrHead")))
 		{
@@ -623,6 +732,17 @@ public class ScheduleController {
 	@GetMapping("/giveFeedback")
 	public ModelAndView givefeedback(HttpSession session,HttpServletResponse redirect)// (@RequestParam Integer InterviewerId)
 	{
+		
+		if(LoginController.checkUser==null)
+		{
+			try {
+				redirect.sendRedirect("/login");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
 		User checkUser=(User)session.getAttribute("loginDetails");
 		if(!(checkUser.getRole().equals("hr")||checkUser.getRole().equals("interviewer")||checkUser.getRole().equals("hrHead")))
 		{

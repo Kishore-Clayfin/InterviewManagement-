@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.poi.ss.usermodel.Cell;
@@ -34,15 +35,37 @@ public class ExcelController
 
 	@Autowired
 	private IDomainDao domainDao;
+	
 	@GetMapping("/excelPage")
-	public String getExc() 
-	{
+	public String getExc(HttpServletResponse redirect) 
+	{	
+		if(LoginController.checkUser==null)
+		{
+			try {
+				redirect.sendRedirect("/login");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 		return "excel";
 	}
+	
 	int count=0;
 	@PostMapping("/import")
-	public String mapReapExcelDatatoDB(@RequestParam("file") MultipartFile reapExcelDataFile,HttpSession session) throws IOException 
+	public String mapReapExcelDatatoDB(@RequestParam("file") MultipartFile reapExcelDataFile,HttpSession session,HttpServletResponse redirect) throws IOException 
 	{
+		
+		if(LoginController.checkUser==null)
+		{
+			try {
+				redirect.sendRedirect("/login");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
 		
 		User user= (User) session.getAttribute("loginDetails");
 //		Domain dom=new Domain();

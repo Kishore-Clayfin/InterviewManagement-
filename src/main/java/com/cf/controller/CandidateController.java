@@ -39,6 +39,17 @@ public class CandidateController
 
 	@GetMapping("/addCandidate")
 	public ModelAndView addCandidate(HttpSession session,HttpServletResponse redirect) {
+		
+		if(LoginController.checkUser==null)
+		{
+			try {
+				redirect.sendRedirect("/login");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
 		User checkUser=(User)session.getAttribute("loginDetails");
 		if(!checkUser.getRole().equals("hr"))
 		{
@@ -84,6 +95,17 @@ public class CandidateController
 			@RequestParam("file") MultipartFile file, Model mav, HttpSession session, RedirectAttributes attributes,HttpServletResponse redirect)
 			throws IOException 
 	{
+		
+		if(LoginController.checkUser==null)
+		{
+			try {
+				redirect.sendRedirect("/login");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
 		User checkUser=(User)session.getAttribute("loginDetails");
 		if(!checkUser.getRole().equals("hr"))
 		{
@@ -216,6 +238,17 @@ public class CandidateController
 
 	@GetMapping("/showUpdateCandidate")
 	public ModelAndView showUpdateCandidate(@RequestParam Integer candidateId,HttpSession session,HttpServletResponse redirect) {
+		
+		if(LoginController.checkUser==null)
+		{
+			try {
+				redirect.sendRedirect("/login");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
 		User checkUser=(User)session.getAttribute("loginDetails");
 		if(!checkUser.getRole().equals("hr"))
 		{
@@ -239,6 +272,17 @@ public class CandidateController
 	@Transactional
 	@GetMapping("/updateStatus")
 	public String updateCandidateStatus(@RequestParam Integer candidateId, @RequestParam String status,HttpSession session,HttpServletResponse redirect) {
+		
+		if(LoginController.checkUser==null)
+		{
+			try {
+				redirect.sendRedirect("/login");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
 		User checkUser=(User)session.getAttribute("loginDetails");
 		if(!(checkUser.getRole().equals("hr")||checkUser.getRole().equals("hrHead")||checkUser.getRole().equals("interviewer")))
 		{
@@ -256,6 +300,17 @@ public class CandidateController
 
 	@GetMapping("/deleteCandidate")
 	public String deleteCandidate(@RequestParam Integer candidateId,HttpSession session,HttpServletResponse redirect) {
+		
+		if(LoginController.checkUser==null)
+		{
+			try {
+				redirect.sendRedirect("/login");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
 		User checkUser=(User)session.getAttribute("loginDetails");
 		if(!checkUser.getRole().equals("hr"))
 		{
@@ -274,6 +329,17 @@ public class CandidateController
 	@GetMapping("/downloadFile")
 	public void downloadFile(@RequestParam Integer candidateId, Model model, HttpSession session,HttpServletResponse response)
 			throws IOException {
+		
+		if(LoginController.checkUser==null)
+		{
+			try {
+				response.sendRedirect("/login");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
 		User checkUser=(User)session.getAttribute("loginDetails");
 		if(!checkUser.getRole().equals("hr"))
 		{

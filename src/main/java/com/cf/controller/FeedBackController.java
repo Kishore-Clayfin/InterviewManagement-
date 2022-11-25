@@ -48,6 +48,17 @@ public class FeedBackController {
 	@GetMapping("/addFeedback")
 	public ModelAndView addFeedback(@RequestParam Integer candidateId ,HttpSession session,HttpServletResponse redirect) 
 	{
+		
+		if(LoginController.checkUser==null)
+		{
+			try {
+				redirect.sendRedirect("/login");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
 		User checkUser=(User)session.getAttribute("loginDetails");
 		if(!(checkUser.getRole().equals("interviewer")||checkUser.getRole().equals("hrHead")))
 		{
@@ -81,6 +92,17 @@ public class FeedBackController {
 	@PostMapping("/saveFeedback")
 	public String saveFeedBack(@Valid @ModelAttribute Feedback feedback,BindingResult result, Model model,@RequestParam Integer candidateId,HttpSession session,HttpServletResponse redirect) 
 	{
+		
+		if(LoginController.checkUser==null)
+		{
+			try {
+				redirect.sendRedirect("/login");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
 		User checkUser=(User)session.getAttribute("loginDetails");
 		if(!(checkUser.getRole().equals("interviewer")||checkUser.getRole().equals("hrHead")))
 		{
@@ -165,6 +187,17 @@ public class FeedBackController {
 	@GetMapping("/viewFeedbacks")
 	public ModelAndView getAllFeedbacks(HttpSession session,HttpServletResponse redirect) 
 	{	
+		
+		if(LoginController.checkUser==null)
+		{
+			try {
+				redirect.sendRedirect("/login");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
 		User checkUser=(User)session.getAttribute("loginDetails");
 		if(!(checkUser.getRole().equals("hr")||checkUser.getRole().equals("interviewer")||checkUser.getRole().equals("hrHead")))
 		{
@@ -184,6 +217,17 @@ public class FeedBackController {
 	@GetMapping("/showUpdateFeedback")
 	public ModelAndView showUpdateFeedback(@RequestParam Integer feedbackId,HttpSession session,HttpServletResponse redirect) 
 	{
+		
+		if(LoginController.checkUser==null)
+		{
+			try {
+				redirect.sendRedirect("/login");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
 		User checkUser=(User)session.getAttribute("loginDetails");
 		if(!(checkUser.getRole().equals("hr")||checkUser.getRole().equals("interviewer")||checkUser.getRole().equals("hrHead")))
 		{
@@ -209,6 +253,16 @@ public class FeedBackController {
 	@GetMapping("/deleteFeedback")
 	public String deleteFeedback(@RequestParam Integer feedbackId,HttpSession session,HttpServletResponse redirect) 
 	{
+		if(LoginController.checkUser==null)
+		{
+			try {
+				redirect.sendRedirect("/login");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
 		User checkUser=(User)session.getAttribute("loginDetails");
 		if(!(checkUser.getRole().equals("hr")||checkUser.getRole().equals("interviewer")||checkUser.getRole().equals("hrHead")))
 		{
@@ -227,8 +281,18 @@ public class FeedBackController {
 	
 	
 	@GetMapping("/generatePdfFile")
-	   public void generatePdfFile(HttpServletResponse response, @RequestParam(value="feedbackId") Integer feedbackId) throws IOException 
+	public void generatePdfFile(HttpServletResponse response, @RequestParam(value="feedbackId") Integer feedbackId) throws IOException 
 	{
+		if(LoginController.checkUser==null)
+		{
+			try {
+				response.sendRedirect("/login");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
 		Feedback feedback1= iFeedbackService.getDetailsById(feedbackId);
 		System.out.println(feedbackId);
 	  System.out.println(feedback1);
@@ -237,8 +301,18 @@ public class FeedBackController {
 			
 	 }
 	@GetMapping("/generateAllPdfFile")
-	   public void generateAllPdfFile(HttpServletResponse response) throws IOException 
+	public void generateAllPdfFile(HttpServletResponse response) throws IOException 
 	{
+		if(LoginController.checkUser==null)
+		{
+			try {
+				response.sendRedirect("/login");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
 		List<Feedback> feedback2= iFeedbackService.getAllFeedback();
 	  PdfUtilHelper export=new PdfUtilHelper();
 	  
@@ -252,6 +326,17 @@ public class FeedBackController {
 	@Transactional
 	@GetMapping("/updateInterviewerFbStatus")
 	public String updateInterviewerFbStatus(@RequestParam Integer feedbackId, @RequestParam String interviewerFbStatus,HttpSession session,HttpServletResponse redirect) {
+		
+		if(LoginController.checkUser==null)
+		{
+			try {
+				redirect.sendRedirect("/login");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
 		User checkUser=(User)session.getAttribute("loginDetails");
 		if(!(checkUser.getRole().equals("hr")||checkUser.getRole().equals("hrHead")||checkUser.getRole().equals("interviewer")))
 		{

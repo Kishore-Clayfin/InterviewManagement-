@@ -3,8 +3,8 @@
 <head>
 <title>CANDIDATES LIST</title>
 
-<link rel="stylesheet" type="text/css"
-	href="https://cdn.datatables.net/v/bs4/dt-1.10.25/datatables.min.css" />
+<!-- <link rel="stylesheet" type="text/css"
+	href="https://cdn.datatables.net/v/bs4/dt-1.10.25/datatables.min.css" /> -->
 <link rel="stylesheet"
 	href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
 	integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l"
@@ -19,6 +19,47 @@
 	integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA=="
 	crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
+<!--Search builder code starts-->
+
+
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script
+	src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+<script
+	src="https://cdn.datatables.net/searchbuilder/1.4.0/js/dataTables.searchBuilder.min.js"></script>
+<script
+	src="https://cdn.datatables.net/datetime/1.2.0/js/dataTables.dateTime.min.js"></script>
+<link rel="stylesheet"
+	href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css">
+<link rel="stylesheet"
+	href="https://cdn.datatables.net/searchbuilder/1.4.0/css/searchBuilder.dataTables.min.css">
+<link rel="stylesheet"
+	href="https://cdn.datatables.net/datetime/1.2.0/css/dataTables.dateTime.min.css">
+
+<script>
+	$(document).ready(function() {
+		$('#doctorTable').DataTable({
+			dom : 'Qlfrtip',
+			searchBuilder : {
+				columns : [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14 ]
+			}
+		});
+	});
+</script>
+
+<!--Search builder code ends-->
+
+
+
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script
+	src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+<script
+	src="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css"></script>
+<script
+	src="https://cdn.datatables.net/searchbuilder/1.4.0/js/dataTables.searchBuilder.min.js"></script>
+
+
 </head>
 
 <body>
@@ -26,28 +67,28 @@
 		<div class="container">
 			<div class="navbar-header">
 
-				<a class="navbar-brand" id="anchor" th:href="@{/home}"> Go
-					To Home Page</a> <a class="navbar-brand" id="anchor"
-					th:href="@{/logout}">Logout </a>
+				<a class="navbar-brand" id="anchor" th:href="@{/home}"> Go To
+					Home Page</a> <a class="navbar-brand" id="anchor" th:href="@{/logout}">Logout
+				</a>
 
-					
+
 			</div>
 		</div>
 	</nav>
-<br>
+	<br>
 	<br>
 	<div style="padding: 50px;">
 
 		<h3>CANDIDATES LIST</h3>
+		
 
 		<hr />
-		<br />
-		<br />
+		<br /> <br />
 		<table class="table table-bordered table-striped" id="doctorTable">
 
 			<thead>
 				<tr>
-					<th>Schedule</th>
+					<th><label>SelectAll</label><input type="checkbox" id="ckbCheckAll" /></th>
 					<th>candidateName</th>
 					<th>email</th>
 					<th>mobileNumber</th>
@@ -68,27 +109,8 @@
 			</thead>
 			<tbody>
 				<tr th:each="candidate : ${candidate}">
-					<!--@Id
-	private Integer candidateId;
-	private String candidateName;
-	private String email;
-	private Long mobileNumber;
-	private String highQualification;
-	private Float cgpa;
-	private String roleAppliedFor;
-	private String alternateEmail;
-	private Float experience;
-	private String resume; 
-	private String status;
-	
-	@JoinColumn(name = "userId")
-	@ManyToOne
-	private User user;
-	
-	@JoinColumn(name = "domainId")
-	@OneToOne
-	private Domain domain;-->
-					<td><input name="selector[]" id="ad_Checkbox1"class="ads_Checkbox" type="checkbox"
+
+					<td> <input type="checkbox" class="checkBoxClass" 
 						th:value="${candidate.getCandidateId}"></td>
 					<td th:text="${candidate.candidateName}" />
 					<td th:text="${candidate.email}" />
@@ -117,21 +139,32 @@
 			</tbody>
 
 		</table>
-		<a th:href="@{/home}" class="btn btn-danger ml-2">Home</a>
-		<a id="save_value" class="btn btn-primary"  href=" /addschedule">Scheduled</a>
+		<a th:href="@{/home}" class="btn btn-danger ml-2">Home</a> <a
+			id="save_value" class="btn btn-primary" href=" /addschedule">Scheduled</a>
 
 
 	</div>
 	<script>
+	
+	
 		$(function() {
-			$('#save_value').click(function() {
-				
+			$('#save_value').click(function() 
+					{
+
 				var val = [];
-				$(':checkbox:checked').each(function(i) {
-					val.push($(this).val());
+				$(':checkbox:checked').each(function(i)
+				{
+					var a=$(this).val()
+					if(/^[0-9]+$/.test(a))
+					{
+						val.push($(this).val());
+						
+					}
+					
 				});
 				val1 = JSON.stringify(val);
-				console.log(val1);
+				console.log('=> '+val1);
+
 				
 				$.ajax({
 
@@ -152,16 +185,22 @@
 						console.log(data);
 
 						return false;
-
+F
 					}
 
 				});
 			});
-			
+
 		});
-		
 	</script>
 
+<script >
+$(document).ready(function () {
+    $("#ckbCheckAll").click(function () {
+        $(".checkBoxClass").prop('checked', $(this).prop('checked'));
+    });
+});
+</script>
 </body>
 
 </html>

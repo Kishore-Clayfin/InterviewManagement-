@@ -1,7 +1,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-<title>INTERVIEWERS LIST</title>
+<title>Users LIST</title>
 
 <link rel="stylesheet" type="text/css"
 	href="https://cdn.datatables.net/v/bs4/dt-1.10.25/datatables.min.css" />
@@ -17,6 +17,34 @@
       color: white;
   }
 	</style>
+	<!--Search builder code starts-->
+
+
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script
+	src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+<script
+	src="https://cdn.datatables.net/searchbuilder/1.4.0/js/dataTables.searchBuilder.min.js"></script>
+<script
+	src="https://cdn.datatables.net/datetime/1.2.0/js/dataTables.dateTime.min.js"></script>
+<link rel="stylesheet"
+	href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css">
+<link rel="stylesheet"
+	href="https://cdn.datatables.net/searchbuilder/1.4.0/css/searchBuilder.dataTables.min.css">
+<link rel="stylesheet"
+	href="https://cdn.datatables.net/datetime/1.2.0/css/dataTables.dateTime.min.css">
+
+<script>
+	$(document).ready(function() {
+		$('#doctorTable').DataTable({
+			dom : 'Qlfrtip',
+			searchBuilder : {
+				columns : [ 0,1, 2, 3, 4, 5, 6, 7 ]
+			}
+		});
+	});
+</script>
+	<!--Search builder code ends-->
 </head>
 
 <body>
@@ -37,7 +65,7 @@
 	<br>
 	<div style="padding: 15PX;">
 
-		<h3>INTERVIEWER LIST</h3>
+		<h3>Users LIST</h3>
 
 		<hr />
 

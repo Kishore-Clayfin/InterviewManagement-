@@ -63,7 +63,7 @@ public class ScheduleController {
 				e.printStackTrace();
 			}
 		}
-		
+//		System.err.println(list1);
 		session.setAttribute("ajax", list1);
 	//	System.out.println(list1);
 	
@@ -85,9 +85,9 @@ public class ScheduleController {
 		}
 		
 		List li1=(List) session.getAttribute("ajax");
-		//	System.out.println(list1);
+//			System.out.println(li1);
 		List<Candidate> li=candidateDao.findAllById(li1);
-	//	System.out.println(li);
+		///System.out.println(li);
 		
 		Schedule Schedule = new Schedule();
 		List<Candidate> Candidate = icandidateService.viewCandidateList();
@@ -107,7 +107,8 @@ public class ScheduleController {
 	}
 
 	@GetMapping("/scheduleInterview") 
-	public ModelAndView addhr(HttpServletResponse redirect) {
+	public ModelAndView addhr(HttpServletResponse redirect) 
+	{
 		
 		if(LoginController.checkUser==null)
 		{
@@ -119,6 +120,10 @@ public class ScheduleController {
 			}
 		}
 		
+		
+	
+	
+	
 		Schedule Schedule = new Schedule();
 		List<Candidate> Candidate = icandidateService.viewCandidateList();
 		List<User> user = iUserService.viewUserList();
@@ -189,6 +194,7 @@ public class ScheduleController {
 	@PostMapping("/saveschedule")
 	public String saveschedule(@Valid @ModelAttribute Schedule schedule,BindingResult result, Model model,RedirectAttributes ra,HttpSession session,HttpServletResponse redirect) 
 	{
+		
 		if(LoginController.checkUser==null)
 		{
 			try {
@@ -212,12 +218,22 @@ public class ScheduleController {
 		}
 
 
+
+//		List li1=(List) session.getAttribute("ajax");
+//		System.out.println(li1);
+//		if(li1!=null)
+//		{
+//			List<Candidate> selectedList=candidateDao.findAllById(li1);
+//			
+//			if(schedule.getCandidate()==null)
+//			{
+//				schedule.setCandidate(selectedList);
+//			}
+//		}
+//		
+//		
+		
 		List<Candidate> candidateList=schedule.getCandidate();
-		
-		
-		
-		
-		
 		List<Schedule> schedules = ischeduleService.viewScheduleList();
 		int id=schedule.getUser().getUserId();
 		List<Schedule> interviewer=schedules.stream().filter(x -> x.getUser().getUserId()==id).collect(Collectors.toList());

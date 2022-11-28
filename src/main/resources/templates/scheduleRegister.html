@@ -82,13 +82,13 @@
 					<div class="form-group">
 						<label class="control-label" for="name">Candidate</label> <select
 							class="form-control" id="testOrder" name="testOrder"
-							th:field="*{Candidate}" multiple required autofocus="autofocus">
+							th:field="*{Candidate}" multiple  autofocus="autofocus">
 							<option value="" selected>--- Select ---</option>
 							<option th:each="candidate : ${candidate}"
 								th:value="${candidate.getCandidateId}"
 								th:text="${candidate.getCandidateName+' with id '+candidate.getCandidateId}"></option>
 						</select>
-							<p class="alert alert-danger" th:if="${#fields.hasErrors('candidate')}" th:errors="*{candidate}" />
+							<!-- <p class="alert alert-danger" th:if="${#fields.hasErrors('candidate')}" th:errors="*{candidate}" /> -->
 					</div>
 
 

@@ -7,111 +7,106 @@
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
 	integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
 	crossorigin="anonymous">
-	
-	<style type="text/css">
 
-
-
-body{
-
-
-
- background:
-        linear-gradient(red, transparent),
-        linear-gradient(to top left, lime, transparent),
-        linear-gradient(to top right, blue, transparent);
-    background-blend-mode: screen;
-
+<style type="text/css">
+body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background: #050505;
 }
-	#anchor
-   {
-        padding-left: 400;
-        font-weight: bold;
-      color: white;
-  }
-	</style>
+h1 {
+    font-size: 36px;
+    color: white;
+}
+</style>
 
 
 
 
 
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.min.js"> </script>  
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"> </script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.min.js">
 	
-		
-	<style>
-	label.error {  
-    color: red;  
-    font-size: 1rem;  
-    display: block;  
-    margin-top: 5px;  
-} </style>
-	<script>  
+</script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js">
 	
-	
-	$(function () {
-	    $("#btnSubmit").click(function () {
-	        var password = $("#password").val();
-	        var confirmPassword = $("#confirmpassword").val();
-	        
-	        
-	        
-	        if (password != confirmPassword) {
-	            alert("Passwords do not match.");
-	            return false;
-	        }
-	        return true;
-	    });
+</script>
+
+
+<style>
+label.error {
+	color: red;
+	font-size: 1rem;
+	display: block;
+	margin-top: 5px;
+}
+</style>
+<script>
+	$(function() {
+		$("#btnSubmit").click(function() {
+			var password = $("#password").val();
+			var confirmPassword = $("#confirmpassword").val();
+
+			if (password != confirmPassword) {
+				alert("Passwords do not match.");
+				return false;
+			}
+			return true;
+		});
 	});
-	
-	
- $(document).ready (function () {  
-  $("#registration").validate ();  
-});  
-</script> 
-	
-	
-</head>
-<body>
 
-	
+	$(document).ready(function() {
+		$("#registration").validate();
+	});
+</script>
+
+<link rel="stylesheet" type="text/css" th:href="@{~/css/home.css}">
+</head>
+<body class="background4" >
+
+
 	<nav class="navbar navbar-inverse navbar-fixed-top">
 		<div class="container">
 			<div class="navbar-header">
 
-				<a class="navbar-brand" id="anchor" th:href="@{/home}"> Go
-					To Home Page</a> <a class="navbar-brand" id="anchor"
-					th:href="@{/logout}">Logout </a>
+				<a class="navbar-brand" id="anchor" th:href="@{/home}"> Go To
+					Home Page</a> <a class="navbar-brand" id="anchor" th:href="@{/logout}">Logout
+				</a>
 
-					
+
 			</div>
 		</div>
 	</nav>
 
 	<br>
 	<br>
-	
+
 	<div class="container">
 		<div class="row">
 			<div class="col-md-6 col-md-offset-3">
 
-				
 
-				<h1> User Registration</h1>
 
-				<form th:action="@{/saveUser}" id="registration" method="post" th:object="${user}">
-					
+				<h1>User Registration</h1>
+
+				<form th:action="@{/saveUser}" id="registration" method="post"
+					th:object="${user}">
+
 
 					<div class="form-group">
 						<label class="control-label" for="name">Name </label> <input
-							id="name" class="form-control" th:field="*{username}"
-							required autofocus="autofocus" th:minlength="4"/>
-	                 <p class="alert alert-danger" th:if="${#fields.hasErrors('username')}" th:errors="*{username}" />
-							
+							id="name" class="form-control" th:field="*{username}" required
+							autofocus="autofocus" th:minlength="4" />
+						<p class="alert alert-danger"
+							th:if="${#fields.hasErrors('username')}" th:errors="*{username}" />
+
 					</div>
 
-					
-                  <!-- private String mailId;
+
+					<!-- private String mailId;
 	private Long mobileNumber;
 	private String designation;
 	private String experties; -->
@@ -120,116 +115,133 @@ body{
 
 
 
-				<div class="form-group">
-						<label class="control-label" for="role">Role </label> 
-                        
-                        <select name="role"  id="role" th:field="*{role}" class="form-control" required autofocus="autofocus">
-                            <option  value="" >--- Select ---</option>
-                           
-                            <option th:value="hr" th:text="Hr" ></option>
-                            <option th:value="interviewer" th:text="Interviewer"></option>
-                            <option th:value="hrHead" th:text="Hr-Head"></option>
-                            
-                          </select>
-                        
-                      
-              	   <p class="alert alert-danger" th:if="${#fields.hasErrors('role')}" th:errors="*{role}" />
-              
-					</div> 
-					
-					
 					<div class="form-group">
-						<label class="control-label" for="Password"> Password </label> <input 
-							id="password" class="form-control" 
-							th:field="*{password}" required autofocus="autofocus" th:minlength="6"/>
-						 <p class="alert alert-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}" />
-							
+						<label class="control-label" for="role">Role </label> <select
+							name="role" id="role" th:field="*{role}" class="form-control"
+							required autofocus="autofocus">
+							<option value="">--- Select ---</option>
+
+							<option th:value="hr" th:text="Hr"></option>
+							<option th:value="interviewer" th:text="Interviewer"></option>
+							<option th:value="hrHead" th:text="Hr-Head"></option>
+
+						</select>
+
+
+						<p class="alert alert-danger" th:if="${#fields.hasErrors('role')}"
+							th:errors="*{role}" />
+
 					</div>
-					
+
+
 					<div class="form-group">
-						<label class="control-label" for="confirmpassword"> Confirm password </label> <input
-							id="confirmpassword" class="form-control" 
-							 required autofocus="autofocus" />
+						<label class="control-label" for="Password"> Password </label> <input
+							id="password" class="form-control" th:field="*{password}"
+							required autofocus="autofocus" th:minlength="6" />
+						<p class="alert alert-danger"
+							th:if="${#fields.hasErrors('password')}" th:errors="*{password}" />
+
 					</div>
-					
+
+					<div class="form-group">
+						<label class="control-label" for="confirmpassword">
+							Confirm password </label> <input id="confirmpassword"
+							class="form-control" required autofocus="autofocus" />
+					</div>
+
 					<div class="form-group">
 						<label class="control-label" for="name">Company MailId</label> <input
-							id="name" class="form-control" th:field="*{email}"
-							required autofocus="autofocus" th:minlength="4"/>
-						 <p class="alert alert-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}" />
-						
-						
+							id="name" class="form-control" th:field="*{email}" required
+							autofocus="autofocus" th:minlength="4" />
+						<p class="alert alert-danger"
+							th:if="${#fields.hasErrors('email')}" th:errors="*{email}" />
+
+
 						<div class="alert alert-danger alert-dismissible"
 							th:if="${param.mailError!= null}">
 							<a th:href="@{/addUser}" class="close" data-dismiss="alert"
 								onclick="$('.alert').hide()" aria-label="close">X</a> <span
 								th:text="${param.mailError}"></span>
-						</div>	
-							
+						</div>
+
 					</div>
-					
+
 					<div class="form-group">
-						<label class="control-label" for="name">Personal EmailId </label> <input
-							id="name" class="form-control" th:field="*{userDetails.personalMailId}"
-							required autofocus="autofocus" th:minlength="4"/>
-						 <p class="alert alert-danger" th:if="${#fields.hasErrors('userDetails.personalMailId')}" th:errors="*{userDetails.personalMailId}" />
-							
+						<label class="control-label" for="name">Personal EmailId </label>
+						<input id="name" class="form-control"
+							th:field="*{userDetails.personalMailId}" required
+							autofocus="autofocus" th:minlength="4" />
+						<p class="alert alert-danger"
+							th:if="${#fields.hasErrors('userDetails.personalMailId')}"
+							th:errors="*{userDetails.personalMailId}" />
+
 					</div>
 					<div class="form-group">
 						<label class="control-label" for="name">Mobile Number </label> <input
-							id="name" class="form-control" th:field="*{userDetails.mobileNumber}"
-							required autofocus="autofocus" th:minlength="4"/>
-						 <p class="alert alert-danger" th:if="${#fields.hasErrors('userDetails.mobileNumber')}" th:errors="*{userDetails.mobileNumber}" />
+							id="name" class="form-control"
+							th:field="*{userDetails.mobileNumber}" required
+							autofocus="autofocus" th:minlength="4" />
+						<p class="alert alert-danger"
+							th:if="${#fields.hasErrors('userDetails.mobileNumber')}"
+							th:errors="*{userDetails.mobileNumber}" />
 						<div class="alert alert-danger alert-dismissible"
 							th:if="${param.numberError!= null}">
 							<a th:href="@{/addUser}" class="close" data-dismiss="alert"
 								onclick="$('.alert').hide()" aria-label="close">X</a> <span
 								th:text="${param.numberError}"></span>
-						</div>	
+						</div>
 					</div>
 					<div class="form-group">
-					<label class="control-label" for="designation">Designation</label> 
-					 <select name="role"  id="role" th:field="*{userDetails.designation}" class="form-control" required autofocus="autofocus">
-                            <option  value="" selected >--- Select ---</option>
-                           
-                            <option th:value="seniorHr" th:text="SeniorHr" ></option>
-                            <option th:value="hr" th:text="hr"></option>
-                             <option th:value="hrHead" th:text="hrHead" ></option>
-                            <option th:value="technicalTrainer" th:text="TechnicalTrainer"></option>
-                             <option th:value="seniorTechnicalTrainer" th:text="seniorTechnicalTrainer"></option>
-                            
-                          </select>
-                          <p class="alert alert-danger" th:if="${#fields.hasErrors('userDetails.designation')}" th:errors="*{userDetails.designation}" />
-                          
-                          </div>
-                          <label class="control-label" for="experties">Experties</label> 
-                          <div class="form-group">
-                           <select name="role"  id="role" th:field="*{userDetails.experties}" class="form-control" required autofocus="autofocus">
-                            <option  value="" >--- Select ---</option>
-                           
-                            <option th:value="javaFSD" th:text="JavaFSD" ></option>
-                            <option th:value="meanStack" th:text="MeanStack"></option>
-                             <option th:value="reactJs" th:text="reactJs" ></option>
-                            <option th:value="dataScience" th:text="dataScience"></option>
-                             <option th:value="testing" th:text="Testing"></option>
-                            
-                          </select>
-                        <p class="alert alert-danger" th:if="${#fields.hasErrors('userDetails.experties')}" th:errors="*{userDetails.experties}" />
-                          
-                          </div>
-					<div class="form-group">
-						<button id="btnSubmit"type="submit" class="btn btn-success">Register</button>
-						
+						<label class="control-label" for="designation">Designation</label>
+						<select name="role" id="role"
+							th:field="*{userDetails.designation}" class="form-control"
+							required autofocus="autofocus">
+							<option value="" selected>--- Select ---</option>
+
+							<option th:value="seniorHr" th:text="SeniorHr"></option>
+							<option th:value="hr" th:text="hr"></option>
+							<option th:value="hrHead" th:text="hrHead"></option>
+							<option th:value="technicalTrainer" th:text="TechnicalTrainer"></option>
+							<option th:value="seniorTechnicalTrainer"
+								th:text="seniorTechnicalTrainer"></option>
+
+						</select>
+						<p class="alert alert-danger"
+							th:if="${#fields.hasErrors('userDetails.designation')}"
+							th:errors="*{userDetails.designation}" />
+
 					</div>
-					<input type="hidden" th:field="*{userId}" />
-					<input type="hidden" th:field="*{userDetails.userDetailsId}" />
-					
+					<label class="control-label" for="experties">Experties</label>
+					<div class="form-group">
+						<select name="role" id="role" th:field="*{userDetails.experties}"
+							class="form-control" required autofocus="autofocus">
+							<option value="">--- Select ---</option>
+
+							<option th:value="javaFSD" th:text="JavaFSD"></option>
+							<option th:value="meanStack" th:text="MeanStack"></option>
+							<option th:value="reactJs" th:text="reactJs"></option>
+							<option th:value="dataScience" th:text="dataScience"></option>
+							<option th:value="testing" th:text="Testing"></option>
+
+						</select>
+						<p class="alert alert-danger"
+							th:if="${#fields.hasErrors('userDetails.experties')}"
+							th:errors="*{userDetails.experties}" />
+
+					</div>
+					<div class="form-group">
+						<button id="btnSubmit" type="submit" class="btn btn-success">Register</button>
+
+					</div>
+					<input type="hidden" th:field="*{userId}" /> <input type="hidden"
+						th:field="*{userDetails.userDetailsId}" />
+
 				</form>
 			</div>
 		</div>
-					<a th:href="@{/home}" class="btn btn-danger ml-2">Home</a>
+		<a th:href="@{/home}" class="btn btn-danger ml-2">Home</a>
 	</div>
 </body>
-</html> 
+</html>
 
 

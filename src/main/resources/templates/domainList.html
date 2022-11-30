@@ -17,31 +17,37 @@
 <style>
 	#anchor
    {
-        padding-left: 400;
+        margin-left: 400;
         font-weight: bold;
       color: white;
   }
-	</style>
+.image {
+    background-image: url(/image/listBackground.jpg);
+    background-repeat: no-repeat;
+        background-size: cover;
+    
+}
+</style>
 
 
 </head>
 
-<body>
+<body class="image">
 
-	<nav class="navbar navbar-inverse navbar-fixed-top">
+	<nav class="navbar navbar-inverse navbar-fixed-top"
+		style="background-color: black;">
 		<div class="container">
 			<div class="navbar-header">
 
-				<a class="navbar-brand" id="anchor" th:href="@{/hrHomepage}"> Go
-					To Home Page</a> <a class="navbar-brand" id="anchor"
-					th:href="@{/addDomain}"> Add Domain </a>
+				<a class="navbar-brand" id="anchor" th:href="@{/home}"> Go To
+					Home Page</a> <a class="navbar-brand" id="anchor" th:href="@{/logout}">Logout
+				</a>
 
-					
+
 			</div>
 		</div>
 	</nav>
 
-	<br>
 	<br>
 	<br>
 	<br>

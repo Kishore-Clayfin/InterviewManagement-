@@ -30,6 +30,25 @@
 	background-size: cover;
 	
 }
+
+.background3
+{
+ 	background-image:url(/image/2314950.jpg);
+ 	background-repeat: no-repeat;
+	background-size: cover;
+	
+}
+
+.background4
+{
+ 	background-image:url(/image/5040007.jpg);
+ 	background-repeat: no-repeat;
+	background-size: cover;
+	
+}
+
+
+
 #login
 {
 	margin-top:60px;

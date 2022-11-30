@@ -45,18 +45,23 @@
 	align-content: center;
 }
 
-	#anchor
-   {
-        padding-left: 400;
-        font-weight: bold;
-      color: white;
-  }
-	</style>
+#anchor {
+	margin-left: 410;
+	font-weight: bold;
+	color: white;
+}
+
+.image {
+    background-image: url(/image/listBackground.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+</style>
 
 
 </head>
 
-<body>
+<body class="image">
 	<nav class="navbar navbar-inverse navbar-fixed-top"
 		style="background-color: black;">
 		<div class="container">
@@ -128,23 +133,28 @@
 									th:href="@{/updateStatus(candidateId=${candidate.candidateId},status=INCOMPLETE)}"
 									class="dropdown-item">InComplete</a>
 							</div>
-						</div>  
-						<div th:each="role:${role}" ></div> 
-							<div th:if="${role.getRole()=='hr'}" style=" display: flex;"> &nbsp;&nbsp;<a
+						</div>
+						<div th:each="role:${role}"></div>
+						<div th:if="${role.getRole()=='hr'}" style="display: flex;">
+							&nbsp;&nbsp;<a
 								th:href="@{/showUpdateSchedule(scheduleId=${schedule.scheduleId})}"
 								class="btn btn-info">Update</a> <a
 								th:href="@{/deleteSchedule(scheduleId=${schedule.scheduleId})}"
 								class="btn btn-danger ml-2">Delete</a>
-								</div>
+						</div>
 
 
 					</td>
 				</tr>
 			</tbody>
 		</table>
-		<a th:href="@{/giveFeedback}" class="btn btn-success ml-2">Give
-			FeedBack</a> <a th:href="@{/home}" class="btn btn-danger ml-2">Home</a>
-
+		<div style="display: flex;">
+		<div th:if="${role.getRole()!='hr'}">
+			<a th:href="@{/giveFeedback}" class="btn btn-success ml-2">Give
+				FeedBack</a>
+		</div>
+		<a th:href="@{/home}" class="btn btn-danger ml-2">Home</a>
+		</div>
 	</div>
 
 	<script

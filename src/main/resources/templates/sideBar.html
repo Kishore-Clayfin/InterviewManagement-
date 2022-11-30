@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+</head>
+<body>
+
+<div th:fragment="header">
+	<link rel="stylesheet" type="text/css" th:href="@{~/css/sideBar.css}">
+	
+	<div id="mySidebar" class="sidebar">
+		<a href="javascript:void(0)" class="closebtn" onclick="closeNav()" style="top: 79px;margin: -33px;">×</a>
+		<br>
+		<a th:href="@{/addCandidate}"><b>Register Candidate</b></a> <a
+			th:href="@{/viewCandidates}"><b>View Candidates</b></a> <a
+			th:href="@{/addDomain}"><b>Add Domain</b></a> <a
+			th:href="@{/viewDomains}"><b>View Domain</b></a> <a
+			th:href="@{/viewUsers}"><b>View Users</b></a> <a
+			th:href="@{/addUser}"><b>Register User</b></a> <a
+			th:href="@{/scheduleInterview}"><b>Schedule Interview</b></a> <a
+			th:href="@{/viewschedules}"><b>View Schedules</b></a> <a
+			th:href="@{/addHiring}"><b>Add Hiring</b></a> <a
+			th:href="@{/viewHirings}"><b>View Hiring</b></a> <a
+			th:href="@{/showInterviewCompleted}"><b>Interview Completed</b></a> <a
+			th:href="@{/viewFeedbacks}"><b>View Feedbacks</b></a>
+	</div>
+
+	<div id="main">
+		<button class="openbutton" onclick="openNav()">
+			<b>☰</b>
+		</button>
+
+	</div>
+
+	<script>
+		function openNav() {
+			document.getElementById("mySidebar").style.width = "250px";
+			document.getElementById("main").style.marginLeft = "250px";
+		}
+
+		function closeNav() {
+			document.getElementById("mySidebar").style.width = "0";
+			document.getElementById("main").style.marginLeft = "0";
+		}
+	</script>
+</div>
+</body>
+</html>

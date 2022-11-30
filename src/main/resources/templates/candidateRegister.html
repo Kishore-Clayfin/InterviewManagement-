@@ -1,6 +1,6 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="ISO-8859-1">
+<!-- <meta charset="ISO-8859-1"> -->
 <title>Registration</title>
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
@@ -33,6 +33,11 @@ h1 {
     top: 0;
     left: 0;
 }
+.openbtn {
+    background-color: lightskyblue;
+    color: black;
+    margin-top: -547.39px;
+}
 </style>
 
 <script
@@ -47,6 +52,11 @@ h1 {
 	src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 
 <style>
+.openbutton {
+    background-color: lightskyblue;
+    color: black;
+    margin-top: -547.39px;
+}
 label.error {
 	color: red;
 	font-size: 1rem;
@@ -88,7 +98,7 @@ label.error {
 
 	<br>
 	<br>
-
+<div th:insert="sideBar :: header"></div>
 	<div class="container">
 		<div class="row">
 			<div class="col-md-6 col-md-offset-3">

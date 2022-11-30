@@ -10,6 +10,19 @@
 
 <link rel="stylesheet" type="text/css" th:href="@{~/css/home.css}">
 <style>
+#back {
+    border-radius: 50%;
+    line-height: 35px;
+    width: 40px;
+    font-size: 25pt;
+    font-family: tahoma;
+    font-weight: bold;
+    margin-top: 11px;
+    margin-left: 21px;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
 body {
   font-family: "Lato", sans-serif;
 }
@@ -94,6 +107,7 @@ img.background {
 <nav class="navbar navbar-inverse navbar-fixed-top">
 		<div class="container" >
 			<div class="navbar-header">
+							<button id="back"  onclick="history.back()"> &laquo;</button>
 				<a class="navbar-brand" href="#" th:href="@{/logout}" style="margin-left:1100px;color:white"><b><i>
 							Logout</i></b></a>
 						

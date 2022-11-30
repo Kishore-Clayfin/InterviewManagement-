@@ -11,7 +11,19 @@
 	
 	
 	<style>
-		
+		#back {
+    border-radius: 50%;
+    line-height: 35px;
+    width: 40px;
+    font-size: 25pt;
+    font-family: tahoma;
+    font-weight: bold;
+    margin-top: 11px;
+    margin-left: 21px;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
 		
 		body {
   background-image: url('https://s27389.pcdn.co/wp-content/uploads/2021/06/how-can-technology-design-be-made-more-inclusive.jpeg.optimal.jpeg');
@@ -45,7 +57,7 @@ color:infobackground;
 	<nav class="navbar navbar-inverse navbar-fixed-top">
 		<div class="container">
 			<div class="navbar-header">
-
+				<button id="back"  onclick="history.back()"> &laquo;</button>
 				<a class="navbar-brand" id="anchor" th:href="@{/home}"> Go
 					To Home Page</a> <a class="navbar-brand" id="anchor"
 					th:href="@{/logout}">Logout </a>

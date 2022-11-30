@@ -62,6 +62,21 @@
 .image {
     background-image: url(/image/listBackground.jpg);
     background-repeat: no-repeat;
+    background-size:3000px;
+}
+
+#back {
+    border-radius: 50%;
+    line-height: 35px;
+    width: 40px;
+    font-size: 25pt;
+    font-family: tahoma;
+    font-weight: bold;
+    margin-top: 11px;
+    margin-left: 21px;
+    position: absolute;
+    top: 0;
+    left: 0;
 }
 </style>
 </head>
@@ -70,7 +85,7 @@
 	<nav class="navbar navbar-inverse navbar-fixed-top">
 		<div class="container">
 			<div class="navbar-header">
-
+				<button id="back"  onclick="history.back()"> &laquo;</button>
 				<a class="navbar-brand" id="anchor" th:href="@{/home}"> Go To
 					Home Page</a> <a class="navbar-brand" id="anchor" th:href="@{/logout}">Logout
 				</a>
@@ -81,6 +96,8 @@
 	</nav>
 	<br>
 	<br>
+	<br>
+	
 	<div style="padding: 50px;">
 
 		<h3>CANDIDATES LIST</h3>
@@ -144,7 +161,7 @@
 
 		</table>
 		<a th:href="@{/home}" class="btn btn-danger ml-2">Home</a> <a
-			id="save_value" class="btn btn-primary" href=" /addschedule">Scheduled</a>
+			id="save_value" class="btn btn-primary" href="javascript:delay('/addschedule')">Scheduled</a>
 
 
 	</div>
@@ -204,6 +221,10 @@ $(document).ready(function () {
         $(".checkBoxClass").prop('checked', $(this).prop('checked'));
     });
 });
+
+function delay (URL) {
+    setTimeout( function() { window.location = URL }, 2000 );
+}
 </script>
 </body>
 

@@ -28,6 +28,19 @@
     background-image: url(/image/listBackground.jpg);
     background-repeat: no-repeat;
 }
+#back {
+    border-radius: 50%;
+    line-height: 35px;
+    width: 40px;
+    font-size: 25pt;
+    font-family: tahoma;
+    font-weight: bold;
+    margin-top: 11px;
+    margin-left: 21px;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
 </style>
 			
 	</head>
@@ -37,7 +50,7 @@
 	<nav class="navbar navbar-inverse navbar-fixed-top">
 		<div class="container">
 			<div class="navbar-header">
-
+				<button id="back"  onclick="history.back()"> &laquo;</button>
 				<a class="navbar-brand" id="anchor" th:href="@{/home}"> Go
 					To Home Page</a> <a class="navbar-brand" id="anchor"
 					th:href="@{/logout}">Logout </a>

@@ -90,7 +90,7 @@
 	</nav>
 	<br>
 	<br>
-	<div th:insert="sideBar :: header"></div>
+	<div th:insert="sideBar :: header" th:object="${role}" th:if="${role.getRole()=='hr'}" ></div>
 	<div style="padding: 100px;">
 
 		<h3>SCHEDULE LIST</h3>
@@ -152,7 +152,7 @@
 						<div th:if="${role.getRole()=='hr'}" style="display: flex;">
 							&nbsp;&nbsp;<a
 								th:href="@{/showUpdateSchedule(scheduleId=${schedule.scheduleId})}"
-								class="btn btn-info">Update</a> <a
+								class="btn btn-info">Edit</a> <a
 								th:href="@{/deleteSchedule(scheduleId=${schedule.scheduleId})}"
 								class="btn btn-danger ml-2">Delete</a>
 						</div>

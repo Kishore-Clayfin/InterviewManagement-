@@ -214,7 +214,7 @@ table thead tr th {
 						</span></td>
 						<td th:text="${Feedback.subDomRatings}" />
 
-						<td><span
+						<td><div style="display: flex;"
 							th:if="${Feedback.getInterviewerFbStatus()=='selected' || Feedback.getInterviewerFbStatus()=='rejected' }">
 
 
@@ -223,7 +223,8 @@ table thead tr th {
 								class="btn btn-danger ml-2">Delete</a> <a
 								th:href="@{/generatePdfFile(feedbackId=${Feedback.feedbackId})} "
 								class="btn btn-primary ml-2">Print</a>
-						</span> <span
+								</div>
+						 <span
 							th:if="${Feedback.getInterviewerFbStatus()!='selected' && Feedback.getInterviewerFbStatus()!='rejected'}">
 
 

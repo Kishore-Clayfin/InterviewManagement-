@@ -150,7 +150,7 @@ public class ScheduleController {
 		Candidate candidate = icandidateService.findResumeCandidate(candidateId);
 		List<User> user = iUserService.viewUserList();
 
-		List<User> list = user.stream().filter(c -> c.getRole().equalsIgnoreCase("hrHead"))
+		List<User> list = user.stream().filter(c -> c.getRole().equalsIgnoreCase("hrHead")||c.getRole().equalsIgnoreCase("interviewer"))
 				.collect(Collectors.toList());
 
 		ModelAndView mv = new ModelAndView("hrRoundScheduleRegistration");

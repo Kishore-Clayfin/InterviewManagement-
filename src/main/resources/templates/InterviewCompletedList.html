@@ -133,7 +133,7 @@
 						<th>DomainName</th>
 						<th>Sub Category Ratings</th>
 
-						<th>Actions</th>
+						<th>Schedule For</th>
 
 
 					</tr>
@@ -172,9 +172,12 @@
 						</span></td>
 						<td th:text="${Feedback.subDomRatings}" />
 
-						<td><a
+						<td style="display:flex;"><a
 							th:href="@{/addschedule2(candidateId=${Feedback.candidate.getCandidateId()})} "
-							class="btn btn-primary ml-2">Hr Round Schedule</a></td>
+							class="btn btn-success ml-2">HrRound</a>
+							<a
+							th:href="@{/addschedule2(candidateId=${Feedback.candidate.getCandidateId()})} "
+							class="btn btn-primary ml-2">NextLevel</a></td>
 
 
 

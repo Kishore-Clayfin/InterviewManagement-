@@ -179,7 +179,8 @@ public class LoginController implements ErrorController{
 	
 	@RequestMapping("/error")
 	  public String error() {
-	    return "login.html";
+		
+	    return "redirect:/login";
 	  }
 	
 }

@@ -36,6 +36,10 @@ public class ExcelController
 	@Autowired
 	private IDomainDao domainDao;
 	
+	public Domain findDomain(String domainName) {
+	Domain domain=	domainDao.findByDomainName(domainName);
+	return domain;
+	}
 	@GetMapping("/excelPage")
 	public String getExc(HttpServletResponse redirect) 
 	{	
@@ -114,19 +118,22 @@ public class ExcelController
 		        	  if(i==0) {
 		        		  
 		        		  candidate.setCandidateId((int)cell.getNumericCellValue() );
-		        		  System.out.print(cell.getNumericCellValue() + "\t");
+//		        		  System.out.print(cell.getNumericCellValue() + "\t");
 		        	  }
 		        	  else if(i==3) {
 		        		  candidate.setMobileNumber((long)cell.getNumericCellValue() );
-		        		  System.out.print(cell.getNumericCellValue() + "\t");
+//		        		  System.out.print(cell.getNumericCellValue() + "\t");
 		        	  }
 		        	  else if(i==5) {
 			        	  candidate.setCgpa((float)cell.getNumericCellValue() );
-			        	  System.out.print(cell.getNumericCellValue() + "\t");
+//			        	  System.out.print(cell.getNumericCellValue() + "\t");
 			        	  }
 		        	  else if(i==8) {
 		        		  candidate.setExperience((float)cell.getNumericCellValue() );
-		        		  System.out.print(cell.getNumericCellValue() + "\t");
+//		        		  System.out.print(cell.getNumericCellValue() + "\t");
+		        	  }else if(i==9) {
+		        		  candidate.setAlternateMobileNumber((long)cell.getNumericCellValue() );
+//		        		  System.out.print(cell.getNumericCellValue() + "\t");
 		        	  }
 		            
 		            i++;
@@ -135,29 +142,31 @@ public class ExcelController
 //		            System.err.println(i);
 		            if(i==1) {
 			        	  candidate.setCandidateName(cell.getStringCellValue() );
-			        	  System.out.print(cell.getStringCellValue() + "\t");
+//			        	  System.out.print(cell.getStringCellValue() + "\t");
 			        	  }
 			        	  else if(i==2) {
 			        		  candidate.setEmail(cell.getStringCellValue() );
-			        		  System.out.print(cell.getStringCellValue() + "\t");
+//			        		  System.out.print(cell.getStringCellValue() + "\t");
 			        	  }
 			        	  else if(i==4) {
 			        		  candidate.setHighQualification(cell.getStringCellValue() );
-			        		  System.out.print(cell.getStringCellValue() + "\t");
+//			        		  System.out.print(cell.getStringCellValue() + "\t");
 			        	  } 
 			        	  else if(i==6) {
 			        		  candidate.setRoleAppliedFor(cell.getStringCellValue() );
-			        		  System.out.print(cell.getStringCellValue() + "\t");
+//			        		  System.out.print(cell.getStringCellValue() + "\t");
 			        	  } 
 			        	  else if(i==7) {
 			        		  candidate.setAlternateEmail(cell.getStringCellValue() );
-			        		  System.out.print(cell.getStringCellValue() + "\t");
+//			        		  System.out.print(cell.getStringCellValue() + "\t");
 			        	  } 
-			        	  else if(i==9)
+			        	  else if(i==10)
 			        	  {
-			        		  Domain domain=domainDao.findByDomainName((cell.getStringCellValue()).toUpperCase());
+			        		  String dom=cell.getStringCellValue();
+			        		  Domain domain=findDomain(dom);
+			        		  System.err.println(domain);
 			        		  candidate.setDomain(domain);
-			        		  System.out.print(cell.getStringCellValue() + "\t");
+//			        		  System.out.print(cell.getStringCellValue() + "\t");
 			        	  } 
 		            i++;
 		            break;
@@ -199,6 +208,6 @@ public class ExcelController
 //		    }
 		System.out.println(tempStudentList);
 		camdidateService.bulkSaveCandidate(tempStudentList);
-	    return "excel";
+	    return "redirect:/viewCandidates";
 	}
 }

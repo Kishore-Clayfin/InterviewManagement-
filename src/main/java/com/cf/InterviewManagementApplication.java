@@ -9,6 +9,8 @@ public class InterviewManagementApplication {
 	public static void main(String[] args) {
 		
 		SpringApplication.run(InterviewManagementApplication.class, args);
+		System.out.println("hii");
 	}
 
 }
+//this is my first commit

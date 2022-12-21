@@ -57,7 +57,7 @@ public class CandidateController
 				redirect.sendRedirect("/login");
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				e.printStackTrace(); 
 			}
 		}
 

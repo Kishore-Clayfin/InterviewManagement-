@@ -29,8 +29,7 @@ import com.cf.service.ICandidateService;
 import com.cf.service.IDomainService;
 
 @Controller
-public class CandidateController
-{
+public class CandidateController {
 	@Autowired
 	private ICandidateService iCandidateService;
 
@@ -38,10 +37,9 @@ public class CandidateController
 	private IDomainService iDomainService;
 
 	@GetMapping("/addCandidate")
-	public ModelAndView addCandidate(HttpSession session,HttpServletResponse redirect) {
-		
-		if(LoginController.checkUser==null)
-		{
+	public ModelAndView addCandidate(HttpSession session, HttpServletResponse redirect) {
+
+		if (LoginController.checkUser == null) {
 			try {
 				redirect.sendRedirect("/login");
 			} catch (IOException e) {
@@ -49,10 +47,9 @@ public class CandidateController
 				e.printStackTrace();
 			}
 		}
-		
-		User checkUser=(User)session.getAttribute("loginDetails");
-		if(!checkUser.getRole().equals("hr"))
-		{
+
+		User checkUser = (User) session.getAttribute("loginDetails");
+		if (!checkUser.getRole().equals("hr")) {
 			try {
 				redirect.sendRedirect("/login");
 			} catch (IOException e) {
@@ -69,35 +66,13 @@ public class CandidateController
 		mav.addObject("domain", domain);
 		return mav;
 	}
-//	@PostMapping("/saveCandidate")
-//	public String saveCandidate(@ModelAttribute Candidate candidate,BindingResult result,Model mav,HttpSession session) 
-//	{
-//		User obj=(User) session.getAttribute("loginDetails");
-//		User user=new User();
-////		System.out.println(obj.getUserId());
-//		List<Domain> domain = iDomainService.viewDomainList();
-//		
-//		mav.addAttribute("domain",domain);
-//		
-//		if(result.hasErrors()) 
-//		{
-//			return "candidateRegister";
-//			
-//		}
-//		user.setUserId(obj.getUserId());
-//		candidate.setUser(user);
-//		iCandidateService.saveCandidate(candidate);
-//		return "redirect:/viewCandidates";
-//	}
 
 	@PostMapping("/saveCandidate")
 	public String saveCandidate(@Valid @ModelAttribute Candidate candidate, BindingResult result,
-			@RequestParam("file") MultipartFile file, Model mav, HttpSession session, RedirectAttributes attributes,HttpServletResponse redirect)
-			throws IOException 
-	{
-		
-		if(LoginController.checkUser==null)
-		{
+			@RequestParam("file") MultipartFile file, Model mav, HttpSession session, RedirectAttributes attributes,
+			HttpServletResponse redirect) throws IOException {
+
+		if (LoginController.checkUser == null) {
 			try {
 				redirect.sendRedirect("/login");
 			} catch (IOException e) {
@@ -105,10 +80,9 @@ public class CandidateController
 				e.printStackTrace();
 			}
 		}
-		
-		User checkUser=(User)session.getAttribute("loginDetails");
-		if(!checkUser.getRole().equals("hr"))
-		{
+
+		User checkUser = (User) session.getAttribute("loginDetails");
+		if (!checkUser.getRole().equals("hr")) {
 			try {
 				redirect.sendRedirect("/login");
 			} catch (IOException e) {
@@ -138,9 +112,7 @@ public class CandidateController
 		if (result.hasErrors()) {
 			return "candidateRegister";
 
-		} 
-		else if (nullcheck == null)
-		{
+		} else if (nullcheck == null) {
 			attributes.addAttribute("numberNull", "Please enter a  mobile number");
 			return "redirect:/addCandidate";
 		}
@@ -149,8 +121,7 @@ public class CandidateController
 
 		boolean mobv = Pattern.matches("^[9876]\\d{9}$", mob);
 
-		if (!mobv == true) 
-		{
+		if (!mobv == true) {
 			attributes.addAttribute("numberError", "Please enter a valid mobile number");
 			return "redirect:/addCandidate";
 		}
@@ -160,11 +131,10 @@ public class CandidateController
 			return "redirect:/addCandidate";
 
 		}
-		if((candidate.getExperience()==null))
-		{
+		if ((candidate.getExperience() == null)) {
 			candidate.setExpectedCtc(0.0f);
 			candidate.setCurrentCtc(0.0f);
-			
+
 		}
 		candidate.setResume(file.getBytes());
 		user.setUserId(obj.getUserId());
@@ -172,54 +142,11 @@ public class CandidateController
 		iCandidateService.saveCandidate(candidate);
 
 		return "redirect:/viewCandidates";
-//		User obj=(User) session.getAttribute("loginDetails");
-//		User user=new User();
-//		
-//		List<Domain> domain = iDomainService.viewDomainList();
-//		
-//		mav.addAttribute("domain",domain);
-//		
-//		boolean b=result.hasErrors();
-//		System.err.println(b);
-//		
-//		String name=file.getOriginalFilename();
-//		
-//		System.err.println("hiiiiiii"+name);
-// 
-//    
-//		
-//		if(result.hasErrors()) 
-//		{
-//			return "candidateRegister";
-//			
-//		}
-//		candidate.setResume(file.getBytes());
-//		user.setUserId(obj.getUserId());
-//		candidate.setUser(user);
-//		iCandidateService.saveCandidate(candidate);
-//		
-//
-//		
-//		return "redirect:/viewCandidates";
 	}
 
 	@GetMapping("/viewCandidates")
-	public ModelAndView getAllCandidates(HttpSession session,HttpServletResponse redirect)
-	{
-		if(LoginController.checkUser==null)
-		{
-			try {
-				redirect.sendRedirect("/login");
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		
-		
-		User checkUser=(User)session.getAttribute("loginDetails");
-		if((!checkUser.getRole().equals("hr")))
-		{
+	public ModelAndView getAllCandidates(HttpSession session, HttpServletResponse redirect) {
+		if (LoginController.checkUser == null) {
 			try {
 				redirect.sendRedirect("/login");
 			} catch (IOException e) {
@@ -228,19 +155,25 @@ public class CandidateController
 			}
 		}
 
-
-//		System.out.println(session.getAttribute("details"));
-//		System.out.println(user);
+		User checkUser = (User) session.getAttribute("loginDetails");
+		if ((!checkUser.getRole().equals("hr"))) {
+			try {
+				redirect.sendRedirect("/login");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 		ModelAndView mav = new ModelAndView("candidateList");
 		mav.addObject("candidate", iCandidateService.viewCandidateList());
 		return mav;
 	}
 
 	@GetMapping("/showUpdateCandidate")
-	public ModelAndView showUpdateCandidate(@RequestParam Integer candidateId,HttpSession session,HttpServletResponse redirect) {
-		
-		if(LoginController.checkUser==null)
-		{
+	public ModelAndView showUpdateCandidate(@RequestParam Integer candidateId, HttpSession session,
+			HttpServletResponse redirect) {
+
+		if (LoginController.checkUser == null) {
 			try {
 				redirect.sendRedirect("/login");
 			} catch (IOException e) {
@@ -248,10 +181,9 @@ public class CandidateController
 				e.printStackTrace();
 			}
 		}
-		
-		User checkUser=(User)session.getAttribute("loginDetails");
-		if(!checkUser.getRole().equals("hr"))
-		{
+
+		User checkUser = (User) session.getAttribute("loginDetails");
+		if (!checkUser.getRole().equals("hr")) {
 			try {
 				redirect.sendRedirect("/login");
 			} catch (IOException e) {
@@ -271,10 +203,10 @@ public class CandidateController
 
 	@Transactional
 	@GetMapping("/updateStatus")
-	public String updateCandidateStatus(@RequestParam Integer candidateId, @RequestParam String status,HttpSession session,HttpServletResponse redirect) {
-		
-		if(LoginController.checkUser==null)
-		{
+	public String updateCandidateStatus(@RequestParam Integer candidateId, @RequestParam String status,
+			HttpSession session, HttpServletResponse redirect) {
+
+		if (LoginController.checkUser == null) {
 			try {
 				redirect.sendRedirect("/login");
 			} catch (IOException e) {
@@ -282,10 +214,10 @@ public class CandidateController
 				e.printStackTrace();
 			}
 		}
-		
-		User checkUser=(User)session.getAttribute("loginDetails");
-		if(!(checkUser.getRole().equals("hr")||checkUser.getRole().equals("hrHead")||checkUser.getRole().equals("interviewer")))
-		{
+
+		User checkUser = (User) session.getAttribute("loginDetails");
+		if (!(checkUser.getRole().equals("hr") || checkUser.getRole().equals("hrHead")
+				|| checkUser.getRole().equals("interviewer"))) {
 			try {
 				redirect.sendRedirect("/login");
 			} catch (IOException e) {
@@ -299,10 +231,10 @@ public class CandidateController
 	}
 
 	@GetMapping("/deleteCandidate")
-	public String deleteCandidate(@RequestParam Integer candidateId,HttpSession session,HttpServletResponse redirect) {
-		
-		if(LoginController.checkUser==null)
-		{
+	public String deleteCandidate(@RequestParam Integer candidateId, HttpSession session,
+			HttpServletResponse redirect) {
+
+		if (LoginController.checkUser == null) {
 			try {
 				redirect.sendRedirect("/login");
 			} catch (IOException e) {
@@ -310,10 +242,9 @@ public class CandidateController
 				e.printStackTrace();
 			}
 		}
-		
-		User checkUser=(User)session.getAttribute("loginDetails");
-		if(!checkUser.getRole().equals("hr"))
-		{
+
+		User checkUser = (User) session.getAttribute("loginDetails");
+		if (!checkUser.getRole().equals("hr")) {
 			try {
 				redirect.sendRedirect("/login");
 			} catch (IOException e) {
@@ -327,11 +258,10 @@ public class CandidateController
 	}
 
 	@GetMapping("/downloadFile")
-	public void downloadFile(@RequestParam Integer candidateId, Model model, HttpSession session,HttpServletResponse response)
-			throws IOException {
-		
-		if(LoginController.checkUser==null)
-		{
+	public void downloadFile(@RequestParam Integer candidateId, Model model, HttpSession session,
+			HttpServletResponse response) throws IOException {
+
+		if (LoginController.checkUser == null) {
 			try {
 				response.sendRedirect("/login");
 			} catch (IOException e) {
@@ -339,10 +269,9 @@ public class CandidateController
 				e.printStackTrace();
 			}
 		}
-		
-		User checkUser=(User)session.getAttribute("loginDetails");
-		if(!checkUser.getRole().equals("hr"))
-		{
+
+		User checkUser = (User) session.getAttribute("loginDetails");
+		if (!checkUser.getRole().equals("hr")) {
 			try {
 				response.sendRedirect("/login");
 			} catch (IOException e) {

@@ -25,20 +25,18 @@ import com.cf.service.IDomainCategoryService;
 import com.cf.service.IDomainService;
 
 @Controller
-public class DomainController 
-{
+public class DomainController {
 
 	@Autowired
 	private IDomainService iDomainService;
-	
+
 	@Autowired
 	private IDomainCategoryService iDomainCategoryService;
-	
+
 	@GetMapping("/addDomain")
-	public ModelAndView addDomain(HttpSession session,HttpServletResponse redirect) {
-		
-		if(LoginController.checkUser==null)
-		{
+	public ModelAndView addDomain(HttpSession session, HttpServletResponse redirect) {
+
+		if (LoginController.checkUser == null) {
 			try {
 				redirect.sendRedirect("/login");
 			} catch (IOException e) {
@@ -46,10 +44,9 @@ public class DomainController
 				e.printStackTrace();
 			}
 		}
-		
-		User user=(User)session.getAttribute("loginDetails");
-		if(!user.getRole().equals("hr"))
-		{
+
+		User user = (User) session.getAttribute("loginDetails");
+		if (!user.getRole().equals("hr")) {
 			try {
 				redirect.sendRedirect("/login");
 			} catch (IOException e) {
@@ -59,31 +56,19 @@ public class DomainController
 		}
 
 		List<DomainCategory> domainCategory = iDomainCategoryService.viewDomainCategoryList();
-		
+
 		Domain domain = new Domain();
 		ModelAndView mav = new ModelAndView("domainRegister");
-		mav.addObject("domain",domain);
-		mav.addObject("domainCategory",domainCategory);
+		mav.addObject("domain", domain);
+		mav.addObject("domainCategory", domainCategory);
 		return mav;
 	}
-	
+
 	@PostMapping("/saveDomain")
-	public String saveDomain(@Valid @ModelAttribute Domain domain,BindingResult result, @RequestParam String category,HttpSession session,HttpServletResponse redirect) 
-	{
-		
-		if(LoginController.checkUser==null)
-		{
-			try {
-				redirect.sendRedirect("/login");
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		
-		User user=(User)session.getAttribute("loginDetails");
-		if(!user.getRole().equals("hr"))
-		{
+	public String saveDomain(@Valid @ModelAttribute Domain domain, BindingResult result, @RequestParam String category,
+			HttpSession session, HttpServletResponse redirect) {
+
+		if (LoginController.checkUser == null) {
 			try {
 				redirect.sendRedirect("/login");
 			} catch (IOException e) {
@@ -92,39 +77,44 @@ public class DomainController
 			}
 		}
 
-		List<DomainCategory> arr=new ArrayList<DomainCategory>();
-		category= category.toUpperCase();
-		String[]  s=category.split(",");
-		List list= Arrays.asList(s);
+		User user = (User) session.getAttribute("loginDetails");
+		if (!user.getRole().equals("hr")) {
+			try {
+				redirect.sendRedirect("/login");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+		List<DomainCategory> arr = new ArrayList<DomainCategory>();
+		category = category.toUpperCase();
+		String[] s = category.split(",");
+		List list = Arrays.asList(s);
 //		System.out.println(list);
 		domain.setDomainCategory(list);
-		for(Object str:list) {
-			DomainCategory domCat=new DomainCategory();
-			domCat.setDomSubCatName((String)str);
-			DomainCategory dom= iDomainCategoryService.saveDomainCategory(domCat);
-			arr.add( dom);
+		for (Object str : list) {
+			DomainCategory domCat = new DomainCategory();
+			domCat.setDomSubCatName((String) str);
+			DomainCategory dom = iDomainCategoryService.saveDomainCategory(domCat);
+			arr.add(dom);
 		}
 		domain.setDomainCategory(arr);
 		System.out.println(arr);
-		
-		
 
-		if(result.hasErrors()) 
-		{
+		if (result.hasErrors()) {
 			return "domainRegister";
-			
+
 		}
-		
-		
+
 		iDomainService.saveDomain(domain);
 		return "redirect:/viewDomains";
 	}
-	
+
 	@GetMapping("/viewDomains")
-	public ModelAndView getAllDomains(HttpSession session,HttpServletResponse redirect) {
-		
-		if(LoginController.checkUser==null)
-		{
+	public ModelAndView getAllDomains(HttpSession session, HttpServletResponse redirect) {
+
+		if (LoginController.checkUser == null) {
 			try {
 				redirect.sendRedirect("/login");
 			} catch (IOException e) {
@@ -132,10 +122,9 @@ public class DomainController
 				e.printStackTrace();
 			}
 		}
-		
-		User user=(User)session.getAttribute("loginDetails");
-		if(!user.getRole().equals("hr"))
-		{
+
+		User user = (User) session.getAttribute("loginDetails");
+		if (!user.getRole().equals("hr")) {
 			try {
 				redirect.sendRedirect("/login");
 			} catch (IOException e) {
@@ -148,12 +137,12 @@ public class DomainController
 		mav.addObject("domain", iDomainService.viewDomainList());
 		return mav;
 	}
-	
+
 	@GetMapping("/showUpdateDomain")
-	public ModelAndView showUpdateDomain(@RequestParam Integer domainId,HttpSession session,HttpServletResponse redirect) {
-		
-		if(LoginController.checkUser==null)
-		{
+	public ModelAndView showUpdateDomain(@RequestParam Integer domainId, HttpSession session,
+			HttpServletResponse redirect) {
+
+		if (LoginController.checkUser == null) {
 			try {
 				redirect.sendRedirect("/login");
 			} catch (IOException e) {
@@ -161,10 +150,9 @@ public class DomainController
 				e.printStackTrace();
 			}
 		}
-		
-		User user=(User)session.getAttribute("loginDetails");
-		if(!user.getRole().equals("hr"))
-		{
+
+		User user = (User) session.getAttribute("loginDetails");
+		if (!user.getRole().equals("hr")) {
 			try {
 				redirect.sendRedirect("/login");
 			} catch (IOException e) {
@@ -174,19 +162,18 @@ public class DomainController
 		}
 
 		List<DomainCategory> domainCategory = iDomainCategoryService.viewDomainCategoryList();
-		
+
 		ModelAndView mav = new ModelAndView("domainRegister");
 		Domain domain = iDomainService.updateDomain(domainId);
 		mav.addObject("domain", domain);
-		mav.addObject("domainCategory",domainCategory);
+		mav.addObject("domainCategory", domainCategory);
 		return mav;
 	}
-	
+
 	@GetMapping("/deleteDomain")
-	public String deleteDomain(@RequestParam Integer domainId,HttpSession session,HttpServletResponse redirect) {
-		
-		if(LoginController.checkUser==null)
-		{
+	public String deleteDomain(@RequestParam Integer domainId, HttpSession session, HttpServletResponse redirect) {
+
+		if (LoginController.checkUser == null) {
 			try {
 				redirect.sendRedirect("/login");
 			} catch (IOException e) {
@@ -194,10 +181,9 @@ public class DomainController
 				e.printStackTrace();
 			}
 		}
-		
-		User user=(User)session.getAttribute("loginDetails");
-		if(!user.getRole().equals("hr"))
-		{
+
+		User user = (User) session.getAttribute("loginDetails");
+		if (!user.getRole().equals("hr")) {
 			try {
 				redirect.sendRedirect("/login");
 			} catch (IOException e) {

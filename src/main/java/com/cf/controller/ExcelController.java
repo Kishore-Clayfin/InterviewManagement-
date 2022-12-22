@@ -28,23 +28,22 @@ import com.cf.repository.IDomainDao;
 import com.cf.service.ICandidateService;
 
 @Controller
-public class ExcelController 
-{	
+public class ExcelController {
 	@Autowired
 	private ICandidateService camdidateService;
 
 	@Autowired
 	private IDomainDao domainDao;
+
 	public Domain findDomain(String domainName) {
-		//comment for checking
-	Domain domain=	domainDao.findByDomainName(domainName);
-	return domain;
+		// comment for checking
+		Domain domain = domainDao.findByDomainName(domainName);
+		return domain;
 	}
+
 	@GetMapping("/excelPage")
-	public String getExc(HttpServletResponse redirect) 
-	{	
-		if(LoginController.checkUser==null)
-		{
+	public String getExc(HttpServletResponse redirect) {
+		if (LoginController.checkUser == null) {
 			try {
 				redirect.sendRedirect("/login");
 			} catch (IOException e) {
@@ -54,14 +53,14 @@ public class ExcelController
 		}
 		return "excel";
 	}
-	
-	int count=0;
+
+	int count = 0;
+
 	@PostMapping("/import")
-	public String mapReapExcelDatatoDB(@RequestParam("file") MultipartFile reapExcelDataFile,HttpSession session,HttpServletResponse redirect) throws IOException 
-	{
-		
-		if(LoginController.checkUser==null)
-		{
+	public String mapReapExcelDatatoDB(@RequestParam("file") MultipartFile reapExcelDataFile, HttpSession session,
+			HttpServletResponse redirect) throws IOException {
+
+		if (LoginController.checkUser == null) {
 			try {
 				redirect.sendRedirect("/login");
 			} catch (IOException e) {
@@ -69,148 +68,99 @@ public class ExcelController
 				e.printStackTrace();
 			}
 		}
-		
-		
-		User user= (User) session.getAttribute("loginDetails");
-//		Domain dom=new Domain();
-//		dom.setDomainId(13);
-//		
-		int count=0;
-    	List<Candidate> tempStudentList = new ArrayList<Candidate>();
+
+		User user = (User) session.getAttribute("loginDetails");
+		int count = 0;
+		List<Candidate> tempStudentList = new ArrayList<Candidate>();
 		try {
-//		
-		    XSSFWorkbook workbook = new XSSFWorkbook(reapExcelDataFile.getInputStream());
-		    XSSFSheet worksheet = workbook.getSheetAt(0);
-		    Iterator<Row> rowIterator = worksheet.iterator();
-//		    Candidate can=new Candidate();
-//		    can.setEmail(getExc())te
-		    
-		    while (rowIterator.hasNext())
-		    {
-		    	Candidate candidate=new Candidate();
-		    	candidate.setUser(user);
-//		    	candidate.setDomain(dom);
-		    	int i=0;
-		    	if(count==0) {
-		    		 rowIterator.next();
-		    		count++;	
-		    	}
-		    	else {
-		    	
-		    	
-		      Row row = rowIterator.next();
-		      //For each row, iterate through all the columns
-		      Iterator<Cell> cellIterator = row.cellIterator();
 
-		      while (cellIterator.hasNext()) 
-		      {
-		    	  
-		    	  
-		        Cell cell = cellIterator.next();
-		        
-		        
-		        //Check the cell type and format accordingly
-		        switch (cell.getCellType()) 
-		        {
-		        
-		          case Cell.CELL_TYPE_NUMERIC:
-		        	  
-		        	  if(i==0) {
-		        		  
-		        		  candidate.setCandidateId((int)cell.getNumericCellValue() );
-		        		  System.out.print(cell.getNumericCellValue() + "\t");
-		        	  }
-		        	  else if(i==3) {
-		        		  candidate.setMobileNumber((long)cell.getNumericCellValue() );
-		        		  System.out.print(cell.getNumericCellValue() + "\t");
-		        	  }
-		        	  else if(i==5) {
-			        	  candidate.setCgpa((float)cell.getNumericCellValue() );
-			        	  System.out.print(cell.getNumericCellValue() + "\t");
-			        	  }
-		        	  else if(i==8) {
-		        		  candidate.setExperience((float)cell.getNumericCellValue() );
-		        		  System.out.print(cell.getNumericCellValue() + "\t");
-		        	  }else if(i==9) {
-		        		  candidate.setAlternateMobileNumber((long)cell.getNumericCellValue());
-		        		  System.out.print(cell.getNumericCellValue() + "\t");
-		        	  }
-		        	  else if(i==10) {
-		        		  candidate.setCurrentCtc(((float)cell.getNumericCellValue()));
-		        		  System.out.print(cell.getNumericCellValue() + "\t");
-		        	  }
-		            i++;
-		            break;
-		          case Cell.CELL_TYPE_STRING:
-//		            System.err.println(i);
-		            if(i==1) {
-			        	  candidate.setCandidateName(cell.getStringCellValue() );
-			        	  System.out.print(cell.getStringCellValue() + "\t");
-			        	  }
-			        	  else if(i==2) {
-			        		  candidate.setEmail(cell.getStringCellValue() );
-			        		  System.out.print(cell.getStringCellValue() + "\t");
-			        	  }
-			        	  else if(i==4) {
-			        		  candidate.setHighQualification(cell.getStringCellValue() );
-			        		  System.out.print(cell.getStringCellValue() + "\t");
-			        	  } 
-			        	  else if(i==6) {
-			        		  candidate.setRoleAppliedFor(cell.getStringCellValue() );
-			        		  System.out.print(cell.getStringCellValue() + "\t");
-			        	  } 
-			        	  else if(i==7) {
-			        		  candidate.setAlternateEmail(cell.getStringCellValue() );
-			        		  System.out.print(cell.getStringCellValue() + "\t");
-			        	  } 
-			        	  else if(i==11)
-			        	  {
-			        		  String dom=cell.getStringCellValue();
-			        		  Domain domain=findDomain(dom);
-			        		  System.err.println(domain);
-			        		  candidate.setDomain(domain);
+			XSSFWorkbook workbook = new XSSFWorkbook(reapExcelDataFile.getInputStream());
+			XSSFSheet worksheet = workbook.getSheetAt(0);
+			Iterator<Row> rowIterator = worksheet.iterator();
+
+			while (rowIterator.hasNext()) {
+				Candidate candidate = new Candidate();
+				candidate.setUser(user);
+
+				int i = 0;
+				if (count == 0) {
+					rowIterator.next();
+					count++;
+				} else {
+
+					Row row = rowIterator.next();
+					// For each row, iterate through all the columns
+					Iterator<Cell> cellIterator = row.cellIterator();
+
+					while (cellIterator.hasNext()) {
+
+						Cell cell = cellIterator.next();
+
+						// Check the cell type and format accordingly
+						switch (cell.getCellType()) {
+
+						case Cell.CELL_TYPE_NUMERIC:
+
+							if (i == 0) {
+
+								candidate.setCandidateId((int) cell.getNumericCellValue());
+//		        		  System.out.print(cell.getNumericCellValue() + "\t");
+							} else if (i == 3) {
+								candidate.setMobileNumber((long) cell.getNumericCellValue());
+//		        		  System.out.print(cell.getNumericCellValue() + "\t");
+							} else if (i == 5) {
+								candidate.setCgpa((float) cell.getNumericCellValue());
+//			        	  System.out.print(cell.getNumericCellValue() + "\t");
+							} else if (i == 8) {
+								candidate.setExperience((float) cell.getNumericCellValue());
+//		        		  System.out.print(cell.getNumericCellValue() + "\t");
+							} else if (i == 9) {
+								candidate.setAlternateMobileNumber((long) cell.getNumericCellValue());
+//		        		  System.out.print(cell.getNumericCellValue() + "\t");
+							} else if (i == 10) {
+								candidate.setCurrentCtc(((float) cell.getNumericCellValue()));
+//		        		  System.out.print(cell.getNumericCellValue() + "\t");
+							}
+							i++;
+							break;
+						case Cell.CELL_TYPE_STRING:
+							if (i == 1) {
+								candidate.setCandidateName(cell.getStringCellValue());
+//			        	  System.out.print(cell.getStringCellValue() + "\t");
+							} else if (i == 2) {
+								candidate.setEmail(cell.getStringCellValue());
 //			        		  System.out.print(cell.getStringCellValue() + "\t");
-			        	  } 
-		            i++;
-		            break;
-		        }
-		      }
-		      System.out.println("");
-//		      System.out.println(candidate);
-		      tempStudentList.add(candidate);
-//				System.out.println(tempStudentList);
+							} else if (i == 4) {
+								candidate.setHighQualification(cell.getStringCellValue());
+//			        		  System.out.print(cell.getStringCellValue() + "\t");
+							} else if (i == 6) {
+								candidate.setRoleAppliedFor(cell.getStringCellValue());
+//			        		  System.out.print(cell.getStringCellValue() + "\t");
+							} else if (i == 7) {
+								candidate.setAlternateEmail(cell.getStringCellValue());
+//			        		  System.out.print(cell.getStringCellValue() + "\t");
+							} else if (i == 11) {
+								String dom = cell.getStringCellValue();
+								Domain domain = findDomain(dom);
+								System.err.println(domain);
+								candidate.setDomain(domain);
+//			        		  System.out.print(cell.getStringCellValue() + "\t");
+							}
+							i++;
+							break;
+						}
+					}
+					tempStudentList.add(candidate);
 
-		    }
-		    	
-		    	
-		    	
-		    }
+				}
+
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		   // file.close();
-		   catch (Exception e) {
-		    e.printStackTrace();
-		  }
-//		    for(int i=1;i<worksheet.getPhysicalNumberOfRows() ;i++) {
-//		        Candidate tempStudent = new Candidate();
-//		            
-//		        XSSFRow row = worksheet.getRow(i);
-//		            tempStudent.setCandidateId((int) row.getCell(0).getNumericCellValue());
-//		            tempStudent.setCandidateName(row.getCell(1).getStringCellValue());
-////		            tempStudent.setEmail(row.getCell(3).getStringCellValue());
-////		            Long mobile=Long.parseLong(row.getCell(4).getStringCellValue());
-//		           // tempStudent.setMobileNumber((long)row.getCell(4).getNumericCellValue());
-//		            tempStudent.setHighQualification(row.getCell(5).getStringCellValue());
-////		            Float cgpa=Float.parseFloat(row.getCell(i+5).getStringCellValue());
-//		       //     tempStudent.setCgpa((float)row.getCell(i+5).getNumericCellValue());
-//		            tempStudent.setRoleAppliedFor(row.getCell(7).getStringCellValue());
-//		         //   tempStudent.setAlternateEmail(row.getCell(7).getStringCellValue());
-//		            //tempStudent.setExperience((float)row.getCell(1).getNumericCellValue());
-////		            Float experience=Float.parseFloat(row.getCell(8).getStringCellValue());
-////		            tempStudent.setExperience(experience);
-//		        tempStudentList.add(tempStudent);   
-//		    }
+
 		System.out.println(tempStudentList);
 		camdidateService.bulkSaveCandidate(tempStudentList);
-	    return "excel";
+		return "excel";
 	}
 }

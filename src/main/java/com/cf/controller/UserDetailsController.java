@@ -19,18 +19,16 @@ import com.cf.model.User;
 import com.cf.model.UserDetails;
 import com.cf.service.IUserDetailsService;
 
-
 @Controller
 public class UserDetailsController {
 
 	@Autowired
 	private IUserDetailsService iUserDetailsService;
-	
+
 	@GetMapping("/addUserDetails")
-	public ModelAndView addUserDetails(HttpSession session,HttpServletResponse redirect) {
-		
-		if(LoginController.checkUser==null)
-		{
+	public ModelAndView addUserDetails(HttpSession session, HttpServletResponse redirect) {
+
+		if (LoginController.checkUser == null) {
 			try {
 				redirect.sendRedirect("/login");
 			} catch (IOException e) {
@@ -38,10 +36,9 @@ public class UserDetailsController {
 				e.printStackTrace();
 			}
 		}
-		
-		User checkUser=(User)session.getAttribute("loginDetails");
-		if(!checkUser.getRole().equals("hr"))
-		{
+
+		User checkUser = (User) session.getAttribute("loginDetails");
+		if (!checkUser.getRole().equals("hr")) {
 			try {
 				redirect.sendRedirect("/login");
 			} catch (IOException e) {
@@ -51,15 +48,14 @@ public class UserDetailsController {
 		}
 		UserDetails userDetails = new UserDetails();
 		ModelAndView mav = new ModelAndView("userDetailsRegister");
-		mav.addObject("userDetails",userDetails);
+		mav.addObject("userDetails", userDetails);
 		return mav;
 	}
-	
+
 	@PostMapping("/saveUserDetails")
-	public String saveUserDetails(@Valid @ModelAttribute UserDetails userDetails,BindingResult result,HttpSession session,HttpServletResponse redirect) 
-	{
-		if(LoginController.checkUser==null)
-		{
+	public String saveUserDetails(@Valid @ModelAttribute UserDetails userDetails, BindingResult result,
+			HttpSession session, HttpServletResponse redirect) {
+		if (LoginController.checkUser == null) {
 			try {
 				redirect.sendRedirect("/login");
 			} catch (IOException e) {
@@ -67,11 +63,9 @@ public class UserDetailsController {
 				e.printStackTrace();
 			}
 		}
-		
-		
-		User checkUser=(User)session.getAttribute("loginDetails");
-		if(!checkUser.getRole().equals("hr"))
-		{
+
+		User checkUser = (User) session.getAttribute("loginDetails");
+		if (!checkUser.getRole().equals("hr")) {
 			try {
 				redirect.sendRedirect("/login");
 			} catch (IOException e) {
@@ -79,19 +73,17 @@ public class UserDetailsController {
 				e.printStackTrace();
 			}
 		}
-		if(result.hasErrors())
-		{
+		if (result.hasErrors()) {
 			return "userDetailsRegister";
 		}
 		iUserDetailsService.saveUserDetails(userDetails);
 		return "redirect:/viewUserDetails";
 	}
-	
+
 	@GetMapping("/viewUserDetails")
-	public ModelAndView getAllUserDetails(HttpSession session,HttpServletResponse redirect) {
-		
-		if(LoginController.checkUser==null)
-		{
+	public ModelAndView getAllUserDetails(HttpSession session, HttpServletResponse redirect) {
+
+		if (LoginController.checkUser == null) {
 			try {
 				redirect.sendRedirect("/login");
 			} catch (IOException e) {
@@ -99,10 +91,9 @@ public class UserDetailsController {
 				e.printStackTrace();
 			}
 		}
-		
-		User checkUser=(User)session.getAttribute("loginDetails");
-		if(!checkUser.getRole().equals("hr"))
-		{
+
+		User checkUser = (User) session.getAttribute("loginDetails");
+		if (!checkUser.getRole().equals("hr")) {
 			try {
 				redirect.sendRedirect("/login");
 			} catch (IOException e) {
@@ -114,12 +105,12 @@ public class UserDetailsController {
 		mav.addObject("userDetails", iUserDetailsService.viewUserDetailsList());
 		return mav;
 	}
-	
+
 	@GetMapping("/showUpdateUserDetails")
-	public ModelAndView showUpdateUserDetails(@RequestParam Integer userDetailsId,HttpSession session,HttpServletResponse redirect) {
-		
-		if(LoginController.checkUser==null)
-		{
+	public ModelAndView showUpdateUserDetails(@RequestParam Integer userDetailsId, HttpSession session,
+			HttpServletResponse redirect) {
+
+		if (LoginController.checkUser == null) {
 			try {
 				redirect.sendRedirect("/login");
 			} catch (IOException e) {
@@ -127,10 +118,9 @@ public class UserDetailsController {
 				e.printStackTrace();
 			}
 		}
-		
-		User checkUser=(User)session.getAttribute("loginDetails");
-		if(!checkUser.getRole().equals("hr"))
-		{
+
+		User checkUser = (User) session.getAttribute("loginDetails");
+		if (!checkUser.getRole().equals("hr")) {
 			try {
 				redirect.sendRedirect("/login");
 			} catch (IOException e) {
@@ -143,12 +133,12 @@ public class UserDetailsController {
 		mav.addObject("userDetails", userDetails);
 		return mav;
 	}
-	
+
 	@GetMapping("/deleteUserDetails")
-	public String deleteUserDetails(@RequestParam Integer userDetailsId,HttpSession session,HttpServletResponse redirect) {
-		
-		if(LoginController.checkUser==null)
-		{
+	public String deleteUserDetails(@RequestParam Integer userDetailsId, HttpSession session,
+			HttpServletResponse redirect) {
+
+		if (LoginController.checkUser == null) {
 			try {
 				redirect.sendRedirect("/login");
 			} catch (IOException e) {
@@ -156,10 +146,9 @@ public class UserDetailsController {
 				e.printStackTrace();
 			}
 		}
-		
-		User checkUser=(User)session.getAttribute("loginDetails");
-		if(!checkUser.getRole().equals("hr"))
-		{
+
+		User checkUser = (User) session.getAttribute("loginDetails");
+		if (!checkUser.getRole().equals("hr")) {
 			try {
 				redirect.sendRedirect("/login");
 			} catch (IOException e) {

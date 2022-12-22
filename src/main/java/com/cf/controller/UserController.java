@@ -26,23 +26,21 @@ import com.cf.service.IUserDetailsService;
 import com.cf.service.IUserService;
 
 @Controller
-public class UserController 
-{
+public class UserController {
 
 	@Autowired
 	private IUserService iUserService;
-	
+
 	@Autowired
 	private IUserDetailsService iUserDetailsService;
-	
+
 	@Autowired
 	private ICandidateService iCandidateService;
-	
+
 	@GetMapping("/addUser")
-	public ModelAndView addUser(HttpSession session,HttpServletResponse redirect) {
-		
-		if(LoginController.checkUser==null)
-		{
+	public ModelAndView addUser(HttpSession session, HttpServletResponse redirect) {
+
+		if (LoginController.checkUser == null) {
 			try {
 				redirect.sendRedirect("/login");
 			} catch (IOException e) {
@@ -50,12 +48,9 @@ public class UserController
 				e.printStackTrace();
 			}
 		}
-		
-		
-		
-		User checkUser=(User)session.getAttribute("loginDetails");
-		if(!checkUser.getRole().equals("hr"))
-		{
+
+		User checkUser = (User) session.getAttribute("loginDetails");
+		if (!checkUser.getRole().equals("hr")) {
 			try {
 				redirect.sendRedirect("/login");
 			} catch (IOException e) {
@@ -63,37 +58,27 @@ public class UserController
 			}
 		}
 
-
-		
-		User errUser= (User) session.getAttribute("user");
+		User errUser = (User) session.getAttribute("user");
 
 		User user = new User();
 		ModelAndView mav = new ModelAndView("userRegister");
-		
-		
-		
-		
-		if(errUser!=null)
-		{
+
+		if (errUser != null) {
 
 			mav.addObject("user", errUser);
-			
+
+		} else {
+			mav.addObject("user", user);
 		}
-		else
-		{
-			mav.addObject("user",user);
-		}
-		
-		
-		
+
 		return mav;
 	}
-	
+
 	@PostMapping("/saveUser")
-	public String saveUser(@Valid@ModelAttribute User user,BindingResult result,HttpSession session,HttpServletResponse redirect,RedirectAttributes attributes) {
-		
-		if(LoginController.checkUser==null)
-		{
+	public String saveUser(@Valid @ModelAttribute User user, BindingResult result, HttpSession session,
+			HttpServletResponse redirect, RedirectAttributes attributes) {
+
+		if (LoginController.checkUser == null) {
 			try {
 				redirect.sendRedirect("/login");
 			} catch (IOException e) {
@@ -101,14 +86,12 @@ public class UserController
 				e.printStackTrace();
 			}
 		}
-		
-		
-		String mail=user.getEmail();
-		
+
+		String mail = user.getEmail();
+
 		String mob;
-		User checkUser=(User)session.getAttribute("loginDetails");
-		if(!checkUser.getRole().equals("hr"))
-		{
+		User checkUser = (User) session.getAttribute("loginDetails");
+		if (!checkUser.getRole().equals("hr")) {
 			try {
 				redirect.sendRedirect("/login");
 			} catch (IOException e) {
@@ -117,65 +100,40 @@ public class UserController
 			}
 		}
 
-
-
-
-		if(result.hasErrors()) 
-		{
+		if (result.hasErrors()) {
 			return "userRegister";
-			
+
 		}
-		
-		if(iUserService.existsUserByEmail(mail)) 
-		{
-			
-			
-			
+
+		if (iUserService.existsUserByEmail(mail)) {
+
 			attributes.addAttribute("mailError", "Mail is already registerd please enter another mail!!!");
 			session.setAttribute("user", user);
-			
+
 			return "redirect:/addUser";
-			
+
 		}
-	
-       mob = user.getUserDetails().getMobileNumber().toString();
-		
-		
+
+		mob = user.getUserDetails().getMobileNumber().toString();
 
 		boolean mobv = Pattern.matches("^[9876]\\d{9}$", mob);
-		if (!mobv == true) 
-		{
+		if (!mobv == true) {
 			attributes.addAttribute("numberError", "Please enter a valid mobile number");
-			
-			session.setAttribute("user", user);
-			
 
-			
+			session.setAttribute("user", user);
 
 			return "redirect:/addUser";
 		}
 
 		iUserService.saveUser(user);
-		
+
 		return "redirect:/viewUsers";
 	}
-	
+
 	@GetMapping("/viewUsers")
-	public ModelAndView getAllUsers(HttpSession session,HttpServletResponse redirect) {
-		
-		if(LoginController.checkUser==null)
-		{
-			try {
-				redirect.sendRedirect("/login");
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		
-		User user=(User)session.getAttribute("loginDetails");
-		if(!user.getRole().equals("hr"))
-		{
+	public ModelAndView getAllUsers(HttpSession session, HttpServletResponse redirect) {
+
+		if (LoginController.checkUser == null) {
 			try {
 				redirect.sendRedirect("/login");
 			} catch (IOException e) {
@@ -184,29 +142,26 @@ public class UserController
 			}
 		}
 
+		User user = (User) session.getAttribute("loginDetails");
+		if (!user.getRole().equals("hr")) {
+			try {
+				redirect.sendRedirect("/login");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 
 		ModelAndView mav = new ModelAndView("userList");
 		mav.addObject("user", iUserService.viewUserList());
-		//mav.addObject("userDetails", iUserDetailsService.viewUserDetailsList());
 		return mav;
 	}
-	
+
 	@GetMapping("/showUpdateUser")
-	public ModelAndView showUpdateUser(@RequestParam Integer userId,HttpSession session,HttpServletResponse redirect) {
-		
-		if(LoginController.checkUser==null)
-		{
-			try {
-				redirect.sendRedirect("/login");
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		
-		User checkUser=(User)session.getAttribute("loginDetails");
-		if(!checkUser.getRole().equals("hr"))
-		{
+	public ModelAndView showUpdateUser(@RequestParam Integer userId, HttpSession session,
+			HttpServletResponse redirect) {
+
+		if (LoginController.checkUser == null) {
 			try {
 				redirect.sendRedirect("/login");
 			} catch (IOException e) {
@@ -215,34 +170,25 @@ public class UserController
 			}
 		}
 
-
-//		List<UserDetails> userDetails = iUserDetailsService.viewUserDetailsList();
-//		List<Candidate> candidate = iCandidateService.viewCandidateList();
-//		
+		User checkUser = (User) session.getAttribute("loginDetails");
+		if (!checkUser.getRole().equals("hr")) {
+			try {
+				redirect.sendRedirect("/login");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 		ModelAndView mav = new ModelAndView("userRegister");
 		User user = iUserService.updateUser(userId);
 		mav.addObject("user", user);
-//		mav.addObject("userDetails",userDetails);
-//		mav.addObject("candidate",candidate);
 		return mav;
 	}
-	
+
 	@GetMapping("/deleteUser")
-	public String deleteUser(@RequestParam Integer userId,HttpSession session,HttpServletResponse redirect) {
-		
-		if(LoginController.checkUser==null)
-		{
-			try {
-				redirect.sendRedirect("/login");
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		
-		User user=(User)session.getAttribute("loginDetails");
-		if(!user.getRole().equals("hr"))
-		{
+	public String deleteUser(@RequestParam Integer userId, HttpSession session, HttpServletResponse redirect) {
+
+		if (LoginController.checkUser == null) {
 			try {
 				redirect.sendRedirect("/login");
 			} catch (IOException e) {
@@ -251,76 +197,18 @@ public class UserController
 			}
 		}
 
+		User user = (User) session.getAttribute("loginDetails");
+		if (!user.getRole().equals("hr")) {
+			try {
+				redirect.sendRedirect("/login");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 
 		iUserService.deleteUser(userId);
 		return "redirect:/viewUsers";
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-//	@Autowired
-//	private IUserService iUserService;
-//	
-//	@Autowired
-//	private IUserDetailsService iUserDetailsService;
-//	
-//	@Autowired
-//	private ICandidateService iCandidateService;
-//	
-//	@GetMapping("/addUser")
-//	public ModelAndView addUser() {
-//		List<UserDetails> userDetails = iUserDetailsService.viewUserDetailsList();
-//		List<Candidate> candidate = iCandidateService.viewCandidateList();
-//		
-//		User user = new User();
-//		ModelAndView mav = new ModelAndView("userRegister");
-//		mav.addObject("user",user);
-//		mav.addObject("userDetails",userDetails);
-//		mav.addObject("candidate",candidate);
-//		return mav;
-//	}
-//	
-//	@PostMapping("/saveUser")
-//	public String saveUser(@ModelAttribute User user) {
-//		iUserService.saveUser(user);
-//		return "redirect:/viewUsers";
-//	}
-//	
-//	@GetMapping("/viewUsers")
-//	public ModelAndView getAllUsers() {
-//		ModelAndView mav = new ModelAndView("userList");
-//		mav.addObject("user", iUserService.viewUserList());
-//		return mav;
-//	}
-//	
-//	@GetMapping("/showUpdateUser")
-//	public ModelAndView showUpdateUser(@RequestParam Integer userId) {
-//		List<UserDetails> userDetails = iUserDetailsService.viewUserDetailsList();
-//		List<Candidate> candidate = iCandidateService.viewCandidateList();
-//		
-//		ModelAndView mav = new ModelAndView("userRegister");
-//		User user = iUserService.updateUser(userId);
-//		mav.addObject("user", user);
-//		mav.addObject("userDetails",userDetails);
-//		mav.addObject("candidate",candidate);
-//		return mav;
-//	}
-//	
-//	@GetMapping("/deleteUser")
-//	public String deleteUser(@RequestParam Integer userId) {
-//		iUserService.deleteUser(userId);
-//		return "redirect:/viewUsers";
-//	}
+
 }

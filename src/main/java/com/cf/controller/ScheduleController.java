@@ -150,7 +150,8 @@ public class ScheduleController {
 		Candidate candidate = icandidateService.findResumeCandidate(candidateId);
 		List<User> user = iUserService.viewUserList();
 
-		List<User> list = user.stream().filter(c -> c.getRole().equalsIgnoreCase("hrHead")||c.getRole().equalsIgnoreCase("interviewer"))
+		List<User> list = user.stream()
+				.filter(c -> c.getRole().equalsIgnoreCase("hrHead") || c.getRole().equalsIgnoreCase("interviewer"))
 				.collect(Collectors.toList());
 
 		ModelAndView mv = new ModelAndView("hrRoundScheduleRegistration");
@@ -244,8 +245,7 @@ public class ScheduleController {
 			System.out.println("entering if");
 
 			ischeduleService.saveSchedule(schedule);
-		}
-		else {
+		} else {
 			int tempDuration = schedule.getDuration();
 			String temp = schedule.getScheduleTime();
 			LocalTime tempTime = LocalTime.parse(temp);

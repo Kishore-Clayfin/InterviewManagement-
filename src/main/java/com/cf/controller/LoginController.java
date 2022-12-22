@@ -26,163 +26,104 @@ public class LoginController implements ErrorController {
 	@Autowired
 	private IUserService iUserService;
 
+	public static User checkUser = null;
 
-	
-    public static User checkUser=null;
-	
-	
-//	@GetMapping({"/login","/"})
-//	public String login() {
-//		return "login";
-//	}
-//	@GetMapping({"/login","/"})
-//	public String login(HttpSession session) {
-//		//HttpSession session = request.getSession();
-//		String url1;
-//		url1=(String)session.getAttribute("url");
-//		//session.isNew()||
-//		if (url1==null) {
-//
-//		return "login";
-//		} else {
-//		
-//		System.out.println(url1);
-//		return url1;
-//		}
-//		
-//	}
-	
-	@GetMapping({"/login","/"})
-	public String login(HttpSession session,HttpServletRequest request) {
-		//HttpSession session = request.getSession();
-//		HttpSession session1 = request.getSession(false);
-//		if (session1 == null || !request.isRequestedSessionIdValid() ) {
-//		    //comes here when session is invalid. 
-//			return "login";
-//		} 
-//		else {
-//			String url =(String)session.getAttribute("url");
-//			System.out.println(url);
-//		    return url;
-//		}
-		User user=(User) session.getAttribute("loginDetails");
-		if (user == null  )
-		{
-		    //comes here when session is invalid. 
+	@GetMapping({ "/login", "/" })
+	public String login(HttpSession session, HttpServletRequest request) {
+
+		User user = (User) session.getAttribute("loginDetails");
+		if (user == null) {
+			// comes here when session is invalid.
 			return "login";
-		} 
-		else 
-		{
-			String url =(String)session.getAttribute("url");
-//			System.out.println(url);
-		    return url;
+		} else {
+			String url = (String) session.getAttribute("url");
+			return url;
 		}
-		
+
 	}
+
 	@GetMapping("/home")
-	public String home(HttpSession session)
-	{
-		User user=(User) session.getAttribute("loginDetails");
-		
-		if(user.getRole().equalsIgnoreCase("interviewer"))
-		{
-			String currentUrl="interviewerHome";
+	public String home(HttpSession session) {
+		User user = (User) session.getAttribute("loginDetails");
+
+		if (user.getRole().equalsIgnoreCase("interviewer")) {
+			String currentUrl = "interviewerHome";
+			session.setAttribute("url", currentUrl);
+			return currentUrl;
+
+		} else if (user.getRole().equalsIgnoreCase("hrHead")) {
+			String currentUrl = "hrHead";
+			session.setAttribute("url", currentUrl);
+			return currentUrl;
+
+		} else {
+			String currentUrl = "hrHome";
 			session.setAttribute("url", currentUrl);
 			return currentUrl;
 
 		}
-		else if(user.getRole().equalsIgnoreCase("hrHead"))
-		{
-			String currentUrl="hrHead";
-			session.setAttribute("url", currentUrl);
-			return currentUrl;
 
-		}
-		else
-		{
-			String currentUrl="hrHome";
-			session.setAttribute("url", currentUrl);
-			return currentUrl;
-
-		}
-		
 	}
+
 	@GetMapping("/homePage")
-	public String hrlogin(HttpSession session,@RequestParam("name") String name , @RequestParam("password") String password) 
-	{
-//		User u= iUserService.findUsername(name);
-////		System.out.println(u);
-		log.info("send from login page"  +name);
-		log.info("send from login page"  +password);
-		
-		   boolean login=iUserService.existsUserByUsernameAndPassword(name, password);
-		   String role=null;
-		   
-		   if(login==true)
-			{
-			    checkUser= iUserService.findUsername(name);
+	public String hrlogin(HttpSession session, @RequestParam("name") String name,
+			@RequestParam("password") String password) {
 
-			   
-//			    System.out.println(session.getAttribute("details"));
-			    role=checkUser.getRole();
-			    session.setAttribute("loginDetails", checkUser);
-			    session.setAttribute("interviewer", role);
-//			    System.out.println(session.getAttribute("details"));
-		    }
-		  
-		   if((login==true)&&(role.equals("hr"))) {
-				log.info("going inside the hr home page");
-				String currentUrl="hrHome";
-				session.setAttribute("url", currentUrl);
-				return currentUrl;
-			}
-			else if((login==true)&&(role.equals("interviewer")))
-			{
-				log.info("going inside the interviewer home page");
-  
-				String currentUrl="interviewerHome";
-				session.setAttribute("url", currentUrl);
-				return currentUrl;
-			
-			}
-			else if((login==true)&&(role.equals("hrHead")))
-			{
-				log.info("going inside the hr home page");
+		boolean login = iUserService.existsUserByUsernameAndPassword(name, password);
+		String role = null;
 
-				String currentUrl="hrHead";
-				session.setAttribute("url", currentUrl);
-				return currentUrl;
-			}
-			else 
-			{
-				log.info("Invalid useremail and password");
-				String url="redirect:/login2";
-				return url;	
-			}
-			
-			
-			
+		if (login == true) {
+			checkUser = iUserService.findUsername(name);
+
+			role = checkUser.getRole();
+			session.setAttribute("loginDetails", checkUser);
+			session.setAttribute("interviewer", role);
+		}
+
+		if ((login == true) && (role.equals("hr"))) {
+			log.info("Logged in as HR");
+			String currentUrl = "hrHome";
+			session.setAttribute("url", currentUrl);
+			return currentUrl;
+		} else if ((login == true) && (role.equals("interviewer"))) {
+			log.info("Logged in as INTERVIEWER");
+
+			String currentUrl = "interviewerHome";
+			session.setAttribute("url", currentUrl);
+			return currentUrl;
+
+		} else if ((login == true) && (role.equals("hrHead"))) {
+			log.info("Logged in as HRHEAD");
+
+			String currentUrl = "hrHead";
+			session.setAttribute("url", currentUrl);
+			return currentUrl;
+		} else {
+			log.info("Invalid CREDENTIALS");
+			String url = "redirect:/login2";
+			return url;
+		}
+
 	}
 
 	@GetMapping("/login2")
 	public ModelAndView login2() {
 		ModelAndView mv = new ModelAndView("login");
-		mv.addObject("message1", "Invalid Credentials!!!! Please Enter correct mail and passward");
+		mv.addObject("message1", "Invalid Credentials!!!! Please Enter correct mail-id and passward");
 
 		return mv;
 
 	}
-	
+
 	@GetMapping("/logout")
-	public String logout( HttpSession session) 
-	{
+	public String logout(HttpSession session) {
 		session.invalidate();
 		return "redirect:/login";
 	}
-	
+
 	@RequestMapping("/error")
-	  public String error() {
-		
-	    return "redirect:/login";
-	  }
+	public String error() {
+
+		return "redirect:/login";
+	}
 }

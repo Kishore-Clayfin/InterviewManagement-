@@ -5,10 +5,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -19,7 +21,7 @@ import lombok.extern.log4j.Log4j2;
 
 @Log4j2
 @Controller
-public class LoginController {
+public class LoginController implements ErrorController {
 
 	@Autowired
 	private IUserService iUserService;
@@ -177,4 +179,10 @@ public class LoginController {
 		session.invalidate();
 		return "redirect:/login";
 	}
+	
+	@RequestMapping("/error")
+	  public String error() {
+		
+	    return "redirect:/login";
+	  }
 }

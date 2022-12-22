@@ -35,7 +35,11 @@ public class ExcelController
 
 	@Autowired
 	private IDomainDao domainDao;
-	
+	public Domain findDomain(String domainName) {
+		//comment for checking
+	Domain domain=	domainDao.findByDomainName(domainName);
+	return domain;
+	}
 	@GetMapping("/excelPage")
 	public String getExc(HttpServletResponse redirect) 
 	{	
@@ -127,8 +131,14 @@ public class ExcelController
 		        	  else if(i==8) {
 		        		  candidate.setExperience((float)cell.getNumericCellValue() );
 		        		  System.out.print(cell.getNumericCellValue() + "\t");
+		        	  }else if(i==9) {
+		        		  candidate.setAlternateMobileNumber((long)cell.getNumericCellValue());
+		        		  System.out.print(cell.getNumericCellValue() + "\t");
 		        	  }
-		            
+		        	  else if(i==10) {
+		        		  candidate.setCurrentCtc(((float)cell.getNumericCellValue()));
+		        		  System.out.print(cell.getNumericCellValue() + "\t");
+		        	  }
 		            i++;
 		            break;
 		          case Cell.CELL_TYPE_STRING:
@@ -153,11 +163,13 @@ public class ExcelController
 			        		  candidate.setAlternateEmail(cell.getStringCellValue() );
 			        		  System.out.print(cell.getStringCellValue() + "\t");
 			        	  } 
-			        	  else if(i==9)
+			        	  else if(i==11)
 			        	  {
-			        		  Domain domain=domainDao.findByDomainName((cell.getStringCellValue()).toUpperCase());
+			        		  String dom=cell.getStringCellValue();
+			        		  Domain domain=findDomain(dom);
+			        		  System.err.println(domain);
 			        		  candidate.setDomain(domain);
-			        		  System.out.print(cell.getStringCellValue() + "\t");
+//			        		  System.out.print(cell.getStringCellValue() + "\t");
 			        	  } 
 		            i++;
 		            break;

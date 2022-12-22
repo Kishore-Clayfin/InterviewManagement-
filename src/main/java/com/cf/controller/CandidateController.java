@@ -25,6 +25,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.cf.model.Candidate;
 import com.cf.model.Domain;
 import com.cf.model.User;
+import com.cf.repository.ICandidateDao;
 import com.cf.service.ICandidateService;
 import com.cf.service.IDomainService;
 
@@ -36,6 +37,8 @@ public class CandidateController {
 	@Autowired
 	private IDomainService iDomainService;
 
+	@Autowired
+	private ICandidateDao iCandidateDao;
 	@GetMapping("/addCandidate")
 	public ModelAndView addCandidate(HttpSession session, HttpServletResponse redirect) {
 
@@ -144,6 +147,7 @@ public class CandidateController {
 		return "redirect:/viewCandidates";
 	}
 
+	
 	@GetMapping("/viewCandidates")
 	public ModelAndView getAllCandidates(HttpSession session, HttpServletResponse redirect) {
 		if (LoginController.checkUser == null) {
@@ -199,6 +203,70 @@ public class CandidateController {
 		mav.addObject("candidate", candidate);
 		mav.addObject("domain", domain);
 		return mav;
+	}
+	@GetMapping("/updateExpectedCtc")
+	public ModelAndView updateExpectedCtc(@RequestParam Integer candidateId, HttpSession session,
+			HttpServletResponse redirect) {
+
+		if (LoginController.checkUser == null) {
+			try {
+				redirect.sendRedirect("/login");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+		User checkUser = (User) session.getAttribute("loginDetails");
+		if (!checkUser.getRole().equals("hr")) {
+			try {
+				redirect.sendRedirect("/login");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+		List<Domain> domain = iDomainService.viewDomainList();
+
+		ModelAndView mav = new ModelAndView("candidateUpdateCtc");
+		Candidate candidate = iCandidateService.updateCandidate(candidateId);
+		mav.addObject("candidate", candidate);
+		mav.addObject("domain", domain);
+		return mav;
+	}
+	
+	@PostMapping("/saveExpectedCtc")
+	public String saveExpectedCtc(@ModelAttribute Candidate candidate, HttpSession session, RedirectAttributes attributes,
+			HttpServletResponse redirect) throws IOException {
+
+		if (LoginController.checkUser == null) {
+			try {
+				redirect.sendRedirect("/login");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+		User checkUser = (User) session.getAttribute("loginDetails");
+		if (!checkUser.getRole().equals("hr")) {
+			try {
+				redirect.sendRedirect("/login");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		System.out.println("candidate from model and view"+candidate.getExpectedCtc());
+      Candidate candidate1=iCandidateService.updateCandidate(candidate.getCandidateId());
+      System.out.println("candidate from jpa repo"+candidate1);
+      candidate1.setExpectedCtc(candidate.getExpectedCtc());
+      System.out.println("candidate after setting expected ctc"+candidate1.getExpectedCtc());
+    Candidate dummy= iCandidateDao.save(candidate1);
+    System.out.println("updated candidate"+dummy);
+		return "redirect:/showInterviewCompleted";
 	}
 
 	@Transactional

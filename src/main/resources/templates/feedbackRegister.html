@@ -16,10 +16,25 @@
 	src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/11.0.2/bootstrap-slider.min.js"></script>
 <link rel="stylesheet"
 	href='https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/11.0.2/css/bootstrap-slider.min.css' />
+<link rel="stylesheet" type="text/css" th:href="@{~/css/home.css}">
 <style>
 #anchor {
 	padding-left: 400;
 	font-weight: bold;
+	color: white;
+}
+
+.image {
+	background-image: url('/image/5555.jpg');
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+
+label {
+	color: white;
+}
+
+.form-group {
 	color: white;
 }
 
@@ -36,9 +51,13 @@
 	top: 0;
 	left: 0;
 }
+
+body {
+    background: #442d2d;
+}
 </style>
 </head>
-<body>
+<body >
 
 	<nav class="navbar navbar-inverse navbar-fixed-top">
 		<div class="container">
@@ -53,7 +72,7 @@
 
 	<br>
 	<br>
-	<div th:insert="sideBar :: header"></div>
+	<!-- <div th:insert="sideBar :: header"></div> -->
 	<div class="container">
 		<div class="row">
 			<div class="col-md-6 col-md-offset-3">

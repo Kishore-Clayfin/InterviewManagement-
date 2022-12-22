@@ -147,7 +147,7 @@ public class FeedBackController {
 		model.addAttribute("FB_MSG", GENERAL_MSG);
 		model.addAttribute("feedback", feedback);
 		model.addAttribute("candidate", candidates);
-		return "redirect:/viewFeedbacks";
+		return "redirect:/giveFeedback";
 
 	}
 

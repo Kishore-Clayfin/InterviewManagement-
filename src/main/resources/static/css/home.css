@@ -46,7 +46,13 @@
 	background-size: cover;
 	
 }
-
+.background3
+{
+ 	background-image:url(/image/5555.jpg);
+ 	background-repeat: no-repeat;
+	background-size: cover;
+	
+}
 
 
 #login

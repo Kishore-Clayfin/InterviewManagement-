@@ -28,32 +28,4 @@ public class EmailService {
 
 	}
 
-//	@Autowired
-//	private JavaMailSender mailSender;
-//	
-//	public void sendMail(String to, String subject, String text,FileSystemResource file)
-//	{
-//
-//		MimeMessage message = mailSender.createMimeMessage();
-//
-//		try
-//		{
-//			MimeMessageHelper helper = new MimeMessageHelper(message, true);
-//
-//			helper.setFrom("xxxxHospital@gmail.com");
-//			helper.setTo(to);
-//			helper.setSubject(subject);
-//			helper.setText(text);
-//
-////			FileSystemResource file = new FileSystemResource("G:\\Spring boot\\WORKSPACE\\Hotel\\src\\main\\resources\\qrcodes\\Phonepe.png");
-//			helper.addAttachment(file.getFilename(), file);
-//
-//		} 
-//		catch (MessagingException e)
-//		{
-//			throw new MailParseException(e);
-//		}
-//		mailSender.send(message);
-//	}
-
 }

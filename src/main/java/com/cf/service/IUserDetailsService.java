@@ -7,10 +7,6 @@ import com.cf.model.UserDetails;
 public interface IUserDetailsService {
 
 	void saveUserDetails(UserDetails userDetails);
-//UserDetails findById(int id);
-//UserDetails save(UserDetails userDetails);
-//void deleteById(int id);
-//List<UserDetails> findAll();
 
 	List<UserDetails> viewUserDetailsList();
 

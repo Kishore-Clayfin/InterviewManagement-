@@ -48,11 +48,6 @@ public class FeedbackServiceImpl implements IFeedbackService {
 		return iFeedbackDao.findAll();
 	}
 	
-	
-	
-	
-	
-	
 	@Override
 	public Feedback updateInterviewerFbStatus(Integer id,String status)
 	{

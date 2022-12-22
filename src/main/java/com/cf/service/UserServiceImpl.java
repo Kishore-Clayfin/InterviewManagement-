@@ -73,16 +73,4 @@ public class UserServiceImpl implements IUserService {
 		return iUserDao.existsUserByEmail(email);
 	}
 
-//	@Override
-//	public User login(String userName, String password) {
-//		// TODO Auto-generated method stub
-//		User user=iUserDao.findByUserNameAndPassword(userName, password);
-//		int userId=user.getUserId();
-//		if( userDao.existsById(userId))
-//			return user;
-//		else
-//			return null;
-//	}
-	
-
 }

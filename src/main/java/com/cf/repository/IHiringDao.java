@@ -11,7 +11,7 @@ import com.cf.model.Hiring;
 
 @Repository
 @Transactional
-public interface IHiringDao extends JpaRepository<Hiring, Integer>{
+public interface IHiringDao extends JpaRepository<Hiring, Integer> {
 	@Query("Select h from Hiring h")
-List<Hiring> findAllHiring();
+	List<Hiring> findAllHiring();
 }

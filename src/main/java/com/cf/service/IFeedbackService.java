@@ -10,10 +10,6 @@ import com.cf.model.Schedule;
 public interface IFeedbackService {
 
 	void saveFeedback(Feedback feedback);
-//	Feedback findById(int id);
-//	Feedback save(Feedback feedback);
-//	void deleteById(int id);
-//	List<Feedback> findAll();
 
 	Object viewFeedbackList();
 

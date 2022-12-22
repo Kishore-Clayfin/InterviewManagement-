@@ -8,10 +8,6 @@ import com.cf.model.Schedule;
 public interface ICandidateService {
 
 	void saveCandidate(Candidate candidate);
-//	Candidate findById(int id);
-//	Candidate save(Candidate Candidate);
-//	void deleteById(int id);
-//	List<Candidate> findAll();
 
 	List<Candidate> viewCandidateList();
 

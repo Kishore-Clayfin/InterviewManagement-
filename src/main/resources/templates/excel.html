@@ -27,13 +27,15 @@
 	left: 0;
 	color: black;
 }
-h1{
-    font-family: inherit;
-    font-weight: bold;
-    line-height: 6.1;
-    color: inherit;
-    padding-right: 331px;
+
+h1 {
+	font-family: inherit;
+	font-weight: bold;
+	line-height: 6.1;
+	color: inherit;
+	padding-right: 331px;
 }
+
 label {
 	color: infobackground;
 }
@@ -47,9 +49,11 @@ label.error {
 h5 {
 	color: yellow;
 }
+
 body {
-color: #fff;
+	color: #fff;
 }
+
 #anchor {
 	padding-left: 400;
 	font-weight: bold;
@@ -110,11 +114,12 @@ color: #fff;
 		<div class="row">
 			<div class="col-md-6 col-md-offset-3" style="margin-top: -200px;">
 
-				<h1 style="color: white; text-align: center; margin-top: 0px">Bulk Upload</h1>
+				<h1 style="color: white; text-align: center; margin-top: 0px">Bulk
+					Upload</h1>
 				<form th:action="@{/import}" method="post"
 					enctype="multipart/form-data">
-					<input type="file" th:name="file" /> <br><input th:type="submit" style="color:black;"
-						value="Import" />
+					<input type="file" th:name="file" /> <br>
+					<input th:type="submit" style="color: black;" value="Import" />
 				</form>
 			</div>
 		</div>

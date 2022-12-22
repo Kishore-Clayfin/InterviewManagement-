@@ -1,95 +1,85 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-        xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
 <meta charset="ISO-8859-1">
 <title>HR Head HOME</title>
 
 
-<link rel="stylesheet" 
-type="text/css" 
-href="https://cdn.datatables.net/v/bs4/dt-1.10.25/datatables.min.css" />
+<link rel="stylesheet" type="text/css"
+	href="https://cdn.datatables.net/v/bs4/dt-1.10.25/datatables.min.css" />
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
 	integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
 	crossorigin="anonymous">
-	<style>
-		.CC{
-			width: 200PX;
-		}
-		
-		body {
-            background-repeat: no-repeat;
-   background-size: cover;
-  background-image: url('https://images.unsplash.com/photo-1521791136064-7986c2920216?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1169&q=80');
+<style>
+.CC {
+	width: 200PX;
 }
-h1{
 
-color:rgb(0, 0, 7);
+body {
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-image:
+		url('https://images.unsplash.com/photo-1521791136064-7986c2920216?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1169&q=80');
+}
 
+h1 {
+	color: rgb(0, 0, 7);
 }
-	#anchor
-   {
-        padding-left: 400;
-        font-weight: bold;
-      color: white;
-  }
-  #back {
-    border-radius: 50%;
-    line-height: 35px;
-    width: 40px;
-    font-size: 25pt;
-    font-family: tahoma;
-    font-weight: bold;
-    margin-top: 11px;
-    margin-left: 21px;
-    position: absolute;
-    top: 0;
-    left: 0;
+
+#anchor {
+	padding-left: 400;
+	font-weight: bold;
+	color: white;
 }
-	</style>
-	
-	
-	
-	
-	
-	
-	
-	
+
+#back {
+	border-radius: 50%;
+	line-height: 35px;
+	width: 40px;
+	font-size: 25pt;
+	font-family: tahoma;
+	font-weight: bold;
+	margin-top: 11px;
+	margin-left: 21px;
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+</style>
+
 </head>
 <body>
-<nav class="navbar navbar-inverse navbar-fixed-top">
+	<nav class="navbar navbar-inverse navbar-fixed-top">
 		<div class="container">
 			<div class="navbar-header">
-				<button id="back"  onclick="history.back()"> &laquo;</button>
-				 <a class="navbar-brand" id="anchor"
-					th:href="@{/logout}">Logout </a>
-
-					
+				<button id="back" onclick="history.back()">&laquo;</button>
+				<a class="navbar-brand" id="anchor" th:href="@{/logout}">Logout
+				</a>
 			</div>
 		</div>
 	</nav>
-<br>
 	<br>
-	<div class = "container" align="center" >
-		<div class = "row">
-			
-				
-				<h1><u>HR Head HOME PAGE</u> </h1>
+	<br>
+	<div class="container" align="center">
+		<div class="row">
 
-				<form th:action="@{/login}" method="post">
 
-					<a th:href="@{/viewschedules}" class="btn btn-primary CC">See Schedules </a><br><br>
+			<h1>
+				<u>HR Head HOME PAGE</u>
+			</h1>
 
-					<a th:href="@{/giveFeedback}" class="btn btn-success CC">Give Feedback</a><br><br>
+			<form th:action="@{/login}" method="post">
 
-					
-					
-				</form>
-				
+				<a th:href="@{/viewschedules}" class="btn btn-primary CC">See
+					Schedules </a><br> <br> <a th:href="@{/giveFeedback}"
+					class="btn btn-success CC">Give Feedback</a><br> <br>
+
+			</form>
+
 		</div>
-<!-- 							<a th:href="@{/home}" class="btn btn-danger ml-2">Home</a>
- -->		
+
 	</div>
 </body>
 </html>

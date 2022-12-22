@@ -10,28 +10,30 @@
 
 <style type="text/css">
 body {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
-    background: #050505;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 100vh;
+	background: #050505;
 }
+
 h1 {
-    font-size: 36px;
-    color: white;
+	font-size: 36px;
+	color: white;
 }
+
 #back {
-    border-radius: 50%;
-    line-height: 35px;
-    width: 40px;
-    font-size: 25pt;
-    font-family: tahoma;
-    font-weight: bold;
-    margin-top: 11px;
-    margin-left: 21px;
-    position: absolute;
-    top: 0;
-    left: 0;
+	border-radius: 50%;
+	line-height: 35px;
+	width: 40px;
+	font-size: 25pt;
+	font-family: tahoma;
+	font-weight: bold;
+	margin-top: 11px;
+	margin-left: 21px;
+	position: absolute;
+	top: 0;
+	left: 0;
 }
 </style>
 
@@ -51,20 +53,22 @@ h1 {
 
 <style>
 .openbtn {
-    background-color: lightskyblue;
-    color: black;
-    margin-top: -383px;
+	background-color: lightskyblue;
+	color: black;
+	margin-top: -383px;
 }
+
 label.error {
 	color: red;
 	font-size: 1rem;
 	display: block;
 	margin-top: 5px;
 }
+
 .openbutton {
-    background-color: #2e88d1;
-    color: black;
-    margin-top: -398px;
+	background-color: #2e88d1;
+	color: black;
+	margin-top: -398px;
 }
 </style>
 <script>
@@ -88,13 +92,13 @@ label.error {
 
 <link rel="stylesheet" type="text/css" th:href="@{~/css/home.css}">
 </head>
-<body class="background4" >
+<body class="background4">
 
 
 	<nav class="navbar navbar-inverse navbar-fixed-top">
 		<div class="container">
 			<div class="navbar-header">
-				<button id="back"  onclick="history.back()"> &laquo;</button>
+				<button id="back" onclick="history.back()">&laquo;</button>
 				<a class="navbar-brand" id="anchor" th:href="@{/home}"> Go To
 					Home Page</a> <a class="navbar-brand" id="anchor" th:href="@{/logout}">Logout
 				</a>
@@ -106,7 +110,7 @@ label.error {
 
 	<br>
 	<br>
-<div th:insert="sideBar :: header"></div>
+	<div th:insert="sideBar :: header"></div>
 	<div class="container">
 		<div class="row">
 			<div class="col-md-6 col-md-offset-3">
@@ -127,16 +131,6 @@ label.error {
 							th:if="${#fields.hasErrors('username')}" th:errors="*{username}" />
 
 					</div>
-
-
-					<!-- private String mailId;
-	private Long mobileNumber;
-	private String designation;
-	private String experties; -->
-
-
-
-
 
 					<div class="form-group">
 						<label class="control-label" for="role">Role </label> <select

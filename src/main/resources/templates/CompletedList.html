@@ -1,17 +1,19 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-	
-	<head>
-		<title>COMPLETED LIST</title>
-			<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-		<link rel="stylesheet" 
-			type="text/css" 
-			href="https://cdn.datatables.net/v/bs4/dt-1.10.25/datatables.min.css" />
-		<link rel="stylesheet" 
-			href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" 
-			integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" 
-			crossorigin="anonymous" />
-			
-			<!--Search builder code starts-->
+
+<head>
+<title>COMPLETED LIST</title>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"
+	integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA=="
+	crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<link rel="stylesheet" type="text/css"
+	href="https://cdn.datatables.net/v/bs4/dt-1.10.25/datatables.min.css" />
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+	integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l"
+	crossorigin="anonymous" />
+
+<!--Search builder code starts-->
 
 
 <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
@@ -40,40 +42,40 @@
 </script>
 
 <!--Search builder code ends-->
-	</head>
-	<style>
-	#anchor
-   {
-        margin-left: 410;
-        font-weight: bold;
-      color: white;
-  }
- #back {
-    border-radius: 50%;
-    line-height: 35px;
-    width: 40px;
-    font-size: 25pt;
-    font-family: tahoma;
-    font-weight: bold;
-    margin-top: 11px;
-    margin-left: 21px;
-    position: absolute;
-    top: 0;
-    left: 0;
-}
-.image {
-    background-image: url('/image/ListBackground.jpg');
-    background-repeat: no-repeat;
-    background-size: cover;
+</head>
+<style>
+#anchor {
+	margin-left: 410;
+	font-weight: bold;
+	color: white;
 }
 
-	</style>
-	<body class="image">
-			<nav class="navbar navbar-inverse navbar-fixed-top"
+#back {
+	border-radius: 50%;
+	line-height: 35px;
+	width: 40px;
+	font-size: 25pt;
+	font-family: tahoma;
+	font-weight: bold;
+	margin-top: 11px;
+	margin-left: 21px;
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
+.image {
+	background-image: url('/image/ListBackground.jpg');
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+</style>
+<body class="image">
+	<nav class="navbar navbar-inverse navbar-fixed-top"
 		style="background-color: black;">
 		<div class="container">
 			<div class="navbar-header">
-				<button id="back"  onclick="history.back()"> &laquo;</button>
+				<button id="back" onclick="history.back()">&laquo;</button>
 				<a class="navbar-brand" id="anchor" th:href="@{/home}"> Go To
 					Home Page</a> <a class="navbar-brand" id="anchor" th:href="@{/logout}">Logout
 				</a>
@@ -84,20 +86,22 @@
 	</nav>
 	<br>
 	<br>
-		<div class="container"></div>
-		
-			<h3>INTERVIEW COMPLETED LIST</h3>
-			
-			<hr/>
-			
-			<br/><br/>
-			
-			<div th:insert="sideBar :: header" th:object="${role}" th:if="${role=='hr'}" ></div>
-			<div style="padding:10px;">
-			
-				<div >
+	<div class="container"></div>
+
+	<h3>INTERVIEW COMPLETED LIST</h3>
+
+	<hr />
+
+	<br />
+	<br />
+
+	<div th:insert="sideBar :: header" th:object="${role}"
+		th:if="${role=='hr'}"></div>
+	<div style="padding: 10px;">
+
+		<div>
 			<table class="table table-bordered table-striped" id="Table">
-			
+
 				<thead>
 					<tr>
 						<th>Id</th>
@@ -108,72 +112,50 @@
 						<th>Domain</th>
 						<th>Experience</th>
 						<th>Status</th>
-						<div th:object="${role}" th:if="${role=='interviewer'||role=='hrHead'}" >
+						<div th:object="${role}"
+							th:if="${role=='interviewer'||role=='hrHead'}">
 							<th>Actions</th>
 						</div>
-						
+
 					</tr>
 				</thead>
 				<tbody>
 					<tr th:each="schedule : ${schedule}">
-						<td th:each="candidate : ${schedule.Candidate}" th:text="${candidate.candidateId}" />
-						
-						<td th:each="candidate : ${schedule.Candidate}" th:text="${candidate.candidateName}" />
-						<td th:each="candidate : ${schedule.Candidate}" th:text="${candidate.email}" />
-						<td th:each="candidate : ${schedule.Candidate}" th:text="${candidate.mobileNumber}" />
-						<td th:each="candidate : ${schedule.Candidate}" th:text="${candidate.roleAppliedFor}" />
-						<td th:each="candidate : ${schedule.Candidate}" th:text="${candidate.domain.domainName}" />						
-						<td th:each="candidate : ${schedule.Candidate}" th:text="${candidate.experience}" />
-						<td th:each="candidate : ${schedule.Candidate}" th:text="${candidate.status}" />
-						
-						<div th:object="${role}" th:if="${role=='interviewer'||role=='hrHead'}">
-							<td>
-							<a  th:each="candidate : ${schedule.Candidate}"  th:href="@{addFeedback(candidateId=${candidate.candidateId})}" class="btn btn-info">Feedback</a>
-						</td>
+						<td th:each="candidate : ${schedule.Candidate}"
+							th:text="${candidate.candidateId}" />
+
+						<td th:each="candidate : ${schedule.Candidate}"
+							th:text="${candidate.candidateName}" />
+						<td th:each="candidate : ${schedule.Candidate}"
+							th:text="${candidate.email}" />
+						<td th:each="candidate : ${schedule.Candidate}"
+							th:text="${candidate.mobileNumber}" />
+						<td th:each="candidate : ${schedule.Candidate}"
+							th:text="${candidate.roleAppliedFor}" />
+						<td th:each="candidate : ${schedule.Candidate}"
+							th:text="${candidate.domain.domainName}" />
+						<td th:each="candidate : ${schedule.Candidate}"
+							th:text="${candidate.experience}" />
+						<td th:each="candidate : ${schedule.Candidate}"
+							th:text="${candidate.status}" />
+
+						<div th:object="${role}"
+							th:if="${role=='interviewer'||role=='hrHead'}">
+							<td><a th:each="candidate : ${schedule.Candidate}"
+								th:href="@{addFeedback(candidateId=${candidate.candidateId})}"
+								class="btn btn-info">Feedback</a></td>
 						</div>
-						
-						
-						<!-- <td th:text="${Candidate.name}" />
-						<td th:text="${Candidate.mailId}" />
-						<td th:text="${Candidate.mobileNumber}" />
-						
-						
-						<td>
-					    <span th:each="secDoc:${Candidate.roleApplied}">
-					    	<span th:text=${secDoc.jobRoleName}></span>
-					    	</span>
-					    </td>
-						
-						
-						<td>
-					    <span th:each="secDoc:${Candidate.technology}">
-					    	<span th:text=${secDoc.technologyName}></span>
-					    	</span>
-					    </td>
-						
-						
-						<td th:text="${Candidate.experience}" />
-						<td th:text="${Candidate.status}" /> -->
-						
-						<!-- <td>
-							<a th:href="@{/showUpdateCandidate(candidateId=${Candidate.candidateId})}" class="btn btn-info">Update</a>
-							
-							<a th:href="@{/deleteCandidate(candidateId=${Candidate.candidateId})}" class="btn btn-danger ml-2">Delete</a>
-						</td> -->
+
 					</tr>
 				</tbody>
-				
+
 			</table>
-			</div>
-			<!-- <div class="alert alert-danger" th:if="${#lists.isEmpty(Candidate)}">	
-			<a href="#" class="close" data-dismiss="alert" onclick="$('.alert').hide()" aria-label="close">X</a>
-			<span th:text='${"no candidate available"}'></span>
-			</div> -->
-					
-					<a th:href="@{/home}" class="btn btn-danger ml-2">Home</a>
 		</div>
-		
-		
-	</body>
-	
+
+		<a th:href="@{/home}" class="btn btn-danger ml-2">Home</a>
+	</div>
+
+
+</body>
+
 </html>

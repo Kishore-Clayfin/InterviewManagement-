@@ -9,28 +9,28 @@
 	href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
 	integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l"
 	crossorigin="anonymous" />
-	<style>
-	#anchor
-   {
-       margin-left: 410;
-        font-weight: bold;
-      color: white;
-  }
-  #back {
-    border-radius: 50%;
-    line-height: 35px;
-    width: 40px;
-    font-size: 25pt;
-    font-family: tahoma;
-    font-weight: bold;
-    margin-top: 11px;
-    margin-left: 21px;
-    position: absolute;
-    top: 0;
-    left: 0;
+<style>
+#anchor {
+	margin-left: 410;
+	font-weight: bold;
+	color: white;
 }
-	</style>
-	<!--Search builder code starts-->
+
+#back {
+	border-radius: 50%;
+	line-height: 35px;
+	width: 40px;
+	font-size: 25pt;
+	font-family: tahoma;
+	font-weight: bold;
+	margin-top: 11px;
+	margin-left: 21px;
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+</style>
+<!--Search builder code starts-->
 
 
 <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
@@ -52,19 +52,18 @@
 		$('#doctorTable').DataTable({
 			dom : 'Qlfrtip',
 			searchBuilder : {
-				columns : [ 0,1, 2, 3, 4, 5, 6, 7 ]
+				columns : [ 0, 1, 2, 3, 4, 5, 6, 7 ]
 			}
 		});
 	});
 </script>
-	<!--Search builder code ends-->
-	
-	<style >
+<!--Search builder code ends-->
+
+<style>
 .image {
-    background-image: url('/image/ListBackground.jpg');
-    background-repeat: no-repeat;
-    background-size: cover;
-    
+	background-image: url('/image/ListBackground.jpg');
+	background-repeat: no-repeat;
+	background-size: cover;
 }
 </style>
 </head>
@@ -74,7 +73,7 @@
 		style="background-color: black;">
 		<div class="container">
 			<div class="navbar-header">
-				<button id="back"  onclick="history.back()"> &laquo;</button>
+				<button id="back" onclick="history.back()">&laquo;</button>
 				<a class="navbar-brand" id="anchor" th:href="@{/home}"> Go To
 					Home Page</a> <a class="navbar-brand" id="anchor" th:href="@{/logout}">Logout
 				</a>
@@ -94,17 +93,7 @@
 
 		<br /> <br />
 		<table class="table table-bordered table-striped" id="doctorTable">
-			<!--
-				private String username;
-	private String password;
-	private String role;
-	private Boolean enabled;
-	private Integer userDetailsId;
-	private String mailId;
-	private Long mobileNumber;
-	private String designation;
-	private String experties;
-			-->
+
 			<thead>
 				<tr>
 					<th>UserName</th>
@@ -124,12 +113,7 @@
 					<td th:text="${user.password}" />
 					<td th:text="${user.role}" />
 					<td th:text="${user.email}" />
-					<!-- <td th:text="${user.enabled}" /> -->
-					<!-- <td>
-							<span th:each="userDetails:${user.userDetails}">
-							<span th:text=${userDetails.getMailId()}></span>							
-							</span>
-							</td> -->
+
 					<td><span th:each="userDetails:${user.userDetails}"> <span
 							th:text=${userDetails.getMobileNumber()}></span>
 					</span></td>
@@ -142,31 +126,6 @@
 					<td><span th:each="candidate:${user.candidate}"> <span
 							th:text="${candidate.getCandidateName()}+','"></span>
 					</span></td>
-					<!-- th:object="userDetails:${user.userDetails}">
-							<td th:text="${userDetails.mailId}" />
-							<td th:text="${userDetails.mobileNumber}" />
-							<td th:text="${userDetails.designation}" />
-							<td th:text="${userDetails.experties}" /> -->
-
-
-
-
-					<!-- <td th:text="${Interviewer.Designation}" />
-						<td th:text="${Interviewer.Passward}" />
-						<td th:text="${Interviewer.role}" />
-						<td th:text="${Interviewer.Type}" /> -->
-					<!-- <td th:text="${Interviewer.Experties}" /> -->
-
-
-
-					<!-- <td>
-					    <span th:each="oneDoc:${Interviewer.technology}">
-					    	<span th:text=${oneDoc.getTechnologyName()}></span>
-					    	</span>
-					    </td> -->
-
-
-
 
 					<td style="display: flex;"><a
 						th:href="@{/showUpdateUser(userId=${user.userId})}"

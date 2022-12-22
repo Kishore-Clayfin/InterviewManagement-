@@ -16,57 +16,48 @@
 	src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/11.0.2/bootstrap-slider.min.js"></script>
 <link rel="stylesheet"
 	href='https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/11.0.2/css/bootstrap-slider.min.css' />
-	<style>
-	#anchor
-   {
-        padding-left: 400;
-        font-weight: bold;
-      color: white;
-  }
-  #back {
-    border-radius: 50%;
-    line-height: 35px;
-    width: 40px;
-    font-size: 25pt;
-    font-family: tahoma;
-    font-weight: bold;
-    margin-top: 11px;
-    margin-left: 21px;
-    position: absolute;
-    top: 0;
-    left: 0;
+<style>
+#anchor {
+	padding-left: 400;
+	font-weight: bold;
+	color: white;
 }
-	</style>
+
+#back {
+	border-radius: 50%;
+	line-height: 35px;
+	width: 40px;
+	font-size: 25pt;
+	font-family: tahoma;
+	font-weight: bold;
+	margin-top: 11px;
+	margin-left: 21px;
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+</style>
 </head>
 <body>
 
 	<nav class="navbar navbar-inverse navbar-fixed-top">
 		<div class="container">
 			<div class="navbar-header">
-				<button id="back"  onclick="history.back()"> &laquo;</button>
-				<a class="navbar-brand" id="anchor" th:href="@{/home}"> Go
-					To Home Page</a> <a class="navbar-brand" id="anchor"
-					th:href="@{/logout}">Logout </a>
-
-					
+				<button id="back" onclick="history.back()">&laquo;</button>
+				<a class="navbar-brand" id="anchor" th:href="@{/home}"> Go To
+					Home Page</a> <a class="navbar-brand" id="anchor" th:href="@{/logout}">Logout
+				</a>
 			</div>
 		</div>
 	</nav>
 
 	<br>
 	<br>
-<div th:insert="sideBar :: header"></div>
+	<div th:insert="sideBar :: header"></div>
 	<div class="container">
 		<div class="row">
 			<div class="col-md-6 col-md-offset-3">
 
-
-				<!-- 	<div class="alert alert-danger alert-dismissible"> 
-		<a href="#" class="close" data-dismiss="alert" onclick="$('.alert').hide()" aria-label="close"> X </a>
- 		<span th:text=${FB_MSG}></span> -->
-				<!-- <span th:if="${error != null && error.summary != null}" th:text="${error.summary}">Static summary</span>
-	    <span th:text="${error?.summary}">Static summary</span>
-	</div> -->
 
 				<div class="alert alert-danger alert-dismissible"
 					th:if="${FB_MSG != null && FB_MSG.FEEDBACK_SUCCESS_MSG != null}">
@@ -82,17 +73,7 @@
 
 				<form th:action="@{/saveFeedback(candidateId=${candidateId})}"
 					method="post" th:object="${feedback}">
-					<!--  <div class="form-group" >
-					 <label class="control-label" for="name">Select Candidate</label>
- 						<select class="form-control" id="testOrder" name="testOrder" th:field="*{candidate}" required autofocus="autofocus" >
-							<option value="" selected>--- Select ---</option>
-							<span th:each="Candidate : ${candidate}">
-							<option th:text="${Candidate.candidateName}" th:value="${Candidate.candidateId}" > 	 
-								th:text="${candidate.candidateName}">
-								</option>
-								</span>
-						</select>
-					 </div>  -->
+
 
 
 					<div class="form-group">
@@ -119,22 +100,7 @@
 						<h3 th:object="${fcandidate}" style="color: blue;">
 							<b th:text="${candidate.domain.getDomainName()}"></b>
 						</h3>
-						<!-- <div class="form-group" th:each="domSub : ${subCategory}"  >
-						<label class="control-label" for="name" th:text="${domSub.getDomSubCatName()}"  ></label>
-						<fieldset>
-   							 <span class="star-cb-group" >
-      						 <input type="radio" id="rating-5" name="r1" th:field="${feedback.domainRatings.subRatingValue}"  th:value="5" /><label for="rating-5" >5</label>
-      						 <input type="radio" id="rating-4" name="r1" th:field="${feedback.domainRatings.subRatingValue}"  th:value="4" checked="checked" /><label for="rating-4">4</label>
-      						 <input type="radio" id="rating-3"  th:field="${feedback.domainRatings.subRatingValue}"  th:value="3" /><label for="rating-3">3</label>
-      						 <input type="radio" id="rating-2"  th:field="${feedback.domainRatings.subRatingValue}"   th:value="2" /><label for="rating-2">2</label>
-      						 <input type="radio" id="rating-1"  th:field="${feedback.domainRatings.subRatingValue}"   th:value="1" /><label for="rating-1">1</label>
-    						</span>
-  							</fieldset>
-					</div>
-					th:field="${feedback.domainRatings.subRatingValue}"
 
-					
-                    -->
 						<div class="form-group mt-3" th:each="domSub : ${subCategory}">
 							<input th:id="${domSub.getDomSubCatName()}" type="text"
 								th:text="${domSub.getDomSubCatName()}" data-slider-min="1"
@@ -170,18 +136,11 @@
 									th:field="${feedback.interviewerFbStatus}" required
 									autofocus="autofocus" value="notAttended"> notAttended
 								</label>
-
 							</p>
 							<br>
 						</div>
-
-
 					</div>
-
-
-
 					<div class="form-group">
-
 						<div class="rating" th:object="${role}" th:if="${role=='hrHead'}">
 							<label> HrFbStatus : Please update the status of
 								candidate....</label> <br> <br>
@@ -208,20 +167,10 @@
 									th:field="${feedback.hrFbStatus}" required
 									autofocus="autofocus" value="notAttended"> notAttended
 								</label>
-
 							</p>
 							<br>
 						</div>
-
-
 					</div>
-
-
-
-
-
-
-
 					<div class="form-group">
 						<label>Enter your overall experience with candidate...</label> <br>
 						<textarea class="input1" name="Feedback" th:field="*{feed_back}"
@@ -229,33 +178,17 @@
 							placeholder="Type in Your Feedback"></textarea>
 						<span class="shadow-input1"></span>
 					</div>
-
 					<input th:field="${feedback.domainRatings}"
 						th:value='#{feedback.domainRatings}' th:id='myInput' type='hidden' />
-
-
 					<div class="form-group">
 						<button type="submit" class="btn btn-success">Submit</button>
-
 					</div>
-
-
 				</form>
-
-
 			</div>
 		</div>
 		<a th:href="@{/home}" class="btn btn-danger ml-2">Home</a>
 	</div>
-
-
-
-
-
 </body>
-
-
-
 <script>
 	let map1 = new Map();
 	$(".skill").slider();

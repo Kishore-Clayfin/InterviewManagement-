@@ -2,9 +2,6 @@
 
 <head>
 <title>CANDIDATES LIST</title>
-
-<!-- <link rel="stylesheet" type="text/css"
-	href="https://cdn.datatables.net/v/bs4/dt-1.10.25/datatables.min.css" /> -->
 <link rel="stylesheet"
 	href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
 	integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l"
@@ -18,9 +15,6 @@
 	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"
 	integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA=="
 	crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
-<!--Search builder code starts-->
-
 
 <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 <script
@@ -58,25 +52,25 @@
 	src="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css"></script>
 <script
 	src="https://cdn.datatables.net/searchbuilder/1.4.0/js/dataTables.searchBuilder.min.js"></script>
-<style >
+<style>
 .image {
-    background-image: url('/image/ListBackground.jpg');
-    background-repeat: no-repeat;
-    background-size:3000px;
+	background-image: url('/image/ListBackground.jpg');
+	background-repeat: no-repeat;
+	background-size: 3000px;
 }
 
 #back {
-    border-radius: 50%;
-    line-height: 35px;
-    width: 40px;
-    font-size: 25pt;
-    font-family: tahoma;
-    font-weight: bold;
-    margin-top: 11px;
-    margin-left: 21px;
-    position: absolute;
-    top: 0;
-    left: 0;
+	border-radius: 50%;
+	line-height: 35px;
+	width: 40px;
+	font-size: 25pt;
+	font-family: tahoma;
+	font-weight: bold;
+	margin-top: 11px;
+	margin-left: 21px;
+	position: absolute;
+	top: 0;
+	left: 0;
 }
 </style>
 </head>
@@ -85,7 +79,7 @@
 	<nav class="navbar navbar-inverse navbar-fixed-top">
 		<div class="container">
 			<div class="navbar-header">
-				<button id="back"  onclick="history.back()"> &laquo;</button>
+				<button id="back" onclick="history.back()">&laquo;</button>
 				<a class="navbar-brand" id="anchor" th:href="@{/home}"> Go To
 					Home Page</a> <a class="navbar-brand" id="anchor" th:href="@{/logout}">Logout
 				</a>
@@ -101,7 +95,7 @@
 	<div style="padding: 50px;">
 
 		<h3>CANDIDATES LIST</h3>
-		
+
 
 		<hr />
 		<br /> <br />
@@ -109,7 +103,8 @@
 
 			<thead>
 				<tr>
-					<th><label>SelectAll</label><input type="checkbox" id="ckbCheckAll" /></th>
+					<th><label>SelectAll</label><input type="checkbox"
+						id="ckbCheckAll" /></th>
 					<th>candidateName</th>
 					<th>email</th>
 					<th>mobileNumber</th>
@@ -131,7 +126,7 @@
 			<tbody>
 				<tr th:each="candidate : ${candidate}">
 
-					<td> <input type="checkbox" class="checkBoxClass" 
+					<td><input type="checkbox" class="checkBoxClass"
 						th:value="${candidate.getCandidateId}"></td>
 					<td th:text="${candidate.candidateName}" />
 					<td th:text="${candidate.email}" />
@@ -161,32 +156,27 @@
 
 		</table>
 		<a th:href="@{/home}" class="btn btn-danger ml-2">Home</a> <a
-			id="save_value" class="btn btn-primary" href="javascript:delay('/addschedule')">Scheduled</a>
+			id="save_value" class="btn btn-primary"
+			href="javascript:delay('/addschedule')">Scheduled</a>
 
 
 	</div>
 	<script>
-	
-	
 		$(function() {
-			$('#save_value').click(function() 
-					{
+			$('#save_value').click(function() {
 
 				var val = [];
-				$(':checkbox:checked').each(function(i)
-				{
-					var a=$(this).val()
-					if(/^[0-9]+$/.test(a))
-					{
+				$(':checkbox:checked').each(function(i) {
+					var a = $(this).val()
+					if (/^[0-9]+$/.test(a)) {
 						val.push($(this).val());
-						
+
 					}
-					
+
 				});
 				val1 = JSON.stringify(val);
-				console.log('=> '+val1);
+				console.log('=> ' + val1);
 
-				
 				$.ajax({
 
 					url : "http://localhost:9091/ajaxPost",
@@ -206,7 +196,7 @@
 						console.log(data);
 
 						return false;
-F
+						F
 					}
 
 				});
@@ -215,17 +205,19 @@ F
 		});
 	</script>
 
-<script >
-$(document).ready(function () {
-    $("#ckbCheckAll").click(function () {
-        $(".checkBoxClass").prop('checked', $(this).prop('checked'));
-    });
-});
+	<script>
+		$(document).ready(function() {
+			$("#ckbCheckAll").click(function() {
+				$(".checkBoxClass").prop('checked', $(this).prop('checked'));
+			});
+		});
 
-function delay (URL) {
-    setTimeout( function() { window.location = URL }, 2000 );
-}
-</script>
+		function delay(URL) {
+			setTimeout(function() {
+				window.location = URL
+			}, 2000);
+		}
+	</script>
 </body>
 
 </html>

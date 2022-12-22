@@ -6,37 +6,40 @@
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
 	integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
 	crossorigin="anonymous">
-	<script type="text/javascript"
+<script type="text/javascript"
 	src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 <style type="text/css">
 body {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
-    background: #2d2d37;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 100vh;
+	background: #2d2d37;
 }
+
 h1 {
-    font-size: 36px;
-    color: white;
+	font-size: 36px;
+	color: white;
 }
+
 #back {
-    border-radius: 50%;
-    line-height: 35px;
-    width: 40px;
-    font-size: 25pt;
-    font-family: tahoma;
-    font-weight: bold;
-    margin-top: 11px;
-    margin-left: 21px;
-    position: absolute;
-    top: 0;
-    left: 0;
+	border-radius: 50%;
+	line-height: 35px;
+	width: 40px;
+	font-size: 25pt;
+	font-family: tahoma;
+	font-weight: bold;
+	margin-top: 11px;
+	margin-left: 21px;
+	position: absolute;
+	top: 0;
+	left: 0;
 }
+
 .openbtn {
-    background-color: lightskyblue;
-    color: black;
-    margin-top: -547.39px;
+	background-color: lightskyblue;
+	color: black;
+	margin-top: -547.39px;
 }
 </style>
 
@@ -53,10 +56,11 @@ h1 {
 
 <style>
 .openbutton {
-    background-color: lightskyblue;
-    color: black;
-    margin-top: -547.39px;
+	background-color: lightskyblue;
+	color: black;
+	margin-top: -547.39px;
 }
+
 label.error {
 	color: red;
 	font-size: 1rem;
@@ -64,11 +68,6 @@ label.error {
 	margin-top: 5px;
 }
 </style>
-<!-- <script>
-	$(document).ready(function() {
-		$("#basic-form").validate();
-	});
-</script> -->
 
 <script>
 	function alert() {
@@ -86,19 +85,19 @@ label.error {
 	<nav class="navbar navbar-inverse navbar-fixed-top">
 		<div class="container">
 			<div class="navbar-header">
-<button id="back"  onclick="history.back()"> &laquo;</button>
-				<a class="navbar-brand" id="anchor" th:href="@{/home}"> Go
-					To Home Page</a> <a class="navbar-brand" id="anchor"
-					th:href="@{/logout}">Logout </a>
+				<button id="back" onclick="history.back()">&laquo;</button>
+				<a class="navbar-brand" id="anchor" th:href="@{/home}"> Go To
+					Home Page</a> <a class="navbar-brand" id="anchor" th:href="@{/logout}">Logout
+				</a>
 
-					
+
 			</div>
 		</div>
 	</nav>
 
 	<br>
 	<br>
-<div th:insert="sideBar :: header"></div>
+	<div th:insert="sideBar :: header"></div>
 	<div class="container">
 		<div class="row">
 			<div class="col-md-6 col-md-offset-3">
@@ -251,14 +250,14 @@ label.error {
 					<div class="form-group">
 						<label class="control-label" for="Phone">Current CTC </label> <input
 							id="ctc" class="form-control" th:field="*{currentCtc}" required
-							autofocus="autofocus" placeholder="Enter Ctc if Experienced"/>
+							autofocus="autofocus" placeholder="Enter Ctc if Experienced" />
 
 					</div>
 
 					<div class="form-group">
 						<label class="control-label" for="Phone">Expected CTC </label> <input
-							id="ectc" class="form-control" th:field="*{expectedCtc}"
-							required autofocus="autofocus" placeholder="Enter Ctc if Experienced"/>
+							id="ectc" class="form-control" th:field="*{expectedCtc}" required
+							autofocus="autofocus" placeholder="Enter Ctc if Experienced" />
 
 					</div>
 
@@ -301,30 +300,20 @@ label.error {
 	</div>
 
 	<script type="text/javascript">
-	//$( document ).ready(function() {
-
-	// $(function () {
-
-	$("#Experience").on('change', function() {
-		console.log("ready!"); 
-		console.log($(this).val());
-		if (($(this).val() == 0)) {
-			console.log('in walkin');
-			$("#ctc").attr("readonly", "readonly");
-			$("#ectc").attr("readonly", "readonly");
-			//$("#testOrder").removeAttr("multiple");
-			//  $("#txtOther").focus();
-		} else 
-		{
-			console.log('in online');
-			$("#ctc").removeAttr("readonly");
-			$("#ectc").removeAttr("readonly");
-// 			$("#testOrder").attr("multiple", "multiple");
-			//  $("#txtOther").focus();
-		}
-	});
-	//  }); });
-</script>
+		$("#Experience").on('change', function() {
+			console.log("ready!");
+			console.log($(this).val());
+			if (($(this).val() == 0)) {
+				console.log('in walkin');
+				$("#ctc").attr("readonly", "readonly");
+				$("#ectc").attr("readonly", "readonly");
+			} else {
+				console.log('in online');
+				$("#ctc").removeAttr("readonly");
+				$("#ectc").removeAttr("readonly");
+			}
+		});
+	</script>
 </body>
 </html>
 

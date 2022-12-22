@@ -41,18 +41,19 @@
 
 <style>
 #back {
-    border-radius: 50%;
-    line-height: 35px;
-    width: 40px;
-    font-size: 25pt;
-    font-family: tahoma;
-    font-weight: bold;
-    margin-top: 11px;
-    margin-left: 21px;
-    position: absolute;
-    top: 0;
-    left: 0;
+	border-radius: 50%;
+	line-height: 35px;
+	width: 40px;
+	font-size: 25pt;
+	font-family: tahoma;
+	font-weight: bold;
+	margin-top: 11px;
+	margin-left: 21px;
+	position: absolute;
+	top: 0;
+	left: 0;
 }
+
 #Table {
 	width: 1300px;
 	align-content: center;
@@ -65,9 +66,9 @@
 }
 
 .image {
-    background-image: url('/image/ListBackground.jpg');
-    background-repeat: no-repeat;
-    background-size: cover;
+	background-image: url('/image/ListBackground.jpg');
+	background-repeat: no-repeat;
+	background-size: cover;
 }
 </style>
 
@@ -79,7 +80,7 @@
 		style="background-color: black;">
 		<div class="container">
 			<div class="navbar-header">
-				<button id="back"  onclick="history.back()"> &laquo;</button>
+				<button id="back" onclick="history.back()">&laquo;</button>
 				<a class="navbar-brand" id="anchor" th:href="@{/home}"> Go To
 					Home Page</a> <a class="navbar-brand" id="anchor" th:href="@{/logout}">Logout
 				</a>
@@ -90,7 +91,8 @@
 	</nav>
 	<br>
 	<br>
-	<div th:insert="sideBar :: header" th:object="${role}" th:if="${role.getRole()=='hr'}" ></div>
+	<div th:insert="sideBar :: header" th:object="${role}"
+		th:if="${role.getRole()=='hr'}"></div>
 	<div style="padding: 100px;">
 
 		<h3>SCHEDULE LIST</h3>
@@ -131,10 +133,6 @@
 
 
 					<td style="display: flex;">
-						<!-- <span th:each="role:${role}">
-					<span th:if="${role.getRole()!='hr'}"> -->
-
-
 
 						<div class="dropdown">
 							<button type="button" class="btn btn-primary dropdown-toggle"
@@ -163,11 +161,11 @@
 			</tbody>
 		</table>
 		<div style="display: flex;">
-		<div th:if="${role.getRole()!='hr'}">
-			<a th:href="@{/giveFeedback}" class="btn btn-success ml-2">Give
-				FeedBack</a>
-		</div>
-		<a th:href="@{/home}" class="btn btn-danger ml-2">Home</a>
+			<div th:if="${role.getRole()!='hr'}">
+				<a th:href="@{/giveFeedback}" class="btn btn-success ml-2">Give
+					FeedBack</a>
+			</div>
+			<a th:href="@{/home}" class="btn btn-danger ml-2">Home</a>
 		</div>
 	</div>
 

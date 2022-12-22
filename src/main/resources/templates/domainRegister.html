@@ -12,51 +12,54 @@
 
 <script
 	src="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/choices.min.js"></script>
-	
-<style type="text/css">
 
+<style type="text/css">
 #back {
-    border-radius: 50%;
-    line-height: 35px;
-    width: 40px;
-    font-size: 25pt;
-    font-family: tahoma;
-    font-weight: bold;
-    margin-top: 11px;
-    margin-left: 21px;
-    position: absolute;
-    top: 0;
-    left: 0;
+	border-radius: 50%;
+	line-height: 35px;
+	width: 40px;
+	font-size: 25pt;
+	font-family: tahoma;
+	font-weight: bold;
+	margin-top: 11px;
+	margin-left: 21px;
+	position: absolute;
+	top: 0;
+	left: 0;
 }
+
 label {
 	color: infobackground;
 }
-label.error {  
-    color: red;  
-    font-size: 1rem;  
-    display: block; 
-    } 
-    h5{
-    color:yellow;}
 
-	#anchor
-   {
-        padding-left: 400;
-        font-weight: bold;
-      color: white;
-  }
-  .openbutton {
-    background-color: lightskyblue;
-    color: black;
-    margin-top: -254px;
+label.error {
+	color: red;
+	font-size: 1rem;
+	display: block;
 }
-	</style>
 
-	<script>  
-$(document).ready (function () {  
-  $("#basic-form").validate ();  
-});  
-</script>  
+h5 {
+	color: yellow;
+}
+
+#anchor {
+	padding-left: 400;
+	font-weight: bold;
+	color: white;
+}
+
+.openbutton {
+	background-color: lightskyblue;
+	color: black;
+	margin-top: -254px;
+}
+</style>
+
+<script>
+	$(document).ready(function() {
+		$("#basic-form").validate();
+	});
+</script>
 
 
 <link rel="stylesheet"
@@ -64,21 +67,29 @@ $(document).ready (function () {
 
 
 </head>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.min.js"> </script>  
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.min.js">
 	
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"> </script>
+</script>
+
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js">
+	
+</script>
 <body class="background2">
 
-<nav class="navbar navbar-inverse navbar-fixed-top">
+	<nav class="navbar navbar-inverse navbar-fixed-top">
 		<div class="container">
 			<div class="navbar-header"
 				style="font-family: sans-serif; font-style: normal;">
-								<button id="back"  onclick="history.back()"> &laquo;</button>
+				<button id="back" onclick="history.back()">&laquo;</button>
 				<a class="navbar-brand" href="#" th:href="@{/home}"
-					style="padding-left: 1000px; color: white;"><b><i style="font-family: sans-serif;   font-style: normal;">
-							Home</i></b></a> <a class="navbar-brand"
-					style="font-family: sans-serif; color: white;"
-					href="https://www.clayfin.com;"><b><i style="font-family: sans-serif; font-style: normal;padding-left: 1	0px"> Logout </i></b></a>
+					style="padding-left: 1000px; color: white;"><b><i
+						style="font-family: sans-serif; font-style: normal;"> Home</i></b></a> <a
+					class="navbar-brand" style="font-family: sans-serif; color: white;"
+					href="https://www.clayfin.com;"><b><i
+						style="font-family: sans-serif; font-style: normal; padding-left: 1 0px">
+							Logout </i></b></a>
 
 			</div>
 		</div>
@@ -86,38 +97,40 @@ $(document).ready (function () {
 
 	<br>
 	<br>
-<div th:insert="sideBar :: header"></div>
+	<div th:insert="sideBar :: header"></div>
 	<div class="container">
 		<div class="row">
 			<div class="col-md-6 col-md-offset-3">
 
 
 
-				<h1 style="color:white; text-align:center; margin-top:0px">Domain Registration</h1>
+				<h1 style="color: white; text-align: center; margin-top: 0px">Domain
+					Registration</h1>
 
-				<form th:action="@{/saveDomain}" id="basic-form" method="post" th:object="${domain}">
+				<form th:action="@{/saveDomain}" id="basic-form" method="post"
+					th:object="${domain}">
 
 
 					<div class="form-group">
-						<label class="control-label" for="name">Domain Name </label> 
-						<input
-							id="name" class="form-control" th:field="*{domainName}"
-							required autofocus="autofocus" />
+						<label class="control-label" for="name">Domain Name </label> <input
+							id="name" class="form-control" th:field="*{domainName}" required
+							autofocus="autofocus" />
 
 						<p class="alert alert-danger"
 							th:if="${#fields.hasErrors('domainName')}"
 							th:errors="*{domainName}" />
 					</div>
 
-					
-					
-					<br><br>
-					<h5 ><b style="color:white">Enter Sub Category List Seperated by ","</b></h5>
-					<input name="category" type="text" class="form-control"  required autofocus="autofocus" ></input>
-
-					<br><br>
+					<br> <br>
+					<h5>
+						<b style="color: white">Enter Sub Category List Seperated by
+							","</b>
+					</h5>
+					<input name="category" type="text" class="form-control" required
+						autofocus="autofocus"></input> <br> <br>
 					<div class="form-group">
-						<button type="submit" class="btn btn-success" style="background-color:black">Register</button>
+						<button type="submit" class="btn btn-success"
+							style="background-color: black">Register</button>
 
 					</div>
 					<input type="hidden" th:field="*{domainId}" />
@@ -125,11 +138,7 @@ $(document).ready (function () {
 				</form>
 			</div>
 		</div>
-							
-		
 	</div>
-	
-	
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<script>
@@ -143,10 +152,7 @@ $(document).ready (function () {
 								searchResultLimit : 100,
 								renderChoiceLimit : 100
 							});
-
 				});
 	</script>
 </body>
 </html>
-
-

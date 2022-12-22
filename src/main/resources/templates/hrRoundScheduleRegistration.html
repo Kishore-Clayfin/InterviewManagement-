@@ -10,45 +10,45 @@
 <script type="text/javascript"
 	src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 <style>
-	#anchor
-   {
-        padding-left: 400;
-        font-weight: bold;
-      color: white;
-  }
-  #back {
-    border-radius: 50%;
-    line-height: 35px;
-    width: 40px;
-    font-size: 25pt;
-    font-family: tahoma;
-    font-weight: bold;
-    margin-top: 11px;
-    margin-left: 21px;
-    position: absolute;
-    top: 0;
-    left: 0;
+#anchor {
+	padding-left: 400;
+	font-weight: bold;
+	color: white;
 }
-	</style>
+
+#back {
+	border-radius: 50%;
+	line-height: 35px;
+	width: 40px;
+	font-size: 25pt;
+	font-family: tahoma;
+	font-weight: bold;
+	margin-top: 11px;
+	margin-left: 21px;
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+</style>
 </head>
 <body>
 
 	<nav class="navbar navbar-inverse navbar-fixed-top">
 		<div class="container">
 			<div class="navbar-header">
-				<button id="back"  onclick="history.back()"> &laquo;</button>
-				<a class="navbar-brand" id="anchor" th:href="@{/home}"> Go
-					To Home Page</a> <a class="navbar-brand" id="anchor"
-					th:href="@{/logout}">Logout </a>
+				<button id="back" onclick="history.back()">&laquo;</button>
+				<a class="navbar-brand" id="anchor" th:href="@{/home}"> Go To
+					Home Page</a> <a class="navbar-brand" id="anchor" th:href="@{/logout}">Logout
+				</a>
 
-					
+
 			</div>
 		</div>
 	</nav>
 
 	<br>
 	<br>
-<div th:insert="sideBar :: header"></div>
+	<div th:insert="sideBar :: header"></div>
 	<div class="container">
 		<div class="row">
 			<div class="col-md-6 col-md-offset-3">
@@ -56,20 +56,17 @@
 
 
 				<h1>Interview Schedule</h1>
-<br>
-<!-- <span style='color:red' class="alert alert-info" th:if="${candidate!=null}"  th:each="candidate : ${candidate}" th:text="${candidate.getCandidateName+' with id: '+candidate.getCandidateId+' is going to be Schedule for Hr Round!!!'}"></span> -->
- <br>
-<br>	
+				<br> <br> <br>
 
-				<form th:action="@{/saveschedule2(candidateId=${candidateId})}" method="post"
-					th:object="${schedule}">
-		
+				<form th:action="@{/saveschedule2(candidateId=${candidateId})}"
+					method="post" th:object="${schedule}">
+
 
 					<div class="form-group">
 						<label class="control-label" for="intreviewDuration">Interview
 							Type </label> <select name="type" id="type" th:field="*{interviewType}"
 							class="form-control" required autofocus="autofocus">
-							<!-- <option  th:value="--- Select ---" th:text="--- Select ---" disabled selected></option> -->
+
 							<option th:value="0" selected="selected">--- Select ---</option>
 							<option th:value="Online" th:text="Online"></option>
 							<option th:value="Walk-in" th:text="Walk-In"></option>
@@ -77,40 +74,23 @@
 
 
 						</select>
-<p class="alert alert-danger" th:if="${#fields.hasErrors('interviewType')}" th:errors="*{interviewType}" />
+						<p class="alert alert-danger"
+							th:if="${#fields.hasErrors('interviewType')}"
+							th:errors="*{interviewType}" />
 					</div>
-					
+
 					<div class="form-group">
 						<label class="control-label" for="name">Interviewer</label> <select
-							class="form-control" id="tes" name="test"
-							th:field="*{user}" required autofocus="autofocus">
+							class="form-control" id="tes" name="test" th:field="*{user}"
+							required autofocus="autofocus">
 							<option value="" selected>--- Select ---</option>
 							<option th:each="interviewer : ${interviewer}"
 								th:value="${interviewer.getUserId}"
 								th:text="${interviewer.getUsername+' - '+interviewer.getRole()}"></option>
 						</select>
-						<p class="alert alert-danger" th:if="${#fields.hasErrors('user')}" th:errors="*{user}" />
+						<p class="alert alert-danger" th:if="${#fields.hasErrors('user')}"
+							th:errors="*{user}" />
 					</div>
-
-
-
-
-
-
-
-<!-- 					<div class="form-group"> -->
-<!-- 						<label class="control-label" for="name">Candidate</label> <select -->
-<!-- 							class="form-control" id="testOrder" name="testOrder" -->
-<!-- 							th:field="*{Candidate}" multiple required autofocus="autofocus"> -->
-<!-- 							<option value="" selected>--- Select ---</option> -->
-<!-- 							<option th:each="candidate : ${candidate}" -->
-<!-- 								th:value="${candidate.getCandidateId}" -->
-<!-- 								th:text="${candidate.getCandidateName+' with id '+candidate.getCandidateId}"></option> -->
-<!-- 						</select> -->
-<!-- 							<p class="alert alert-danger" th:if="${#fields.hasErrors('candidate')}" th:errors="*{candidate}" /> -->
-<!-- 					</div> -->
-
-
 
 					<div class="form-group">
 						<label class="control-label" for="email"> Meeting Link </label> <input
@@ -130,51 +110,34 @@
 							Time </label> <input type="time" id="roleApplied" class="form-control"
 							th:field="*{scheduleTime}" required autofocus="autofocus" />
 					</div>
-
-
-
-
-
-
 					<div class="form-group">
 						<label class="control-label" for="intreviewDuration">Schedule
 							Duration </label> <select name="intreviewDuration" id="intreviewDuration"
 							th:field="*{duration}" class="form-control" required
 							autofocus="autofocus">
-							<!-- <option  th:value="--- Select ---" th:text="--- Select ---" disabled selected></option> -->
+
 							<option th:value="0" selected="selected">--- Select ---</option>
 							<option th:value="15" th:text="15-minutes"></option>
 							<option th:value="30" th:text="30-minutes"></option>
 							<option th:value="45" th:text="45-minutes"></option>
-
-
-
 						</select>
-							<p class="alert alert-danger" th:if="${#fields.hasErrors('duration')}" th:errors="*{duration}" />
+						<p class="alert alert-danger"
+							th:if="${#fields.hasErrors('duration')}" th:errors="*{duration}" />
 					</div>
-
-
-
-
-
-
-
-
 					<div class="form-group">
 						<button type="submit" class="btn btn-success">Schedule</button>
 
 					</div>
-					<input type="hidden" th:field="*{scheduleId}" />
-					
-					<input type="hidden" th:each="interviewer : ${interviewer}"
-								th:value="${interviewer.getUserId}" />
-					<input type="hidden" th:each="candidate : ${candidate}"
-								th:value="${candidate.getCandidateId}" />
+					<input type="hidden" th:field="*{scheduleId}" /> <input
+						type="hidden" th:each="interviewer : ${interviewer}"
+						th:value="${interviewer.getUserId}" /> <input type="hidden"
+						th:each="candidate : ${candidate}"
+						th:value="${candidate.getCandidateId}" />
 
 				</form>
 			</div>
 		</div>
-					<a th:href="@{/home}" class="btn btn-danger ml-2">Home</a>
+		<a th:href="@{/home}" class="btn btn-danger ml-2">Home</a>
 	</div>
 </body>
 <script type="text/javascript">
@@ -201,8 +164,4 @@
 </script>
 </html>
 
-<!-- else {
-            	$("#testOrder").prop("multiple",'multiple');
-                $("#email").removeAttr("readonly");
-                
-            } -->
+

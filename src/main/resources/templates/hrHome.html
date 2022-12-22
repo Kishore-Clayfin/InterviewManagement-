@@ -1,154 +1,163 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet"	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
 	integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
 	crossorigin="anonymous">
-	<link rel="stylesheet" type="text/css" th:href="@{~/css/home.css}">
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<link rel="stylesheet" type="text/css" th:href="@{~/css/home.css}">
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"
+	integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA=="
+	crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 
 <link rel="stylesheet" type="text/css" th:href="@{~/css/home.css}">
 <style>
 #back {
-    border-radius: 50%;
-    line-height: 35px;
-    width: 40px;
-    font-size: 25pt;
-    font-family: tahoma;
-    font-weight: bold;
-    margin-top: 11px;
-    margin-left: 21px;
-    position: absolute;
-    top: 0;
-    left: 0;
+	border-radius: 50%;
+	line-height: 35px;
+	width: 40px;
+	font-size: 25pt;
+	font-family: tahoma;
+	font-weight: bold;
+	margin-top: 11px;
+	margin-left: 21px;
+	position: absolute;
+	top: 0;
+	left: 0;
 }
+
 body {
-  font-family: "Lato", sans-serif;
+	font-family: "Lato", sans-serif;
 }
 
 .sidebar {
-  height: 100%;
-  width: 0;
-  position: fixed;
-  z-index: 1;
-  top: 0;
-  left: 0;
-  background-color: rgb(3, 192, 255);
-  overflow-x: hidden;
-  transition: 0.5s;
-  padding-top: 60px;
+	height: 100%;
+	width: 0;
+	position: fixed;
+	z-index: 1;
+	top: 0;
+	left: 0;
+	background-color: rgb(3, 192, 255);
+	overflow-x: hidden;
+	transition: 0.5s;
+	padding-top: 60px;
 }
 
 .sidebar a {
-  padding: 8px 8px 8px 32px;
-  text-decoration: none;
-  font-size: 20px;
-  color: #000000;
-  display: block;
-  transition: 0.3s;
+	padding: 8px 8px 8px 32px;
+	text-decoration: none;
+	font-size: 20px;
+	color: #000000;
+	display: block;
+	transition: 0.3s;
 }
 
 .sidebar a:hover {
-  color: #f1f1f1;
+	color: #f1f1f1;
 }
 
 .sidebar .closebtn {
-  position: absolute;
-  top: 0;
-  right: 25px;
-  font-size: 36px;
-  margin-left: 50px;
+	position: absolute;
+	top: 0;
+	right: 25px;
+	font-size: 36px;
+	margin-left: 50px;
 }
 
 .openbtn {
-  font-size: 20px;
-  cursor: pointer;
-  background-color: rgba(236, 9, 9, 0.972);
-  color: white;
-  padding: 10px 15px;
-  border: none;
+	font-size: 20px;
+	cursor: pointer;
+	background-color: rgba(236, 9, 9, 0.972);
+	color: white;
+	padding: 10px 15px;
+	border: none;
 }
 
 .openbtn:hover {
-  background-color: #444;
+	background-color: #444;
 }
 
 #main {
-  transition: margin-left .5s;
-  padding: 16px;
+	transition: margin-left .5s;
+	padding: 16px;
 }
 
 /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
 @media screen and (max-height: 450px) {
-  .sidebar {padding-top: 15px;}
-  .sidebar a {font-size: 18px;}
+	.sidebar {
+		padding-top: 15px;
+	}
+	.sidebar a {
+		font-size: 18px;
+	}
 }
 
 img.background {
-      position: absolute;
-      left: 0px;
-      top: 0px;
-      z-index: -1;
-      width: 100%;
-      height: 100%;
-      -webkit-filter: blur(5px); /* Safari 6.0 - 9.0 */
-      filter: blur(1.5px);
-      background-repeat: no-repeat;
-  	 background-size: cover;
-      }
-
+	position: absolute;
+	left: 0px;
+	top: 0px;
+	z-index: -1;
+	width: 100%;
+	height: 100%;
+	-webkit-filter: blur(5px); /* Safari 6.0 - 9.0 */
+	filter: blur(1.5px);
+	background-repeat: no-repeat;
+	background-size: cover;
+}
 </style>
 </head>
-<body class="background1" >
+<body class="background1">
 
 
 
-<nav class="navbar navbar-inverse navbar-fixed-top">
-		<div class="container" >
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+		<div class="container">
 			<div class="navbar-header">
-							<button id="back"  onclick="history.back()"> &laquo;</button>
-				<a class="navbar-brand" href="#" th:href="@{/logout}" style="margin-left:1100px;color:white"><b><i>
-							Logout</i></b></a>
-						
+				<button id="back" onclick="history.back()">&laquo;</button>
+				<a class="navbar-brand" href="#" th:href="@{/logout}"
+					style="margin-left: 1100px; color: white"><b><i> Logout</i></b></a>
+
 			</div>
 		</div>
-	</nav>  
-<div id="mySidebar" class="sidebar"  style="margin-top:51px;background-color:gray">
-  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
-  <a th:href="@{/addCandidate}"><b>Register Candidate</b></a>
-  <a th:href="@{/viewCandidates}"><b>View  Candidates</b></a>
-  <a th:href="@{/addDomain}"><b>Add Domain</b></a>
-  <a th:href="@{/viewDomains}"><b>View Domain</b></a>
-  <a th:href="@{/viewUsers}"><b>View Users</b></a>
-  <a th:href="@{/addUser}"><b>Register User</b></a>
-  <a th:href="@{/scheduleInterview}"><b>Schedule Interview</b></a>
-  <a th:href="@{/viewschedules}"><b>View Schedules</b></a>
-  <a th:href="@{/addHiring}"><b>Add Hiring</b></a>
-  <a th:href="@{/viewHirings}"><b>View Hiring</b></a>
-    <a th:href="@{/showInterviewCompleted}"><b>Show Interview Completed</b></a>
-  <a th:href="@{/viewFeedbacks}"><b>View Feedbacks</b></a>
-  <a th:href="@{/excelPage}"><b>Bulk Upload</b></a>
-</div>
+	</nav>
+	<div id="mySidebar" class="sidebar"
+		style="margin-top: 51px; background-color: gray">
+		<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+		<a th:href="@{/addCandidate}"><b>Register Candidate</b></a> <a
+			th:href="@{/viewCandidates}"><b>View Candidates</b></a> <a
+			th:href="@{/addDomain}"><b>Add Domain</b></a> <a
+			th:href="@{/viewDomains}"><b>View Domain</b></a> <a
+			th:href="@{/viewUsers}"><b>View Users</b></a> <a
+			th:href="@{/addUser}"><b>Register User</b></a> <a
+			th:href="@{/scheduleInterview}"><b>Schedule Interview</b></a> <a
+			th:href="@{/viewschedules}"><b>View Schedules</b></a> <a
+			th:href="@{/addHiring}"><b>Add Hiring</b></a> <a
+			th:href="@{/viewHirings}"><b>View Hiring</b></a> <a
+			th:href="@{/showInterviewCompleted}"><b>Show Interview
+				Completed</b></a> <a th:href="@{/viewFeedbacks}"><b>View Feedbacks</b></a> <a
+			th:href="@{/excelPage}"><b>Bulk Upload</b></a>
+	</div>
 
-<div id="main">
-  <button class="openbtn" onclick="openNav()" style="background-color:gray;
-    color: black; margin-top:-250px;">☰ Operations</button>  
-  <!-- <h2>Collapsed Sidebar</h2>
-  <p>Click on the hamburger menu/bar icon to open the sidebar, and push this content to the right.</p> -->
-</div>
+	<div id="main">
+		<button class="openbtn" onclick="openNav()"
+			style="background-color: gray; color: black; margin-top: -250px;">☰
+			Operations</button>
 
-<script>
-function openNav() {
-  document.getElementById("mySidebar").style.width = "250px";
-  document.getElementById("main").style.marginLeft = "250px";
-}
+	</div>
 
-function closeNav() {
-  document.getElementById("mySidebar").style.width = "0";
-  document.getElementById("main").style.marginLeft= "0";
-}
-</script>
-   
+	<script>
+		function openNav() {
+			document.getElementById("mySidebar").style.width = "250px";
+			document.getElementById("main").style.marginLeft = "250px";
+		}
+
+		function closeNav() {
+			document.getElementById("mySidebar").style.width = "0";
+			document.getElementById("main").style.marginLeft = "0";
+		}
+	</script>
+
 </body>
-</html> 
+</html>

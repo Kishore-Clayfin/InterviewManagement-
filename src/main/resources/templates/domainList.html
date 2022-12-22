@@ -15,31 +15,30 @@
 	integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
 	crossorigin="anonymous">
 <style>
-	#anchor
-   {
-        margin-left: 400;
-        font-weight: bold;
-      color: white;
-  }
-.image {
-    background-image: url('/image/ListBackground.jpg');
-    background-repeat: no-repeat;
-        background-size: cover;
-    
+#anchor {
+	margin-left: 400;
+	font-weight: bold;
+	color: white;
 }
+
+.image {
+	background-image: url('/image/ListBackground.jpg');
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+
 #back {
-    border-radius: 50%;
-    line-height: 35px;
-    width: 40px;
-    font-size: 25pt;
-    font-family: tahoma;
-    font-weight: bold;
-    margin-top: 11px;
-    margin-left: 21px;
-    position: absolute;
-    top: 0;
-    left: 0;
-    
+	border-radius: 50%;
+	line-height: 35px;
+	width: 40px;
+	font-size: 25pt;
+	font-family: tahoma;
+	font-weight: bold;
+	margin-top: 11px;
+	margin-left: 21px;
+	position: absolute;
+	top: 0;
+	left: 0;
 }
 </style>
 
@@ -53,7 +52,7 @@
 		style="background-color: black;">
 		<div class="container">
 			<div class="navbar-header">
-				<button id="back"  onclick="history.back()"> &laquo;</button>
+				<button id="back" onclick="history.back()">&laquo;</button>
 				<a class="navbar-brand" id="anchor" th:href="@{/home}"> Go To
 					Home Page</a> <a class="navbar-brand" id="anchor" th:href="@{/logout}">Logout
 				</a>
@@ -68,7 +67,7 @@
 	<br>
 
 
-<div th:insert="sideBar :: header"></div>
+	<div th:insert="sideBar :: header"></div>
 
 	<div class="container">
 
@@ -92,26 +91,21 @@
 					<td th:text="${domain.domainId}" />
 					<td th:text="${domain.domainName}" />
 
-					<td>
-						<span th:each="domainCategory : ${domain.domainCategory}"> <span
-							th:text="${domainCategory.domSubCatName}+','"></span>
-						</span>
-					</td>
+					<td><span th:each="domainCategory : ${domain.domainCategory}">
+							<span th:text="${domainCategory.domSubCatName}+','"></span>
+					</span></td>
 
-
-						<td>
-							<a th:href="@{/showUpdateDomain(domainId=${domain.domainId})}" class="btn btn-info">Edit</a>
-							
-							<a th:href="@{/deleteDomain(domainId=${domain.domainId})}" class="btn btn-danger ml-2">Delete</a>
-							<!-- 
-							<a th:href="@{/addDomainCategory}" class="btn btn-primary ml-2">Add Sub Category</a> -->
-						</td>
+					<td><a
+						th:href="@{/showUpdateDomain(domainId=${domain.domainId})}"
+						class="btn btn-info">Edit</a> <a
+						th:href="@{/deleteDomain(domainId=${domain.domainId})}"
+						class="btn btn-danger ml-2">Delete</a></td>
 				</tr>
 			</tbody>
 
 		</table>
-							<a th:href="@{/home}" class="btn btn-danger ml-2">Home</a>
-		
+		<a th:href="@{/home}" class="btn btn-danger ml-2">Home</a>
+
 	</div>
 
 

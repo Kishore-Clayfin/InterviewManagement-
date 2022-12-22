@@ -6,93 +6,82 @@
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
 	integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
 	crossorigin="anonymous">
-	
-	<style type="text/css">
 
+<style type="text/css">
 #back {
-    border-radius: 50%;
-    line-height: 35px;
-    width: 40px;
-    font-size: 25pt;
-    font-family: tahoma;
-    font-weight: bold;
-    margin-top: 11px;
-    margin-left: 21px;
-    position: absolute;
-    top: 0;
-    left: 0;
+	border-radius: 50%;
+	line-height: 35px;
+	width: 40px;
+	font-size: 25pt;
+	font-family: tahoma;
+	font-weight: bold;
+	margin-top: 11px;
+	margin-left: 21px;
+	position: absolute;
+	top: 0;
+	left: 0;
 }
 
-body{
-
-
-
- background:
-        linear-gradient(red, transparent),
-        linear-gradient(to top left, lime, transparent),
-        linear-gradient(to top right, blue, transparent);
-    background-blend-mode: screen;
-
+body {
+	background: linear-gradient(red, transparent),
+		linear-gradient(to top left, lime, transparent),
+		linear-gradient(to top right, blue, transparent);
+	background-blend-mode: screen;
 }
 
-	#anchor
-   {
-        padding-left: 400;
-        font-weight: bold;
-      color: white;
-  }
-	</style>
+#anchor {
+	padding-left: 400;
+	font-weight: bold;
+	color: white;
+}
+</style>
 
-
-
-
-
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.min.js"> </script>  
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"> </script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.min.js">
 	
-		
-	<style>
-	label.error {  
-    color: red;  
-    font-size: 1rem;  
-    display: block;  
-    margin-top: 5px;  
-} </style>
-	<script>  
+</script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js">
 	
-	
-	$(function () {
-	    $("#btnSubmit").click(function () {
-	        var password = $("#password").val();
-	        var confirmPassword = $("#confirmpassword").val();
-	        
-	        
-	        
-	        if (password != confirmPassword) {
-	            alert("Passwords do not match.");
-	            return false;
-	        }
-	        return true;
-	    });
+</script>
+
+<style>
+label.error {
+	color: red;
+	font-size: 1rem;
+	display: block;
+	margin-top: 5px;
+}
+</style>
+<script>
+	$(function() {
+		$("#btnSubmit").click(function() {
+			var password = $("#password").val();
+			var confirmPassword = $("#confirmpassword").val();
+
+			if (password != confirmPassword) {
+				alert("Passwords do not match.");
+				return false;
+			}
+			return true;
+		});
 	});
-	
-	
-$(document).ready (function () {  
-  $("#registration").validate ();  
-});  
-</script> 
-	
-	
+
+	$(document).ready(function() {
+		$("#registration").validate();
+	});
+</script>
+
+
 </head>
 <body>
 
-	
 	<nav class="navbar navbar-inverse navbar-fixed-top">
 		<div class="container">
 			<div class="navbar-header">
-								<button id="back"  onclick="history.back()"> &laquo;</button>
-				<a class="navbar-brand" href="#" th:href="@{/hrHomepage}">
-					Go To Home Page</a>
+				<button id="back" onclick="history.back()">&laquo;</button>
+				<a class="navbar-brand" href="#" th:href="@{/hrHomepage}"> Go To
+					Home Page</a>
 			</div>
 		</div>
 	</nav>
@@ -104,76 +93,61 @@ $(document).ready (function () {
 		<div class="row">
 			<div class="col-md-6 col-md-offset-3">
 
-				
-<!--private Integer userDetailsId;
-	private String mailId;
-	private Long mobileNumber;
-	private String designation;
-	private String experties;-->
-				<h1> User Registration</h1>
+				<h1>User Registration</h1>
 
-				<form th:action="@{/saveUserDetails}" id="registration" method="post" th:object="${userDetails}">
-					
+				<form th:action="@{/saveUserDetails}" id="registration"
+					method="post" th:object="${userDetails}">
+
 
 					<div class="form-group">
 						<label class="control-label" for="name">Name </label> <input
-							id="name" class="form-control" th:field="*{mailId}"
-							required autofocus="autofocus" th:minlength="4"/>
+							id="name" class="form-control" th:field="*{mailId}" required
+							autofocus="autofocus" th:minlength="4" />
 					</div>
 					<div class="form-group">
-						<label class="control-label" for="mobileNumber">Mobile Number </label> <input
-							id="name" class="form-control" th:field="*{mobileNumber}"
-							required autofocus="autofocus" th:minlength="4"/>
+						<label class="control-label" for="mobileNumber">Mobile
+							Number </label> <input id="name" class="form-control"
+							th:field="*{mobileNumber}" required autofocus="autofocus"
+							th:minlength="4" />
 					</div>
 
-				<div class="form-group">
-						<label class="control-label" for="role">Role </label> 
-                        
-                        <select name="role"  id="role" th:field="*{experties}" class="form-control" required autofocus="autofocus">
-                            <option  value="" >--- Select ---</option>
-                           
-                            <option th:value="none" th:text="None" ></option>
-                            <option th:value="javaFullStack" th:text="JavaFullStack"></option>
-                            <option th:value="python" th:text="Python"></option>
+					<div class="form-group">
+						<label class="control-label" for="role">Role </label> <select
+							name="role" id="role" th:field="*{experties}"
+							class="form-control" required autofocus="autofocus">
+							<option value="">--- Select ---</option>
+
+							<option th:value="none" th:text="None"></option>
+							<option th:value="javaFullStack" th:text="JavaFullStack"></option>
+							<option th:value="python" th:text="Python"></option>
 							<option th:value="react" th:text="React"></option>
-                            <option th:value="testing" th:text="Testing"></option>
-                          </select>
-					</div> 
-					<div class="form-group">
-						<label class="control-label" for="role">Role </label> 
-                        
-                        <select name="role"  id="role" th:field="*{designation}" class="form-control" required autofocus="autofocus">
-                            <option  value="" >--- Select ---</option>
-                           
-                            <option th:value="senior" th:text="Senior" ></option>
-                            <option th:value="superSenior" th:text="SuperSenior"></option>
-                            <option th:value="trainee" th:text="Trainee"></option>
-                          </select>
-					</div> 
-					<!-- <div class="form-group">
-						<label class="control-label" for="Password"> Password </label> <input
-							id="password" class="form-control" type="password"
-							th:field="*{password}" required autofocus="autofocus" th:minlength="6"/>
+							<option th:value="testing" th:text="Testing"></option>
+						</select>
 					</div>
-					
 					<div class="form-group">
-						<label class="control-label" for="confirmpassword"> Confirm password </label> <input
-							id="confirmpassword" class="form-control" type="password"
-							 required autofocus="autofocus" />
-					</div> -->
-					
+						<label class="control-label" for="role">Role </label> <select
+							name="role" id="role" th:field="*{designation}"
+							class="form-control" required autofocus="autofocus">
+							<option value="">--- Select ---</option>
+
+							<option th:value="senior" th:text="Senior"></option>
+							<option th:value="superSenior" th:text="SuperSenior"></option>
+							<option th:value="trainee" th:text="Trainee"></option>
+						</select>
+					</div>
+
 					<div class="form-group">
-						<button id="btnSubmit"type="submit" class="btn btn-success">Register</button>
-						
+						<button id="btnSubmit" type="submit" class="btn btn-success">Register</button>
+
 					</div>
 					<input type="hidden" th:field="*{userDetailsId}" />
-					
+
 				</form>
 			</div>
 		</div>
-					<a th:href="@{/home}" class="btn btn-danger ml-2">Home</a>
+		<a th:href="@{/home}" class="btn btn-danger ml-2">Home</a>
 	</div>
 </body>
-</html> 
+</html>
 
 

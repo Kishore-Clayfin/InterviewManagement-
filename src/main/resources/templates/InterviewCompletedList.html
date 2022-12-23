@@ -161,9 +161,12 @@
 							class="btn btn-success ml-2">HrRound</a> <a
 							th:href="@{/addschedule2(candidateId=${Feedback.candidate.getCandidateId()})} "
 							class="btn btn-primary ml-2">NextLevel</a>
-							<a
+							<span th:if="${Feedback.candidate.getExperience()} > 0.0">
+							<a 
+						
 							th:href="@{/updateExpectedCtc(candidateId=${Feedback.candidate.getCandidateId()})} "
 							class="btn btn-success ml-2">ExpectedCtc</a>
+							</span>
 							</td>
 							
 					</tr>

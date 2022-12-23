@@ -112,6 +112,7 @@
 					<th>Type</th>
 					<th>Interviewer</th>
 					<th>Candidate</th>
+					<th>Status</th>
 					<th>Actions</th>
 
 				</tr>
@@ -129,7 +130,9 @@
 					<td><span th:each="candidate : ${schedule.candidate}">
 							<span th:text=${candidate.candidateName}> </span>
 					</span></td>
-
+					<td><span th:each="candidate : ${schedule.candidate}">
+							<span th:text=${candidate.status}> </span>
+					</span></td>
 
 
 					<td style="display: flex;">

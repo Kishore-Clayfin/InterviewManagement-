@@ -138,8 +138,12 @@
 					<td style="display: flex;">
 
 						<div class="dropdown">
+						
 							<button type="button" class="btn btn-primary dropdown-toggle"
-								data-toggle="dropdown">Status</button>
+								data-toggle="dropdown"><span th:each="candidate : ${schedule.candidate}">
+							<span th:text=${candidate.status}> </span>
+					</span></button>
+								
 							<div class="dropdown-menu">
 								<a th:each="candidate : ${schedule.candidate}"
 									th:href="@{/updateStatus(candidateId=${candidate.candidateId},status=COMPLETED)}"

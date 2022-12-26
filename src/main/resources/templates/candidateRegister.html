@@ -15,6 +15,9 @@ body {
 	justify-content: center;
 	min-height: 100vh;
 	background: #2d2d37;
+	
+ font-family: cambria , sans-serif;
+
 }
 
 h1 {
@@ -69,13 +72,13 @@ label.error {
 }
 </style>
 
-<script>
+<!-- <script>
 	function alert() {
 
 		alert("Canidate Sucessfully registered!!!!");
 
 	}
-</script>
+</script> -->
 <link rel="stylesheet" type="text/css" th:href="@{~/css/home.css}">
 </head>
 
@@ -299,7 +302,21 @@ label.error {
 		<a th:href="@{/home}" class="btn btn-danger ml-2">Home</a>
 	</div>
 
-	<script type="text/javascript">
+	<script >	
+	
+	$(document).ready(function() {
+	    // document is loaded and DOM is ready
+	    if (($("#Experience").val() == 0)) {
+				console.log('in walkin');
+				$("#ctc").attr("readonly", "readonly");
+				$("#ectc").attr("readonly", "readonly");
+			} else {
+				console.log('in online');
+				$("#ctc").removeAttr("readonly");
+				$("#ectc").removeAttr("readonly");
+			}
+	    
+	});
 		$("#Experience").on('change', function() {
 			console.log("ready!");
 			console.log($(this).val());

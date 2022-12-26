@@ -53,7 +53,9 @@
 	top: 0;
 	left: 0;
 }
-
+body{
+font-family: cambria , sans-serif;
+}
 #Table {
 	width: 1300px;
 	align-content: center;
@@ -130,14 +132,7 @@
 					<td><span th:each="candidate : ${schedule.candidate}">
 							<span th:text=${candidate.candidateName}> </span>
 					</span></td>
-					<td><span th:each="candidate : ${schedule.candidate}">
-							<span th:text=${candidate.status}> </span>
-					</span></td>
-
-
-					<td style="display: flex;">
-
-						<div class="dropdown">
+					<td><div class="dropdown">
 						
 							<button type="button" class="btn btn-primary dropdown-toggle"
 								data-toggle="dropdown"><span th:each="candidate : ${schedule.candidate}">
@@ -146,13 +141,18 @@
 								
 							<div class="dropdown-menu">
 								<a th:each="candidate : ${schedule.candidate}"
-									th:href="@{/updateStatus(candidateId=${candidate.candidateId},status=COMPLETED)}"
-									class="dropdown-item">Completed</a> <a
+									th:href="@{/updateStatus(candidateId=${candidate.candidateId},status=TECHNICALCOMPLETED)}"
+									class="dropdown-item">TechnicalCompleted</a> <a
 									th:each="candidate : ${schedule.candidate}"
-									th:href="@{/updateStatus(candidateId=${candidate.candidateId},status=INCOMPLETE)}"
-									class="dropdown-item">InComplete</a>
+									th:href="@{/updateStatus(candidateId=${candidate.candidateId},status=HRROUNDCOMPLETED)}"
+									class="dropdown-item">HrRoundCompleted</a>
 							</div>
-						</div>
+						</div></td>
+
+
+					<td style="display: flex;">
+
+						
 						<div th:each="role:${role}"></div>
 						<div th:if="${role.getRole()=='hr'}" style="display: flex;">
 							&nbsp;&nbsp;<a

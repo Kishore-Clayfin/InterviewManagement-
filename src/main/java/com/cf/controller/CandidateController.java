@@ -142,6 +142,14 @@ public class CandidateController {
 		candidate.setResume(file.getBytes());
 		user.setUserId(obj.getUserId());
 		candidate.setUser(user);
+		
+		//DEFAULT STATUS
+//		System.err.println(candidate.getStatus());
+//		if(candidate.getStatus()==null) 
+//		{
+//			System.err.println("-------Comming Inside---------");
+//			candidate.setStatus("INCOMPLETE");
+//		}
 		iCandidateService.saveCandidate(candidate);
 
 		return "redirect:/viewCandidates";

@@ -42,6 +42,7 @@ public class CandidateController {
 	@GetMapping("/addCandidate")
 	public ModelAndView addCandidate(HttpSession session, HttpServletResponse redirect) {
 
+//		System.err.println(LoginController.checkUser==null);
 		if (LoginController.checkUser == null) {
 			try {
 				redirect.sendRedirect("/login");
@@ -51,8 +52,8 @@ public class CandidateController {
 			}
 		}
 
-		User checkUser = (User) session.getAttribute("loginDetails");
-		if (!checkUser.getRole().equals("hr")) {
+		User check = (User) session.getAttribute("loginDetails");
+		if (!check.getRole().equals("hr")) {
 			try {
 				redirect.sendRedirect("/login");
 			} catch (IOException e) {

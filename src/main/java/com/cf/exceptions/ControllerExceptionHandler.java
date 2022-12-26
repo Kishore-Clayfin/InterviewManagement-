@@ -34,8 +34,7 @@ public class ControllerExceptionHandler {
         new Date(),
         ex.getMessage(),
         request.getDescription(false));
-    LoginController contro=new LoginController();
-    contro.error();
+  
     return message;
   }
 }

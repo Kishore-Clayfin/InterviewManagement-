@@ -117,6 +117,7 @@ public class LoginController implements ErrorController {
 
 	@GetMapping("/logout")
 	public String logout(HttpSession session) {
+		checkUser = null;
 		session.invalidate();
 		return "redirect:/login";
 	}

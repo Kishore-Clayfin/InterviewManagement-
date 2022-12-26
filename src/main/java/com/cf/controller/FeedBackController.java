@@ -27,6 +27,8 @@ import com.cf.model.Domain;
 import com.cf.model.DomainCategory;
 import com.cf.model.Feedback;
 import com.cf.model.User;
+import com.cf.repository.IDomainDao;
+import com.cf.service.DomainServiceImpl;
 import com.cf.service.ICandidateService;
 import com.cf.service.IDomainService;
 import com.cf.service.IFeedbackService;
@@ -43,6 +45,9 @@ public class FeedBackController {
 
 	@Autowired
 	private ICandidateService iCandidateService;
+	
+	@Autowired
+	private IDomainDao dom;
 
 	@GetMapping("/addFeedback")
 	public ModelAndView addFeedback(@RequestParam Integer candidateId, HttpSession session,
@@ -67,6 +72,13 @@ public class FeedBackController {
 			}
 		}
 
+		Domain d=dom.findByDomainName("HRHEADRATING");
+		List<DomainCategory> domCat=d.getDomainCategory();
+		
+		
+		
+		
+		
 		User user = (User) session.getAttribute("loginDetails");
 		Candidate candidate = iCandidateService.updateCandidate(candidateId);
 		List<DomainCategory> domainCategory = iCandidateService.updateCandidate(candidateId).getDomain()
@@ -80,6 +92,7 @@ public class FeedBackController {
 			System.out.println(dc.getDomSubCatName().length());
 		mav.addObject("subCategory", domainCategory);
 		mav.addObject("role", user.getRole());
+		mav.addObject("hrRating", domCat);
 		return mav;
 	}
 

@@ -551,7 +551,7 @@ public class ScheduleController {
 		for (Schedule schedules : list) {
 			for (int i = 0; i < schedules.getCandidate().size(); i++) {
 				if (schedules.getCandidate().get(i).getStatus() != null) {
-					if (schedules.getCandidate().get(i).getStatus().equalsIgnoreCase("TECHNICALCOMPLETED"))// &&
+					if (schedules.getCandidate().get(i).getStatus().equalsIgnoreCase("TECHNICALCOMPLETED")||schedules.getCandidate().get(i).getStatus().equalsIgnoreCase("HRROUNDCOMPLETED"))// &&
 					// schedules.getInterviewer().getInterviewerId()==InterviewerId)
 					{
 						a.add(schedules);

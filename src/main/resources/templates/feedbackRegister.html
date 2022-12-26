@@ -52,6 +52,10 @@ label {
 	left: 0;
 }
 
+textarea {
+    color: black;
+    }
+
 body {
 
  font-family: cambria , sans-serif;
@@ -130,6 +134,24 @@ body {
 								class="skill" /> <span th:class="${domSub.getDomSubCatName()}">1</span>
 						</div>
 					</div>
+				
+					<!------------------------------ HrHead ratings --------------------------------------->
+					
+					<div th:object="${role}" th:if="${role=='hrHead'}">
+						<h3 th:object="${fcandidate}" style="color: blue;">
+							<b th:text="${candidate.domain.getDomainName()}"></b>
+						</h3>
+
+						<div class="form-group mt-3" th:each="domSub : ${hrRating}">
+							<input th:id="${domSub.getDomSubCatName()}" type="text"
+								th:text="${domSub.getDomSubCatName()}" data-slider-min="1"
+								data-slider-max="10" data-slider-step="1" data-slider-value="1"
+								class="skill" /> <span th:class="${domSub.getDomSubCatName()}">1</span>
+						</div>
+					</div>
+					
+					<!------------------------------------------------------------------------------------------>
+					
 					<div class="form-group">
 						<div class="rating" th:object="${role}"
 							th:if="${role=='interviewer'}">

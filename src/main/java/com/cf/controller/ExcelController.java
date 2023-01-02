@@ -161,6 +161,6 @@ public class ExcelController {
 
 		System.out.println(tempStudentList);
 		camdidateService.bulkSaveCandidate(tempStudentList);
-		return "excel";
+		return "redirect:/viewCandidates";
 	}
 }

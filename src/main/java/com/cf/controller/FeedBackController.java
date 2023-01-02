@@ -99,7 +99,9 @@ public class FeedBackController {
 	@PostMapping("/saveFeedback")
 	public String saveFeedBack(@Valid @ModelAttribute Feedback feedback, BindingResult result, Model model,
 			@RequestParam Integer candidateId, HttpSession session, HttpServletResponse redirect) {
-
+Candidate candidate1=iCandidateService.updateCandidate(candidateId);
+System.out.println(feedback.getInterviewerFbStatus());
+System.out.println(feedback.getHrFbStatus());
 		if (LoginController.checkUser == null) {
 			try {
 				redirect.sendRedirect("/login");
@@ -146,9 +148,31 @@ public class FeedBackController {
 			if (result.hasErrors()) {
 				return "feedbackRegister";
 			}
+			
+			if(iFeedbackService.existsFeedbackByCandidate(candidate1)) {
+				Feedback feedback1=iFeedbackService.findByCandidate(candidate1);
+				feedback1.setCandidate(candidate);
+				Map map1=feedback1.getSubDomRatings();
+				map1.putAll(map);
+				feedback1.setSubDomRatings(map1);
+				if(feedback.getInterviewerFbStatus()!=null) 
+				{
+				feedback1.setInterviewerFbStatus(feedback.getInterviewerFbStatus());
+				System.out.println("inside if"+feedback.getInterviewerFbStatus());
+				}
+				else if(feedback.getHrFbStatus()!=null)
+				{
+					feedback1.setHrFbStatus(feedback.getHrFbStatus());
+					System.out.println("inside if"+feedback.getHrFbStatus());
+					String hrReview="Interviewer Feedback: "+feedback1.getFeed_back()+"\n"+"HrHead Feedback: "+feedback.getFeed_back();
+					feedback1.setFeed_back(hrReview);
+				}
+				iFeedbackService.saveFeedback(feedback1);
+			}else {
 			feedback.setCandidate(candidate);
 			feedback.setSubDomRatings(map);
 			iFeedbackService.saveFeedback(feedback);
+			}
 			GENERAL_MSG = FeedbackConstants.FEEDBACK_SUCCESS_MSG;
 		} catch (Exception e) {
 			candidates = iCandidateService.viewCandidateList();
@@ -163,7 +187,6 @@ public class FeedBackController {
 		return "redirect:/giveFeedback";
 
 	}
-
 	@GetMapping("/viewFeedbacks")
 	public ModelAndView getAllFeedbacks(HttpSession session, HttpServletResponse redirect) {
 

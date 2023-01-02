@@ -22,8 +22,9 @@ Feedback getDetailsById(Integer id);
 	
 	List<Feedback> getAllFeedback();
 	
+	boolean existsFeedbackByCandidate(Candidate candidate);
 	
-	
+	Feedback findByCandidate(Candidate candidate);
 	
 	Feedback updateInterviewerFbStatus(Integer id,String status);
 	

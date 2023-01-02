@@ -59,5 +59,21 @@ public class FeedbackServiceImpl implements IFeedbackService {
 		return f;
 	}
 
+	@Override
+	public Feedback findByCandidate(Candidate candidate) {
+		// TODO Auto-generated method stub
+		Feedback feedback=iFeedbackDao.findByCandidate(candidate);
+		System.out.println("find by"+feedback);
+		return feedback;
+	}
+
+	@Override
+	public boolean existsFeedbackByCandidate(Candidate candidate) {
+		// TODO Auto-generated method stub
+		boolean bool=iFeedbackDao.existsFeedbackByCandidate(candidate);
+		System.out.println("does it exist"+bool);
+		return bool;
+	}
+
 
 }

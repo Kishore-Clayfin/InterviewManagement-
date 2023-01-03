@@ -76,6 +76,13 @@ body {
 
   font-family: cambria, sans-serif;
 }
+th {
+    white-space: nowrap;
+    font-size: larger;
+}
+td {
+    font-size: larger;
+}
 </style>
 </head>
 
@@ -85,8 +92,8 @@ body {
 			<div class="navbar-header">
 				<button id="back" onclick="history.back()">&laquo;</button>
 				<a class="navbar-brand" id="anchor" style="color:white;margin-left:-250;" th:href="@{/home}">
-					Home</a> 
-				<a class="navbar-brand" style="color:white;margin-left: 1350;" id="anchor" th:href="@{/logout}">Logout
+					<b>Home</b></a> 
+				<a class="navbar-brand" style="color:white;margin-left: 1350;" id="anchor" th:href="@{/logout}"><b>Logout</b>
 				</a>
 
 
@@ -110,20 +117,20 @@ body {
 				<tr>
 					<th><label>SelectAll</label><input type="checkbox"
 						id="ckbCheckAll" /></th>
-					<th>candidateName</th>
-					<th>email</th>
-					<th>mobileNumber</th>
-					<th>highQualification</th>
-					<th>cgpa</th>
-					<th>roleAppliedFor</th>
-					<th>alternateEmail</th>
-					<th>experience</th>
-					<th>Expected Ctc</th>
-					<th>Current Ctc</th>
-					<th>Alternate Mobilenumber</th>
-					<th>status</th>
+					<th>Candidate Name</th>
+					<th>EmailId</th>
+					<th>Mobile Number</th>
+					<th>Qualification</th>
+					<th>Cgpa</th>
+					<th>Role</th>
+					<th>Other EmailId</th>
+					<th>Experience</th>
+					<th>CTC</th>
+					<th>ECTC</th>
+					<th>Other Mobile Number</th>
+					<th>Status</th>
 					<th>Created By</th>
-					<th>domain</th>
+					<th>Domain</th>
 					<th>Resume</th>
 					<th>Actions</th>
 				</tr>
@@ -141,8 +148,8 @@ body {
 					<td th:text="${candidate.roleAppliedFor}" />
 					<td th:text="${candidate.alternateEmail}" />
 					<td th:text="${candidate.experience}" />
-					<td th:text="${candidate.expectedCtc}" />
 					<td th:text="${candidate.currentCtc}" />
+					<td th:text="${candidate.expectedCtc}" />
 					<td th:text="${candidate.alternateMobileNumber}" />
 					<td th:text="${candidate.status}" />
 					<td th:text="${candidate.user.getUsername()}" />
@@ -162,7 +169,7 @@ body {
 		</table>
 		<a th:href="@{/home}" class="btn btn-danger ml-2">Home</a> <a
 			id="save_value" class="btn btn-primary"
-			href="javascript:delay('/addschedule')">Scheduled</a>
+			href="javascript:delay('/addschedule')">Schedule</a>
 
 
 	</div>

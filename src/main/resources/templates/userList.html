@@ -68,6 +68,13 @@ body{
 	background-repeat: no-repeat;
 	background-size: cover;
 }
+th {
+    white-space: nowrap;
+    font-size: larger;
+}
+td {
+    font-size: larger;
+}
 </style>
 </head>
 
@@ -99,14 +106,14 @@ body{
 
 			<thead>
 				<tr>
-					<th>UserName</th>
+					<th>User Name</th>
 					<th>Password</th>
 					<th>Role</th>
 					<th>EmailId</th>
 					<th>Mobile Number</th>
 					<th>Designation</th>
 					<th>Experties</th>
-					<th>Candidates Added</th>
+					<!-- <th>Candidates Added</th> -->
 					<th>Actions</th>
 				</tr>
 			</thead>
@@ -126,10 +133,10 @@ body{
 					<td><span th:each="userDetails:${user.userDetails}"> <span
 							th:text=${userDetails.getExperties()}></span>
 					</span></td>
-					<td><span th:each="candidate:${user.candidate}"> <span
+					<!-- <td><span th:each="candidate:${user.candidate}"> <span
 							th:text="${candidate.getCandidateName()}+','"></span>
 					</span></td>
-
+ -->
 					<td style="display: flex;"><a
 						th:href="@{/showUpdateUser(userId=${user.userId})}"
 						class="btn btn-info">Edit</a> <!-- 

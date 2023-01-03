@@ -95,15 +95,15 @@ label.error {
 
 <link rel="stylesheet" type="text/css" th:href="@{~/css/home.css}">
 </head>
-<body class="background4">
+<body class="background4" style="font-size: large;">
 
 
-	<nav class="navbar navbar-inverse navbar-fixed-top">
+	<nav class="navbar navbar-inverse navbar-fixed-top" style="background-color: black;">
 		<div class="container">
 			<div class="navbar-header">
 				<button id="back" onclick="history.back()">&laquo;</button>
 				<a class="navbar-brand" id="anchor" style="color:white;margin-left:-250;"th:href="@{/home}">
-					Home</a> <a class="navbar-brand" style="color:white;margin-left:1250;"id="anchor" th:href="@{/logout}">Logout
+					<b>Home</b></a> <a class="navbar-brand" style="color:white;margin-left:1250;"id="anchor" th:href="@{/logout}"><b>Logout</b>
 				</a>
 
 
@@ -170,7 +170,7 @@ label.error {
 					</div>
 
 					<div class="form-group">
-						<label class="control-label" for="name">Company MailId</label> <input
+						<label class="control-label" for="name">Company EmailId</label> <input
 							id="name" class="form-control" th:field="*{email}" required
 							autofocus="autofocus" th:minlength="4" />
 						<p class="alert alert-danger"

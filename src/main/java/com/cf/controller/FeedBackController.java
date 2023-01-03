@@ -164,7 +164,7 @@ System.out.println(feedback.getHrFbStatus());
 				{
 					feedback1.setHrFbStatus(feedback.getHrFbStatus());
 					System.out.println("inside if"+feedback.getHrFbStatus());
-					String hrReview="Interviewer Feedback: "+feedback1.getFeed_back()+"\n"+"HrHead Feedback: "+feedback.getFeed_back();
+					String hrReview="Interviewer Feedback: "+feedback1.getFeed_back()+" & "+"HrHead Feedback: "+feedback.getFeed_back();
 					feedback1.setFeed_back(hrReview);
 				}
 				iFeedbackService.saveFeedback(feedback1);

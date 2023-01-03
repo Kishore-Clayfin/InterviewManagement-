@@ -115,7 +115,7 @@ font-family: cambria , sans-serif;
 					<th>Interviewer</th>
 					<th>Candidate</th>
 					<th>Status</th>
-					<th>Actions</th>
+					<th th:if="${role.getRole()=='hr'}">Actions</th>
 
 				</tr>
 			</thead>

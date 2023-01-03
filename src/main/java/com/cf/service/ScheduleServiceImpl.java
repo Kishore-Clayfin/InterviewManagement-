@@ -7,6 +7,9 @@ import org.springframework.stereotype.Service;
 
 import com.cf.model.Schedule;
 import com.cf.repository.IScheduleDao;
+
+import lombok.extern.log4j.Log4j2;
+@Log4j2
 @Service
 public class ScheduleServiceImpl implements IScheduleService {
 
@@ -21,6 +24,7 @@ public class ScheduleServiceImpl implements IScheduleService {
 	{
 		
 		Schedule s= iScheduleDao.save(schedule);
+		log.info("new schedule added");
 		String to="";
 		String text;
 		if(s.getCandidate().size()==1)
@@ -45,7 +49,8 @@ public class ScheduleServiceImpl implements IScheduleService {
 	}
 
 	@Override
-	public List<Schedule> viewScheduleList() {		
+	public List<Schedule> viewScheduleList() {	
+		log.info("find all schedules from the database");
 		return iScheduleDao.findAll();
 	}
 
@@ -53,12 +58,14 @@ public class ScheduleServiceImpl implements IScheduleService {
 	public Schedule updateSchedule(Integer scheduleId)
 	{
 		Schedule schedule= iScheduleDao.findById(scheduleId).orElseThrow(null);
+		log.info("Schedule with scheduleId "+scheduleId +" updated");
 		return schedule;
 	}
 
 	@Override
 	public void deleteSchedule(Integer scheduleId) {
 		iScheduleDao.deleteById(scheduleId);
+		log.info("Schedule with scheduleId "+scheduleId +" deleted");
 	}
 
 }

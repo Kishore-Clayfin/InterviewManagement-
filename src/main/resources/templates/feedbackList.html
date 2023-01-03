@@ -236,6 +236,20 @@ function(index, element) {
 	$(element).html($(element).html().replace('HrHead-Feedback:','<strong>HrHead-Feedback:</strong>'));
 });
 });
+$(document).ready(function(){
+	$("table td:nth-child(8)").each(
+
+	function(index, element) {
+		console.log(index+'  00')
+		console.log($(element).text())
+	    $(element).html($(element).html().replaceAll('=',' : '));
+		$(element).html($(element).html().replaceAll('{',' '));
+		$(element).html($(element).html().replaceAll('}',' '));
+		$(element).html($(element).html().replaceAll(',','<br>'));
+		/* $(element).html($(element).html().replace('Interviewer-Feedback:','<strong>Interviewer-Feedback:</strong>'));
+		$(element).html($(element).html().replace('HrHead-Feedback:','<strong>HrHead-Feedback:</strong>')); */
+	});
+	});
 </script>
 </body>
 

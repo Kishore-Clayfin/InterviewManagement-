@@ -62,6 +62,9 @@ body {
 
     background: #442d2d;
 }
+h1{
+color:white;
+}
 </style>
 </head >
 <body class="background3" style="font-size: large;">
@@ -103,8 +106,7 @@ body {
 
 
 					<div class="form-group">
-						<label class="control-label" for="name">Please give rating
-							according to the over all interview...</label>
+						<label class="control-label" for="name">Overall Ratings</label>
 						<fieldset>
 							<span class="star-cb-group"> <input type="radio"
 								id="rating-5" name="rating" th:field="*{rating}" value="5" /><label
@@ -130,7 +132,7 @@ body {
 						<div class="form-group mt-3" th:each="domSub : ${subCategory}">
 							<input th:id="${domSub.getDomSubCatName()}" type="text"
 								th:text="${domSub.getDomSubCatName()}" data-slider-min="1"
-								data-slider-max="10" data-slider-step="1" data-slider-value="1"
+								data-slider-max="5" data-slider-step="1" data-slider-value="1"
 								class="skill" /> <span th:class="${domSub.getDomSubCatName()}">1</span>
 						</div>
 					</div>
@@ -145,7 +147,7 @@ body {
 						<div class="form-group mt-3" th:each="domSub : ${hrRating}">
 							<input th:id="${domSub.getDomSubCatName()}" type="text"
 								th:text="${domSub.getDomSubCatName()}" data-slider-min="1"
-								data-slider-max="10" data-slider-step="1" data-slider-value="1"
+								data-slider-max="5" data-slider-step="1" data-slider-value="1"
 								class="skill" /> <span th:class="${domSub.getDomSubCatName()}">1</span>
 						</div>
 					</div>
@@ -155,7 +157,7 @@ body {
 					<div class="form-group">
 						<div class="rating" th:object="${role}"
 							th:if="${role=='interviewer'}">
-							<label> Please update the status of candidate....</label> <br>
+							<label> Interviewer Status</label> <br>
 							<br>
 							<p>
 								<label class="radio-inline"> <input type="radio"
@@ -186,8 +188,7 @@ body {
 					</div>
 					<div class="form-group">
 						<div class="rating" th:object="${role}" th:if="${role=='hrHead'}">
-							<label> HrFbStatus : Please update the status of
-								candidate....</label> <br> <br>
+							<label>HRHead Status</label> <br> <br>
 							<p>
 								<label class="radio-inline"> <input type="radio"
 									class="control-label" id="radio_experience"
@@ -216,7 +217,7 @@ body {
 						</div>
 					</div>
 					<div class="form-group">
-						<label>Enter your overall experience with candidate...</label> <br>
+						<label>Overall Comments</label> <br>
 						<textarea class="input1" name="Feedback" th:field="*{feed_back}"
 							required autofocus="autofocus"
 							placeholder="Type in Your Feedback"></textarea>

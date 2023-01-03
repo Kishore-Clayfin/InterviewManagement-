@@ -10,7 +10,11 @@
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
 	integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
 	crossorigin="anonymous">
-
+<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"> -->
+<!--added for dropdown  -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+	
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"
 	integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA=="
@@ -115,7 +119,7 @@ td {
 
 			<thead>
 				<tr>
-					<th><label>SelectAll</label><input type="checkbox"
+					<th><input type="checkbox"
 						id="ckbCheckAll" /></th>
 					<th>Candidate Name</th>
 					<th>EmailId</th>
@@ -162,7 +166,17 @@ td {
 						th:href="@{/showUpdateCandidate(candidateId=${candidate.candidateId})}"
 						class="btn btn-info">Edit</a> <a
 						th:href="@{/deleteCandidate(candidateId=${candidate.candidateId})}"
-						class="btn btn-danger ml-2">Delete</a></td>
+						class="btn btn-danger ml-2">Delete</a>
+  <div class="dropdown">
+    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Dropdown Example</button>
+    <ul class="dropdown-menu">
+      <li><a th:href="@{/addschedule2(candidateId=${candidate.candidateId})} ">HRRound</a></li>
+      <li><a th:href="@{/addschedule2(candidateId=${candidate.candidateId})} ">NextLevel</a></li>
+    </ul>
+  </div>
+
+							
+						</td>
 				</tr>
 			</tbody>
 

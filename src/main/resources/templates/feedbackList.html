@@ -115,7 +115,7 @@ font-family: cambria , sans-serif;
 		<div class="container">
 			<div class="navbar-header">
 				<button id="back" onclick="history.back()">&laquo;</button>
-				<a class="navbar-brand" id="anchor" style="margin-left:-250;" th:href="@{/home}">Home</a> <a class="navbar-brand" id="anchor" style="margin-left:1500;"th:href="@{/logout}">Logout
+				<a class="navbar-brand" id="anchor" style="color:white;margin-left:-250;" th:href="@{/home}">Home</a> <a class="navbar-brand" id="anchor" style="margin-left:1500;"th:href="@{/logout}">Logout
 				</a>
 
 
@@ -216,7 +216,20 @@ font-family: cambria , sans-serif;
 			class="btn btn-primary ml-2">PrintAll</a> <br> <br> <a
 			th:href="@{/home}" class="btn btn-danger ml-2">Home</a>
 	</div>
+<script>
+/* var replacementRegexp = " "; */
+$(document).ready(function(){
+$("table td:nth-child(4)").each(
 
+function(index, element) {
+	console.log(index+'  00')
+	console.log($(element).text())
+    $(element).html($(element).html().replace('&amp;','<br><br>'));
+	$(element).html($(element).html().replace('Interviewer-Feedback:','<strong>Interviewer-Feedback:</strong>'));
+	$(element).html($(element).html().replace('HrHead-Feedback:','<strong>HrHead-Feedback:</strong>'));
+});
+});
+</script>
 </body>
 
 </html>

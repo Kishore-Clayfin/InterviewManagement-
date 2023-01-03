@@ -19,7 +19,9 @@ body {
  font-family: cambria , sans-serif;
 
 }
-
+label {
+    color: white;
+    }
 h1 {
 	font-size: 36px;
 	color: white;
@@ -38,11 +40,10 @@ h1 {
 	top: 0;
 	left: 0;
 }
-
-.openbtn {
-	background-color: lightskyblue;
-	color: black;
-	margin-top: -547.39px;
+.openbutton {
+    
+    color: black;
+    margin-top: -547.39px;
 }
 </style>
 
@@ -58,19 +59,23 @@ h1 {
 	src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 
 <style>
-.openbutton {
+/* .openbutton {
 	background-color: lightskyblue;
 	color: black;
 	margin-top: -547.39px;
 }
-
+ */
 label.error {
 	color: red;
 	font-size: 1rem;
 	display: block;
 	margin-top: 5px;
 }
-
+.image {
+	background-image: url('/image/jared.jpg');
+	background-repeat: no-repeat;
+	background-size: cover;
+}
 </style>
 
 <!-- <script>
@@ -80,11 +85,11 @@ label.error {
 
 	}
 </script> -->
-<link rel="stylesheet" type="text/css" th:href="@{~/css/home.css}">
+<!-- <link rel="stylesheet" type="text/css" th:href="@{~/css/home.css}"> -->
 </head>
 
 
-<body class="background3" style="font-size: large;">
+<body class="image" style="font-size: large;">
 
 	<nav class="navbar navbar-inverse navbar-fixed-top" style="background-color: black;">
 		<div class="container">
@@ -107,7 +112,7 @@ label.error {
 	<div th:insert="sideBar :: header"></div>
 	<div class="container">
 		<div class="row">
-			<div class="col-md-6 col-md-offset-3">
+			<div class="col-md-6 col-md-offset-3" style="margin-top: 52px;">
 
 
 

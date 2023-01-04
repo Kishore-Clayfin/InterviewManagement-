@@ -91,6 +91,18 @@ th {
 td {
     font-size: larger;
 }
+.zoom:hover {
+  padding: 50px;
+  background-color:skyblue;
+  transition: transform .2s; 
+  width: 200px;
+  height: 200px;
+  margin: 0 auto;
+}
+
+.zoom:hover {
+  transform: scale(1.5);
+} 
 </style>
 
 <script
@@ -163,7 +175,7 @@ td {
 								th:text="${oneDoc.domain.getDomainName()}"> </span>
 						</span></td>
 						
-						<td th:text="${Feedback.subDomRatings}" />
+						<td class ="zoom" th:text="${Feedback.subDomRatings}"/>
 
 						<td style="display: flex;"><a
 							th:href="@{/addschedule2(candidateId=${Feedback.candidate.getCandidateId()})} "
@@ -184,7 +196,34 @@ td {
 		</div>
 		<br> <br> <a th:href="@{/home}" class="btn btn-danger ml-2">Home</a>
 	</div>
+<script>
+/* var replacementRegexp = " "; */
+$(document).ready(function(){
+$("table td:nth-child(4)").each(
 
+function(index, element) {
+	console.log(index+'  00')
+	console.log($(element).text())
+    $(element).html($(element).html().replace('&amp;','<br><br>'));
+	$(element).html($(element).html().replace('Interviewer-Feedback:','<strong>Interviewer-Feedback:</strong>'));
+	$(element).html($(element).html().replace('HrHead-Feedback:','<strong>HrHead-Feedback:</strong>'));
+});
+});
+$(document).ready(function(){
+	$("table td:nth-child(8)").each(
+
+	function(index, element) {
+		console.log(index+'  00')
+		console.log($(element).text())
+	    $(element).html($(element).html().replaceAll('=',' : '));
+		$(element).html($(element).html().replaceAll('{',' '));
+		$(element).html($(element).html().replaceAll('}',' '));
+		$(element).html($(element).html().replaceAll(',','<br>'));
+		/* $(element).html($(element).html().replace('Interviewer-Feedback:','<strong>Interviewer-Feedback:</strong>'));
+		$(element).html($(element).html().replace('HrHead-Feedback:','<strong>HrHead-Feedback:</strong>')); */
+	});
+	});
+</script>
 
 </body>
 

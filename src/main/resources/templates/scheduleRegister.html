@@ -41,12 +41,16 @@ body {
 	color: black;
 	margin-top: -392px;
 }
-
+.image {
+	background-image: url('/image/jared.jpg');
+	background-repeat: no-repeat;
+	background-size: cover;
+}
 </style>
 
 <link rel="stylesheet" type="text/css" th:href="@{~/css/home.css}">
 </head>
-<body class="background" style="font-size: large;">
+<body class="image" style="font-size: large;">
 
 	<nav class="navbar navbar-inverse navbar-fixed-top" style="background-color: black;">
 		<div class="container">
@@ -71,8 +75,8 @@ body {
 
 
 				<h1>Interview Schedule</h1>
-				<br> <span style='color: red' class="alert alert-info"
-					th:text="${param.errorMessage}">err</span> <br> <br>
+				<!-- <br> <span style='color: red' class="alert alert-info"
+					th:text="${param.errorMessage}">err</span> <br> <br> -->
 
 				<form th:action="@{/saveschedule}" method="post"
 					th:object="${schedule}">

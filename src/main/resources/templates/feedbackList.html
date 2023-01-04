@@ -109,6 +109,18 @@ th {
 td {
     font-size: larger;
 }
+ .zoom:hover {
+  padding: 50px;
+  background-color:skyblue;
+  transition: transform .2s; 
+  width: 200px;
+  height: 200px;
+  margin: 0 auto;
+}
+
+.zoom:hover {
+  transform: scale(1.5);
+} 
 </style>
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.js">
@@ -179,7 +191,7 @@ td {
 					<tr th:each="Feedback : ${feedback}">
 
 						<td><span th:each="oneDoc:${Feedback.candidate}"> <span
-								th:text="${oneDoc.getCandidateId()}"> < </span>
+								th:text="${oneDoc.getCandidateId()}">  </span>
 						</span></td>
 						<td><span th:each="oneDoc:${Feedback.candidate}"> <span
 								th:text="${oneDoc.getCandidateName()}"> </span>
@@ -191,8 +203,9 @@ td {
 						<td><span th:each="oneDoc:${Feedback.candidate}"> <span
 								id="inner" th:text="${oneDoc.domain.getDomainName()}"> </span>
 						</span></td>
-						<td th:text="${Feedback.subDomRatings}" />
-
+					
+					<td class ="zoom" th:text="${Feedback.subDomRatings}" />
+					
 						<td><div style="display: flex;"
 								th:if="${Feedback.getInterviewerFbStatus()=='selected' || Feedback.getInterviewerFbStatus()=='rejected' }">
 								<a

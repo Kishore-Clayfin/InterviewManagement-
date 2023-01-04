@@ -30,7 +30,7 @@ public class CandidateServiceImpl implements ICandidateService {
 			if (can.getStatus() == null) 
 			{
 				System.err.println("-------Comming Inside---------");
-				candidate.setStatus("INCOMPLETE");
+				candidate.setStatus("ResumeShortlisted");
 			}
 		}
 		else

@@ -81,7 +81,7 @@ public class ExcelController {
 			while (rowIterator.hasNext()) {
 				Candidate candidate = new Candidate();
 				candidate.setUser(user);
-
+				candidate.setStatus("ResumeShortlisted");
 				int i = 0;
 				if (count == 0) {
 					rowIterator.next();

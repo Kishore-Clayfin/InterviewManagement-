@@ -168,10 +168,10 @@ td {
 						th:href="@{/deleteCandidate(candidateId=${candidate.candidateId})}"
 						class="btn btn-danger ml-2">Delete</a>
   <div class="dropdown">
-    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Dropdown Example</button>
+    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Schedule</button>
     <ul class="dropdown-menu">
-      <li><a th:href="@{/addschedule2(candidateId=${candidate.candidateId})} ">HRRound</a></li>
-      <li><a th:href="@{/addschedule2(candidateId=${candidate.candidateId})} ">NextLevel</a></li>
+      <li><a th:href="@{/addschedule2(candidateId=${candidate.candidateId},status=HrRound)} ">HRRound</a></li>
+      <li><a th:href="@{/addschedule2(candidateId=${candidate.candidateId},status=nextTechnicalRound)} ">NextLevel</a></li>
     </ul>
   </div>
 

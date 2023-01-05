@@ -123,9 +123,9 @@ public class ScheduleController {
 	}
 
 	@GetMapping("/addschedule2")
-	public ModelAndView addschedule2(@RequestParam Integer candidateId, HttpSession session,
+	public ModelAndView addschedule2(@RequestParam Integer candidateId, @RequestParam String status,HttpSession session,
 			HttpServletResponse redirect) {
-
+System.out.println("Checkuu"+status);
 		if (LoginController.checkUser == null) {
 			try {
 				redirect.sendRedirect("/login");
@@ -149,7 +149,9 @@ public class ScheduleController {
 
 		Candidate candidate = icandidateService.findResumeCandidate(candidateId);
 		List<User> user = iUserService.viewUserList();
-
+		List<Candidate> listOfCandi=new ArrayList<>();
+		listOfCandi.add(candidate);
+		Schedule.setCandidate(listOfCandi);
 		List<User> list = user.stream()
 				.filter(c -> c.getRole().equalsIgnoreCase("hrHead") || c.getRole().equalsIgnoreCase("interviewer"))
 				.collect(Collectors.toList());
@@ -160,6 +162,7 @@ public class ScheduleController {
 		mv.addObject("candidateId", candidateId);
 		mv.addObject("candidate", candidate);
 		mv.addObject("interviewer", list);
+		mv.addObject("status",status);
 		return mv;
 	}
 
@@ -273,7 +276,7 @@ public class ScheduleController {
 
 	@PostMapping("/saveschedule2")
 	public String saveschedule2(@Valid @ModelAttribute Schedule schedule, BindingResult result, Model model,
-			@RequestParam Integer candidateId, RedirectAttributes ra, HttpSession session,
+			@RequestParam Integer candidateId, @RequestParam String status1, RedirectAttributes ra, HttpSession session,
 			HttpServletResponse redirect) {
 
 		if (LoginController.checkUser == null) {
@@ -296,10 +299,25 @@ public class ScheduleController {
 		}
 
 		List<Candidate> candidateList = new ArrayList<Candidate>();
-
+//System.out.println("params from add schedule status"+status1);
 //		log.info("list"+candidateList);
 		Candidate candidate = icandidateService.updateCandidate(candidateId);
-
+		System.out.println(candidateId);
+		System.out.println(candidate.getStatus());
+		System.out.println(candidate.getStatus()=="TechnicalCompleted");
+		if(status1.equalsIgnoreCase("nextTechnicalRound")) {
+		if(candidate.getStatus().equalsIgnoreCase("TechnicalCompleted")) {
+			candidate.setStatus("SecondTechnicalScheduled");
+		}
+		else if(candidate.getStatus().equalsIgnoreCase("SecondTechnicalCompleted")) {
+			candidate.setStatus("ThirdTechnicalScheduled");
+		}
+		else if(candidate.getStatus().equalsIgnoreCase("ThirdTechnicalCompleted")) {
+			candidate.setStatus("FourthTechnicalScheduled");
+		}
+		}else if(status1.equalsIgnoreCase("hrRound")) {
+			candidate.setStatus("HRRoundScheduled");
+		}
 		candidateList.add(candidate);
 		log.info("list" + candidateList);
 
@@ -357,7 +375,8 @@ public class ScheduleController {
 
 		if (candidateId != null) {
 			schedule.setCandidate(candidateList);
-			ischeduleService.saveSchedule(schedule);
+			Schedule sche=ischeduleService.saveSchedule(schedule);
+			System.out.println("sche value to check whether candidate updates"+sche);
 
 		}
 
@@ -551,7 +570,7 @@ public class ScheduleController {
 		for (Schedule schedules : list) {
 			for (int i = 0; i < schedules.getCandidate().size(); i++) {
 				if (schedules.getCandidate().get(i).getStatus() != null) {
-					if (schedules.getCandidate().get(i).getStatus().equalsIgnoreCase("TECHNICALCOMPLETED")||schedules.getCandidate().get(i).getStatus().equalsIgnoreCase("HRROUNDCOMPLETED"))// &&
+					if (schedules.getCandidate().get(i).getStatus().equalsIgnoreCase("SECONDTECHNICALCOMPLETED")||schedules.getCandidate().get(i).getStatus().equalsIgnoreCase("THIRDTECHNICALCOMPLETED")||schedules.getCandidate().get(i).getStatus().equalsIgnoreCase("FOURTHTECHNICALCOMPLETED")||schedules.getCandidate().get(i).getStatus().equalsIgnoreCase("TECHNICALCOMPLETED")||schedules.getCandidate().get(i).getStatus().equalsIgnoreCase("HRROUNDCOMPLETED"))// &&
 					// schedules.getInterviewer().getInterviewerId()==InterviewerId)
 					{
 						a.add(schedules);

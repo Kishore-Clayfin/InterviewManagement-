@@ -146,12 +146,30 @@ td {
 							<span th:text=${candidate.status}> </span>
 					</span></button>
 								
-							<div class="dropdown-menu">
-								<a th:each="candidate : ${schedule.candidate}"
-									th:href="@{/updateStatus(candidateId=${candidate.candidateId},status=TECHNICALCOMPLETED)}"
-									class="dropdown-item">TechnicalCompleted</a> <a
+							<div th:each="candidate : ${schedule.candidate}" class="dropdown-menu">
+							<div th:if="${candidate.getStatus()=='SecondTechnicalScheduled'}">
+							<a 
+									th:href="@{/updateStatus(candidateId=${candidate.candidateId},status=SecondTechnicalCompleted)}"
+									class="dropdown-item">SecondTechnicalCompleted</a>
+							</div>
+							<div th:if="${candidate.getStatus()=='ThirdTechnicalScheduled'}">
+							<a 
+									th:href="@{/updateStatus(candidateId=${candidate.candidateId},status=ThirdTechnicalCompleted)}"
+									class="dropdown-item">ThirdTechnicalCompleted</a>
+							</div>
+							<div th:if="${candidate.getStatus()=='FourthTechnicalScheduled'}">
+							<a 
+									th:href="@{/updateStatus(candidateId=${candidate.candidateId},status=FourthTechnicalCompleted)}"
+									class="dropdown-item">FourthTechnicalCompleted</a>
+							</div>
+							<div th:if="${candidate.getStatus()=='ResumeShortlisted'}">
+								<a 
+									th:href="@{/updateStatus(candidateId=${candidate.candidateId},status=TechnicalCompleted)}"
+									class="dropdown-item">TechnicalCompleted</a>
+									</div>
+									 <a
 									th:each="candidate : ${schedule.candidate}"
-									th:href="@{/updateStatus(candidateId=${candidate.candidateId},status=HRROUNDCOMPLETED)}"
+									th:href="@{/updateStatus(candidateId=${candidate.candidateId},status=HRRoundCompleted)}"
 									class="dropdown-item">HrRoundCompleted</a>
 							</div>
 						</div></td>

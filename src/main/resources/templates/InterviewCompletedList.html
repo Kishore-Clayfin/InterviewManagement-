@@ -178,9 +178,9 @@ td {
 						<td class ="zoom" th:text="${Feedback.subDomRatings}"/>
 
 						<td style="display: flex;"><a
-							th:href="@{/addschedule2(candidateId=${Feedback.candidate.getCandidateId()})} "
+							th:href="@{/addschedule2(candidateId=${Feedback.candidate.getCandidateId()},status=HrRound)} "
 							class="btn btn-success ml-2">HrRound</a> <a
-							th:href="@{/addschedule2(candidateId=${Feedback.candidate.getCandidateId()})} "
+							th:href="@{/addschedule2(candidateId=${Feedback.candidate.getCandidateId()},status=nextTechnicalRound)} "
 							class="btn btn-primary ml-2">NextLevel</a>
 							<span th:if="${Feedback.candidate.getExperience()} > 0.0">
 							<a 

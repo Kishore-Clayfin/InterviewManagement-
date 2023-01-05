@@ -9,7 +9,7 @@ import com.cf.model.Schedule;
 
 public interface IFeedbackService {
 
-	void saveFeedback(Feedback feedback);
+	Feedback saveFeedback(Feedback feedback);
 
 	Object viewFeedbackList();
 

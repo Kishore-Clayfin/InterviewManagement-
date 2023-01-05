@@ -151,23 +151,54 @@ System.out.println(feedback.getHrFbStatus());
 			
 			if(iFeedbackService.existsFeedbackByCandidate(candidate1)) {
 				Feedback feedback1=iFeedbackService.findByCandidate(candidate1);
+				System.out.println(candidate1);
+				System.out.println(feedback1);
 				feedback1.setCandidate(candidate);
 				Map map1=feedback1.getSubDomRatings();
 				map1.putAll(map);
 				feedback1.setSubDomRatings(map1);
+				System.out.println(feedback.getInterviewerFbStatus());
 				if(feedback.getInterviewerFbStatus()!=null) 
 				{
 				feedback1.setInterviewerFbStatus(feedback.getInterviewerFbStatus());
 				System.out.println("inside if"+feedback.getInterviewerFbStatus());
+				System.out.println(feedback1);
+				if(candidate1.getStatus().equalsIgnoreCase("SecondTechnicalCompleted")) {
+					String interviewerStatus="First-Interviewer: "+feedback1.getInterviewerFbStatus()+" & "+"Second-Interviewer: "+feedback.getInterviewerFbStatus();
+					feedback1.setInterviewerFbStatus(interviewerStatus);
+					System.out.println("inside SecondTechnicalCompleted if"+feedback.getHrFbStatus());
+					String SecondInterviewer="First-Interviewer: "+feedback1.getFeed_back()+" & "+"Second-Interviewer: "+feedback.getFeed_back();
+					feedback1.setFeed_back(SecondInterviewer);
+					System.out.println(feedback1.getFeed_back());
+				}
+				else if(candidate1.getStatus().equalsIgnoreCase("ThirdTechnicalCompleted")) {
+					String interviewerStatus=feedback1.getInterviewerFbStatus()+" & "+"Third-Interviewer: "+feedback.getInterviewerFbStatus();
+					feedback1.setInterviewerFbStatus(interviewerStatus);
+					System.out.println("inside ThirdTechnicalCompleted if"+feedback.getHrFbStatus());
+					String SecondInterviewer=feedback1.getFeed_back()+" & "+"Third-Interviewer: "+feedback.getFeed_back();
+					feedback1.setFeed_back(SecondInterviewer);
+					System.out.println(feedback1.getFeed_back());
+				}
+				else if(candidate1.getStatus().equalsIgnoreCase("FourthTechnicalCompleted")) {
+					String interviewerStatus=feedback1.getInterviewerFbStatus()+" & "+"Fourth-Interviewer: "+feedback.getInterviewerFbStatus();
+					feedback1.setInterviewerFbStatus(interviewerStatus);
+					System.out.println("inside FourthTechnicalCompleted if"+feedback.getHrFbStatus());
+					String SecondInterviewer=feedback1.getFeed_back()+" & "+"Fourth-Interviewer: "+feedback.getFeed_back();
+					feedback1.setFeed_back(SecondInterviewer);
+					System.out.println(feedback1.getFeed_back());
+				}
 				}
 				else if(feedback.getHrFbStatus()!=null)
 				{
 					feedback1.setHrFbStatus(feedback.getHrFbStatus());
 					System.out.println("inside if"+feedback.getHrFbStatus());
-					String hrReview="Interviewer-Feedback: "+feedback1.getFeed_back()+" & "+"HrHead-Feedback: "+feedback.getFeed_back();
+					String hrReview=feedback1.getFeed_back()+" & "+"HrHead-Feedback: "+feedback.getFeed_back();
 					feedback1.setFeed_back(hrReview);
+					System.out.println(feedback1.getFeed_back());
 				}
-				iFeedbackService.saveFeedback(feedback1);
+				Feedback feed=iFeedbackService.saveFeedback(feedback1);
+				System.out.println("after saving"+feed.getFeed_back());
+			
 			}else {
 			feedback.setCandidate(candidate);
 			feedback.setSubDomRatings(map);

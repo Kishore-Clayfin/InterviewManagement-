@@ -302,6 +302,8 @@ System.out.println("Checkuu"+status);
 //System.out.println("params from add schedule status"+status1);
 //		log.info("list"+candidateList);
 		Candidate candidate = icandidateService.updateCandidate(candidateId);
+		List<Candidate> listOfCandidate=new ArrayList<>();
+		listOfCandidate.add(candidate);
 		System.out.println(candidateId);
 		System.out.println(candidate.getStatus());
 		System.out.println(candidate.getStatus()=="TechnicalCompleted");
@@ -372,15 +374,24 @@ System.out.println("Checkuu"+status);
 		if (result.hasErrors()) {
 			return "hrRoundScheduleRegister";
 		}
-
+				
 		if (candidateId != null) {
-			schedule.setCandidate(candidateList);
-			Schedule sche=ischeduleService.saveSchedule(schedule);
-			System.out.println("sche value to check whether candidate updates"+sche);
-
-		}
-
-		else {
+			if(ischeduleService.existsScheduleByCandidate(listOfCandidate)) {
+				Schedule schedule1=ischeduleService.findByCandidate(listOfCandidate);
+				schedule1.setCandidate(candidateList);
+				schedule1.setDuration(schedule.getDuration());
+				schedule1.setInterviewType(schedule.getInterviewType());
+				schedule1.setMeetingLink(schedule.getMeetingLink());
+				schedule1.setScheduleDate(schedule.getScheduleDate());
+				schedule1.setScheduleTime(schedule.getScheduleTime());
+				schedule1.setUser(schedule.getUser());
+				ischeduleService.saveSchedule(schedule1);
+			}else {
+				schedule.setCandidate(candidateList);
+				Schedule sche=ischeduleService.saveSchedule(schedule);
+				System.out.println("sche value to check whether candidate updates"+sche);
+			}
+		}else {
 			int tempDuration = schedule.getDuration();
 			String temp = schedule.getScheduleTime();
 			LocalTime tempTime = LocalTime.parse(temp);

@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.cf.model.Candidate;
 import com.cf.model.Schedule;
 import com.cf.repository.IScheduleDao;
 
@@ -66,6 +67,20 @@ public class ScheduleServiceImpl implements IScheduleService {
 	public void deleteSchedule(Integer scheduleId) {
 		iScheduleDao.deleteById(scheduleId);
 		log.info("Schedule with scheduleId "+scheduleId +" deleted");
+	}
+
+	@Override
+	public Schedule findByCandidate(List<Candidate> candidate) {
+		// TODO Auto-generated method stub
+		Schedule schedule=iScheduleDao.findByCandidateIn(candidate);
+		return schedule;
+	}
+
+	@Override
+	public boolean existsScheduleByCandidate(List<Candidate> candidateList) {
+		// TODO Auto-generated method stub
+		boolean checkByCandidate=iScheduleDao.existsScheduleByCandidateIn(candidateList);
+		return checkByCandidate;
 	}
 
 }

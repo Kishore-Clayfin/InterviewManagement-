@@ -167,7 +167,7 @@ System.out.println(feedback.getHrFbStatus());
 					String interviewerStatus="First-Interviewer: "+feedback1.getInterviewerFbStatus()+" & "+"Second-Interviewer: "+feedback.getInterviewerFbStatus();
 					feedback1.setInterviewerFbStatus(interviewerStatus);
 					System.out.println("inside SecondTechnicalCompleted if"+feedback.getHrFbStatus());
-					String SecondInterviewer="First-Interviewer: "+feedback1.getFeed_back()+" & "+"Second-Interviewer: "+feedback.getFeed_back();
+					String SecondInterviewer=feedback1.getFeed_back()+" & "+"Second-Interviewer: "+feedback.getFeed_back();
 					feedback1.setFeed_back(SecondInterviewer);
 					System.out.println(feedback1.getFeed_back());
 				}
@@ -200,6 +200,8 @@ System.out.println(feedback.getHrFbStatus());
 				System.out.println("after saving"+feed.getFeed_back());
 			
 			}else {
+				String interviewerFeed="First-Interviewer: "+feedback.getFeed_back();
+				feedback.setFeed_back(interviewerFeed);
 			feedback.setCandidate(candidate);
 			feedback.setSubDomRatings(map);
 			iFeedbackService.saveFeedback(feedback);

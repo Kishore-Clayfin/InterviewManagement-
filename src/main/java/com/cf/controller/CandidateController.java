@@ -26,6 +26,7 @@ import com.cf.model.Candidate;
 import com.cf.model.Domain;
 import com.cf.model.User;
 import com.cf.repository.ICandidateDao;
+import com.cf.repository.IuserDao;
 import com.cf.service.ICandidateService;
 import com.cf.service.IDomainService;
 
@@ -39,9 +40,12 @@ public class CandidateController {
 
 	@Autowired
 	private ICandidateDao iCandidateDao;
+	
+	@Autowired
+	private IuserDao iUserDao;
 	@GetMapping("/addCandidate")
 	public ModelAndView addCandidate(HttpSession session, HttpServletResponse redirect) {
-
+Integer userId=null;
 //		System.err.println(LoginController.checkUser==null);
 		if (LoginController.checkUser == null) {
 			try {
@@ -68,12 +72,13 @@ public class CandidateController {
 		ModelAndView mav = new ModelAndView("candidateRegister");
 		mav.addObject("candidate", candidate);
 		mav.addObject("domain", domain);
+		mav.addObject("userId",userId);
 		return mav;
 	}
 
 	@PostMapping("/saveCandidate")
 	public String saveCandidate(@Valid @ModelAttribute Candidate candidate, BindingResult result,
-			@RequestParam("file") MultipartFile file, Model mav, HttpSession session, RedirectAttributes attributes,
+			@RequestParam("file") MultipartFile file,@RequestParam Integer exists, Model mav, HttpSession session, RedirectAttributes attributes,
 			HttpServletResponse redirect) throws IOException {
 
 		if (LoginController.checkUser == null) {
@@ -142,7 +147,13 @@ public class CandidateController {
 		}
 		candidate.setResume(file.getBytes());
 		user.setUserId(obj.getUserId());
+		if(exists==null) {
 		candidate.setUser(user);
+		}else
+		{
+			User user2=iUserDao.findById(exists).orElseThrow();
+			candidate.setUser(user2);
+		}
 		
 		//DEFAULT STATUS
 //		System.err.println(candidate.getStatus());
@@ -209,8 +220,10 @@ public class CandidateController {
 
 		ModelAndView mav = new ModelAndView("candidateRegister");
 		Candidate candidate = iCandidateService.updateCandidate(candidateId);
+		Integer userId=candidate.getUser().getUserId();
 		mav.addObject("candidate", candidate);
 		mav.addObject("domain", domain);
+		mav.addObject("userId", userId);
 		return mav;
 	}
 	@GetMapping("/updateExpectedCtc")

@@ -224,7 +224,7 @@ System.out.println(feedback.getHrFbStatus());
 			feedback.setCandidate(candidate);
 			feedback.setSubDomRatings(map);
 			Feedback firstFeedback=iFeedbackService.saveFeedback(feedback);
-			String status;
+			String status="";
 			if(feedback.getInterviewerFbStatus().equalsIgnoreCase("rejected")) {
 				status="FirstTechnicalRejected";
 			}
@@ -237,6 +237,7 @@ System.out.println(feedback.getHrFbStatus());
 			}else if(feedback.getInterviewerFbStatus().equalsIgnoreCase("notattended")) {
 				status="FirstTechnicalAbsent";
 			}
+			iCandidateService.updateCandidateStatus(candidateId, status);
 			}
 			GENERAL_MSG = FeedbackConstants.FEEDBACK_SUCCESS_MSG;
 		} catch (Exception e) {

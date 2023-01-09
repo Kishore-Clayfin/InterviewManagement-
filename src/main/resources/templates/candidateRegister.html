@@ -118,7 +118,7 @@ label.error {
 
 				<h1>Candidate Registration</h1>
 
-				<form th:action="@{/saveCandidate}" id="basic-form" method="post"
+				<form th:action="@{/saveCandidate(exists=${userId})}" id="basic-form" method="post"
 					th:object="${candidate}" enctype='multipart/form-data'>
 
 

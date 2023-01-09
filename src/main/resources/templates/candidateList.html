@@ -167,7 +167,7 @@ td {
 						class="btn btn-info">Edit</a> <a
 						th:href="@{/deleteCandidate(candidateId=${candidate.candidateId})}"
 						class="btn btn-danger ml-2">Delete</a>
-  <div class="dropdown">
+  <div th:if="${#strings.endsWith(candidate.status,'Selected')}" class="dropdown">
     <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Schedule</button>
     <ul class="dropdown-menu">
       <li><a th:href="@{/addschedule2(candidateId=${candidate.candidateId},status=HrRound)} ">HRRound</a></li>

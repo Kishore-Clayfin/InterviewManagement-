@@ -150,6 +150,7 @@ System.out.println(feedback.getHrFbStatus());
 			}
 			
 			if(iFeedbackService.existsFeedbackByCandidate(candidate1)) {
+				String interviewRound="";
 				Feedback feedback1=iFeedbackService.findByCandidate(candidate1);
 				System.out.println(candidate1);
 				System.out.println(feedback1);
@@ -170,6 +171,7 @@ System.out.println(feedback.getHrFbStatus());
 					String SecondInterviewer=feedback1.getFeed_back()+" & "+"Second-Interviewer: "+feedback.getFeed_back();
 					feedback1.setFeed_back(SecondInterviewer);
 					System.out.println(feedback1.getFeed_back());
+					interviewRound="Second";
 				}
 				else if(candidate1.getStatus().equalsIgnoreCase("ThirdTechnicalCompleted")) {
 					String interviewerStatus=feedback1.getInterviewerFbStatus()+" & "+"Third-Interviewer: "+feedback.getInterviewerFbStatus();
@@ -178,6 +180,7 @@ System.out.println(feedback.getHrFbStatus());
 					String SecondInterviewer=feedback1.getFeed_back()+" & "+"Third-Interviewer: "+feedback.getFeed_back();
 					feedback1.setFeed_back(SecondInterviewer);
 					System.out.println(feedback1.getFeed_back());
+					interviewRound="Third";
 				}
 				else if(candidate1.getStatus().equalsIgnoreCase("FourthTechnicalCompleted")) {
 					String interviewerStatus=feedback1.getInterviewerFbStatus()+" & "+"Fourth-Interviewer: "+feedback.getInterviewerFbStatus();
@@ -186,6 +189,7 @@ System.out.println(feedback.getHrFbStatus());
 					String SecondInterviewer=feedback1.getFeed_back()+" & "+"Fourth-Interviewer: "+feedback.getFeed_back();
 					feedback1.setFeed_back(SecondInterviewer);
 					System.out.println(feedback1.getFeed_back());
+					interviewRound="Fourth";
 				}
 				}
 				else if(feedback.getHrFbStatus()!=null)
@@ -197,14 +201,42 @@ System.out.println(feedback.getHrFbStatus());
 					System.out.println(feedback1.getFeed_back());
 				}
 				Feedback feed=iFeedbackService.saveFeedback(feedback1);
+				String status="";
+				if(feedback.getInterviewerFbStatus().equalsIgnoreCase("rejected")) {
+					status=interviewRound+"TechnicalRejected";
+				}
+				else if(feedback.getInterviewerFbStatus().equalsIgnoreCase("selected")) {
+					status=interviewRound+"TechnicalSelected";
+				}else if(feedback.getInterviewerFbStatus().equalsIgnoreCase("waiting")) {
+					status=interviewRound+"TechnicalWaiting";
+				}else if(feedback.getInterviewerFbStatus().equalsIgnoreCase("disconnected")) {
+					status=interviewRound+"TechnicalDisconnected";
+				}else if(feedback.getInterviewerFbStatus().equalsIgnoreCase("notattended")) {
+					status=interviewRound+"TechnicalAbsent";
+				}
+				iCandidateService.updateCandidateStatus(candidateId, status);
 				System.out.println("after saving"+feed.getFeed_back());
 			
 			}else {
 				String interviewerFeed="First-Interviewer: "+feedback.getFeed_back();
+				
 				feedback.setFeed_back(interviewerFeed);
 			feedback.setCandidate(candidate);
 			feedback.setSubDomRatings(map);
-			iFeedbackService.saveFeedback(feedback);
+			Feedback firstFeedback=iFeedbackService.saveFeedback(feedback);
+			String status;
+			if(feedback.getInterviewerFbStatus().equalsIgnoreCase("rejected")) {
+				status="FirstTechnicalRejected";
+			}
+			else if(feedback.getInterviewerFbStatus().equalsIgnoreCase("selected")) {
+				status="FirstTechnicalSelected";
+			}else if(feedback.getInterviewerFbStatus().equalsIgnoreCase("waiting")) {
+				status="FirstTechnicalWaiting";
+			}else if(feedback.getInterviewerFbStatus().equalsIgnoreCase("disconnected")) {
+				status="FirstTechnicalDisconnected";
+			}else if(feedback.getInterviewerFbStatus().equalsIgnoreCase("notattended")) {
+				status="FirstTechnicalAbsent";
+			}
 			}
 			GENERAL_MSG = FeedbackConstants.FEEDBACK_SUCCESS_MSG;
 		} catch (Exception e) {

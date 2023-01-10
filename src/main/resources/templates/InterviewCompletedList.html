@@ -244,15 +244,35 @@ $(document).ready(function(){
 	$("table td:nth-child(8)").each(
 
 	function(index, element) {
+		var title1=$(".zoom").attr(("data-title"));
 		console.log(index+'  00')
+		console.log(title1);
 		console.log($(element).text())
-	    $(element).html($(element).html().replaceAll('=',' : '));
-		$(element).html($(element).html().replaceAll('{',' '));
-		$(element).html($(element).html().replaceAll('}',' '));
-		$(element).html($(element).html().replaceAll(',','<br>'));
+	    $(element).attr("data-title",title1.replaceAll('=',' : ').replaceAll('{',' ').replaceAll('}',' '));
+		/* $(element).attr("data-title",title1.replaceAll('{',' '));
+		$(element).attr("data-title",title1.replaceAll('}',' ')); */
+		/* $(element).attr("data-title",title1.replaceAll(',','<br>')); */
 		/* $(element).html($(element).html().replace('Interviewer-Feedback:','<strong>Interviewer-Feedback:</strong>'));
 		$(element).html($(element).html().replace('HrHead-Feedback:','<strong>HrHead-Feedback:</strong>')); */
-	});
+	 });
+	}); 
+$(document).ready(function(){
+	//console.log( $(".zoom").attr("data-title"));
+	/* var title1=$(".zoom").attr(("data-title"));
+	console.log(title1);
+	title1.replaceAll('=',' : ');
+	title1.replaceAll('{',' ');
+			title1.replaceAll('}',' ');
+					title1.replaceAll(',','<br>');
+					$(".zoom").attr("data-title",title1); */
+					/* document.getElementByClass('.zoom').title = title1;
+					console.log($(".zoom").prop("data-title",title1)); */
+							
+	/*  $("data-title").html($(element).html().replaceAll('=',' : '));
+		$("data-title").html($(element).html().replaceAll('{',' '));
+		$("data-title").html($(element).html().replaceAll('}',' '));
+		$("data-title").html($(element).html().replaceAll(',','<br>')); */
+	
 	});
 </script>
 

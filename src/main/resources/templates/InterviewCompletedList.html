@@ -92,6 +92,47 @@ td {
     font-size: larger;
 }
 
+/* [data-title]:hover:after {
+			visibility: visible;
+		}
+		
+		[data-title]:after {
+			content: attr(data-title);
+			 background-color: black;	 
+			color: black;
+			font-size: 120%;
+			position: absolute;
+			padding: 0px 5px 4px 8px;
+			visibility: hidden;
+		} */
+		
+		[data-title]:hover:after {
+            opacity: 1;
+            transition: all 0.2s ease 0.6s;
+            visibility: visible;
+        }
+        [data-title]:after
+         {
+            content: attr(data-title);
+            position: absolute;
+            padding: 4px 4px 4px 4px;
+            color: #222;
+            border-radius: 5px;  
+            box-shadow: 0px 0px 15px #222;  
+            background-image: -webkit-linear-gradient(
+                                top, #f8f8f8, #cccccc); 
+                                  
+            background-image: -moz-linear-gradient(
+                                top, #f8f8f8, #cccccc);  
+                                  
+            background-image: -ms-linear-gradient(
+                                top, #f8f8f8, #cccccc); 
+                                  
+            background-image: -o-linear-gradient(
+                                top, #f8f8f8, #cccccc);
+                                  
+            visibility: hidden;
+        }
 </style>
 
 <script
@@ -163,7 +204,7 @@ td {
 								th:text="${oneDoc.domain.getDomainName()}"> </span>
 						</span></td>
 						
-						<td class ="zoom" th:text="${Feedback.subDomRatings}"/>
+						<td class ="zoom" th:data-title="${Feedback.subDomRatings}">Ratings</td>
 
 						<td style="display: flex;"><a
 							th:href="@{/addschedule2(candidateId=${Feedback.candidate.getCandidateId()},status=HrRound)} "

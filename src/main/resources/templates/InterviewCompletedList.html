@@ -115,7 +115,8 @@ td {
          {
             content: attr(data-title);
             position: absolute;
-            padding: 4px 4px 4px 4px;
+            padding: 100px 50px 100px 50px;
+             white-space: pre;
             color: #222;
             border-radius: 5px;  
             box-shadow: 0px 0px 15px #222;  
@@ -248,7 +249,7 @@ $(document).ready(function(){
 		console.log(index+'  00')
 		console.log(title1);
 		console.log($(element).text())
-	    $(element).attr("data-title",title1.replaceAll('=',' : ').replaceAll('{',' ').replaceAll('}',' '));
+	    $(element).attr("data-title",title1.replaceAll('=',' : ').replaceAll('{',' ').replaceAll('}',' ').replaceAll(',','\n'));
 		/* $(element).attr("data-title",title1.replaceAll('{',' '));
 		$(element).attr("data-title",title1.replaceAll('}',' ')); */
 		/* $(element).attr("data-title",title1.replaceAll(',','<br>')); */

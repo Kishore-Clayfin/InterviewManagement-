@@ -89,7 +89,6 @@ table thead tr th {
 }
 
 #anchor {
-	
 	font-weight: bold;
 	color: white;
 }
@@ -99,28 +98,47 @@ table thead tr th {
 	background-repeat: no-repeat;
 	background-size: cover;
 }
-body{
-font-family: cambria , sans-serif;
-}
-th {
-    white-space: nowrap;
-    font-size: larger;
-}
-td {
-    font-size: larger;
-}
- /* .zoom:hover {
-  padding: 50px;
-  background-color:skyblue;
-  transition: transform .2s; 
-  width: 200px;
-  height: 200px;
-  margin: 0 auto;
+
+body {
+	font-family: cambria, sans-serif;
 }
 
-.zoom:hover {
-  transform: scale(1.5);
-}  */
+th {
+	white-space: nowrap;
+	font-size: larger;
+}
+
+td {
+	font-size: larger;
+}
+[data-title]:hover:after {
+            opacity: 1;
+            transition: all 0.2s ease 0.6s;
+            visibility: visible;
+        }
+        [data-title]:after
+         {
+            content: attr(data-title);
+            position: absolute;
+            padding: 100px 50px 100px 50px;
+             white-space: pre;
+            color: #222;
+            border-radius: 5px;  
+            box-shadow: 0px 0px 15px #222;  
+            background-image: -webkit-linear-gradient(
+                                top, #f8f8f8, #cccccc); 
+                                  
+            background-image: -moz-linear-gradient(
+                                top, #f8f8f8, #cccccc);  
+                                  
+            background-image: -ms-linear-gradient(
+                                top, #f8f8f8, #cccccc); 
+                                  
+            background-image: -o-linear-gradient(
+                                top, #f8f8f8, #cccccc);
+                                  
+            visibility: hidden;
+        }
 </style>
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.js">
@@ -134,8 +152,10 @@ td {
 		<div class="container">
 			<div class="navbar-header">
 				<button id="back" onclick="history.back()">&laquo;</button>
-				<a class="navbar-brand" id="anchor" style="color:white;margin-left:-250;" th:href="@{/home}">Home</a> <a class="navbar-brand" id="anchor" style="margin-left:1500;"th:href="@{/logout}">Logout
-				</a>
+				<a class="navbar-brand" id="anchor"
+					style="color: white; margin-left: -250;" th:href="@{/home}">Home</a>
+				<a class="navbar-brand" id="anchor" style="margin-left: 1500;"
+					th:href="@{/logout}">Logout </a>
 
 
 			</div>
@@ -191,7 +211,7 @@ td {
 					<tr th:each="Feedback : ${feedback}">
 
 						<td><span th:each="oneDoc:${Feedback.candidate}"> <span
-								th:text="${oneDoc.getCandidateId()}">  </span>
+								th:text="${oneDoc.getCandidateId()}"> </span>
 						</span></td>
 						<td><span th:each="oneDoc:${Feedback.candidate}"> <span
 								th:text="${oneDoc.getCandidateName()}"> </span>
@@ -203,9 +223,15 @@ td {
 						<td><span th:each="oneDoc:${Feedback.candidate}"> <span
 								id="inner" th:text="${oneDoc.domain.getDomainName()}"> </span>
 						</span></td>
-					
-					<td class ="zoom" th:text="${Feedback.subDomRatings}" />
-					
+
+						<td class ="zoom" th:data-title="${Feedback.subDomRatings}">Ratings</td>
+						
+						
+						<!-- <span class="myDIV">hello</span>
+							<span class="hide">I am shown when someone hovers over the
+								div above.</span>
+						</td> -->
+
 						<td><div style="display: flex;"
 								th:if="${Feedback.getInterviewerFbStatus()=='selected' || Feedback.getInterviewerFbStatus()=='rejected' }">
 								<a
@@ -230,53 +256,84 @@ td {
 				</tbody>
 
 			</table>
+
 		</div>
 
 		<a th:href="@{/generateAllPdfFile} " target="_blank"
 			class="btn btn-primary ml-2">PrintAll</a> <br> <br> <a
 			th:href="@{/home}" class="btn btn-danger ml-2">Home</a>
 	</div>
-<script>
-/* var replacementRegexp = " "; */
-$(document).ready(function(){
-$("table td:nth-child(4)").each(
-
-function(index, element) {
-	console.log(index+'  00')
-	console.log($(element).text())
-    $(element).html($(element).html().replaceAll('&amp;','<br><br>'));
-	$(element).html($(element).html().replace('First-Interviewer:','<strong>First-Interviewer:</strong>'));
-	$(element).html($(element).html().replace('Second-Interviewer:','<strong>Second-Interviewer:</strong>'));
-	$(element).html($(element).html().replace('Fourth-Interviewer:','<strong>First-Interviewer:</strong>'));
-	$(element).html($(element).html().replace('HrHead-Feedback: ','<strong>HrHead-Feedback:</strong>'));
-});
-$("table td:nth-child(5)").each(
+	<script>
+	$(document).ready(function() {
+		$("table td:nth-child(4)").each(function(index, element) {
+			console.log(index + '  00')
+			console.log($(element).text())
+			$(element).html($(element).html().replaceAll('&amp;', '<br><br>'));
+			$(element).html($(element).html().replace('First-Interviewer:', '<strong>First-Interviewer:</strong>'));
+			$(element).html($(element).html().replace('Second-Interviewer:', '<strong>Second-Interviewer:</strong>'));
+			$(element).html($(element).html().replace('Fourth-Interviewer:', '<strong>First-Interviewer:</strong>'));
+			$(element).html($(element).html().replace('HrHead-Feedback: ', '<strong>HrHead-Feedback:</strong>'));
+		});
+		$("table td:nth-child(5)").each(function(index, element) {
+			console.log(index + '  00')
+			console.log($(element).text())
+			$(element).html($(element).html().replaceAll('&amp;', '<br><br>'));
+			$(element).html($(element).html().replace('First-Interviewer:', '<strong>First-Interviewer:</strong>'));
+			$(element).html($(element).html().replace('Second-Interviewer:', '<strong>Second-Interviewer:</strong>'));
+			$(element).html($(element).html().replace('Fourth-Interviewer:', '<strong>First-Interviewer:</strong>'));
+			$(element).html($(element).html().replace('HrHead-Feedback: ', '<strong>HrHead-Feedback:</strong>'));
+		});
+	});
+	/* $(document).ready(function() {
+		$("table td:nth-child(8)").each(function(index, element) {
+			console.log(index + '  00')
+			console.log($(element).text())
+			$(element).html($(element).html().replaceAll('=', ' : '));
+			$(element).html($(element).html().replaceAll('=', ' : '));
+			$(element).html($(element).html().replaceAll('{', ' '));
+			$(element).html($(element).html().replaceAll('}', ' '));
+			$(element).html($(element).html().replaceAll(',', '<br>'));
+		 $(element).html($(element).html().replace('Interviewer-Feedback:','<strong>Interviewer-Feedback:</strong>'));
+			$(element).html($(element).html().replace('HrHead-Feedback:','<strong>HrHead-Feedback:</strong>'));
+		});
+		
+	});  */
+	/* $(document).ready(function() {
+		/* $("#yourDivId span:first").hide(); */
+		/* $("#yourDivId").mouseleave(function(){$("#yourDivId span").hide()}); */
+		/* $("#yourDivId span").hide();
+		$("#yourDivId").mouseenter(function(){$("#yourDivId span").show()}); 
+		$("#yourDivId").mouseleave(function(){$("#yourDivId span").hide()});
+		$(document).ready(function() {
+			$("table td:nth-child(8)").each(function(index, element) {
+				console.log(index + '  00')
+				console.log($(element).text())
+				
+				$("#yourDivId span").html($("#yourDivId span").html().replaceAll('=', ' : '));
+				$("#yourDivId span").html($("#yourDivId span").html().replaceAll('{', ' '));
+				$("#yourDivId span").html($("#yourDivId span").html().replaceAll('}', ' '));
+				$("#yourDivId span").html($("#yourDivId span").html().replaceAll(',', '<br>'));
+				
+				
+			 
+			});
+		});
+	});  */
+	$(document).ready(function(){
+		$("table td:nth-child(8)").each(
 
 		function(index, element) {
+			var title1=$(".zoom").attr(("data-title"));
 			console.log(index+'  00')
+			console.log(title1);
 			console.log($(element).text())
-		    $(element).html($(element).html().replaceAll('&amp;','<br><br>'));
-			$(element).html($(element).html().replace('First-Interviewer:','<strong>First-Interviewer:</strong>'));
-			$(element).html($(element).html().replace('Second-Interviewer:','<strong>Second-Interviewer:</strong>'));
-			$(element).html($(element).html().replace('Fourth-Interviewer:','<strong>First-Interviewer:</strong>'));
-			$(element).html($(element).html().replace('HrHead-Feedback: ','<strong>HrHead-Feedback:</strong>'));
-		});
-});
-$(document).ready(function(){
-	$("table td:nth-child(8)").each(
-
-	function(index, element) {
-		console.log(index+'  00')
-		console.log($(element).text())
-	    $(element).html($(element).html().replaceAll('=',' : '));
-		$(element).html($(element).html().replaceAll('{',' '));
-		$(element).html($(element).html().replaceAll('}',' '));
-		$(element).html($(element).html().replaceAll(',','<br>'));
-		/* $(element).html($(element).html().replace('Interviewer-Feedback:','<strong>Interviewer-Feedback:</strong>'));
-		$(element).html($(element).html().replace('HrHead-Feedback:','<strong>HrHead-Feedback:</strong>')); */
-	});
-	});
-</script>
+		    $(element).attr("data-title",title1.replaceAll('=',' : ').replaceAll('{',' ').replaceAll('}',' ').replaceAll(',','\n'));
+			});
+		}); 
+	
+	$("#yourDivId span").mouseenter(function(){$(this).show()}); 
+		
+	</script>
 </body>
 
 </html>

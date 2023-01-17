@@ -57,7 +57,7 @@ public class ControllerExceptionHandler {
                                HttpServletResponse response) throws IOException {
 //      String redirect = getRedirectUrl("/logout");
 System.out.println("entered exception handler logout resolver");
-      RedirectView rw = new RedirectView("/logout");
+      RedirectView rw = new RedirectView("/login");
 //      rw.setStatusCode(HttpStatus.MOVED_PERMANENTLY); // you might not need this
       FlashMap outputFlashMap = RequestContextUtils.getOutputFlashMap(request);
       if (outputFlashMap != null){

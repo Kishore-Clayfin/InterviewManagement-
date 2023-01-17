@@ -34,7 +34,8 @@ public class DomainController {
 	private IDomainCategoryService iDomainCategoryService;
 
 	@GetMapping("/addDomain")
-	public ModelAndView addDomain(HttpSession session, HttpServletResponse redirect) {
+	public ModelAndView addDomain(HttpSession session, HttpServletResponse redirect) 
+	{
 
 		if (LoginController.checkUser == null) {
 			try {
@@ -88,7 +89,7 @@ public class DomainController {
 		}
 
 		List<DomainCategory> arr = new ArrayList<DomainCategory>();
-		category = category.toUpperCase();
+		
 		String[] s = category.split(",");
 		List list = Arrays.asList(s);
 //		System.out.println(list);
@@ -165,7 +166,14 @@ public class DomainController {
 
 		ModelAndView mav = new ModelAndView("domainRegister");
 		Domain domain = iDomainService.updateDomain(domainId);
+		String name="";
+		List<DomainCategory> domName= domain.getDomainCategory();
+		for (DomainCategory a : domName) 
+		{
+			name=name+a.getDomSubCatName()+",";
+		}
 		mav.addObject("domain", domain);
+		mav.addObject("dom", name);
 		mav.addObject("domainCategory", domainCategory);
 		return mav;
 	}

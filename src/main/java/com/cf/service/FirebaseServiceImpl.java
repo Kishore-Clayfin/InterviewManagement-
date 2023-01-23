@@ -65,7 +65,7 @@ public class FirebaseServiceImpl implements IFirebaseService{
 //            fileName = UUID.randomUUID().toString().concat(this.getExtension(fileName));  // to generated random string values for file name. 
 
             File file = this.convertToFile(multipartFile, candidateEmail);                      // to convert multipartFile to File
-            TEMP_URL = this.uploadFile(file, fileName);                                   // to get uploaded file link
+            TEMP_URL = this.uploadFile(file, candidateEmail);                                   // to get uploaded file link
             file.delete();    
             System.out.println("service layer upload method " +candidateEmail);
             System.out.println("temp url:"+TEMP_URL);

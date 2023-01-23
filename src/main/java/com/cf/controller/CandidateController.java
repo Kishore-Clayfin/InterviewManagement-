@@ -29,6 +29,7 @@ import com.cf.repository.ICandidateDao;
 import com.cf.repository.IuserDao;
 import com.cf.service.ICandidateService;
 import com.cf.service.IDomainService;
+import com.cf.service.IFirebaseService;
 
 @Controller
 public class CandidateController {
@@ -40,6 +41,9 @@ public class CandidateController {
 
 	@Autowired
 	private ICandidateDao iCandidateDao;
+	
+	@Autowired
+	private IFirebaseService firebase;
 	
 	@Autowired
 	private IuserDao iUserDao;
@@ -162,6 +166,13 @@ Integer userId=null;
 //			System.err.println("-------Comming Inside---------");
 //			candidate.setStatus("INCOMPLETE");
 //		}
+		
+		String download=(String)firebase.upload(file);
+		System.out.println("filenammmme "+file.getOriginalFilename());
+		System.out.println("firebaseUploadStarts");
+		//candidate.setDownloadUrl(download);
+		System.out.println(download);
+		
 		iCandidateService.saveCandidate(candidate);
 
 		return "redirect:/viewCandidates";
@@ -349,7 +360,7 @@ Integer userId=null;
 
 	@GetMapping("/downloadFile")
 	public void downloadFile(@RequestParam Integer candidateId, Model model, HttpSession session,
-			HttpServletResponse response) throws IOException {
+			HttpServletResponse response ) throws IOException {
 
 		if (LoginController.checkUser == null) {
 			try {
@@ -371,16 +382,23 @@ Integer userId=null;
 		}
 
 		Candidate candidate1 = iCandidateService.findResumeCandidate(candidateId);
-		if (candidate1 != null) {
-
-			response.setContentType("application/octet-stream");
-			String headerKey = "Content-Disposition";
-			String headerValue = "attachment; filename = " + candidate1.getCandidateName() + ".pdf";
-			response.setHeader(headerKey, headerValue);
-			ServletOutputStream outputStream = response.getOutputStream();
-			outputStream.write(candidate1.getResume());
-			outputStream.close();
-		}
+//		if (candidate1 != null) {
+//
+//			response.setContentType("application/octet-stream");
+//			String headerKey = "Content-Disposition";
+//			String headerValue = "attachment; filename = " + candidate1.getCandidateName() + ".pdf";
+//			response.setHeader(headerKey, headerValue);
+//			ServletOutputStream outputStream = response.getOutputStream();
+//			outputStream.write(candidate1.getResume());
+//			outputStream.close();
+//		}
+		
+	//	String name = file.getOriginalFilename();
+		String filename = candidate1.getResume().toString();
+		
+		String download = (String)firebase.download("3507ca31-b79d-4077-9489-01f6112e26a0.pdf");
+		System.out.println("Downloaded File" + download);
+		
 	}
 
 }

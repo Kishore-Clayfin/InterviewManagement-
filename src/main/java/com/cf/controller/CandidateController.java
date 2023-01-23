@@ -166,8 +166,8 @@ Integer userId=null;
 //			System.err.println("-------Comming Inside---------");
 //			candidate.setStatus("INCOMPLETE");
 //		}
-		
-		String download=(String)firebase.upload(file);
+		String candidateEmail=candidate.getEmail()+".pdf";
+		String download=(String)firebase.upload(file,candidateEmail);
 		System.out.println("filenammmme "+file.getOriginalFilename());
 		System.out.println("firebaseUploadStarts");
 		//candidate.setDownloadUrl(download);
@@ -395,8 +395,8 @@ Integer userId=null;
 		
 	//	String name = file.getOriginalFilename();
 		String filename = candidate1.getResume().toString();
-		
-		String download = (String)firebase.download("3507ca31-b79d-4077-9489-01f6112e26a0.pdf");
+		String candidateEmail=candidate1.getEmail()+".pdf";
+		String download = (String)firebase.download(candidateEmail);
 		System.out.println("Downloaded File" + download);
 		
 	}

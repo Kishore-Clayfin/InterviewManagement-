@@ -57,17 +57,17 @@ public class FirebaseServiceImpl implements IFirebaseService{
         return fileName.substring(fileName.lastIndexOf("."));
     }
     
-    public Object upload(MultipartFile multipartFile) {
+    public Object upload(MultipartFile multipartFile,String candidateEmail) {
     	String TEMP_URL = null;
 
         try {
             String fileName = multipartFile.getOriginalFilename();                        // to get original file name
 //            fileName = UUID.randomUUID().toString().concat(this.getExtension(fileName));  // to generated random string values for file name. 
 
-            File file = this.convertToFile(multipartFile, fileName);                      // to convert multipartFile to File
+            File file = this.convertToFile(multipartFile, candidateEmail);                      // to convert multipartFile to File
             TEMP_URL = this.uploadFile(file, fileName);                                   // to get uploaded file link
             file.delete();    
-            System.out.println("service layer upload method " +fileName);
+            System.out.println("service layer upload method " +candidateEmail);
             System.out.println("temp url:"+TEMP_URL);
             // to delete the copy of uploaded file stored in the project folder
             //return sendResponse("Successfully Uploaded !", TEMP_URL);                     // Your customized response

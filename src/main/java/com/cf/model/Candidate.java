@@ -68,6 +68,7 @@ public class Candidate
 
 	@Lob
 	private byte[] resume;
+	private String resumeName;
 	private String status;
 	
 	@Min(value=0,message="ctc can't be -ve ")

@@ -56,6 +56,7 @@
 	src="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css"></script>
 <script
 	src="https://cdn.datatables.net/searchbuilder/1.4.0/js/dataTables.searchBuilder.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <style>
 .image {
 	background-image: url('/image/ListBackground.jpg');
@@ -87,7 +88,21 @@ th {
 td {
     font-size: larger;
 }
+.custom-file-upload {
+  border: 1px solid #ccc;
+  display: inline-block;
+  padding: 2px 4px;
+  cursor: pointer;
+}
+input[type="file"] {
+    display: none;
+}
+.resumeBlock{
+display:flex;
+justify-content: center;
+}
 </style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
 <body class="image">
@@ -158,10 +173,45 @@ td {
 					<td th:text="${candidate.status}" />
 					<td th:text="${candidate.user.getUsername()}" />
 					<td th:text="${candidate.domain.domainName}" />
-
-					<td><a
+					
+					<td>
+					<div class="resumeBlock"th:if= "${candidate.resumeName != null}">
+					<span th:text="${candidate.resumeName}"></span>
+					<center><a
 						th:href="@{/downloadFile(candidateId=${candidate.candidateId})}"
-						class="btn btn-success">Download</a></td>
+						class="btn btn-success"><i class="fa fa-download" style="font-size:15px"></i></a></center>
+					</div>
+					<div class="resumeBlock" th:if="${candidate.resumeName == null}">
+					<form class="resumeBlock"th:action="@{/uploadOrEditResume(candidateId=${candidate.candidateId})}" id="basic-form" method="post"
+					th:object="${candidate}" enctype='multipart/form-data'>
+					
+  <!-- <button type="submit" class="btn btn-success">upload</button> -->
+                       <!-- <input type="file" class="form-control-file"> -->
+                       <input
+							type="file" id="role" class="form-control" name="file" 
+							style="display:hidden" />
+							<label for="role" class="custom-file-upload">Resume</label>
+							<span id="spanRes"></span>
+					 <center><button type="submit" class="btn btn-success">upload</button></center> 
+ 
+					<!-- <div class="input-group">
+  					<div class="input-group-prepend">
+    <a class="btn btn-info" th:href="@{/uploadOrEditResume(candidateId=${candidate.candidateId})}" id="inputGroupFileAddon01">Upload</a>
+  </div>
+  <div class="custom-file">
+    <input type="file" class="custom-file-input" id="inputGroupFile01"
+      aria-describedby="inputGroupFileAddon01">
+    <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+  </div>
+</div> -->
+					<!-- <span >Resume not uploaded</span>
+					<a
+						th:href="@{/showUpdateCandidate(candidateId=${candidate.candidateId})}"
+						class="btn btn-info">Edit to upload</a> -->
+						</form>
+					</div>
+					</td>
+						
 					<td style="display: flex;"><a
 						th:href="@{/showUpdateCandidate(candidateId=${candidate.candidateId})}"
 						class="btn btn-info">Edit</a> <a
@@ -230,7 +280,17 @@ td {
 
 		});
 	</script>
+	<script>
+	/* $('#file-upload').change(function() {
+		  var i = $(this).prev('label').clone();
+		  var file = $('#file-upload')[0].files[0].name;
+		  $(this).prev('label').text(file);
+		}); */
+		$("#role").change(function(){
+			  $("#spanRes").text(this.files[0].name);
+			});
 
+	</script>
 	<script>
 		$(document).ready(function() {
 			$("#ckbCheckAll").click(function() {
@@ -243,6 +303,7 @@ td {
 				window.location = URL
 			}, 2000);
 		}
+		
 	</script>
 </body>
 

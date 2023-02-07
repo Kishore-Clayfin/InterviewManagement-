@@ -118,7 +118,7 @@ label.error {
 
 				<h1>Candidate Registration</h1>
 
-				<form th:action="@{/saveCandidate(exists=${userId},candiExist=${canId})}" id="basic-form" method="post"
+				<form th:action="@{/saveCandidate}" id="basic-form" method="post"
 					th:object="${candidate}" enctype='multipart/form-data'>
 
 
@@ -276,7 +276,7 @@ label.error {
 					<div th:if="${resName==null}">
 					<div class="form-group">
 						<label class="control-label" for="resumr">Resume </label> <input
-							type="file" id="role" class="form-control" name="file" required
+							type="file" id="role" class="form-control" name="file" 
 							autofocus="autofocus" />
 						<div class="alert alert-danger alert-dismissible"
 							th:if="${param.fileError!= null}">
@@ -290,7 +290,7 @@ label.error {
 					<div th:if="${resName!=null}">
 					<div class="form-group">
 						<label class="control-label" for="resumr">Edit Resume:<span style="color:red;" th:text="${resName}"></span></label> <input
-							type="file" id="role" class="form-control" name="file" required
+							type="file" id="role" class="form-control" name="file" 
 							autofocus="autofocus" />
 					</div>
 					</div>

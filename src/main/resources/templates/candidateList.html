@@ -101,6 +101,10 @@ input[type="file"] {
 display:flex;
 justify-content: center;
 }
+.resumeMiddle{
+display:flex;
+text-align: center; 
+}
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
@@ -157,44 +161,54 @@ justify-content: center;
 			<tbody>
 				<tr th:each="candidate : ${candidate}">
 
-					<td><input type="checkbox" class="checkBoxClass"
+					<td class="customerIDCell"><input type="checkbox" class="checkBoxClass"
 						th:value="${candidate.getCandidateId}"></td>
-					<td th:text="${candidate.candidateName}" />
-					<td th:text="${candidate.email}" />
-					<td th:text="${candidate.mobileNumber}" />
-					<td th:text="${candidate.highQualification}" />
-					<td th:text="${candidate.cgpa}" />
-					<td th:text="${candidate.roleAppliedFor}" />
-					<td th:text="${candidate.alternateEmail}" />
-					<td th:text="${candidate.experience}" />
-					<td th:text="${candidate.currentCtc}" />
-					<td th:text="${candidate.expectedCtc}" />
-					<td th:text="${candidate.alternateMobileNumber}" />
-					<td th:text="${candidate.status}" />
-					<td th:text="${candidate.user.getUsername()}" />
-					<td th:text="${candidate.domain.domainName}" />
+					<td class="customerIDCell"th:text="${candidate.candidateName}" />
+					<td class="customerIDCell"th:text="${candidate.email}" />
+					<td class="customerIDCell"th:text="${candidate.mobileNumber}" />
+					<td class="customerIDCell"th:text="${candidate.highQualification}" />
+			 		<td class="customerIDCell"th:text="${candidate.cgpa}" />
+					<td class="customerIDCell"th:text="${candidate.roleAppliedFor}" />
+					<td class="customerIDCell"th:text="${candidate.alternateEmail}" />
+					<td class="customerIDCell"th:text="${candidate.experience}" />
+					<td class="customerIDCell" th:text="${candidate.currentCtc}" />
+					<td class="customerIDCell" id="expectedCtcLength"th:text="${candidate.expectedCtc}" />
+					<td class="customerIDCell" th:text="${candidate.alternateMobileNumber}" />
+					<td class="customerIDCell" th:text="${candidate.status}" />
+					<td class="customerIDCell"th:text="${candidate.user.getUsername()}" />
+					<td class="customerIDCell" th:text="${candidate.domain.domainName}" />
 					
-					<td>
-					<div class="resumeBlock"th:if= "${candidate.resumeName != null}">
-					<span th:text="${candidate.resumeName}"></span>
+					<td class="customerIDCell">
+					<div class="resumeMiddle"th:if= "${candidate.resumeName != null}">
+					<!-- <span th:text="${candidate.resumeName}"></span> -->
+					<!-- &nbsp;&nbsp; -->
 					<center><a
 						th:href="@{/downloadFile(candidateId=${candidate.candidateId})}"
-						class="btn btn-success"><i class="fa fa-download" style="font-size:15px"></i></a></center>
+						class="btn btn-success">Download &nbsp;<i class="fa fa-download" style="font-size:15px"></i></a></center>
 					</div>
 					<div class="resumeBlock" th:if="${candidate.resumeName == null}">
-					<form class="resumeBlock"th:action="@{/uploadOrEditResume(candidateId=${candidate.candidateId})}" id="basic-form" method="post"
+					<span>No Resume</span>
+					<!-- <form class="resumeBlock"th:action="@{/uploadOrEditResume(candidateId=${candidate.candidateId})}" id="basic-form" method="post"
 					th:object="${candidate}" enctype='multipart/form-data'>
-					
-  <!-- <button type="submit" class="btn btn-success">upload</button> -->
-                       <!-- <input type="file" class="form-control-file"> -->
+			
+  <button type="submit" class="btn btn-success">upload</button>
+                       <input type="file" class="form-control-file">
+                       
+                    
                        <input
 							type="file" id="role" class="form-control" name="file" 
-							style="display:hidden" />
-							<label for="role" class="custom-file-upload">Resume</label>
+							/>
+							<input type ="file" class="form-control">
+							<label for="role" id="labelResume"class="custom-file-upload">Browse</label>
 							<span id="spanRes"></span>
-					 <center><button type="submit" class="btn btn-success">upload</button></center> 
+					 <center><button type="submit" id="fileUpload"class="btn btn-success" >upload</button></center> 
+ 						
+ <input
+							type="file" id="role" class="form-control" name="file" 
+							style="display:hidden" /><label for="role" id="labelResume"class="custom-file-upload"><span id="spanRes">Browse</span></label>
  
-					<!-- <div class="input-group">
+							<center><button type="submit" id="fileUpload"class="btn btn-success" disabled>upload</button></center> 
+					<div class="input-group">
   					<div class="input-group-prepend">
     <a class="btn btn-info" th:href="@{/uploadOrEditResume(candidateId=${candidate.candidateId})}" id="inputGroupFileAddon01">Upload</a>
   </div>
@@ -203,16 +217,16 @@ justify-content: center;
       aria-describedby="inputGroupFileAddon01">
     <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
   </div>
-</div> -->
-					<!-- <span >Resume not uploaded</span>
+</div>
+					<span >Resume not uploaded</span>
 					<a
 						th:href="@{/showUpdateCandidate(candidateId=${candidate.candidateId})}"
-						class="btn btn-info">Edit to upload</a> -->
-						</form>
+						class="btn btn-info">Edit to upload</a>
+						</form> -->
 					</div>
 					</td>
 						
-					<td style="display: flex;"><a
+					<td class="customerIDCell" style="display: flex;"><a
 						th:href="@{/showUpdateCandidate(candidateId=${candidate.candidateId})}"
 						class="btn btn-info">Edit</a> <a
 						th:href="@{/deleteCandidate(candidateId=${candidate.candidateId})}"
@@ -280,18 +294,124 @@ justify-content: center;
 
 		});
 	</script>
-	<script>
-	/* $('#file-upload').change(function() {
-		  var i = $(this).prev('label').clone();
-		  var file = $('#file-upload')[0].files[0].name;
-		  $(this).prev('label').text(file);
-		}); */
-		$("#role").change(function(){
-			  $("#spanRes").text(this.files[0].name);
-			});
+	<script type="text/javascript">
+	window.onload =   function setup() {
+            	document.getElementById('buttonid').addEventListener('click', openDialog);
 
-	</script>
-	<script>
+            	function openDialog() {
+            	  document.getElementById('fileid').click();
+            	}
+                /* document.getElementById('buttonid').addEventListener('click', openDialog);
+                function openDialog() {
+                    document.getElementById('fileid').click();
+                }
+                document.getElementById('fileid').addEventListener('change', submitForm);
+                function submitForm() {
+                    document.getElementById('formid').submit();
+                } */
+            }
+        </script> 
+	<!-- <script type="text/javascript">
+    $(document).ready(
+function(){
+$('#fileUpload:submit').attr('disabled',true);
+$('#role:file').change(
+    function(){
+        if ($(this).val()){
+        	document.getElementById("fileUpload").disabled = true;
+        }
+        else {
+        	document.getElementById("fileUpload").disabled = false;
+        }
+    });
+});
+</script> -->
+
+<!-- <script type="text/javascript">
+window.onload = function () {
+    var fileupload = document.getElementById("role");
+    var filePath = document.getElementById("spanRes");
+    var button = document.getElementById("fileUpload");
+    button.onclick = function () {
+        fileupload.click();
+    };
+    fileupload.onchange = function () {
+        var fileName = fileupload.value.split('\\')[fileupload.value.split('\\').length - 1];
+        filePath.innerHTML = "<b>Selected File: </b>" + fileName;
+    };
+};
+</script> -->
+
+		<script>
+		
+				
+			   /*$(document).ready( 
+			   function(){
+			    	$("table td:nth-child(16)").each(function(index, element) {
+			        $('#role:file').change(
+			            function(){
+			            	
+			                  /* //  $('fileUpload').attr('disabled',false); */
+			                    // or, as has been pointed out elsewhere:
+			                   /*   $('#fileUpload').removeAttr('disabled'); 
+			                     var file =$('#role:file')[0].files[0].name;
+			                     $('#fileUpload').closest('div>#spanRes').text(file);
+			            }
+			            ); */ 
+			        /*     function(){
+					    	$("table td:nth-child(16)").each(function(index, element) {
+					    		$('div>input[type="file"]').change(
+					            function(){
+					            	
+					                  /* //  $('fileUpload').attr('disabled',false); */
+					                    // or, as has been pointed out elsewhere:
+					                   /*   $('div>button').removeAttr('disabled'); 
+					                     var file =$('div>input[type="file"]')[0].files[0].name;
+					                     /* $('#fileUpload').closest('div>#spanRes').text(file); 
+					                     $('label').text(file);
+					            }
+					            );
+			    });
+			    }); */
+		</script>
+		<script>
+			$(document).ready(
+				
+			    function(){
+			    	$("table td:nth-child(11)").each(function(index, element) {
+						/* console.log(index + '  00')
+						console.log($(element).text())
+						console.log("value"+$(element).val())
+						console.log("length"+$(element).val().length>=9)
+						console.log("checking"+$(element).val()>100000) */
+						var a=
+						$(element).html($(element).html().replaceAll('&amp;', '<br><br>'));
+						if($(element).val().length>=9&&$(element).val().length<10)
+						$(element).html($(element).indexOf(0)+" Lpa");
+						else if($(element).val()>10)
+							$(element).html($(element).slice(0)+" Lpa");	
+					});
+			    }
+			    )
+		</script>
+		
+  <script>
+/*  $(document).ready(
+			
+		    function(){
+		    	$('#doctorTable .customerIDCell').each(function() {
+		    		$('#role:file').change(function() {
+		//  var i = $(this).prev('label').clone();
+		  var file =$('#role:file')[0].files[0].name;
+		  console.log("My file name"+file);
+		  //console.log($(element).$("#labelResume").text(file));
+		// $("#labelResume").text(file);
+		 $('label').text(file);
+		});
+ });
+		    }); */
+	</script>  
+	<!-- <script>
 		$(document).ready(function() {
 			$("#ckbCheckAll").click(function() {
 				$(".checkBoxClass").prop('checked', $(this).prop('checked'));
@@ -304,7 +424,7 @@ justify-content: center;
 			}, 2000);
 		}
 		
-	</script>
+	</script> -->
 </body>
 
 </html>

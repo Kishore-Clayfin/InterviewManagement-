@@ -156,10 +156,10 @@ text-align: center;
 					<!-- &nbsp;&nbsp; -->
 					<a
 						th:href="@{/viewFile(candidateId=${candidate.candidateId})}"
-						class="btn btn-success">View &nbsp;<i class="fa fa-eye" style="font-size:15px;color:black;"></i></a>
+						class="btn btn-info" target="blank" >View &nbsp;<i class="fa fa-eye" style="font-size:15px;color:black;"></i></a>&nbsp;
 						<a
 						th:href="@{/downloadFile(candidateId=${candidate.candidateId})}"
-						class="btn btn-warning">download &nbsp;<i class="fa fa-download" style="font-size:15px;color:black;"></i></a>
+						class="btn btn-success">Download &nbsp;<i class="fa fa-download" style="font-size:15px;color:black;"></i></a>
 						
 					</div>
 					<div class="resumeBlock" th:if="${candidate.resumeName == null}">
@@ -170,7 +170,7 @@ text-align: center;
 					</td>
 					<td><div class="dropdown">
 						
-							<button type="button" class="btn btn-primary dropdown-toggle"
+							<button type="button" class="btn btn-info dropdown-toggle"
 								data-toggle="dropdown"><span th:each="candidate : ${schedule.candidate}">
 							<span th:text=${candidate.status}> </span>
 					</span></button>

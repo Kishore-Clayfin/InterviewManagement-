@@ -15,6 +15,9 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -447,6 +450,57 @@ try {
 		return "redirect:/viewCandidates";
 	}
 
+	@GetMapping("/viewFile")
+	public ResponseEntity<byte[]> viewFile(@RequestParam Integer candidateId, Model model, HttpSession session,
+			HttpServletResponse response ) throws IOException {
+
+		if (LoginController.checkUser == null) {
+			try {
+				response.sendRedirect("/login");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+		User checkUser = (User) session.getAttribute("loginDetails");
+		if (!(checkUser.getRole().equals("hr") || checkUser.getRole().equals("interviewer")
+				|| checkUser.getRole().equals("hrHead"))) {
+			try {
+				response.sendRedirect("/login");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+		Candidate candidate1 = iCandidateService.findResumeCandidate(candidateId);
+		ResponseEntity<byte[]> response1=null;
+		if (candidate1 != null) {
+			 HttpHeaders headers = new HttpHeaders();
+
+			    headers.setContentType(MediaType.parseMediaType("application/pdf"));
+//			response.setContentType("application/octet-stream");
+			
+			String headerValue = "attachment; filename = " + candidate1.getResumeName();// + ".pdf";
+			
+			headers.add("content-disposition", "inline;filename=" + candidate1.getResumeName());
+			  headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
+			   response1 = new ResponseEntity<byte[]>(candidate1.getResume(), headers, HttpStatus.OK);
+			
+			ServletOutputStream outputStream = response.getOutputStream();
+			outputStream.write(candidate1.getResume());
+			outputStream.close();
+		}
+		
+	//	String name = file.getOriginalFilename();
+		String filename = candidate1.getResume().toString();
+//		downloadFile1(filename);
+		String candidateEmail=candidate1.getCandidateName()+".pdf";
+//		String download = (String)firebase.download(candidateEmail);
+//		System.out.println("Downloaded File" + download);
+		return response1;
+	}
 	@GetMapping("/downloadFile")
 	public void downloadFile(@RequestParam Integer candidateId, Model model, HttpSession session,
 			HttpServletResponse response ) throws IOException {
@@ -461,7 +515,8 @@ try {
 		}
 
 		User checkUser = (User) session.getAttribute("loginDetails");
-		if (!checkUser.getRole().equals("hr")) {
+		if (!(checkUser.getRole().equals("hr") || checkUser.getRole().equals("interviewer")
+				|| checkUser.getRole().equals("hrHead"))) {
 			try {
 				response.sendRedirect("/login");
 			} catch (IOException e) {

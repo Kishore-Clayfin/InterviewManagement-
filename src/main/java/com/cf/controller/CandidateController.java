@@ -166,15 +166,7 @@ try {
 			candidate.setCurrentCtc(0.0f);
 
 		}
-//		if(candiExist==null) {
-//		candidate.setResume(file.getBytes());
-//		candidate.setResumeName(name);
-//		}
-//		else {
-//			Candidate candi=iCandidateService.updateCandidate(candiExist);
-//			candidate.setResume(candi.getResume());
-//			candidate.setResumeName(candi.getResumeName());
-//		}
+
 		if(!file.isEmpty()||candidate.getCandidateId()==null) {
 		candidate.setResume(file.getBytes());
 		candidate.setResumeName(name);

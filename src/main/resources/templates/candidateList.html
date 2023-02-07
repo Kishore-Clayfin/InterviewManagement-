@@ -187,7 +187,7 @@ text-align: center;
 						class="btn btn-primary"target="_blank">View &nbsp;<i class="fa fa-eye" style="font-size:15px;color:black;"></i></a>&nbsp;
 						<a
 						th:href="@{/downloadFile(candidateId=${candidate.candidateId})}"
-						class="btn btn-success">download &nbsp;<i class="fa fa-download" style="font-size:15px;color:black;"></i></a>
+						class="btn btn-success">Download &nbsp;<i class="fa fa-download" style="font-size:15px;color:black;"></i></a>
 						
 					</div>
 					<div class="resumeBlock" th:if="${candidate.resumeName == null}">
@@ -415,7 +415,7 @@ window.onload = function () {
  });
 		    }); */
 	</script>  
-	<!-- <script>
+	<script>
 		$(document).ready(function() {
 			$("#ckbCheckAll").click(function() {
 				$(".checkBoxClass").prop('checked', $(this).prop('checked'));
@@ -428,7 +428,7 @@ window.onload = function () {
 			}, 2000);
 		}
 		
-	</script> -->
+	</script>
 </body>
 
 </html>

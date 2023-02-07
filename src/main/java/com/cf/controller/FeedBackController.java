@@ -72,7 +72,7 @@ public class FeedBackController {
 			}
 		}
 
-		Domain d=dom.findByDomainName("HRHEADRATING");
+		Domain d=dom.findByDomainName("HR Head Rating");
 		List<DomainCategory> domCat=d.getDomainCategory();
 		
 		

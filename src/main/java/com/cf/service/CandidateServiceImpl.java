@@ -84,4 +84,12 @@ public class CandidateServiceImpl implements ICandidateService {
 		log.info("List of candidates added successfully");
 		return candList;
 	}
+
+	@Override
+	public Candidate save(Candidate candidate) {
+		// TODO Auto-generated method stub
+		candidate.setStatus("ResumeShortlisted");
+		Candidate candid=iCandidateDao.save(candidate);
+		return candid;
+	}
 }

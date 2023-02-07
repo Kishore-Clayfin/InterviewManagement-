@@ -95,7 +95,7 @@ try {
 
 	@PostMapping("/saveCandidate")
 	public String saveCandidate(@Valid @ModelAttribute Candidate candidate, BindingResult result,
-			@RequestParam("file") MultipartFile file,@RequestParam Integer exists,@RequestParam Integer candiExist, Model mav, HttpSession session, RedirectAttributes attributes,
+			@RequestParam("file") MultipartFile file, Model mav, HttpSession session, RedirectAttributes attributes,
 			HttpServletResponse redirect) throws IOException {
 
 		if (LoginController.checkUser == null) {
@@ -175,20 +175,20 @@ try {
 //			candidate.setResume(candi.getResume());
 //			candidate.setResumeName(candi.getResumeName());
 //		}
-		if(!file.isEmpty()||candiExist==null) {
+		if(!file.isEmpty()||candidate.getCandidateId()==null) {
 		candidate.setResume(file.getBytes());
 		candidate.setResumeName(name);
 		}else{
-			Candidate candi=iCandidateService.findResumeCandidate(candiExist);
+			Candidate candi=iCandidateService.findResumeCandidate(candidate.getCandidateId());
 			candidate.setResume(candi.getResume());
 			candidate.setResumeName(candi.getResumeName());
 		}
 //		user.setUserId(obj.getUserId());
-		if(exists==null) {
+		if(candidate.getUser()==null) {
 		candidate.setUser(obj);
 		}else
 		{
-			User user2=iUserDao.findById(exists).orElseThrow();
+			User user2=candidate.getUser();
 			candidate.setUser(user2);
 		}
 		
@@ -205,9 +205,10 @@ try {
 		System.out.println("firebaseUploadStarts");
 		//candidate.setDownloadUrl(download);
 //		System.out.println(download);
-		
+		if(candidate.getCandidateId()!=null)
 		iCandidateService.saveCandidate(candidate);
-
+		else 
+			iCandidateService.save(candidate);
 		return "redirect:/viewCandidates";
 	}
 	
@@ -243,6 +244,7 @@ try {
 		catch(Exception e) {
 			
 		}
+		
 		iCandidateService.saveCandidate(candidate);
 		return "redirect:/viewCandidates";
 	}

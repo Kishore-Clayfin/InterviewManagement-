@@ -8,7 +8,8 @@ import com.cf.model.Schedule;
 public interface ICandidateService {
 
 	void saveCandidate(Candidate candidate);
-
+	Candidate save(Candidate candidate);
+	
 	List<Candidate> viewCandidateList();
 
 	Candidate updateCandidate(Integer candidateId);

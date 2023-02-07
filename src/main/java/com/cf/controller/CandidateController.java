@@ -483,7 +483,7 @@ try {
 
 			response.setContentType("application/octet-stream");
 			String headerKey = "Content-Disposition";
-			String headerValue = "attachment; filename = " + candidate1.getResumeName() + ".pdf";
+			String headerValue = "attachment; filename = " + candidate1.getResumeName();// + ".pdf";
 			response.setHeader(headerKey, headerValue);
 			ServletOutputStream outputStream = response.getOutputStream();
 			outputStream.write(candidate1.getResume());

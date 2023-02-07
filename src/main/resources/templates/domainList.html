@@ -102,9 +102,14 @@ td {
 					<td th:text="${domain.domainId}" />
 					<td th:text="${domain.domainName}" />
 
-					<td><span th:each="domainCategory : ${domain.domainCategory}">
-							<span th:text="${domainCategory.domSubCatName}+','"></span>
-					</span></td>
+					<td>
+					<div style="display: flex;">
+					<div th:each="domainCategory,itr : ${domain.domainCategory}" style="display: flex;">
+							<div th:text="${domainCategory.domSubCatName}"></div>
+							<div th:if= "${domain.domainCategory.size()-1}!=${itr.index}">,</div>
+					</div>
+					</div>
+					</td>
 
 					<td><a
 						th:href="@{/showUpdateDomain(domainId=${domain.domainId})}"

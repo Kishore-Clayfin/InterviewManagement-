@@ -225,7 +225,7 @@ td {
 								id="inner" th:text="${oneDoc.domain.getDomainName()}"> </span>
 						</span></td>
 							
-						<td class ="zoom" th:data-title="${Feedback.subDomRatings}">Ratings</td>
+						<td class ="zoom" id="hope"th:data-title="${Feedback.subDomRatings}">Ratings</td>
 						
 						
 						<!-- <span class="myDIV">hello</span>
@@ -267,8 +267,6 @@ td {
 	<script>
 	$(document).ready(function() {
 		$("table td:nth-child(4)").each(function(index, element) {
-			console.log(index + '  00')
-			console.log($(element).text())
 			$(element).html($(element).html().replaceAll('&amp;', '<br><br>'));
 			$(element).html($(element).html().replace('First-Interviewer:', '<strong>First-Interviewer:</strong>'));
 			$(element).html($(element).html().replace('Second-Interviewer:', '<strong>Second-Interviewer:</strong>'));
@@ -276,13 +274,16 @@ td {
 			$(element).html($(element).html().replace('HrHead-Feedback: ', '<strong>HrHead-Feedback:</strong>'));
 		});
 		$("table td:nth-child(5)").each(function(index, element) {
-			console.log(index + '  00')
-			console.log($(element).text())
 			$(element).html($(element).html().replaceAll('&amp;', '<br><br>'));
 			$(element).html($(element).html().replace('First-Interviewer:', '<strong>First-Interviewer:</strong>'));
 			$(element).html($(element).html().replace('Second-Interviewer:', '<strong>Second-Interviewer:</strong>'));
 			$(element).html($(element).html().replace('Fourth-Interviewer:', '<strong>First-Interviewer:</strong>'));
 			$(element).html($(element).html().replace('HrHead-Feedback: ', '<strong>HrHead-Feedback:</strong>'));
+		});
+		$("table td:nth-child(8)").each(function(index, element) {
+			console.log(index + '  00')
+			console.log($(element).attr(("data-title")));
+			$(element).attr("data-title",$(element).attr(("data-title")).replaceAll('=',' : ').replaceAll('{',' ').replaceAll('}',' ').replaceAll(',','\n'));
 		});
 	});
 	/* $(document).ready(function() {
@@ -317,19 +318,19 @@ td {
 				
 				
 			 
-			}); 
+			}); hope
 		});
 	});  */
-	$(document).ready(function(){
+	/* $(document).ready(function(){
 		$("table td:nth-child(8)").each(
 
 		function(index, element) {
-			var title1=$(".zoom").attr(("data-title"));
+			var title1=$("#hope").attr(("data-title"));
 			console.log(index);
-			console.log(element.text())
-		    $(element).attr("data-title",title1.replaceAll('=',' : ').replaceAll('{',' ').replaceAll('}',' ').replaceAll(',','\n'));
+			console.log(title1)
+		    $("#hope").attr("data-title",title1.replaceAll('=',' : ').replaceAll('{',' ').replaceAll('}',' ').replaceAll(',','\n'));
 			});
-		}); 
+		}); */ 
 	
 	$("#yourDivId span").mouseenter(function(){$(this).show()}); 
 		

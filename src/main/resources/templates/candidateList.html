@@ -94,16 +94,17 @@ td {
   padding: 2px 4px;
   cursor: pointer;
 }
-input[type="file"] {
-    display: none;
-}
+ input[type="file"] {
+   width:220px;
+} 
 .resumeBlock{
-display:flex;
+
 justify-content: center;
 }
 .resumeMiddle{
 display:flex;
 text-align: center; 
+
 }
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -191,11 +192,27 @@ text-align: center;
 						
 					</div>
 					<div class="resumeBlock" th:if="${candidate.resumeName == null}">
-					<span>No Resume</span>
-					<!-- <form class="resumeBlock"th:action="@{/uploadOrEditResume(candidateId=${candidate.candidateId})}" id="basic-form" method="post"
+					<!-- <span>No Resume</span> -->
+					<form class="resumeBlock"th:action="@{/uploadOrEditResume(candidateId=${candidate.candidateId})}" id="basic-form" method="post"
 					th:object="${candidate}" enctype='multipart/form-data'>
-			
-  <button type="submit" class="btn btn-success">upload</button>
+					<!-- <label for="file-upload" class="custom-file-upload">
+                     <i class="fa fa-cloud-upload"></i> Upload Image 
+                     <input id="file-upload" name='upload_cont_img' type="file" style="display:none;">
+                      </label>-->
+                   
+  <!-- <input id="file-upload" name='upload_cont_img' type="file">&nbsp; -->
+<input
+							type="file" id="role" class="form-control" name="file" 
+							autofocus="autofocus" required/>
+			<!-- <input
+							type="file" id="role" class="form-control" name="file" 
+							/>
+							<input type ="file"id="role" class="form-control">
+							<label for="role" id="labelResume"class="custom-file-upload">Browse</label>
+							<span id="spanRes"></span>-->
+					 <button type="submit" id="fileUpload"class="btn btn-dark">upload</button>
+					 </form>
+<!-- <button type="submit" class="btn btn-success">upload</button>
                        <input type="file" class="form-control-file">
                        
                     
@@ -227,8 +244,8 @@ text-align: center;
 						th:href="@{/showUpdateCandidate(candidateId=${candidate.candidateId})}"
 						class="btn btn-info">Edit to upload</a>
 						</form> -->
-					</div>
-					</td>
+					<!-- </div>
+					</td> - -->
 						
 					<td class="customerIDCell" style="display: flex;"><a
 						th:href="@{/showUpdateCandidate(candidateId=${candidate.candidateId})}"
@@ -388,6 +405,7 @@ window.onload = function () {
 						console.log("value"+$(element).val())
 						console.log("length"+$(element).val().length>=9)
 						console.log("checking"+$(element).val()>100000) */
+						console.log()
 						var a=
 						$(element).html($(element).html().replaceAll('&amp;', '<br><br>'));
 						if($(element).val().length>=9&&$(element).val().length<10)
@@ -395,7 +413,16 @@ window.onload = function () {
 						else if($(element).val()>10)
 							$(element).html($(element).slice(0)+" Lpa");	
 					});
-			    }
+			    	/* $("table td:nth-child(16)").each(function(index, element) {
+			    	$('table td:nth-child(16) input[type="file"],select').change(function() {
+			    			//  var i = $(this).prev('label').clone()
+			    			  var file = $('input[type="file"]')[0].files[0].name;
+			    			  $('input:file,select').parent('label').text(file);
+			    			});	
+			    }); */
+					}
+			    	
+			    
 			    )
 		</script>
 		

@@ -311,13 +311,10 @@ System.out.println("Checkuu"+status);
 		if(candidate.getStatus().equalsIgnoreCase("TechnicalCompleted")) {
 			candidate.setStatus("SecondTechnicalScheduled");
 		}
-		if(candidate.getStatus().equalsIgnoreCase("FirstTechnicalSelected")) {
-			candidate.setStatus("SecondTechnicalScheduled");
-		}
-		else if(candidate.getStatus().equalsIgnoreCase("SecondTechnicalSelected")) {
+		else if(candidate.getStatus().equalsIgnoreCase("SecondTechnicalCompleted")) {
 			candidate.setStatus("ThirdTechnicalScheduled");
 		}
-		else if(candidate.getStatus().equalsIgnoreCase("ThirdTechnicalSelected")) {
+		else if(candidate.getStatus().equalsIgnoreCase("ThirdTechnicalCompleted")) {
 			candidate.setStatus("FourthTechnicalScheduled");
 		}
 		}else if(status1.equalsIgnoreCase("hrRound")) {

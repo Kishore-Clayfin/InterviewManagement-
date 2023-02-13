@@ -1,8 +1,10 @@
 package com.cf.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Map; 
+import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -121,7 +123,7 @@ System.out.println(feedback.getHrFbStatus());
 			}
 		}
 
-		System.out.println(feedback.getDomainRatings());
+	//	System.out.println(feedback.getDomainRatings());
 
 		ObjectMapper mapper = new ObjectMapper();
 		String json = feedback.getDomainRatings();
@@ -148,20 +150,23 @@ System.out.println(feedback.getHrFbStatus());
 			if (result.hasErrors()) {
 				return "feedbackRegister";
 			}
-			
+			System.out.println("check if candidate1 already exists"+iFeedbackService.existsFeedbackByCandidate(candidate1));
 			if(iFeedbackService.existsFeedbackByCandidate(candidate1)) {
+				System.out.println("existFeedbackBy Candidate");
 				String interviewRound="";
 				Feedback feedback1=iFeedbackService.findByCandidate(candidate1);
 				System.out.println(candidate1);
 				System.out.println(feedback1);
 				feedback1.setCandidate(candidate);
 				Map map1=feedback1.getSubDomRatings();
-				map1.putAll(map);
-				feedback1.setSubDomRatings(map1);
+//				map1.putAll(map);
+//				feedback1.setSubDomRatings(map1);
 				System.out.println(feedback.getInterviewerFbStatus());
 				if(feedback.getInterviewerFbStatus()!=null) 
 				{
 				feedback1.setInterviewerFbStatus(feedback.getInterviewerFbStatus());
+				Map<String,Integer> feedbackModelAndView=feedback.getSubDomRatings();
+				Map<String,Integer> feedbackExisting=feedback1.getSubDomRatings();
 				System.out.println("inside if"+feedback.getInterviewerFbStatus());
 				System.out.println(feedback1);
 				if(candidate1.getStatus().equalsIgnoreCase("SecondTechnicalCompleted")) {
@@ -172,6 +177,22 @@ System.out.println(feedback.getHrFbStatus());
 					feedback1.setFeed_back(SecondInterviewer);
 					System.out.println(feedback1.getFeed_back());
 					interviewRound="Second";
+					Map<String,Integer> map2=new HashMap<>();
+					System.out.println("Map from ui"+map);
+					for(Map.Entry<String,Integer> firstMap:map.entrySet()) {
+//						String jsonKey=firstMap.getKey();
+						String updatedKey="Second-Round "+firstMap.getKey();
+//						map.put(updatedKey,map.remove(jsonKey));
+						map2.put(updatedKey, firstMap.getValue());
+						System.out.println(updatedKey);
+						System.out.println(firstMap.getValue());
+					}
+					System.out.println("existing feedback from database"+feedbackExisting);
+					System.out.println("Map after iteration Map2"+map2);
+					feedbackExisting.putAll(map2);
+					System.out.println("Map afer Merging with map2 and feedbackExisting"+feedbackExisting);
+					feedback1.setSubDomRatings(feedbackExisting);
+					
 				}
 				else if(candidate1.getStatus().equalsIgnoreCase("ThirdTechnicalCompleted")) {
 					String interviewerStatus=feedback1.getInterviewerFbStatus()+" & "+"Third-Interviewer: "+feedback.getInterviewerFbStatus();
@@ -181,6 +202,20 @@ System.out.println(feedback.getHrFbStatus());
 					feedback1.setFeed_back(SecondInterviewer);
 					System.out.println(feedback1.getFeed_back());
 					interviewRound="Third";
+					Map<String,Integer> map2=new HashMap<>();
+					System.out.println("Map from ui"+map);
+					for(Map.Entry<String,Integer> firstMap:map.entrySet()) {
+//						String jsonKey=firstMap.getKey();
+						String updatedKey="Third-Round "+firstMap.getKey();
+//						map.put(updatedKey,map.remove(jsonKey));
+						map2.put(updatedKey, firstMap.getValue());
+						System.out.println(updatedKey);
+						System.out.println(firstMap.getValue());
+					}
+					System.out.println("existing feedback from database"+feedbackExisting);
+					System.out.println("Map after iteration Map2"+map2);
+					feedbackExisting.putAll(map2);
+					feedback1.setSubDomRatings(feedbackExisting);
 				}
 				else if(candidate1.getStatus().equalsIgnoreCase("FourthTechnicalCompleted")) {
 					String interviewerStatus=feedback1.getInterviewerFbStatus()+" & "+"Fourth-Interviewer: "+feedback.getInterviewerFbStatus();
@@ -190,6 +225,20 @@ System.out.println(feedback.getHrFbStatus());
 					feedback1.setFeed_back(SecondInterviewer);
 					System.out.println(feedback1.getFeed_back());
 					interviewRound="Fourth";
+					Map<String,Integer> map2=new HashMap<>();
+					System.out.println("Map from ui"+map);
+					for(Map.Entry<String,Integer> firstMap:map.entrySet()) {
+//						String jsonKey=firstMap.getKey();
+						String updatedKey="Fourth-Round "+firstMap.getKey();
+//						map.put(updatedKey,map.remove(jsonKey));
+						map2.put(updatedKey, firstMap.getValue());
+						System.out.println(updatedKey);
+						System.out.println(firstMap.getValue());
+					}
+					System.out.println("existing feedback from database"+feedbackExisting);
+					System.out.println("Map after iteration Map2"+map2);
+					feedbackExisting.putAll(map2);
+					feedback1.setSubDomRatings(feedbackExisting);
 				}
 				}
 				else if(feedback.getHrFbStatus()!=null)
@@ -201,6 +250,8 @@ System.out.println(feedback.getHrFbStatus());
 					System.out.println(feedback1.getFeed_back());
 				}
 				Feedback feed=iFeedbackService.saveFeedback(feedback1);
+				System.out.println(feed);
+				System.out.println(feed.getDomainRatings());
 				String status="";
 				if(feedback.getInterviewerFbStatus().equalsIgnoreCase("rejected")) {
 					status=interviewRound+"TechnicalRejected";
@@ -219,11 +270,23 @@ System.out.println(feedback.getHrFbStatus());
 			
 			}else {
 				String interviewerFeed="First-Interviewer: "+feedback.getFeed_back();
-				
 				feedback.setFeed_back(interviewerFeed);
 			feedback.setCandidate(candidate);
-			feedback.setSubDomRatings(map);
+			Map<String,Integer> map2=new HashMap<>();
+			for(Map.Entry<String,Integer> firstMap:map.entrySet()) {
+//				String jsonKey=firstMap.getKey();
+				String updatedKey="First-Round "+firstMap.getKey();
+//				map.put(updatedKey,map.remove(jsonKey));
+				map2.put(updatedKey, firstMap.getValue());
+				System.out.println(updatedKey);
+				System.out.println(firstMap.getValue());
+			}
+			System.out.println("Map after iteration"+map2);
+			feedback.setSubDomRatings(map2);
 			Feedback firstFeedback=iFeedbackService.saveFeedback(feedback);
+			System.out.println("Map after saving"+firstFeedback.getDomainRatings());
+			
+			System.out.println("feedback afer saving"+firstFeedback);
 			String status="";
 			if(feedback.getInterviewerFbStatus().equalsIgnoreCase("rejected")) {
 				status="FirstTechnicalRejected";
@@ -275,9 +338,20 @@ System.out.println(feedback.getHrFbStatus());
 				e.printStackTrace();
 			}
 		}
-
+		List<String> ratings=new ArrayList<>();
+		List<Feedback> feedList=(List<Feedback>) iFeedbackService.viewFeedbackList();
+		for(Feedback feed:feedList) {
+			String mapString=null;
+		Map<String,Integer> mapFeedback=feed.getSubDomRatings();
+		for (Map.Entry<String,Integer> entry : mapFeedback.entrySet()) {
+			 mapString=entry.getKey()+" : "+entry.getValue()+"<br>";
+			
+		}
+		ratings.add(mapString);
+		}
 		ModelAndView mav = new ModelAndView("feedbackList");
 		mav.addObject("feedback", iFeedbackService.viewFeedbackList());
+		mav.addObject("domainRatingsList", ratings);
 		return mav;
 	}
 

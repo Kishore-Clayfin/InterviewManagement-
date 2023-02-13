@@ -164,7 +164,7 @@ try {
 		}
 		System.out.println("resume is empty");
 		}
-		if ((candidate.getExperience() == null)) {
+		if ((candidate.getExperience() == null)|| (candidate.getExperience()==0)) {
 			candidate.setExpectedCtc(0.0f);
 			candidate.setCurrentCtc(0.0f);
 

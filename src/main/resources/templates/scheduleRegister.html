@@ -102,7 +102,7 @@ body {
 						<label class="control-label" for="name">Interviewer</label> <select
 							class="form-control" id="tes" name="test" th:field="*{user}"
 							required autofocus="autofocus">
-							<option value="" selected>--- Select ---</option>
+							<option value="" >--- Select ---</option>
 							<option th:each="interviewer : ${interviewer}"
 								th:value="${interviewer.getUserId}"
 								th:text="${interviewer.getUsername+' - '+interviewer.getRole()}"></option>
@@ -115,10 +115,10 @@ body {
 						<label class="control-label" for="name">Candidate</label> <select
 							class="form-control" id="testOrder" name="testOrder"
 							th:field="*{Candidate}" multiple autofocus="autofocus">
-							<option value="" selected>--- Select ---</option>
+<!-- 							<option value="" class="mulselect" style="font-weight: bold;color: black;font-size: large;">Select All</option> -->
 							<option th:each="candidate : ${candidate}"
 								th:value="${candidate.getCandidateId}"
-								th:text="${candidate.getCandidateName+' with id '+candidate.getCandidateId}"></option>
+								th:text="${candidate.getCandidateName+' with id '+candidate.getCandidateId}" selected></option>
 						</select>
 
 					</div>
@@ -177,6 +177,22 @@ body {
 		<a th:href="@{/home}" class="btn btn-danger ml-2">Home</a>
 	</div>
 </body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script >
+$(document).ready(function() 
+		{
+		      $(".form-control").find("option").prop("selected", true);
+		});
+		
+//  $("select").on("click", function(){      
+// 	  if ($(this).find(":selected").text() == "Select All"){
+// 	    if ($(this).attr("data-select") == "false")
+// 	      $(this).attr("data-select", "true").find("option").prop("selected", true);
+// 	    else
+// 	      $(this).attr("data-select", "false").find("option").prop("selected", false);
+// 	  }
+// 	}); 
+</script>
 <script type="text/javascript">
 	//$( document ).ready(function() {
 

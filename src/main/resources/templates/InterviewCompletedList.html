@@ -181,7 +181,7 @@ td {
 				</thead>
 				<tbody>
 					<tr th:each="Feedback : ${feedback}"
-						th:if="${Feedback.getInterviewerFbStatus()=='selected'}">
+						th:if="${#strings.contains(Feedback.getInterviewerFbStatus(),'selected')}">
 
 						<td><span th:each="oneDoc:${Feedback.candidate}"> <span
 								th:text="${oneDoc.getCandidateId()}"> </span>

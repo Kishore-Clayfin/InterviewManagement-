@@ -161,7 +161,7 @@ System.out.println("Checkuu"+status);
 		}
 		else if(status.equalsIgnoreCase("HrRound")) {
 			 list = user.stream()
-					.filter(c ->c.getRole().equalsIgnoreCase("hrHead") || c.getRole().equalsIgnoreCase("interviewer"))
+					.filter(c ->c.getRole().equalsIgnoreCase("hrHead"))
 					.collect(Collectors.toList());
 		}
 		ModelAndView mv = new ModelAndView("hrRoundScheduleRegistration");

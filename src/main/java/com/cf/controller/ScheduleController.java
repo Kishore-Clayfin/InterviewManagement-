@@ -152,10 +152,18 @@ System.out.println("Checkuu"+status);
 		List<Candidate> listOfCandi=new ArrayList<>();
 		listOfCandi.add(candidate);
 		Schedule.setCandidate(listOfCandi);
-		List<User> list = user.stream()
-				.filter(c -> c.getRole().equalsIgnoreCase("hrHead") || c.getRole().equalsIgnoreCase("interviewer"))
-				.collect(Collectors.toList());
+		List<User> list=new ArrayList<>();
+		if(status.equalsIgnoreCase("nextTechnicalRound")) {
+			list = user.stream()
+					.filter(c -> c.getRole().equalsIgnoreCase("interviewer"))
+					.collect(Collectors.toList());
 
+		}
+		else if(status.equalsIgnoreCase("HrRound")) {
+			 list = user.stream()
+					.filter(c ->c.getRole().equalsIgnoreCase("hrHead") || c.getRole().equalsIgnoreCase("interviewer"))
+					.collect(Collectors.toList());
+		}
 		ModelAndView mv = new ModelAndView("hrRoundScheduleRegistration");
 		mv.addObject("schedule", Schedule);
 

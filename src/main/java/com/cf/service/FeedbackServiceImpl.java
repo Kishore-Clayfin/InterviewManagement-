@@ -16,7 +16,7 @@ public class FeedbackServiceImpl implements IFeedbackService {
 
 	@Autowired
 	private IFeedbackDao iFeedbackDao;
-	
+	@Autowired private ICandidateService candidateService;
 	@Override
 	public Feedback saveFeedback(Feedback feedback) {
 		Feedback feed=iFeedbackDao.save(feedback);
@@ -64,6 +64,7 @@ public class FeedbackServiceImpl implements IFeedbackService {
 		
 		Feedback f=iFeedbackDao.save(feedback);
 		log.info("Updating InterviewerFbStatus with feedbackId:" + id);
+		candidateService.updateCandidateStatus(feedback.getCandidate().getCandidateId(), status);
 		return f;
 	}
 

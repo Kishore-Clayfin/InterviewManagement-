@@ -6,5 +6,6 @@ import com.cf.model.Candidate;
 
 public interface ICandidateDao extends JpaRepository<Candidate, Integer>
 {
-
+boolean existsCandidateByEmail(String email);
+Candidate findCandidateByEmail(String email);
 }

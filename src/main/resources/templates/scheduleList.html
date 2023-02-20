@@ -78,7 +78,7 @@ th {
 }
 td {
     font-size: larger;
-     white-space: nowrap;
+   /*   white-space: nowrap; */
 }
 .resumeBlock{
 display:flex;
@@ -87,6 +87,9 @@ justify-content: center;
 .resumeMiddle{
 display:flex;
 text-align: center; 
+}
+#wrapno{
+white-space: nowrap;
 }
 </style>
 
@@ -139,9 +142,9 @@ text-align: center;
 			<tbody>
 				<tr th:each="schedule : ${schedule}">
 					<td th:text="${schedule.scheduleId}" />
-					<td th:text="${schedule.scheduleDate}" />
+					<td style="white-space: nowrap;" th:text="${schedule.scheduleDate}" />
 					<td th:text="${schedule.scheduleTime}" />
-					<td th:text="${schedule.duration}+' Minutes'" />
+					<td style="white-space: nowrap;"th:text="${schedule.duration}+' Minutes'" />
 					<td th:text="${schedule.meetingLink}" />
 					<td th:text="${schedule.interviewType}" />
 					<td th:text=${schedule.user.username} />
@@ -149,7 +152,7 @@ text-align: center;
 					<td><span th:each="candidate : ${schedule.candidate}">
 							<span th:text=${candidate.candidateName}> </span>
 					</span></td>
-					<td>
+					<td id="wrapno">
 					<div th:each="candidate : ${schedule.candidate}">
 							<div class="resumeMiddle"th:if= "${candidate.resumeName != null}">
 					<!-- <span th:text="${candidate.resumeName}"></span> -->
@@ -168,40 +171,57 @@ text-align: center;
 					</div>
 					
 					</td>
-					<td><div class="dropdown">
-						
-							<button type="button" class="btn btn-info dropdown-toggle"
-								data-toggle="dropdown"><span th:each="candidate : ${schedule.candidate}">
+					<td>
+					<div th:each="candid : ${schedule.candidate}">
+					<!-- <div  th:if="${candid.getStatus()=='FirstTechnicalSelected'||candid.getStatus()=='SecondTechnicalSelected'||candid.getStatus()=='ThirdTechnicalSelected'||candid.getStatus()=='FourthTechnicalSelected'||candid.getStatus()=='HRRoundCompleted'}"class="dropdown"> -->
+					 <div  th:if="${#strings.containsIgnoreCase(candid.getStatus(),'selected')||#strings.containsIgnoreCase(candid.getStatus(),'completed')}" class="dropdown">
+					<button type="button" class="btn btn-info dropdown-toggle"
+								data-toggle="dropdown" disabled><span th:each="candidate : ${schedule.candidate}">
 							<span th:text=${candidate.status}> </span>
 					</span></button>
+					</div>
+					<div th:unless="${#strings.containsIgnoreCase(candid.getStatus(),'selected')||#strings.containsIgnoreCase(candid.getStatus(),'completed')}" class="dropdown">
+						
+							<button type="button" class="btn btn-info dropdown-toggle"
+								data-toggle="dropdown"><!-- <span th:each="candidate : ${schedule.candidate}"> -->
+							<span th:text=${candid.status}> </span>
+					<!-- </span> --></button>
 								
-							<div th:each="candidate : ${schedule.candidate}" class="dropdown-menu">
-							<div th:if="${candidate.getStatus()=='SecondTechnicalScheduled'}">
+							<div  class="dropdown-menu">
+							<div th:if="${candid.getStatus()=='SecondTechnicalScheduled'}">
 							<a 
-									th:href="@{/updateStatus(candidateId=${candidate.candidateId},status=SecondTechnicalCompleted)}"
+									th:href="@{/updateStatus(candidateId=${candid.candidateId},status=SecondTechnicalCompleted)}"
 									class="dropdown-item">SecondTechnicalCompleted</a>
 							</div>
-							<div th:if="${candidate.getStatus()=='ThirdTechnicalScheduled'}">
+							
+							<div th:if="${candid.getStatus()=='ThirdTechnicalScheduled'}">
 							<a 
-									th:href="@{/updateStatus(candidateId=${candidate.candidateId},status=ThirdTechnicalCompleted)}"
+									th:href="@{/updateStatus(candidateId=${candid.candidateId},status=ThirdTechnicalCompleted)}"
 									class="dropdown-item">ThirdTechnicalCompleted</a>
 							</div>
-							<div th:if="${candidate.getStatus()=='FourthTechnicalScheduled'}">
+							
+							<div th:if="${candid.getStatus()=='FourthTechnicalScheduled'}">
 							<a 
-									th:href="@{/updateStatus(candidateId=${candidate.candidateId},status=FourthTechnicalCompleted)}"
+									th:href="@{/updateStatus(candidateId=${candid.candidateId},status=FourthTechnicalCompleted)}"
 									class="dropdown-item">FourthTechnicalCompleted</a>
 							</div>
-							<div th:if="${candidate.getStatus()=='ResumeShortlisted'}">
+							<div th:if="${#strings.equalsIgnoreCase(candid.getStatus(),'ResumeShortlisted')}">
 								<a 
-									th:href="@{/updateStatus(candidateId=${candidate.candidateId},status=TechnicalCompleted)}"
+									th:href="@{/updateStatus(candidateId=${candid.candidateId},status=TechnicalCompleted)}"
 									class="dropdown-item">TechnicalCompleted</a>
 									</div>
-									 <a
-									th:each="candidate : ${schedule.candidate}"
-									th:href="@{/updateStatus(candidateId=${candidate.candidateId},status=HRRoundCompleted)}"
+							<div th:if="${candid.getStatus()=='HRRoundScheduled'}">		
+							<a
+									
+									th:href="@{/updateStatus(candidateId=${candid.candidateId},status=HRRoundCompleted)}"
 									class="dropdown-item">HrRoundCompleted</a>
+							</div>	
+													 
 							</div>
-						</div></td>
+							
+						</div>
+						</div>
+						</td>
 
 
 					<td style="display: flex;">

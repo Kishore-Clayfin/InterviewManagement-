@@ -1,13 +1,21 @@
 package com.cf.service;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.cf.model.Candidate;
+import com.cf.model.Feedback;
+import com.cf.model.History;
+import com.cf.model.Schedule;
 import com.cf.repository.ICandidateDao;
+import com.cf.repository.IFeedbackDao;
+import com.cf.repository.IScheduleDao;
 
 import lombok.extern.log4j.Log4j2;
 
@@ -19,7 +27,14 @@ public class CandidateServiceImpl implements ICandidateService {
 
 	@Autowired
 	private ICandidateDao iCandidateDao;
-
+	@Autowired
+	private IFeedbackDao iFeedbackDao;
+	@Autowired
+	private IHistoryService historyService;
+	@Autowired
+	private IScheduleService scheduleService;
+	@Autowired
+	private IScheduleDao scheduleDao;
 	@Override
 	public void saveCandidate(Candidate candidate) {
 
@@ -50,6 +65,47 @@ public class CandidateServiceImpl implements ICandidateService {
 
 	@Override
 	public void deleteCandidate(Integer candidateId) {
+		Candidate candi=iCandidateDao.findById(candidateId).orElseThrow();
+		
+		History history=new History();
+		history.setAlternateEmail(candi.getAlternateEmail());
+		history.setAlternateMobileNumber(candi.getAlternateMobileNumber());
+		history.setCandidateId(candidateId);
+		history.setCandidateName(candi.getCandidateName());
+		history.setCgpa(candi.getCgpa());
+		history.setCurrentCtc(candi.getCurrentCtc());
+		history.setHighQualification(candi.getHighQualification());
+		history.setEmail(candi.getEmail());
+		history.setMobileNumber(candi.getMobileNumber());
+		history.setResume(candi.getResume());
+		history.setResumeName(candi.getResumeName());
+		history.setRoleAppliedFor(candi.getRoleAppliedFor());		
+		history.setUserName(candi.getUser().getUsername());
+		history.setExpectedCtc(candi.getExpectedCtc());
+		history.setExperience(candi.getExperience());
+		history.setStatus(candi.getStatus());		                                                        
+		if(iFeedbackDao.existsFeedbackByCandidate(candi)) {
+		Feedback feedback=iFeedbackDao.findByCandidate(candi);
+		history.setDomainRatings(feedback.getDomainRatings());
+		System.out.println("Feedback domain Ratings"+feedback.getDomainRatings());
+		history.setFeed_back(feedback.getFeed_back());
+		history.setFeedbackId(feedback.getFeedbackId());		
+		history.setHrFbStatus(feedback.getHrFbStatus());
+		history.setRating(feedback.getRating());
+		history.setInterviewerFbStatus(feedback.getInterviewerFbStatus());
+		iFeedbackDao.deleteById(feedback.getFeedbackId());
+		}
+		List<Candidate> candiList=new ArrayList();
+		candiList.add(candi);
+		if(scheduleService.existsScheduleByCandidate(candiList))
+		{
+			//Schedule schedule=scheduleService.findByCandidate(candiList);
+			//scheduleService.deleteSchedule(schedule.getScheduleId());
+			List<Schedule> listOfSchedule=scheduleDao.findByCandidate(candi);
+			scheduleDao.deleteAll(listOfSchedule);
+		}
+		History historyAfterSave=historyService.saveHistory(history);
+		if(historyAfterSave!=null)
 		iCandidateDao.deleteById(candidateId);
 		log.info("candidate with candidateId "+candidateId +" deleted");
 	}
@@ -91,5 +147,70 @@ public class CandidateServiceImpl implements ICandidateService {
 		candidate.setStatus("ResumeShortlisted");
 		Candidate candid=iCandidateDao.save(candidate);
 		return candid;
+	}
+
+	@Override
+	public boolean existsCandidateByEmail(String email) {
+		// TODO Auto-generated method stub
+		boolean ifExist=iCandidateDao.existsCandidateByEmail(email);
+		return ifExist;
+	}
+
+	@Override
+	public Candidate findCandidateByEmail(String email) {
+		// TODO Auto-generated method stub
+		Candidate candi=iCandidateDao.findCandidateByEmail(email);
+		return candi;
+	}
+
+	@Override
+	public void deleteAllCandidates(List<Integer> candiIds) {
+		// TODO Auto-generated method stub
+		List<Candidate> candiList=iCandidateDao.findAllById(candiIds);
+		List<History> historyList=new ArrayList<>();
+		for(Candidate candi:candiList) {
+			History history=new History();
+			history.setAlternateEmail(candi.getAlternateEmail());
+			history.setAlternateMobileNumber(candi.getAlternateMobileNumber());
+			history.setCandidateId(candi.getCandidateId());
+			history.setCandidateName(candi.getCandidateName());
+			history.setCgpa(candi.getCgpa());
+			history.setCurrentCtc(candi.getCurrentCtc());
+			history.setHighQualification(candi.getHighQualification());
+			history.setEmail(candi.getEmail());
+			history.setMobileNumber(candi.getMobileNumber());
+			history.setResume(candi.getResume());
+			history.setResumeName(candi.getResumeName());
+			history.setRoleAppliedFor(candi.getRoleAppliedFor());		
+			history.setUserName(candi.getUser().getUsername());
+			
+			history.setExpectedCtc(candi.getExpectedCtc());
+			history.setExperience(candi.getExperience());
+			history.setStatus(candi.getStatus());		                                                        
+			if(iFeedbackDao.existsFeedbackByCandidate(candi)) {
+			Feedback feedback=iFeedbackDao.findByCandidate(candi);
+			history.setDomainRatings(feedback.getDomainRatings());
+			System.out.println("Feedback domain Ratings"+feedback.getDomainRatings());
+			history.setRating(feedback.getRating());
+			history.setFeed_back(feedback.getFeed_back());
+			history.setFeedbackId(feedback.getFeedbackId());		
+			history.setHrFbStatus(feedback.getHrFbStatus());
+			history.setInterviewerFbStatus(feedback.getInterviewerFbStatus());
+			iFeedbackDao.deleteById(feedback.getFeedbackId());
+			}
+			List<Candidate> candiList1=new ArrayList();
+			candiList1.add(candi);
+			if(scheduleService.existsScheduleByCandidate(candiList1))
+			{
+				//Schedule schedule=scheduleService.findByCandidate(candiList);
+				//scheduleService.deleteSchedule(schedule.getScheduleId());
+				List<Schedule> listOfSchedule=scheduleDao.findByCandidate(candi);
+				scheduleDao.deleteAll(listOfSchedule);
+			}
+			History historyAfterSave=historyService.saveHistory(history);
+			historyList.add(historyAfterSave);
+		}
+		if(historyList.size()==candiList.size())
+		iCandidateDao.deleteAllByIdInBatch(candiIds);
 	}
 }

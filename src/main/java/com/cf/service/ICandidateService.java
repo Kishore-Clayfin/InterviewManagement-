@@ -21,4 +21,8 @@ public interface ICandidateService {
 	Candidate findResumeCandidate(Integer candidateId);
 	
 	List<Candidate> bulkSaveCandidate(List<Candidate> candidateList);
+	
+	boolean existsCandidateByEmail(String email);
+	Candidate findCandidateByEmail(String email);
+	void deleteAllCandidates(List<Integer> candiIds);
 }

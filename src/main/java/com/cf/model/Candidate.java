@@ -44,6 +44,7 @@ public class Candidate
 	private String candidateName;
 	@NotBlank(message = "Candidate's email cannot be empty.")
 	@Email
+	@Column(unique=true)
 	private String email;
 	//@Pattern(regexp="^[+]91[6789]\\d{9}$",message="Candidate's mobile no should start with +91 and should be 10digits ")
     @Min(value=1,message=" mobile number can't be -ve ")

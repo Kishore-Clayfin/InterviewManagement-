@@ -405,7 +405,7 @@ System.out.println("Checkuu"+status);
 
 	@GetMapping({ "/viewschedules" })
 	public ModelAndView getAllschedules(HttpSession session, HttpServletResponse redirect) {
-
+System.out.println("<----------------------view Schedule entered------------------------------>");
 		if (LoginController.checkUser == null) {
 			try {
 				redirect.sendRedirect("/login");
@@ -426,21 +426,27 @@ System.out.println("Checkuu"+status);
 			}
 		}
 		String role = (String) session.getAttribute("interviewer");
+		System.out.println("role of interviewer"+role);
 		User user2 = new User();
 		user2.setRole(role);
 
 		User user = (User) session.getAttribute("loginDetails");
+		System.out.println("User After interviewer logins"+user.getEmail());
 		List<Schedule> scheduleList = ischeduleService.viewScheduleList();
 		if (user.getRole().equalsIgnoreCase("hr")) {
+			System.out.println("entered as hr");
 			ModelAndView mav = new ModelAndView("scheduleList");
 			mav.addObject("schedule", scheduleList);
 			mav.addObject("role", user2);
 			return mav;
 		} else {
-			List<Schedule> sch = scheduleList.stream().filter(s -> s.getUser().getUserId() == user.getUserId())
-					.collect(Collectors.toList());
+			System.out.println("enter as interviewer");
+			List<Schedule> listOfSchedule=ischeduleService.findScheduleByUser(user);
+//			List<Schedule> sch = scheduleList.stream().filter(s -> s.getUser().getUserId() == user.getUserId())
+//					.collect(Collectors.toList());
 			ModelAndView mav = new ModelAndView("scheduleList");
-			mav.addObject("schedule", sch);
+			System.out.println("Schedule List------------------>"+listOfSchedule);
+			mav.addObject("schedule",listOfSchedule);
 			mav.addObject("role", user2);
 			return mav;
 		}
@@ -575,8 +581,11 @@ System.out.println("Checkuu"+status);
 		if (user.getRole().equals("hr")) {
 			list = ischeduleService.viewScheduleList();
 		} else {
-			list = scheduleList.stream().filter(s -> s.getUser().getUserId() == user.getUserId())
-					.collect(Collectors.toList());
+			System.out.println("else block entered");
+			list=ischeduleService.findScheduleByUser(user);
+//			list = scheduleList.stream().filter(s -> s.getUser().getUserId() == user.getUserId())
+//					.collect(Collectors.toList());
+			System.out.println("List of Schedules"+list);
 		}
 //		System.out.println(list);
 		ArrayList<Schedule> a = new ArrayList<Schedule>();
@@ -592,7 +601,7 @@ System.out.println("Checkuu"+status);
 				}
 			}
 		}
-
+		System.out.println("List of schedule for a particular interviewer"+a);
 		mav.addObject("schedule", a);
 		mav.addObject("role", checkUser.getRole());
 		return mav;

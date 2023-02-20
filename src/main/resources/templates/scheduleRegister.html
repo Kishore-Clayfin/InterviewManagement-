@@ -111,7 +111,7 @@ body {
 							th:errors="*{user}" />
 					</div>
 
-					<div class="form-group">
+					<div class="form-group" id="candiSelect">
 						<label class="control-label" for="name">Candidate</label> <select
 							class="form-control" id="testOrder" name="testOrder"
 							th:field="*{Candidate}" multiple autofocus="autofocus">
@@ -181,7 +181,7 @@ body {
 <script >
 $(document).ready(function() 
 		{
-		      $(".form-control").find("option").prop("selected", true);
+		      $("#candiSelect").find("option").prop("selected", true);
 		});
 		
 //  $("select").on("click", function(){      

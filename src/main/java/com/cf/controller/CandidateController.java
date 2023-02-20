@@ -4,7 +4,10 @@ import java.io.IOException;
 
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Pattern;
 
 import javax.servlet.ServletOutputStream;
@@ -25,6 +28,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
@@ -96,6 +100,7 @@ try {
 		return mav;
 	}
 
+
 	@PostMapping("/saveCandidate")
 	public String saveCandidate(@Valid @ModelAttribute Candidate candidate, BindingResult result,
 			@RequestParam("file") MultipartFile file, Model mav, HttpSession session, RedirectAttributes attributes,
@@ -149,7 +154,10 @@ try {
 		mob = candidate.getMobileNumber().toString();
 
 		boolean mobv = Pattern.matches("^[9876]\\d{9}$", mob);
-
+		if(!iCandidateService.existsCandidateByEmail(candidate.getEmail())) {
+			attributes.addAttribute("uniqueEmail", "The entered Email already exist");
+			return "redirect:/addCandidate";
+		}
 		if (!mobv == true) {
 			attributes.addAttribute("numberError", "Please enter a valid mobile number");
 			return "redirect:/addCandidate";
@@ -243,8 +251,145 @@ try {
 		iCandidateService.saveCandidate(candidate);
 		return "redirect:/viewCandidates";
 	}
-
 	
+	@PostMapping("/deleteCandidateByIds")
+	public String deleteCandidateByIds(@RequestBody List<Integer> list1, HttpSession session, HttpServletResponse redirect) {
+		if (LoginController.checkUser == null) {
+			try {
+				redirect.sendRedirect("/login");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		User checkUser = (User) session.getAttribute("loginDetails");
+		if (!checkUser.getRole().equals("hr")) {
+			try {
+				redirect.sendRedirect("/login");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		iCandidateService.deleteAllCandidates(list1);
+		return "redirect:/viewCandidates";
+
+	}
+	
+	@GetMapping("/bulkUploadResume")
+	public ModelAndView bulkUploadResume(HttpSession session,HttpServletResponse redirect) {
+		if (LoginController.checkUser == null) {
+			try {
+				redirect.sendRedirect("/login");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		User checkUser = (User) session.getAttribute("loginDetails");
+		System.out.println("check true or false"+checkUser.getRole().equals("hr"));
+		System.out.println(checkUser.getRole());
+		if (!checkUser.getRole().equals("hr")) {
+			try {
+				redirect.sendRedirect("/login");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		String notFound=null;
+		ModelAndView mav=new ModelAndView("bulkUploadResume");
+		mav.addObject("notFound", notFound);
+		return mav;
+	}
+	@GetMapping("/bulkUploadResumeError")
+	public ModelAndView bulkUploadResumeError(HttpSession session,HttpServletResponse redirect) {
+		if (LoginController.checkUser == null) {
+			try {
+				redirect.sendRedirect("/login");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		User checkUser = (User) session.getAttribute("loginDetails");
+		System.out.println("check true or false"+checkUser.getRole().equals("hr"));
+		if (!checkUser.getRole().equals("hr")) {
+			try {
+				redirect.sendRedirect("/login");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		String notFound=(String)session.getAttribute("notPresent");
+		ModelAndView mav=new ModelAndView("bulkUploadResume");
+		System.out.println("is empty"+notFound.isEmpty());
+		System.out.println(notFound);
+		System.out.println("is blank"+notFound.isBlank());
+		System.out.println(notFound.length()==0);
+		mav.addObject("notFound", notFound+" did not match any candidates");
+		
+		return mav;
+	}
+	
+
+	@PostMapping("/saveBulkResume")
+	public String saveBulkResume(@RequestParam("file") MultipartFile[] file, HttpSession session,
+			HttpServletResponse redirect,RedirectAttributes attributes) {
+		
+		if (LoginController.checkUser == null) {
+			try {
+				redirect.sendRedirect("/login");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		User checkUser = (User) session.getAttribute("loginDetails");
+		if (!checkUser.getRole().equals("hr")) {
+			try {
+				redirect.sendRedirect("/login");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		System.out.println("file is empty or not");
+		System.out.println(file[0]);
+		List<String> missingNames=new ArrayList<>();
+		String notFound=null;
+		
+		System.out.println("file is empty or not"+file.length);
+		for(MultipartFile resume:file) {
+			System.out.println("file name from ui"+resume.getOriginalFilename());
+			String res=resume.getOriginalFilename();
+			String resumeName=resume.getOriginalFilename().replaceAll(".pdf","");
+			System.out.println("after splitting"+resumeName);
+			if(iCandidateDao.existsCandidateByEmail(resumeName)) {
+				Candidate candi=iCandidateDao.findCandidateByEmail(resumeName);
+				try {
+				candi.setResume(resume.getBytes());
+				candi.setResumeName(res);
+				}
+				catch(Exception e) {
+					
+				}
+				iCandidateService.save(candi);
+			}else {
+				missingNames.add(resumeName);
+				notFound=notFound+resumeName+",";
+			}
+		}
+		System.out.println("bulk save resume");
+		if(missingNames.size()==0) {
+		return "redirect:/viewCandidates";
+		}
+		else {
+			session.setAttribute("notPresent", notFound);
+			return "redirect:/bulkUploadResumeError" ;
+		}		
+	}
 	@GetMapping("/viewCandidates")
 	public ModelAndView getAllCandidates(HttpSession session, HttpServletResponse redirect) {
 		if (LoginController.checkUser == null) {

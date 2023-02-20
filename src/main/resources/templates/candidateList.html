@@ -266,10 +266,12 @@ text-align: center;
 			</tbody>
 
 		</table>
-		<a th:href="@{/home}" class="btn btn-danger ml-2">Home</a> <a
+		<a th:href="@{/home}" class="btn btn-info ml-2">Home</a> &nbsp;<a
 			id="save_value" class="btn btn-primary"
-			href="javascript:delay('/addschedule')">Schedule</a>
-
+			href="javascript:delay('/addschedule')">Schedule</a>&nbsp;
+			<a
+			id="delete_value" class="btn btn-danger"
+			href="javascript:delay('/deleteCandidateByIds')">Delete</a>
 
 	</div>
 	<script>
@@ -291,6 +293,47 @@ text-align: center;
 				$.ajax({
 
 					url : "http://localhost:9091/ajaxPost",
+
+					type : "POST",
+
+					data : JSON.stringify(val),
+
+					dataType : "json",
+
+					contentType : "application/json; charset=utf-8",
+
+					mimeType : 'application/json',
+
+					success : function(data) {
+
+						console.log(data);
+
+						return false;
+						F
+					}
+
+				});
+			});
+
+		});
+		$(function() {
+			$('#delete_value').click(function() {
+
+				var val = [];
+				$(':checkbox:checked').each(function(i) {
+					var a = $(this).val()
+					if (/^[0-9]+$/.test(a)) {
+						val.push($(this).val());
+
+					}
+
+				});
+				val1 = JSON.stringify(val);
+				console.log('=> ' + val1);
+
+				$.ajax({
+
+					url : "http://localhost:9091/deleteCandidateByIds",
 
 					type : "POST",
 

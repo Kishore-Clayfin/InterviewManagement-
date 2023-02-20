@@ -339,16 +339,16 @@ System.out.println(feedback.getHrFbStatus());
 			}
 		}
 		List<String> ratings=new ArrayList<>();
-		List<Feedback> feedList=(List<Feedback>) iFeedbackService.viewFeedbackList();
-		for(Feedback feed:feedList) {
-			String mapString=null;
-		Map<String,Integer> mapFeedback=feed.getSubDomRatings();
-		for (Map.Entry<String,Integer> entry : mapFeedback.entrySet()) {
-			 mapString=entry.getKey()+" : "+entry.getValue()+"<br>";
-			
-		}
-		ratings.add(mapString);
-		}
+//		List<Feedback> feedList=(List<Feedback>) iFeedbackService.viewFeedbackList();
+//		for(Feedback feed:feedList) {
+//			String mapString=null;
+//		Map<String,Integer> mapFeedback=feed.getSubDomRatings();
+//		for (Map.Entry<String,Integer> entry : mapFeedback.entrySet()) {
+//			 mapString=entry.getKey()+" : "+entry.getValue()+"<br>";
+//			
+//		}
+//		ratings.add(mapString);
+//		}
 		ModelAndView mav = new ModelAndView("feedbackList");
 		mav.addObject("feedback", iFeedbackService.viewFeedbackList());
 		mav.addObject("domainRatingsList", ratings);

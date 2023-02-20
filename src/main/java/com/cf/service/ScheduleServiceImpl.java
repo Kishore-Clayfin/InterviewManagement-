@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.cf.model.Candidate;
 import com.cf.model.Schedule;
+import com.cf.model.User;
 import com.cf.repository.IScheduleDao;
 
 import lombok.extern.log4j.Log4j2;
@@ -81,6 +82,13 @@ public class ScheduleServiceImpl implements IScheduleService {
 		// TODO Auto-generated method stub
 		boolean checkByCandidate=iScheduleDao.existsScheduleByCandidateIn(candidateList);
 		return checkByCandidate;
+	}
+
+	@Override
+	public List<Schedule> findScheduleByUser(User user) {
+		// TODO Auto-generated method stub
+		List<Schedule> listOfSchedule=iScheduleDao.findScheduleByUser(user);
+		return listOfSchedule;
 	}
 
 }

@@ -237,9 +237,19 @@ function(index, element) {
     $(element).html($(element).html().replaceAll('&amp;','<br><br>'));
 	$(element).html($(element).html().replace('First-Interviewer:','<strong>First-Interviewer:</strong>'));
 	$(element).html($(element).html().replace('Second-Interviewer:','<strong>Second-Interviewer:</strong>'));
-	$(element).html($(element).html().replace('Fourth-Interviewer:','<strong>First-Interviewer:</strong>'));
+	$(element).html($(element).html().replace('Third-Interviewer:','<strong>Third-Interviewer:</strong>'));
+	$(element).html($(element).html().replace('Fourth-Interviewer:','<strong>Fourth-Interviewer:</strong>'));
 	$(element).html($(element).html().replace('HrHead-Feedback:','<strong>HrHead-Feedback:</strong>'));
 });
+$("table td:nth-child(6)").each(function(index, element) {
+	$(element).html($(element).html().replaceAll('&amp;', '<br><br>'));
+	$(element).html($(element).html().replace('First-Interviewer:', '<strong>First-Interviewer:</strong>'));
+	$(element).html($(element).html().replace('Second-Interviewer:', '<strong>Second-Interviewer:</strong>'));
+	$(element).html($(element).html().replace('Fourth-Interviewer:', '<strong>Fourth-Interviewer:</strong>'));
+	$(element).html($(element).html().replace('Third-Interviewer:', '<strong>Third-Interviewer:</strong>'));
+	$(element).html($(element).html().replace('HrHead-Feedback: ', '<strong>HrHead-Feedback:</strong>'));
+});
+
 });
 $(document).ready(function(){
 	$("table td:nth-child(8)").each(

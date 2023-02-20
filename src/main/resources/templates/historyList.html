@@ -1,0 +1,337 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<title>HISTORY LIST</title>
+
+<link rel="stylesheet" type="text/css"
+	href="https://cdn.datatables.net/v/bs4/dt-1.10.25/datatables.min.css" />
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+	integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l"
+	crossorigin="anonymous" />
+<script data-require="jquery@2.0.3" data-semver="2.0.3"
+	src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
+
+<!-- <script
+	src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script> -->
+<script
+	src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
+
+<!--Search builder code starts-->
+
+
+
+<!-- <script
+	src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+<script
+	src="https://cdn.datatables.net/searchbuilder/1.4.0/js/dataTables.searchBuilder.min.js"></script>
+<script
+	src="https://cdn.datatables.net/datetime/1.2.0/js/dataTables.dateTime.min.js"></script>
+<link rel="stylesheet"
+	href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css">
+<link rel="stylesheet"
+	href="https://cdn.datatables.net/searchbuilder/1.4.0/css/searchBuilder.dataTables.min.css">
+<link rel="stylesheet"
+	href="https://cdn.datatables.net/datetime/1.2.0/css/dataTables.dateTime.min.css">
+
+<script>
+	$(document).ready(function() {
+		$('#doctorTable').DataTable({
+			dom : 'Qlfrtip',
+			searchBuilder : {
+				columns : [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14 ]
+			}
+		});
+	});
+</script> -->
+
+<!--Search builder code ends-->
+
+<style>
+#back 
+{
+
+    line-height: 28px;
+    font-size: 46px;
+    font-weight: bold;
+    margin-top: 11px;
+    margin-left: 21px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: black;
+    color: white;
+}
+
+#button {
+	background-color: #4caf50;
+	border-radius: 5px;
+	margin-left: 650px;
+	margin-bottom: 5px;
+	color: white;
+}
+
+table thead tr th {
+	/* background-color : gray; */
+	min-width: 100px;
+	position: relative;
+}
+
+.filter {
+	position: absolute;
+	border: solid 1px;
+	top: 20px;
+	background-color: white;
+	width: 100px;
+	right: 0;
+	display: none;
+}
+
+#anchor {
+	font-weight: bold;
+	color: white;
+}
+
+.image {
+	background-image: url('/image/ListBackground.jpg');
+	background-repeat: no-repeat;
+	background-size: inherit;
+}
+
+body {
+	font-family: cambria, sans-serif;
+}
+
+th {
+	white-space: nowrap;
+	font-size: larger;
+}
+
+td {
+	font-size: larger;
+}
+
+[data-title]:hover:after {
+            opacity: 1;
+            transition: all 0.2s ease 0.6s;
+            visibility: visible;
+        }
+        [data-title]:after
+         {
+            content: attr(data-title);
+            position: absolute;
+            padding: 100px 50px 100px 50px;
+             white-space: pre;
+            color: #222;
+            border-radius: 5px;  
+            box-shadow: 0px 0px 15px #222;  
+            background-image: -webkit-linear-gradient(
+                                top, #f8f8f8, #cccccc); 
+                                  
+            background-image: -moz-linear-gradient(
+                                top, #f8f8f8, #cccccc);  
+                                  
+            background-image: -ms-linear-gradient(
+                                top, #f8f8f8, #cccccc); 
+                                  
+            background-image: -o-linear-gradient(
+                                top, #f8f8f8, #cccccc);
+                                  
+            visibility: hidden;
+        }
+</style>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.js">
+	
+</script>
+</head>
+
+<body class="image">
+	<nav class="navbar navbar-inverse navbar-sticky-top"
+		style="background-color: black;padding:0.5rem 100rem;">
+		<div class="container">
+			<div class="navbar-header">
+				<button id="back" onclick="history.back()">&laquo;</button>
+				<a class="navbar-brand" id="anchor"
+					style="color: white; margin-left:-1518px;" th:href="@{/home}">Home</a>
+				<a class="navbar-brand" id="anchor" style="margin-left: 2937px;"
+					th:href="@{/logout}">Logout </a>
+
+
+			</div>
+		</div>
+	</nav>
+	<br>
+	<br>
+	<div th:insert="sideBar :: header"></div>
+	<div style="padding: 10px;">
+
+		<div>
+			<!-- class="card" id="makepdf"> -->
+
+			<h3>HISTORY LIST</h3>
+
+			<hr />
+
+			<br /> <br />
+			<table class="table table-bordered table-striped" id="table">
+
+				<thead>
+					<tr>
+
+						<th>Candidate Id
+							<div class="filter"></div>
+						</th>
+						<th>candidate Name
+							<div class="filter"></div>
+						</th>
+						<th>Overall Rating
+							<div class="filter"></div>
+						</th>
+						<th>Feedback
+							<div class="filter"></div>
+						</th>
+						<th>Interviewer Status
+							<div class="filter"></div>
+						</th>
+						<th>HRHead Status
+							<div class="filter"></div>
+						</th>
+						<th>Domain Name
+							<div class="filter"></div>
+						</th>
+						<th>Sub Category Ratings
+							<div class="filter"></div>
+						</th>
+						<th>EmailId</th>
+					<th>Mobile Number</th>
+					<th>Qualification</th>
+					<th>Cgpa</th>
+					<th>Role</th>
+					<th>Other EmailId</th>
+					<th>Experience</th>
+					<th>CTC</th>
+					<th>ECTC</th>
+					<th>Other Mobile Number</th>
+					<th>Status</th>
+					<th>Created By</th>
+
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="history : ${historyList}">
+
+						<td class="customerIDCell"th:text="${history.candidateId}" />
+						<td class="customerIDCell"th:text="${history.candidateName}" />
+						<td th:text="${history.rating}" />
+						<td th:data-title="${history.feed_back}">Feedback</td>
+						<td th:data-title="${history.interviewerFbStatus}">Interviewer status</td>
+						<td th:text="${history.hrFbStatus}" />
+						<td th:text="${history.getDomainName()}"></td>							
+						<td class ="zoom" id="hope"th:data-title="${history.domainRatings}"></td>
+					<td class="customerIDCell"th:text="${history.email}" />
+					<td class="customerIDCell"th:text="${history.mobileNumber}" />
+					<td class="customerIDCell"th:text="${history.highQualification}" />
+			 		<td class="customerIDCell"th:text="${history.cgpa}" />
+					<td class="customerIDCell"th:text="${history.roleAppliedFor}" />
+					<td class="customerIDCell"th:text="${history.alternateEmail}" />
+					<td class="customerIDCell"th:text="${history.experience}" />
+					<td class="customerIDCell" style="white-space: nowrap;" th:text="${history.currentCtc} +' LPA'" />
+					<td class="customerIDCell" style="white-space: nowrap;" id="expectedCtcLength"th:text="${history.expectedCtc}+' LPA'" />
+					<td class="customerIDCell" th:text="${history.alternateMobileNumber}" />
+					<td class="customerIDCell" th:text="${history.status}" />
+					<td class="customerIDCell"th:text="${history.getUserName()}" />
+					</tr>
+				</tbody>
+
+			</table>
+
+		</div>
+
+		<a th:href="@{/generateAllPdfFile} " target="_blank"
+			class="btn btn-primary ml-2">PrintAll</a> <br> <br> <a
+			th:href="@{/home}" class="btn btn-danger ml-2">Home</a>
+	</div>
+	<script>
+	$(document).ready(function() {
+		$("table td:nth-child(4)").each(function(index, element) {
+			$(element).attr("data-title",$(element).attr("data-title").replaceAll('&amp;', '\n'));
+			/* $(element).html($(element).html().replaceAll('&amp;', ' '));
+			$(element).html($(element).html().replace('First-Interviewer:', '<strong>First-Interviewer:</strong>'));
+			$(element).html($(element).html().replace('Second-Interviewer:', '<strong>Second-Interviewer:</strong>'));
+			$(element).html($(element).html().replace('Fourth-Interviewer:', '<strong>First-Interviewer:</strong>'));
+			$(element).html($(element).html().replace('HrHead-Feedback: ', '<strong>HrHead-Feedback:</strong>')); */
+		});
+		$("table td:nth-child(5)").each(function(index, element) {
+			$(element).attr("data-title",$(element).attr("data-title").replaceAll('&amp;', '\n'));
+			/* $(element).html($(element).html().replaceAll('&amp;', ' ')); */
+			/* $(element).html($(element).html().replace('First-Interviewer:', '<strong>First-Interviewer:</strong>'));
+			$(element).html($(element).html().replace('Second-Interviewer:', '<strong>Second-Interviewer:</strong>'));
+			$(element).html($(element).html().replace('Fourth-Interviewer:', '<strong>First-Interviewer:</strong>'));
+			$(element).html($(element).html().replace('HrHead-Feedback: ', '<strong>HrHead-Feedback:</strong>')); */
+		});
+		$("table td:nth-child(8)").each(function(index, element) {
+			/* $(element).html($(element).html().replace('{', ''));
+			$(element).html($(element).html().replace('}', ''));
+			$(element).html($(element).html().replace('"', '')); */
+			console.log(index);
+			console.log(element);
+			console.log($("#hope").attr("data-title"));
+			$(element).attr("data-title",$(element).attr("data-title").replaceAll('=',' : ').replaceAll('{',' ').replaceAll('}',' ').replaceAll(',','\n'));
+
+		});
+	});
+	/* $(document).ready(function() {
+		$("table td:nth-child(8)").each(function(index, element) {
+			console.log(index + '  00')
+			console.log($(element).text())
+			$(element).html($(element).html().replaceAll('=', ' : '));
+			$(element).html($(element).html().replaceAll('=', ' : '));
+			$(element).html($(element).html().replaceAll('{', ' '));
+			$(element).html($(element).html().replaceAll('}', ' '));
+			$(element).html($(element).html().replaceAll(',', '<br>'));
+		 $(element).html($(element).html().replace('Interviewer-Feedback:','<strong>Interviewer-Feedback:</strong>'));
+			$(element).html($(element).html().replace('HrHead-Feedback:','<strong>HrHead-Feedback:</strong>'));
+		});
+		
+	});  */
+	/* $(document).ready(function() {
+		/* $("#yourDivId span:first").hide(); */
+		/* $("#yourDivId").mouseleave(function(){$("#yourDivId span").hide()}); */
+		/* $("#yourDivId span").hide();
+		$("#yourDivId").mouseenter(function(){$("#yourDivId span").show()}); 
+		$("#yourDivId").mouseleave(function(){$("#yourDivId span").hide()});
+		$(document).ready(function() {
+			$("table td:nth-child(8)").each(function(index, element) {
+				console.log(index + '  00')
+				console.log($(element).text())
+				
+				$("#yourDivId span").html($("#yourDivId span").html().replaceAll('=', ' : '));
+				$("#yourDivId span").html($("#yourDivId span").html().replaceAll('{', ' '));
+				$("#yourDivId span").html($("#yourDivId span").html().replaceAll('}', ' '));
+				$("#yourDivId span").html($("#yourDivId span").html().replaceAll(',', '<br>'));
+				
+				
+			 
+			}); hope
+		});
+	});  */
+	/* $(document).ready(function(){
+		$("table td:nth-child(8)").each(
+
+		function(index, element) {
+			var title1=$("#hope").attr(("data-title"));
+			console.log(index);
+			console.log(title1)
+		    $("#hope").attr("data-title",title1.replaceAll('=',' : ').replaceAll('{',' ').replaceAll('}',' ').replaceAll(',','\n'));
+			});
+		}); */ 
+	
+	$("#yourDivId span").mouseenter(function(){$(this).show()}); 
+		
+	</script>
+</body>
+
+</html>

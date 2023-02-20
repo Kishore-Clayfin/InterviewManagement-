@@ -58,9 +58,14 @@ public class FeedbackServiceImpl implements IFeedbackService {
 	@Override
 	public Feedback updateInterviewerFbStatus(Integer id,String status)
 	{
-		
+		String status1;
 		Feedback feedback= iFeedbackDao.findById(id).orElseThrow(null);
-		feedback.setInterviewerFbStatus(status);
+		if(status.equalsIgnoreCase("FirstTechnicalSelected") || status.equalsIgnoreCase("SecondTechnicalSelected") || status.equalsIgnoreCase("ThirdTechnicalSelected") || status.equalsIgnoreCase("FourthTechnicalSelected") || status.equalsIgnoreCase("HRRoundSelected")  )
+		    status1 = "selected";
+		else
+			status1 = "rejected";
+		
+		feedback.setInterviewerFbStatus(status1);
 		
 		Feedback f=iFeedbackDao.save(feedback);
 		log.info("Updating InterviewerFbStatus with feedbackId:" + id);

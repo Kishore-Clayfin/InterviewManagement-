@@ -248,37 +248,39 @@ td {
 								<span class="dropdown">
 									<button type="button" class="btn btn-primary dropdown-toggle"
 										data-toggle="dropdown">Interviewer-Status</button> <span
-									class="dropdown-menu"> <span th:if="${#strings.contains(Feedback.getInterviewerFbStatus(),'FirstTechnicalWaiting')}"><a
+									class="dropdown-menu">
+									<span  th:each="oneDoc:${Feedback.candidate}" >
+									 <span th:if="${#strings.contains(oneDoc.getStatus(),'FirstTechnicalWaiting')}"><a
 										th:href="@{/updateInterviewerFbStatus(feedbackId=${Feedback.feedbackId},interviewerFbStatus=FirstTechnicalSelected)}"
 										class="dropdown-item">Selected</a> <a
 										th:href="@{/updateInterviewerFbStatus(feedbackId=${Feedback.feedbackId},interviewerFbStatus=FirstTechnicalRejected)}"
 										class="dropdown-item">Rejected</a>
 										</span>
-										<span th:if="${#strings.contains(Feedback.getInterviewerFbStatus(),'SecondTechnicalWaiting')}"><a
+										<span th:if="${#strings.contains(oneDoc.getStatus(),'SecondTechnicalWaiting')}"><a
 										th:href="@{/updateInterviewerFbStatus(feedbackId=${Feedback.feedbackId},interviewerFbStatus=SecondTechnicalSelected)}"
 										class="dropdown-item">Selected</a> <a
 										th:href="@{/updateInterviewerFbStatus(feedbackId=${Feedback.feedbackId},interviewerFbStatus=SecondTechnicalRejected)}"
 										class="dropdown-item">Rejected</a>
 										</span>
-										<span th:if="${#strings.contains(Feedback.getInterviewerFbStatus(),'ThirdTechnicalWaiting')}"><a
+										<span th:if="${#strings.contains(oneDoc.getStatus(),'ThirdTechnicalWaiting')}"><a
 										th:href="@{/updateInterviewerFbStatus(feedbackId=${Feedback.feedbackId},interviewerFbStatus=ThirdTechnicalSelected)}"
 										class="dropdown-item">Selected</a> <a
 										th:href="@{/updateInterviewerFbStatus(feedbackId=${Feedback.feedbackId},interviewerFbStatus=ThirdTechnicalRejected)}"
 										class="dropdown-item">Rejected</a>
 										</span>
-										<span th:if="${#strings.contains(Feedback.getInterviewerFbStatus(),'FourthTechnicalWaiting')}"><a
+										<span th:if="${#strings.contains(oneDoc.getStatus(),'FourthTechnicalWaiting')}"><a
 										th:href="@{/updateInterviewerFbStatus(feedbackId=${Feedback.feedbackId},interviewerFbStatus=FourthTechnicalSelected)}"
 										class="dropdown-item">Selected</a> <a
 										th:href="@{/updateInterviewerFbStatus(feedbackId=${Feedback.feedbackId},interviewerFbStatus=FourthTechnicalRejected)}"
 										class="dropdown-item">Rejected</a>
 										</span>
-										<span th:if="${#strings.contains(Feedback.getInterviewerFbStatus(),'HRRoundWaiting')}"><a
+										<span th:if="${#strings.contains(oneDoc.getStatus(),'HRRoundWaiting')}"><a
 										th:href="@{/updateInterviewerFbStatus(feedbackId=${Feedback.feedbackId},interviewerFbStatus=HRRoundSelected)}"
 										class="dropdown-item">Selected</a> <a
 										th:href="@{/updateInterviewerFbStatus(feedbackId=${Feedback.feedbackId},interviewerFbStatus=HRRoundRejected)}"
 										class="dropdown-item">Rejected</a>
 										</span>
-										
+									</span>	
 								</span>
 							</span>
 						</span></td>

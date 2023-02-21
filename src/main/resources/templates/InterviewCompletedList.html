@@ -174,7 +174,6 @@ td {
 						<th>Overall Rating</th>
 						<th>Feedback</th>
 						<th>Interviewer Status</th>
-						<th>HRHead Status </th>
 						<th>Domain Name</th>
 						<th>Sub Category Ratings</th>
 						<th>Schedule For</th>
@@ -198,11 +197,9 @@ td {
 						
 						<td th:text="${Feedback.rating}" />
 						
-						<td th:text="${Feedback.feed_back}" />
+						<td  style="white-space: nowrap;" th:text="${Feedback.feed_back}" />
 						
-						<td th:text="${Feedback.interviewerFbStatus}" />
-						
-						<td th:text="${Feedback.hrFbStatus}" />
+						<td style="white-space: nowrap;" th:text="${Feedback.interviewerFbStatus}" />
 						
 						<td><span th:each="oneDoc:${Feedback.candidate}"> <span
 								th:text="${oneDoc.domain.getDomainName()}"> </span>
@@ -237,7 +234,7 @@ $("table td:nth-child(5)").each(
 function(index, element) {
 	console.log(index+'  00')
 	console.log($(element).text())
-    $(element).html($(element).html().replaceAll('&amp;','<br><br>'));
+    $(element).html($(element).html().replaceAll('&amp;','<br>'));
 	$(element).html($(element).html().replace('First-Interviewer:','<strong>First-Interviewer:</strong>'));
 	$(element).html($(element).html().replace('Second-Interviewer:','<strong>Second-Interviewer:</strong>'));
 	$(element).html($(element).html().replace('Third-Interviewer:','<strong>Third-Interviewer:</strong>'));
@@ -245,7 +242,7 @@ function(index, element) {
 	$(element).html($(element).html().replace('HrHead-Feedback:','<strong>HrHead-Feedback:</strong>'));
 });
 $("table td:nth-child(6)").each(function(index, element) {
-	$(element).html($(element).html().replaceAll('&amp;', '<br><br>'));
+	$(element).html($(element).html().replaceAll('&amp;', '<br>'));
 	$(element).html($(element).html().replace('First-Interviewer:', '<strong>First-Interviewer:</strong>'));
 	$(element).html($(element).html().replace('Second-Interviewer:', '<strong>Second-Interviewer:</strong>'));
 	$(element).html($(element).html().replace('Fourth-Interviewer:', '<strong>Fourth-Interviewer:</strong>'));

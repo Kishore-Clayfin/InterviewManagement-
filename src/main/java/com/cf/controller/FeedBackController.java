@@ -164,7 +164,7 @@ System.out.println(feedback.getHrFbStatus());
 				System.out.println(feedback.getInterviewerFbStatus());
 				if(feedback.getInterviewerFbStatus()!=null) 
 				{
-				feedback1.setInterviewerFbStatus(feedback.getInterviewerFbStatus());
+//				feedback1.setInterviewerFbStatus(feedback.getInterviewerFbStatus());
 				Map<String,Integer> feedbackModelAndView=feedback.getSubDomRatings();
 				Map<String,Integer> feedbackExisting=feedback1.getSubDomRatings();
 				System.out.println("inside if"+feedback.getInterviewerFbStatus());
@@ -174,6 +174,8 @@ System.out.println(feedback.getHrFbStatus());
 					feedback1.setInterviewerFbStatus(interviewerStatus);
 					System.out.println("inside SecondTechnicalCompleted if"+feedback.getHrFbStatus());
 					String SecondInterviewer=feedback1.getFeed_back()+" & "+"Second-Interviewer: "+feedback.getFeed_back();
+					System.out.println("888888888888888888888888 "+ interviewerStatus);
+					
 					feedback1.setFeed_back(SecondInterviewer);
 					System.out.println(feedback1.getFeed_back());
 					interviewRound="Second";
@@ -199,6 +201,8 @@ System.out.println(feedback.getHrFbStatus());
 					feedback1.setInterviewerFbStatus(interviewerStatus);
 					System.out.println("inside ThirdTechnicalCompleted if"+feedback.getHrFbStatus());
 					String SecondInterviewer=feedback1.getFeed_back()+" & "+"Third-Interviewer: "+feedback.getFeed_back();
+					System.out.println("888888888888888888888888 "+ interviewerStatus);
+					
 					feedback1.setFeed_back(SecondInterviewer);
 					System.out.println(feedback1.getFeed_back());
 					interviewRound="Third";
@@ -218,10 +222,14 @@ System.out.println(feedback.getHrFbStatus());
 					feedback1.setSubDomRatings(feedbackExisting);
 				}
 				else if(candidate1.getStatus().equalsIgnoreCase("FourthTechnicalCompleted")) {
+					System.out.println("<----------------------fourrth round--------------------------->");
 					String interviewerStatus=feedback1.getInterviewerFbStatus()+" & "+"Fourth-Interviewer: "+feedback.getInterviewerFbStatus();
+					System.out.println("<----------interviewer status:");
 					feedback1.setInterviewerFbStatus(interviewerStatus);
 					System.out.println("inside FourthTechnicalCompleted if"+feedback.getHrFbStatus());
 					String SecondInterviewer=feedback1.getFeed_back()+" & "+"Fourth-Interviewer: "+feedback.getFeed_back();
+					System.out.println("888888888888888888888888 "+ interviewerStatus);
+					
 					feedback1.setFeed_back(SecondInterviewer);
 					System.out.println(feedback1.getFeed_back());
 					interviewRound="Fourth";

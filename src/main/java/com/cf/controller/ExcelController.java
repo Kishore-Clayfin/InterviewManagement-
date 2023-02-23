@@ -126,7 +126,7 @@ public class ExcelController {
 //		        		  System.out.print(cell.getNumericCellValue() + "\t");
 							}
 							i++;
-							break;
+							break; 
 						case Cell.CELL_TYPE_STRING:
 							if (i == 1) {
 								candidate.setCandidateName(cell.getStringCellValue());

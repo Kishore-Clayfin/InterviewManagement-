@@ -121,6 +121,10 @@ public class ExcelController {
 								candidate.setCurrentCtc(((float) cell.getNumericCellValue()));
 //		        		  System.out.print(cell.getNumericCellValue() + "\t");
 							}
+							else if (i == 11) {
+								candidate.setExpectedCtc(((float) cell.getNumericCellValue()));
+//		        		  System.out.print(cell.getNumericCellValue() + "\t");
+							}
 							i++;
 							break;
 						case Cell.CELL_TYPE_STRING:
@@ -139,7 +143,7 @@ public class ExcelController {
 							} else if (i == 7) {
 								candidate.setAlternateEmail(cell.getStringCellValue());
 //			        		  System.out.print(cell.getStringCellValue() + "\t");
-							} else if (i == 11) {
+							} else if (i == 12) {
 								String dom = cell.getStringCellValue();
 								Domain domain = findDomain(dom);
 								System.err.println(domain);

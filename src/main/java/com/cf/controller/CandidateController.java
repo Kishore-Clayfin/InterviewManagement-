@@ -378,7 +378,7 @@ try {
 				iCandidateService.save(candi);
 			}else {
 				missingNames.add(resumeName);
-				notFound=notFound+resumeName+",";
+				notFound=""+resumeName+",";
 			}
 		}
 		System.out.println("bulk save resume");

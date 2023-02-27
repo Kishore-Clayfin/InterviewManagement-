@@ -31,7 +31,7 @@
 		$('#Table').DataTable({
 			dom : 'Qlfrtip',
 			searchBuilder : {
-				columns : [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14 ]
+				columns : [ 1, 2, 3, 4, 5, 6, 7]
 			}
 		});
 	});
@@ -231,9 +231,9 @@ white-space: nowrap;
 						<div th:if="${role.getRole()=='hr'}" style="display: flex;">
 							&nbsp;&nbsp;<a
 								th:href="@{/showUpdateSchedule(scheduleId=${schedule.scheduleId})}"
-								class="btn btn-info">Edit</a> <a
+								class="btn btn-info">Edit</a> <!-- <a
 								th:href="@{/deleteSchedule(scheduleId=${schedule.scheduleId})}"
-								class="btn btn-danger ml-2">Delete</a>
+								class="btn btn-danger ml-2">Delete</a> -->
 						</div>
 
 

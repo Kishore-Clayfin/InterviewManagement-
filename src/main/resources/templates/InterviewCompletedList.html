@@ -169,11 +169,11 @@ td {
 				<thead>
 					<tr>
 						<th>Candidate Id</th>
-						<th>Candidate Name</th>
-						<th>ECTC</th>
+						<th>Candidate Name</th>					
 						<th>Overall Rating</th>
 						<th>Feedback</th>
 						<th>Interviewer Status</th>
+						<th>HRHead Status</th>
 						<th>Domain Name</th>
 						<th>Sub Category Ratings</th>
 						<th>Schedule For</th>
@@ -191,15 +191,17 @@ td {
 								th:text="${oneDoc.getCandidateName()}"> </span>
 						</span></td>
 						
-						<td><span th:each="oneDoc:${Feedback.candidate}"> <span
+						<!-- <td><span th:each="oneDoc:${Feedback.candidate}"> <span
 								th:text="${oneDoc.getExpectedCtc()}"> </span>
-						</span></td>
+						</span></td> -->
 						
 						<td th:text="${Feedback.rating}" />
 						
-						<td  style="white-space: nowrap;" th:text="${Feedback.feed_back}" />
+						<td style="white-space: nowrap;" th:text="${Feedback.feed_back}" />
 						
 						<td style="white-space: nowrap;" th:text="${Feedback.interviewerFbStatus}" />
+						
+						<td th:text="${Feedback.hrFbStatus}" />
 						
 						<td><span th:each="oneDoc:${Feedback.candidate}"> <span
 								th:text="${oneDoc.domain.getDomainName()}"> </span>
@@ -212,12 +214,12 @@ td {
 							class="btn btn-success ml-2">HrRound</a> <a
 							th:href="@{/addschedule2(candidateId=${Feedback.candidate.getCandidateId()},status=nextTechnicalRound)} "
 							class="btn btn-primary ml-2">NextLevel</a>
-							<span th:if="${Feedback.candidate.getExperience()} > 0.0">
+							<!-- <span th:if="${Feedback.candidate.getExperience()} > 0.0">
 							<a 
 						
 							th:href="@{/updateExpectedCtc(candidateId=${Feedback.candidate.getCandidateId()})} "
 							class="btn btn-success ml-2">ExpectedCtc</a>
-							</span>
+							</span> -->
 							</td>
 							
 					</tr>
@@ -229,7 +231,7 @@ td {
 <script>
 /* var replacementRegexp = " "; */
 $(document).ready(function(){
-$("table td:nth-child(5)").each(
+$("table td:nth-child(4)").each(
 
 function(index, element) {
 	console.log(index+'  00')
@@ -241,7 +243,7 @@ function(index, element) {
 	$(element).html($(element).html().replace('Fourth-Interviewer:','<strong>Fourth-Interviewer:</strong>'));
 	$(element).html($(element).html().replace('HrHead-Feedback:','<strong>HrHead-Feedback:</strong>'));
 });
-$("table td:nth-child(6)").each(function(index, element) {
+$("table td:nth-child(5)").each(function(index, element) {
 	$(element).html($(element).html().replaceAll('&amp;', '<br>'));
 	$(element).html($(element).html().replace('First-Interviewer:', '<strong>First-Interviewer:</strong>'));
 	$(element).html($(element).html().replace('Second-Interviewer:', '<strong>Second-Interviewer:</strong>'));

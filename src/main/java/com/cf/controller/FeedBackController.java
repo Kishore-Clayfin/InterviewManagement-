@@ -30,14 +30,17 @@ import com.cf.model.DomainCategory;
 import com.cf.model.Feedback;
 import com.cf.model.User;
 import com.cf.repository.IDomainDao;
-import com.cf.service.DomainServiceImpl;
 import com.cf.service.ICandidateService;
 import com.cf.service.IDomainService;
 import com.cf.service.IFeedbackService;
+import com.cf.service.IUserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Controller
-public class FeedBackController {
+public class FeedBackController 
+{
+	@Autowired
+	private IUserService userService;
 
 	@Autowired
 	private IFeedbackService iFeedbackService;
@@ -68,7 +71,7 @@ public class FeedBackController {
 		for (DomainCategory dc : candidate.getDomain().getDomainCategory())
 			System.out.println(dc.getDomSubCatName().length());
 		mav.addObject("subCategory", domainCategory);
-		mav.addObject("role","interviewer" /*user.getRole()*/);
+		mav.addObject("role",userService.getAuthentication() /*user.getRole()*/);
 		mav.addObject("hrRating", domCat);
 		return mav;
 	}
@@ -89,7 +92,7 @@ System.out.println(feedback.getHrFbStatus());
 		}
 
 		User checkUser = (User) session.getAttribute("loginDetails");
-		if (!(checkUser.getRole().equals("interviewer") || checkUser.getRole().equals("hrHead"))) {
+		if (!(userService.getAuthentication().equals("interviewer") || userService.getAuthentication().equals("hrHead"))) {
 			try {
 				redirect.sendRedirect("/login");
 			} catch (IOException e) {
@@ -324,8 +327,8 @@ System.out.println(feedback.getHrFbStatus());
 		}
 
 		User checkUser = (User) session.getAttribute("loginDetails");
-		if (!(checkUser.getRole().equals("hr") || checkUser.getRole().equals("interviewer")
-				|| checkUser.getRole().equals("hrHead"))) {
+		if (!(userService.getAuthentication().equals("hr") || userService.getAuthentication().equals("interviewer")
+				|| userService.getAuthentication().equals("hrHead"))) {
 			try {
 				redirect.sendRedirect("/login");
 			} catch (IOException e) {
@@ -357,8 +360,8 @@ System.out.println(feedback.getHrFbStatus());
 		}
 
 		User checkUser = (User) session.getAttribute("loginDetails");
-		if (!(checkUser.getRole().equals("hr") || checkUser.getRole().equals("interviewer")
-				|| checkUser.getRole().equals("hrHead"))) {
+		if (!(userService.getAuthentication().equals("hr") ||userService.getAuthentication().equals("interviewer")
+				|| userService.getAuthentication().equals("hrHead"))) {
 			try {
 				redirect.sendRedirect("/login");
 			} catch (IOException e) {
@@ -424,8 +427,8 @@ System.out.println(feedback.getHrFbStatus());
 		}
 
 		User checkUser = (User) session.getAttribute("loginDetails");
-		if (!(checkUser.getRole().equals("hr") || checkUser.getRole().equals("hrHead")
-				|| checkUser.getRole().equals("interviewer"))) {
+		if (!(userService.getAuthentication().equals("hr") || userService.getAuthentication().equals("hrHead")
+				|| userService.getAuthentication().equals("interviewer"))) {
 			try {
 				redirect.sendRedirect("/login");
 			} catch (IOException e) {

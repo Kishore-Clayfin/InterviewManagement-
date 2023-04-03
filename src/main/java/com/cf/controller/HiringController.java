@@ -30,6 +30,8 @@ import com.cf.service.IUserService;
 public class HiringController {
 
 	@Autowired
+	private IUserService userService;
+	@Autowired
 	private IHiringService iHiringService;
 
 	@Autowired
@@ -56,7 +58,7 @@ public class HiringController {
 		List<Domain> domain = iDomainService.viewDomainList();
 
 		User checkUser = (User) session.getAttribute("loginDetails");
-		if (!checkUser.getRole().equals("hr")) {
+		if (!userService.getAuthentication().equals("hr")) {
 			try {
 				redirect.sendRedirect("/login");
 			} catch (IOException e) {
@@ -91,7 +93,7 @@ public class HiringController {
 		}
 
 		User checkUser = (User) session.getAttribute("loginDetails");
-		if (!checkUser.getRole().equals("hr")) {
+		if (!userService.getAuthentication().equals("hr")) {
 			try {
 				redirect.sendRedirect("/login");
 			} catch (IOException e) {
@@ -117,7 +119,7 @@ public class HiringController {
 		}
 
 		User checkUser = (User) session.getAttribute("loginDetails");
-		if (!checkUser.getRole().equals("hr")) {
+		if (!userService.getAuthentication().equals("hr")) {
 			try {
 				redirect.sendRedirect("/login");
 			} catch (IOException e) {
@@ -154,7 +156,7 @@ public class HiringController {
 		List<User> list = user.stream().filter(c -> c.getRole().equalsIgnoreCase("hr")).collect(Collectors.toList());
 
 		User checkUser = (User) session.getAttribute("loginDetails");
-		if (!checkUser.getRole().equals("hr")) {
+		if (!userService.getAuthentication().equals("hr")) {
 			try {
 				redirect.sendRedirect("/login");
 			} catch (IOException e) {
@@ -183,7 +185,7 @@ public class HiringController {
 		}
 
 		User user = (User) session.getAttribute("loginDetails");
-		if (!user.getRole().equals("hr")) {
+		if (!userService.getAuthentication().equals("hr")) {
 			try {
 				redirect.sendRedirect("/login");
 			} catch (IOException e) {

@@ -29,7 +29,7 @@ import com.cf.service.IUserService;
 public class UserController {
 
 	@Autowired
-	private IUserService iUserService;
+	private IUserService userService;
 
 	@Autowired
 	private IUserDetailsService iUserDetailsService;
@@ -71,7 +71,7 @@ public class UserController {
 
 		String mob;
 		User checkUser = (User) session.getAttribute("loginDetails");
-		if (!checkUser.getRole().equals("hr")) {
+		if (!userService.getAuthentication().equals("hr")) {
 			try {
 				redirect.sendRedirect("/login");
 			} catch (IOException e) {
@@ -85,7 +85,7 @@ public class UserController {
 
 		}
 
-		if (iUserService.existsUserByEmail(mail)) {
+		if (userService.existsUserByEmail(mail)) {
 
 			attributes.addAttribute("mailError", "Mail is already registerd please enter another mail!!!");
 			session.setAttribute("user", user);
@@ -105,7 +105,7 @@ public class UserController {
 			return "redirect:/addUser";
 		}
 
-		iUserService.saveUser(user);
+		userService.saveUser(user);
 
 		return "redirect:/viewUsers";
 	}
@@ -123,7 +123,7 @@ public class UserController {
 		}
 
 		User user = (User) session.getAttribute("loginDetails");
-		if (!user.getRole().equals("hr")) {
+		if (!userService.getAuthentication().equals("hr")) {
 			try {
 				redirect.sendRedirect("/login");
 			} catch (IOException e) {
@@ -133,7 +133,7 @@ public class UserController {
 		}
 
 		ModelAndView mav = new ModelAndView("userList");
-		mav.addObject("user", iUserService.viewUserList());
+		mav.addObject("user", userService.viewUserList());
 		return mav;
 	}
 
@@ -151,7 +151,7 @@ public class UserController {
 		}
 
 		User checkUser = (User) session.getAttribute("loginDetails");
-		if (!checkUser.getRole().equals("hr")) {
+		if (!userService.getAuthentication().equals("hr")) {
 			try {
 				redirect.sendRedirect("/login");
 			} catch (IOException e) {
@@ -160,7 +160,7 @@ public class UserController {
 			}
 		}
 		ModelAndView mav = new ModelAndView("userRegister");
-		User user = iUserService.updateUser(userId);
+		User user = userService.updateUser(userId);
 		mav.addObject("user", user);
 		return mav;
 	}
@@ -178,7 +178,7 @@ public class UserController {
 		}
 
 		User user = (User) session.getAttribute("loginDetails");
-		if (!user.getRole().equals("hr")) {
+		if (!userService.getAuthentication().equals("hr")) {
 			try {
 				redirect.sendRedirect("/login");
 			} catch (IOException e) {
@@ -187,7 +187,7 @@ public class UserController {
 			}
 		}
 
-		iUserService.deleteUser(userId);
+		userService.deleteUser(userId);
 		return "redirect:/viewUsers";
 	}
 

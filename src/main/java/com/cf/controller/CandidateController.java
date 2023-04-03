@@ -46,6 +46,7 @@ import com.cf.repository.ICandidateDao;
 import com.cf.repository.IuserDao;
 import com.cf.service.ICandidateService;
 import com.cf.service.IDomainService;
+import com.cf.service.IUserService;
 //import com.cf.service.IFirebaseService;
 
 @Controller
@@ -59,6 +60,9 @@ public class CandidateController {
 
 	@Autowired
 	private ICandidateDao iCandidateDao;
+	
+	@Autowired
+	private IUserService userService;
 	
 //	@Autowired
 //	private IFirebaseService firebase;
@@ -316,7 +320,7 @@ public class CandidateController {
 		}
 
 		User checkUser = (User) session.getAttribute("loginDetails");
-		if (!checkUser.getRole().equals("hr")) {
+		if (!userService.getAuthentication().equals("hr")) {
 			try {
 				redirect.sendRedirect("/login");
 			} catch (IOException e) {
@@ -348,7 +352,7 @@ public class CandidateController {
 		}
 
 		User checkUser = (User) session.getAttribute("loginDetails");
-		if (!checkUser.getRole().equals("hr")) {
+		if (!userService.getAuthentication().equals("hr")) {
 			try {
 				redirect.sendRedirect("/login");
 			} catch (IOException e) {
@@ -381,7 +385,7 @@ public class CandidateController {
 		}
 
 		User checkUser = (User) session.getAttribute("loginDetails");
-		if (!checkUser.getRole().equals("hr")) {
+		if (!userService.getAuthentication().equals("hr")) {
 			try {
 				redirect.sendRedirect("/login");
 			} catch (IOException e) {
@@ -415,8 +419,8 @@ public class CandidateController {
 		}
 
 		User checkUser = (User) session.getAttribute("loginDetails");
-		if (!(checkUser.getRole().equals("hr") || checkUser.getRole().equals("hrHead")
-				|| checkUser.getRole().equals("interviewer"))) {
+		if (!(userService.getAuthentication().equals("hr") || userService.getAuthentication().equals("hrHead")
+				|| userService.getAuthentication().equals("interviewer"))) {
 			try {
 				redirect.sendRedirect("/login");
 			} catch (IOException e) {
@@ -462,7 +466,7 @@ public class CandidateController {
 		}
 
 		User checkUser = (User) session.getAttribute("loginDetails");
-		if (!checkUser.getRole().equals("hr")) {
+		if (!userService.getAuthentication().equals("hr")) {
 			try {
 				redirect.sendRedirect("/login");
 			} catch (IOException e) {
@@ -490,8 +494,8 @@ public class CandidateController {
 		}
 
 		User checkUser = (User) session.getAttribute("loginDetails");
-		if (!(checkUser.getRole().equals("hr") || checkUser.getRole().equals("interviewer")
-				|| checkUser.getRole().equals("hrHead"))) {
+		if (!(userService.getAuthentication().equals("hr") || userService.getAuthentication().equals("interviewer")
+				|| userService.getAuthentication().equals("hrHead"))) {
 			try {
 				response.sendRedirect("/login");
 			} catch (IOException e) {
@@ -541,8 +545,8 @@ public class CandidateController {
 		}
 
 		User checkUser = (User) session.getAttribute("loginDetails");
-		if (!(checkUser.getRole().equals("hr") || checkUser.getRole().equals("interviewer")
-				|| checkUser.getRole().equals("hrHead"))) {
+		if (!(userService.getAuthentication().equals("hr") || userService.getAuthentication().equals("interviewer")
+				|| userService.getAuthentication().equals("hrHead"))) {
 			try {
 				response.sendRedirect("/login");
 			} catch (IOException e) {

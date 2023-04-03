@@ -50,7 +50,7 @@ public class ScheduleController {
 	@Autowired
 	private IScheduleService ischeduleService;
 	@Autowired
-	private IUserService iUserService;
+	private IUserService userService;
 
 	@PostMapping("/ajaxPost")
 	public void ajaxPostMethod(@RequestBody List<Integer> list1, HttpSession session, HttpServletResponse redirect) {
@@ -75,7 +75,7 @@ public class ScheduleController {
 
 		Schedule Schedule = new Schedule();
 		List<Candidate> Candidate = icandidateService.viewCandidateList();
-		List<User> user = iUserService.viewUserList();
+		List<User> user = userService.viewUserList();
 
 		List<User> list = user.stream()
 				.filter(c -> c.getRole().equalsIgnoreCase("interviewer") || c.getRole().equalsIgnoreCase("hrHead"))
@@ -102,7 +102,7 @@ public class ScheduleController {
 
 		Schedule Schedule = new Schedule();
 		List<Candidate> Candidate = icandidateService.viewCandidateList();
-		List<User> user = iUserService.viewUserList();
+		List<User> user = userService.viewUserList();
 
 		List<User> list = user.stream()
 				.filter(c -> c.getRole().equalsIgnoreCase("interviewer") || c.getRole().equalsIgnoreCase("hrHead"))
@@ -129,7 +129,7 @@ System.out.println("Checkuu"+status);
 		}
 
 		User checkUser = (User) session.getAttribute("loginDetails");
-		if (!checkUser.getRole().equals("hr")) {
+		if (!userService.getAuthentication().equals("hr")) {
 			try {
 				redirect.sendRedirect("/login");
 			} catch (IOException e) {
@@ -141,7 +141,7 @@ System.out.println("Checkuu"+status);
 		Schedule Schedule = new Schedule();
 
 		Candidate candidate = icandidateService.findResumeCandidate(candidateId);
-		List<User> user = iUserService.viewUserList();
+		List<User> user = userService.viewUserList();
 		List<Candidate> listOfCandi=new ArrayList<>();
 		listOfCandi.add(candidate);
 		Schedule.setCandidate(listOfCandi);
@@ -181,7 +181,7 @@ System.out.println("Checkuu"+status);
 		}
 
 		User checkUser = (User) session.getAttribute("loginDetails");
-		if (!checkUser.getRole().equals("hr")) {
+		if (!userService.getAuthentication().equals("hr")) {
 			try {
 				redirect.sendRedirect("/login");
 			} catch (IOException e) {
@@ -290,7 +290,7 @@ System.out.println("Checkuu"+status);
 		}
 
 		User checkUser = (User) session.getAttribute("loginDetails");
-		if (!checkUser.getRole().equals("hr")) {
+		if (!userService.getAuthentication().equals("hr")) {
 			try {
 				redirect.sendRedirect("/login");
 			} catch (IOException e) {
@@ -410,12 +410,12 @@ System.out.println("<----------------------view Schedule entered----------------
 		String role = (String) session.getAttribute("interviewer");
 		System.out.println("role of interviewer"+role);
 		User user2 = new User();
-		user2.setRole(role);
+		user2.setRole(userService.getAuthentication());
 
 		User user = (User) session.getAttribute("loginDetails");
 		System.out.println("User After interviewer logins"+user.getEmail());
 		List<Schedule> scheduleList = ischeduleService.viewScheduleList();
-		if (user.getRole().equalsIgnoreCase("hr")) {
+		if (userService.getAuthentication().equalsIgnoreCase("hr")) {
 			System.out.println("entered as hr");
 			ModelAndView mav = new ModelAndView("scheduleList");
 			mav.addObject("schedule", scheduleList);
@@ -448,7 +448,7 @@ System.out.println("<----------------------view Schedule entered----------------
 			}
 		}
 
-		if (!iUserService.getAuthentication().equals("hr")) {
+		if (!userService.getAuthentication().equals("hr")) {
 			try {
 				redirect.sendRedirect("/login");
 			} catch (IOException e) {
@@ -460,7 +460,7 @@ System.out.println("<----------------------view Schedule entered----------------
 		Schedule schedule = ischeduleService.updateSchedule(scheduleId);
 		List<Candidate> Candidate = schedule.getCandidate();
 //		List<Candidate> Candidate = icandidateService.viewCandidateList();
-		List<User> user = iUserService.viewUserList();
+		List<User> user = userService.viewUserList();
 
 		List<User> list = user.stream().filter(c -> c.getRole().equalsIgnoreCase("interviewer"))
 				.collect(Collectors.toList());
@@ -486,7 +486,7 @@ System.out.println("<----------------------view Schedule entered----------------
 		}
 
 		User checkUser = (User) session.getAttribute("loginDetails");
-		if (!checkUser.getRole().equals("hr")) {
+		if (!userService.getAuthentication().equals("hr")) {
 			try {
 				redirect.sendRedirect("/login");
 			} catch (IOException e) {
@@ -521,7 +521,7 @@ System.out.println("<----------------------view Schedule entered----------------
 		System.out.println("Login User Object###################"+SecurityContextHolder.getContext().getAuthentication().getPrincipal());
 		List<Schedule> scheduleList = ischeduleService.viewScheduleList();
 		List<Schedule> list = null;
-		if (iUserService.getAuthentication().equals("hr")) {
+		if (userService.getAuthentication().equals("hr")) {
 			list = ischeduleService.viewScheduleList();
 		} else {
 			System.out.println("else block entered");
@@ -546,7 +546,7 @@ System.out.println("<----------------------view Schedule entered----------------
 		}
 		System.out.println("List of schedule for a particular interviewer"+a);
 		mav.addObject("schedule", a);
-		mav.addObject("role", checkUser.getRole());
+		mav.addObject("role", userService.getAuthentication());
 		return mav;
 	}
 

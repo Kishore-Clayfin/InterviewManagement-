@@ -1,101 +1,27 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-<meta charset="ISO-8859-1">
-<title>Login</title>
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-	integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
-	crossorigin="anonymous">
-<link rel="stylesheet" type="text/css" th:href="@{~/css/home.css}">
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"
-	integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA=="
-	crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<style>
-body{
-font-family: cambria , sans-serif;
-}
-</style>
-</head>
-<body class="background_image">
-
-
-	<nav class="navbar navbar-inverse navbar-fixed-top">
-		<div class="container">
-			<div class="navbar-header" style="font-family: sans-serif">
-				<a class="navbar-brand" href="#" th:href="@{/login}"
-					style="margin-left: 860px; color: white; font-family: sans-serif"><b><i>
-							Login</i></b></a> <a class="navbar-brand"
-					style="font-family: sans-serif; color: white;"
-					href="https://www.clayfin.com;"><b><i> About </i></b></a> <a
-					class="navbar-brand" style="font-family: sans-serif; color: white;"
-					href="https://www.clayfin.com"><b><i> Contact</i></b></a>
-			</div>
-		</div>
-	</nav>
-
-
-
-	<br>
-	<br>
-
-	<div style="margin-top: -350px; margin-left: 20%">
-		<div class="logo1">
-			<img alt="" src="/image/clayfinImg.png" style="width: 180px;">
-		</div>
-		<div class="logo2">
-			<img alt="" src="/image/logo.png"
-				style="width: 100px; margin-left: 40px">
-		</div>
-	</div>
-
-
-	<div class="container" style="margin-left: -40%">
-		<div class="row">
-			<div class="col-md-6 col-md-offset-3" style="">
-
-
-				<h2 id="login">Sign-in</h2>
-				<div th:if="${message!= null}">
-					<div class="alert alert-info" th:text="${message}"></div>
-				</div>
-
-				<div class="alert alert-danger alert-dismissible"
-					th:if="${message1!= null}">
-					<a th:href="@{/login}" class="close" data-dismiss="alert"
-						onclick="$('.alert').hide()" aria-label="close">X</a> <span
-						th:text="${message1}"></span>
-				</div>
-
-
-
-				<form name="myform" th:action="@{/homePage}"
-					style="margin-left: 50px;">
-
-
-					<div class="form-group">
-						<label class="control-label" for="name"> User Email </label> <input
-							id="name" class="form-control" type="text" name="name"
-							style="width: 350px" autofocus="autofocus" />
-					</div>
-
-
-					<div class="form-group">
-						<label class="control-label" for="password"> Password </label> <input
-							id="password" class="form-control" type="password"
-							style="width: 350px" name="password" autofocus="autofocus" />
-					</div>
-					<div class="form-group">
-						<button type="submit" class="btn btn-success" id="btn_color">Login</button>
-
-
-					</div>
-				</form>
-
-			</div>
-		</div>
-
-	</div>
-</body>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:tiles="http://www.thymeleaf.org">
+  <head>
+    <title tiles:fragment="title">Messages : Create</title>
+  </head>
+  <body>
+    <div tiles:fragment="content">
+        <form name="f" th:action="@{/login}" method="post">               
+            <fieldset>
+                <legend>Please Login</legend>
+                <div th:if="${param.error}" class="alert alert-error">    
+                    Invalid username and password.
+                </div>
+                <div th:if="${param.logout}" class="alert alert-success"> 
+                    You have been logged out.
+                </div>
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username"/>        
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password"/>    
+                <div class="form-actions">
+                    <button type="submit" class="btn">Log in</button>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+  </body>
 </html>

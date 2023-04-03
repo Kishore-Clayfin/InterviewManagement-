@@ -35,7 +35,7 @@ public class Candidate
 {
 	@Id
 	@GeneratedValue
-	private Integer candidateId;
+	private Integer candidateId; 
 	
 	
 	@NotBlank(message = "Candidates's name Should n't be empty.")

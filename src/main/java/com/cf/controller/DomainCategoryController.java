@@ -26,56 +26,17 @@ public class DomainCategoryController {
 	@Autowired
 	private IDomainCategoryService iDomainCategoryService;
 
-	@GetMapping("/addDomainCategory")
+	@GetMapping("/hr/addDomainCategory")
 	public ModelAndView addDomainCategory(HttpSession session, HttpServletResponse redirect) {
-
-		if (LoginController.checkUser == null) {
-			try {
-				redirect.sendRedirect("/login");
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-
-		User user = (User) session.getAttribute("loginDetails");
-		if (!user.getRole().equals("hr")) {
-			try {
-				redirect.sendRedirect("/login");// ("http://localhost:9091/login");
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
 		DomainCategory domainCategory = new DomainCategory();
 		ModelAndView mav = new ModelAndView("domainCategoryRegister");
 		mav.addObject("domainCategory", domainCategory);
 		return mav;
 	}
 
-	@PostMapping("/saveDomainCategory")
+	@PostMapping("/hr/saveDomainCategory")
 	public String saveDomainCategory(@Valid @ModelAttribute DomainCategory domainCategory, BindingResult result,
 			HttpSession session, HttpServletResponse redirect) {
-
-		if (LoginController.checkUser == null) {
-			try {
-				redirect.sendRedirect("/login");
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-
-		User user = (User) session.getAttribute("loginDetails");
-		if (!user.getRole().equals("hr")) {
-			try {
-				redirect.sendRedirect("/login");// ("http://localhost:9091/login");
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-
 		if (result.hasErrors()) {
 			return "domainCategoryRegister";
 		}
@@ -83,85 +44,25 @@ public class DomainCategoryController {
 		return "redirect:/viewDomainCategories";
 	}
 
-	@GetMapping("/viewDomainCategories")
+	@GetMapping("/hr/viewDomainCategories")
 	public ModelAndView getAllDomainCategories(HttpSession session, HttpServletResponse redirect) {
-
-		if (LoginController.checkUser == null) {
-			try {
-				redirect.sendRedirect("/login");
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-
-		User user = (User) session.getAttribute("loginDetails");
-		if (!user.getRole().equals("hr")) {
-			try {
-				redirect.sendRedirect("/login");// ("http://localhost:9091/login");
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-
 		ModelAndView mav = new ModelAndView("domainCategoryList");
 		mav.addObject("domainCategory", iDomainCategoryService.viewDomainCategoryList());
 		return mav;
 	}
 
-	@GetMapping("/showUpdateDomainCategory")
+	@GetMapping("/hr/showUpdateDomainCategory")
 	public ModelAndView showUpdateDomainCategory(@RequestParam Integer domSubCatId, HttpSession session,
 			HttpServletResponse redirect) {
-
-		if (LoginController.checkUser == null) {
-			try {
-				redirect.sendRedirect("/login");
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-
-		User user = (User) session.getAttribute("loginDetails");
-		if (!user.getRole().equals("hr")) {
-			try {
-				redirect.sendRedirect("/login");// ("http://localhost:9091/login");
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-
 		ModelAndView mav = new ModelAndView("domainCategoryRegister");
 		DomainCategory domainCategory = iDomainCategoryService.updateDomainCategory(domSubCatId);
 		mav.addObject("domainCategory", domainCategory);
 		return mav;
 	}
 
-	@GetMapping("/deleteDomainCategory")
+	@GetMapping("/hr/deleteDomainCategory")
 	public String deleteDomainCategory(@RequestParam Integer domSubCatId, HttpSession session,
 			HttpServletResponse redirect) {
-
-		if (LoginController.checkUser == null) {
-			try {
-				redirect.sendRedirect("/login");
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-
-		User user = (User) session.getAttribute("loginDetails");
-		if (!user.getRole().equals("hr")) {
-			try {
-				redirect.sendRedirect("/login");// ("http://localhost:9091/login");
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-
 		iDomainCategoryService.deleteDomainCategory(domSubCatId);
 		return "redirect:/viewDomainCategories";
 	}

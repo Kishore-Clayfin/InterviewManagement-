@@ -14,7 +14,7 @@ public class HistoryController {
 @Autowired
 private IHistoryService historyService;
 
-@GetMapping("/viewHistoryList")
+@GetMapping("/hr/viewHistoryList")
 public ModelAndView viewHistory(HttpSession session) {
 	ModelAndView mav = new ModelAndView("historyList");
 	mav.addObject("historyList", historyService.findAllHistory());

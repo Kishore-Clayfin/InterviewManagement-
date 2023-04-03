@@ -51,36 +51,11 @@ public class FeedBackController {
 	@Autowired
 	private IDomainDao dom;
 
-	@GetMapping("/addFeedback")
+	@GetMapping("/commonInterviewerAndhrHead/addFeedback")
 	public ModelAndView addFeedback(@RequestParam Integer candidateId, HttpSession session,
 			HttpServletResponse redirect) {
-
-		if (LoginController.checkUser == null) {
-			try {
-				redirect.sendRedirect("/login");
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-
-		User checkUser = (User) session.getAttribute("loginDetails");
-		if (!(checkUser.getRole().equals("interviewer") || checkUser.getRole().equals("hrHead"))) {
-			try {
-				redirect.sendRedirect("/login");
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-
 		Domain d=dom.findByDomainName("HR Head Rating");
 		List<DomainCategory> domCat=d.getDomainCategory();
-		
-		
-		
-		
-		
 		User user = (User) session.getAttribute("loginDetails");
 		Candidate candidate = iCandidateService.updateCandidate(candidateId);
 		List<DomainCategory> domainCategory = iCandidateService.updateCandidate(candidateId).getDomain()
@@ -93,12 +68,12 @@ public class FeedBackController {
 		for (DomainCategory dc : candidate.getDomain().getDomainCategory())
 			System.out.println(dc.getDomSubCatName().length());
 		mav.addObject("subCategory", domainCategory);
-		mav.addObject("role", user.getRole());
+		mav.addObject("role","interviewer" /*user.getRole()*/);
 		mav.addObject("hrRating", domCat);
 		return mav;
 	}
 
-	@PostMapping("/saveFeedback")
+	@PostMapping("/commonInterviewerAndhrHead/saveFeedback")
 	public String saveFeedBack(@Valid @ModelAttribute Feedback feedback, BindingResult result, Model model,
 			@RequestParam Integer candidateId, HttpSession session, HttpServletResponse redirect) {
 Candidate candidate1=iCandidateService.updateCandidate(candidateId);
@@ -316,28 +291,8 @@ System.out.println(feedback.getHrFbStatus());
 		return "redirect:/giveFeedback";
 
 	}
-	@GetMapping("/viewFeedbacks")
+	@GetMapping("/common/viewFeedbacks")
 	public ModelAndView getAllFeedbacks(HttpSession session, HttpServletResponse redirect) {
-
-		if (LoginController.checkUser == null) {
-			try {
-				redirect.sendRedirect("/login");
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-
-		User checkUser = (User) session.getAttribute("loginDetails");
-		if (!(checkUser.getRole().equals("hr") || checkUser.getRole().equals("interviewer")
-				|| checkUser.getRole().equals("hrHead"))) {
-			try {
-				redirect.sendRedirect("/login");
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
 		List<String> ratings=new ArrayList<>();
 //		List<Feedback> feedList=(List<Feedback>) iFeedbackService.viewFeedbackList();
 //		for(Feedback feed:feedList) {
@@ -355,7 +310,7 @@ System.out.println(feedback.getHrFbStatus());
 		return mav;
 	}
 
-	@GetMapping("/showUpdateFeedback")
+	@GetMapping("/commonInterviewerAndhrHead/showUpdateFeedback")
 	public ModelAndView showUpdateFeedback(@RequestParam Integer feedbackId, HttpSession session,
 			HttpServletResponse redirect) {
 
@@ -416,7 +371,7 @@ System.out.println(feedback.getHrFbStatus());
 		return "redirect:/viewFeedbacks";
 	}
 
-	@GetMapping("/generatePdfFile")
+	@GetMapping("/common/generatePdfFile")
 	public void generatePdfFile(HttpServletResponse response, @RequestParam(value = "feedbackId") Integer feedbackId)
 			throws IOException {
 		if (LoginController.checkUser == null) {
@@ -436,7 +391,7 @@ System.out.println(feedback.getHrFbStatus());
 
 	}
 
-	@GetMapping("/generateAllPdfFile")
+	@GetMapping("/common/generateAllPdfFile")
 	public void generateAllPdfFile(HttpServletResponse response) throws IOException {
 		if (LoginController.checkUser == null) {
 			try {
@@ -455,7 +410,7 @@ System.out.println(feedback.getHrFbStatus());
 	}
 
 	@Transactional
-	@GetMapping("/updateInterviewerFbStatus")
+	@GetMapping("/common/updateInterviewerFbStatus")
 	public String updateInterviewerFbStatus(@RequestParam Integer feedbackId, @RequestParam String interviewerFbStatus,
 			HttpSession session, HttpServletResponse redirect) {
 

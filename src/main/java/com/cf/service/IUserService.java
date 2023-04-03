@@ -22,4 +22,6 @@ public interface IUserService {
 	User findUsername(String name);
 
 	boolean existsUserByEmail(String email);
+	
+	String getAuthentication();
 }

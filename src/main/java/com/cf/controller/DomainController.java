@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.cf.model.Domain;
@@ -33,31 +34,10 @@ public class DomainController {
 	@Autowired
 	private IDomainCategoryService iDomainCategoryService;
 
-	@GetMapping("/addDomain")
+	@GetMapping("/hr/addDomain")
 	public ModelAndView addDomain(HttpSession session, HttpServletResponse redirect) 
 	{
-
-		if (LoginController.checkUser == null) {
-			try {
-				redirect.sendRedirect("/login");
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-
-		User user = (User) session.getAttribute("loginDetails");
-		if (!user.getRole().equals("hr")) {
-			try {
-				redirect.sendRedirect("/login");
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-
 		List<DomainCategory> domainCategory = iDomainCategoryService.viewDomainCategoryList();
-
 		Domain domain = new Domain();
 		ModelAndView mav = new ModelAndView("domainRegister");
 		mav.addObject("domain", domain);
@@ -65,31 +45,10 @@ public class DomainController {
 		return mav;
 	}
 
-	@PostMapping("/saveDomain")
+	@PostMapping("/hr/saveDomain")
 	public String saveDomain(@Valid @ModelAttribute Domain domain, BindingResult result, @RequestParam String category,
 			HttpSession session, HttpServletResponse redirect) {
-
-		if (LoginController.checkUser == null) {
-			try {
-				redirect.sendRedirect("/login");
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-
-		User user = (User) session.getAttribute("loginDetails");
-		if (!user.getRole().equals("hr")) {
-			try {
-				redirect.sendRedirect("/login");
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-
-		List<DomainCategory> arr = new ArrayList<DomainCategory>();
-		
+	List<DomainCategory> arr = new ArrayList<DomainCategory>();	
 		String[] s = category.split(",");
 		List list = Arrays.asList(s);
 //		System.out.println(list);
@@ -112,56 +71,16 @@ public class DomainController {
 		return "redirect:/viewDomains";
 	}
 
-	@GetMapping("/viewDomains")
+	@GetMapping("/hr/viewDomains")
 	public ModelAndView getAllDomains(HttpSession session, HttpServletResponse redirect) {
-
-		if (LoginController.checkUser == null) {
-			try {
-				redirect.sendRedirect("/login");
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-
-		User user = (User) session.getAttribute("loginDetails");
-		if (!user.getRole().equals("hr")) {
-			try {
-				redirect.sendRedirect("/login");
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-
 		ModelAndView mav = new ModelAndView("domainList");
 		mav.addObject("domain", iDomainService.viewDomainList());
 		return mav;
 	}
 
-	@GetMapping("/showUpdateDomain")
+	@GetMapping("/hr/showUpdateDomain")
 	public ModelAndView showUpdateDomain(@RequestParam Integer domainId, HttpSession session,
 			HttpServletResponse redirect) {
-
-		if (LoginController.checkUser == null) {
-			try {
-				redirect.sendRedirect("/login");
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-
-		User user = (User) session.getAttribute("loginDetails");
-		if (!user.getRole().equals("hr")) {
-			try {
-				redirect.sendRedirect("/login");
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-
 		List<DomainCategory> domainCategory = iDomainCategoryService.viewDomainCategoryList();
 
 		ModelAndView mav = new ModelAndView("domainRegister");
@@ -178,28 +97,8 @@ public class DomainController {
 		return mav;
 	}
 
-	@GetMapping("/deleteDomain")
+	@GetMapping("/hr/deleteDomain")
 	public String deleteDomain(@RequestParam Integer domainId, HttpSession session, HttpServletResponse redirect) {
-
-		if (LoginController.checkUser == null) {
-			try {
-				redirect.sendRedirect("/login");
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-
-		User user = (User) session.getAttribute("loginDetails");
-		if (!user.getRole().equals("hr")) {
-			try {
-				redirect.sendRedirect("/login");
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-
 		iDomainService.deleteDomain(domainId);
 		return "redirect:/viewDomains";
 	}

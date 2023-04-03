@@ -1,9 +1,11 @@
 package com.cf.service;
 
+import java.util.Collection;
 import java.util.List;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.cf.model.User;
@@ -75,6 +77,22 @@ public class UserServiceImpl implements IUserService {
 	public boolean existsUserByEmail(String email) {
 		
 		return iUserDao.existsUserByEmail(email);
+	}
+
+
+
+	@Override
+	public String getAuthentication() {
+		
+		String role=null;
+		org.springframework.security.core.Authentication auth= SecurityContextHolder.getContext().getAuthentication();
+		Collection<?> c= auth.getAuthorities();
+		for (Object object : c) 
+		{
+			role=object.toString();
+			
+		}
+		return role;
 	}
 
 }

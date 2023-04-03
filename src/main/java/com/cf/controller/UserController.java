@@ -39,27 +39,7 @@ public class UserController {
 
 	@GetMapping("/addUser")
 	public ModelAndView addUser(HttpSession session, HttpServletResponse redirect) {
-
-		if (LoginController.checkUser == null) {
-			try {
-				redirect.sendRedirect("/login");
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-
-		User checkUser = (User) session.getAttribute("loginDetails");
-		if (!checkUser.getRole().equals("hr")) {
-			try {
-				redirect.sendRedirect("/login");
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-
 		User errUser = (User) session.getAttribute("user");
-
 		User user = new User();
 		ModelAndView mav = new ModelAndView("userRegister");
 

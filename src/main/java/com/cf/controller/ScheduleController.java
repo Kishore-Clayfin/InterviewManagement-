@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -53,19 +54,11 @@ public class ScheduleController {
 
 	@PostMapping("/ajaxPost")
 	public void ajaxPostMethod(@RequestBody List<Integer> list1, HttpSession session, HttpServletResponse redirect) {
-		if (LoginController.checkUser == null) {
-			try {
-				redirect.sendRedirect("/login");
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
 		session.setAttribute("ajax", list1);
 
 	}
 
-	@GetMapping("/addschedule")
+	@GetMapping("/hr/addschedule")
 	public ModelAndView addhr(HttpSession session, HttpServletResponse redirect) {
 
 		if (LoginController.checkUser == null) {
@@ -95,7 +88,7 @@ public class ScheduleController {
 		return mv;
 	}
 
-	@GetMapping("/scheduleInterview")
+	@GetMapping("/hr/scheduleInterview")
 	public ModelAndView addhr(HttpServletResponse redirect) {
 
 		if (LoginController.checkUser == null) {
@@ -122,7 +115,7 @@ public class ScheduleController {
 		return mv;
 	}
 
-	@GetMapping("/addschedule2")
+	@GetMapping("/hr/addschedule2")
 	public ModelAndView addschedule2(@RequestParam Integer candidateId, @RequestParam String status,HttpSession session,
 			HttpServletResponse redirect) {
 System.out.println("Checkuu"+status);
@@ -174,7 +167,7 @@ System.out.println("Checkuu"+status);
 		return mv;
 	}
 
-	@PostMapping("/saveschedule")
+	@PostMapping("/hr/saveschedule")
 	public String saveschedule(@Valid @ModelAttribute Schedule schedule, BindingResult result, Model model,
 			RedirectAttributes ra, HttpSession session, HttpServletResponse redirect) {
 
@@ -282,7 +275,7 @@ System.out.println("Checkuu"+status);
 		return "redirect:/viewschedules";
 	}
 
-	@PostMapping("/saveschedule2")
+	@PostMapping("/hr/saveschedule2")
 	public String saveschedule2(@Valid @ModelAttribute Schedule schedule, BindingResult result, Model model,
 			@RequestParam Integer candidateId, @RequestParam String status1, RedirectAttributes ra, HttpSession session,
 			HttpServletResponse redirect) {
@@ -408,31 +401,12 @@ System.out.println("Checkuu"+status);
 			LocalTime tempTime = LocalTime.parse(temp);
 		}
 
-		return "redirect:/showInterviewCompleted";
+		return "redirect:/viewschedules";
 	}
 
-	@GetMapping({ "/viewschedules" })
+	@GetMapping({ "/hr/viewschedules" })
 	public ModelAndView getAllschedules(HttpSession session, HttpServletResponse redirect) {
 System.out.println("<----------------------view Schedule entered------------------------------>");
-		if (LoginController.checkUser == null) {
-			try {
-				redirect.sendRedirect("/login");
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-
-		User checkUser = (User) session.getAttribute("loginDetails");
-		if (!(checkUser.getRole().equals("hr") || checkUser.getRole().equals("interviewer")
-				|| checkUser.getRole().equals("hrHead"))) {
-			try {
-				redirect.sendRedirect("/login");
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
 		String role = (String) session.getAttribute("interviewer");
 		System.out.println("role of interviewer"+role);
 		User user2 = new User();
@@ -461,7 +435,7 @@ System.out.println("<----------------------view Schedule entered----------------
 	}
 
 //
-	@GetMapping("/showUpdateSchedule")
+	@GetMapping("/hr/showUpdateSchedule")
 	public ModelAndView showUpdateSchedule(@RequestParam Integer scheduleId, HttpSession session,
 			HttpServletResponse redirect) {
 
@@ -474,8 +448,7 @@ System.out.println("<----------------------view Schedule entered----------------
 			}
 		}
 
-		User checkUser = (User) session.getAttribute("loginDetails");
-		if (!checkUser.getRole().equals("hr")) {
+		if (!iUserService.getAuthentication().equals("hr")) {
 			try {
 				redirect.sendRedirect("/login");
 			} catch (IOException e) {
@@ -485,7 +458,8 @@ System.out.println("<----------------------view Schedule entered----------------
 		}
 
 		Schedule schedule = ischeduleService.updateSchedule(scheduleId);
-		List<Candidate> Candidate = icandidateService.viewCandidateList();
+		List<Candidate> Candidate = schedule.getCandidate();
+//		List<Candidate> Candidate = icandidateService.viewCandidateList();
 		List<User> user = iUserService.viewUserList();
 
 		List<User> list = user.stream().filter(c -> c.getRole().equalsIgnoreCase("interviewer"))
@@ -499,7 +473,7 @@ System.out.println("<----------------------view Schedule entered----------------
 
 	}
 
-	@GetMapping("/deleteSchedule")
+	@GetMapping("/hr/deleteSchedule")
 	public String deleteSchedule(@RequestParam Integer scheduleId, HttpSession session, HttpServletResponse redirect) {
 
 		if (LoginController.checkUser == null) {
@@ -525,68 +499,29 @@ System.out.println("<----------------------view Schedule entered----------------
 		return "redirect:/viewschedules";
 	}
 
-	@GetMapping("/showInterviewCompleted")
-	public ModelAndView getfeedback(HttpSession session, HttpServletResponse redirect)// (@RequestParam Integer
+	@GetMapping("/commonAll/showInterviewCompleted")
+	public ModelAndView getfeedback(HttpSession session, HttpServletResponse redirect){// (@RequestParam Integer
 																						// InterviewerId)
-	{
-
-		if (LoginController.checkUser == null) {
-			try {
-				redirect.sendRedirect("/login");
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-
-		User checkUser = (User) session.getAttribute("loginDetails");
-		if (!(checkUser.getRole().equals("hr") || checkUser.getRole().equals("interviewer")
-				|| checkUser.getRole().equals("hrHead"))) {
-			try {
-				redirect.sendRedirect("/login");
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-
 		ModelAndView mav = new ModelAndView("InterviewCompletedList");
+		
+		Candidate candidate=new Candidate();
 		mav.addObject("feedback", iFeedbackService.viewFeedbackList());
+		mav.addObject("candidate", candidate);
 		return mav;
 
 	}
 
-	@GetMapping("/giveFeedback")
+	@GetMapping("/commonInterviewerAndhrHead/giveFeedback")
 	public ModelAndView givefeedback(HttpSession session, HttpServletResponse redirect)// (@RequestParam Integer
 																						// InterviewerId)
 	{
-
-		if (LoginController.checkUser == null) {
-			try {
-				redirect.sendRedirect("/login");
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-
 		User checkUser = (User) session.getAttribute("loginDetails");
-		if (!(checkUser.getRole().equals("hr") || checkUser.getRole().equals("interviewer")
-				|| checkUser.getRole().equals("hrHead"))) {
-			try {
-				redirect.sendRedirect("/login");
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-
 		User user = (User) session.getAttribute("loginDetails");
 		ModelAndView mav = new ModelAndView("CompletedList");
-
+		System.out.println("Login User Object###################"+SecurityContextHolder.getContext().getAuthentication().getPrincipal());
 		List<Schedule> scheduleList = ischeduleService.viewScheduleList();
 		List<Schedule> list = null;
-		if (user.getRole().equals("hr")) {
+		if (iUserService.getAuthentication().equals("hr")) {
 			list = ischeduleService.viewScheduleList();
 		} else {
 			System.out.println("else block entered");

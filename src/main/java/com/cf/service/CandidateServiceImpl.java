@@ -1,5 +1,6 @@
 package com.cf.service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -8,6 +9,7 @@ import java.util.Map;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 
 import com.cf.model.Candidate;
 import com.cf.model.Feedback;
@@ -162,7 +164,20 @@ public class CandidateServiceImpl implements ICandidateService {
 		Candidate candi=iCandidateDao.findCandidateByEmail(email);
 		return candi;
 	}
-
+	@Scheduled(cron = "0 45 10 * * ?")
+	public void autoMoveCandidateToHistory() {
+		System.out.println("entered @ Schedule cron deleted method");
+		List<Candidate> candiList=iCandidateDao.findAll();
+		List<Integer> candidateToDelete=new ArrayList<>();
+		LocalDate today=LocalDate.now();
+		LocalDate thirtyDay=today.minusDays(30);
+		for(Candidate candi:candiList) {
+			if(candi.getCreatedAt().equals(thirtyDay)) {
+				candidateToDelete.add(candi.getCandidateId());
+			}
+//			deleteAllCandidates(candidateToDelete);
+		}
+	}
 	@Override
 	public void deleteAllCandidates(List<Integer> candiIds) {
 		// TODO Auto-generated method stub
@@ -183,7 +198,7 @@ public class CandidateServiceImpl implements ICandidateService {
 			history.setResumeName(candi.getResumeName());
 			history.setRoleAppliedFor(candi.getRoleAppliedFor());		
 			history.setUserName(candi.getUser().getUsername());
-			
+			history.setDomainName(candi.getDomain().getDomainName());
 			history.setExpectedCtc(candi.getExpectedCtc());
 			history.setExperience(candi.getExperience());
 			history.setStatus(candi.getStatus());		                                                        

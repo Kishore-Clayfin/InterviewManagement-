@@ -2,53 +2,11 @@
 
 <head>
 <title>HISTORY LIST</title>
-
-<link rel="stylesheet" type="text/css"
-	href="https://cdn.datatables.net/v/bs4/dt-1.10.25/datatables.min.css" />
-<link rel="stylesheet"
-	href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
-	integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l"
-	crossorigin="anonymous" />
-<script data-require="jquery@2.0.3" data-semver="2.0.3"
-	src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
-
-<!-- <script
-	src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script> -->
-<script
-	src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-<script
-	src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
-
-<!--Search builder code starts-->
-
-
-
-<!-- <script
-	src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
-<script
-	src="https://cdn.datatables.net/searchbuilder/1.4.0/js/dataTables.searchBuilder.min.js"></script>
-<script
-	src="https://cdn.datatables.net/datetime/1.2.0/js/dataTables.dateTime.min.js"></script>
-<link rel="stylesheet"
-	href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css">
-<link rel="stylesheet"
-	href="https://cdn.datatables.net/searchbuilder/1.4.0/css/searchBuilder.dataTables.min.css">
-<link rel="stylesheet"
-	href="https://cdn.datatables.net/datetime/1.2.0/css/dataTables.dateTime.min.css">
-
-<script>
-	$(document).ready(function() {
-		$('#doctorTable').DataTable({
-			dom : 'Qlfrtip',
-			searchBuilder : {
-				columns : [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14 ]
-			}
-		});
-	});
-</script> -->
-
-<!--Search builder code ends-->
-
+<!-- added for  model starts-->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<!--  model ends -->
 <style>
 #back 
 {
@@ -103,6 +61,13 @@ table thead tr th {
 body {
 	font-family: cambria, sans-serif;
 }
+.modelsp{
+font-size: 20.8px;
+font-weight: bold;
+}
+.modelSpanClass{
+font-size: 20.8px;
+}
 
 th {
 	white-space: nowrap;
@@ -141,6 +106,8 @@ td {
                                   
             visibility: hidden;
         }
+        }
+
 </style>
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.js">
@@ -170,7 +137,10 @@ td {
 
 		<div>
 			<!-- class="card" id="makepdf"> -->
-
+			<!-- Modal content-->
+    
+      </div>
+      
 			<h3>HISTORY LIST</h3>
 
 			<hr />
@@ -180,81 +150,152 @@ td {
 
 				<thead>
 					<tr>
-
-						<th>Candidate Id
-							<div class="filter"></div>
-						</th>
-						<th>candidate Name
-							<div class="filter"></div>
-						</th>
-						<th>Overall Rating
-							<div class="filter"></div>
-						</th>
-						<th>Feedback
-							<div class="filter"></div>
-						</th>
-						<th>Interviewer Status
-							<div class="filter"></div>
-						</th>
-						<th>HRHead Status
-							<div class="filter"></div>
-						</th>
-						<th>Domain Name
-							<div class="filter"></div>
-						</th>
-						<th>Sub Category Ratings
-							<div class="filter"></div>
-						</th>
-						<th>EmailId</th>
+					<th>Candidate Name</th>
+					<th>EmailId</th>
 					<th>Mobile Number</th>
 					<th>Qualification</th>
-					<th>Cgpa</th>
 					<th>Role</th>
-					<th>Other EmailId</th>
 					<th>Experience</th>
-					<th>CTC</th>
-					<th>ECTC</th>
-					<th>Other Mobile Number</th>
 					<th>Status</th>
-					<th>Created By</th>
-
+					<!-- <th>Domain</th> -->
+					<th>more</th>
+					<th>Feedbacks</th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr th:each="history : ${historyList}">
-
-						<td class="customerIDCell"th:text="${history.candidateId}" />
 						<td class="customerIDCell"th:text="${history.candidateName}" />
-						<td th:text="${history.rating}" />
+						<td class="customerIDCell"th:text="${history.email}" />
+							<td class="customerIDCell"th:text="${history.mobileNumber}" />
+							<td class="customerIDCell"th:text="${history.highQualification}" />
+							<td class="customerIDCell"th:text="${history.roleAppliedFor}" />
+							<td class="customerIDCell"th:text="${history.experience}" />
+							<td class="customerIDCell" th:text="${history.status}" />
+						<!-- 	<td class="customerIDCell" th:text="${history.domainName}"></td>	 -->
+							<td><button data-toggle="modal" th:attr="onclick=|upload('${history.candidateId}','${history.candidateName}','${history.alternateMobileNumber}','${history.alternateEmail}','${history.userName}','${history.currentCtc}','${history.expectedCtc}')|" class="btn btn-info btn-sm" data-target="#myModal" >
+more</button>  </td>
+							<td><button data-toggle="modal" th:attr="onclick=|uploadFeedback('${history.feedbackId}','${history.rating}','${history.feed_back}','${history.interviewerFbStatus}','${history.hrFbStatus}','${history.domainRatings}')|" class="btn btn-info btn-sm" data-target="#myModal1" >
+feedback</button>&nbsp;</td>
+						<!-- <td th:text="${history.rating}" />
 						<td th:data-title="${history.feed_back}">Feedback</td>
-						<td th:data-title="${history.interviewerFbStatus}">Interviewer status</td>
+						<td th:text="${history.interviewerFbStatus}">
 						<td th:text="${history.hrFbStatus}" />
-						<td th:text="${history.getDomainName()}"></td>							
+												
 						<td class ="zoom" id="hope"th:data-title="${history.domainRatings}">Ratings:</td>
-					<td class="customerIDCell"th:text="${history.email}" />
-					<td class="customerIDCell"th:text="${history.mobileNumber}" />
-					<td class="customerIDCell"th:text="${history.highQualification}" />
 			 		<td class="customerIDCell"th:text="${history.cgpa}" />
-					<td class="customerIDCell"th:text="${history.roleAppliedFor}" />
+					
 					<td class="customerIDCell"th:text="${history.alternateEmail}" />
-					<td class="customerIDCell"th:text="${history.experience}" />
+					
 					<td class="customerIDCell" style="white-space: nowrap;" th:text="${history.currentCtc} +' LPA'" />
 					<td class="customerIDCell" style="white-space: nowrap;" id="expectedCtcLength"th:text="${history.expectedCtc}+' LPA'" />
 					<td class="customerIDCell" th:text="${history.alternateMobileNumber}" />
-					<td class="customerIDCell" th:text="${history.status}" />
-					<td class="customerIDCell"th:text="${history.getUserName()}" />
+					
+					<td class="customerIDCell"th:text="${history.getUserName()}" /> -->
 					</tr>
 				</tbody>
 
 			</table>
 
 		</div>
-
+<div>
 		<a th:href="@{/generateAllPdfFile} " target="_blank"
 			class="btn btn-primary ml-2">PrintAll</a> <br> <br> <a
 			th:href="@{/home}" class="btn btn-danger ml-2">Home</a>
-	</div>
-	<script>
+	</div>     
+       <!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+         <h1 class="modal-title">Additional Info</h1>
+        </div>
+        <div class="modal-body">
+           <div style='font-family: cambria, sans-serif'class="modal-body">
+             <span class="modelsp">Candidate Id:</span><span class ="modelSpanClass" id="spanId"> </span><br>
+            <span class="modelsp">Name :</span><span class ="modelSpanClass"id="spanName"> </span><br>
+            <span class="modelsp">Other EmailId :</span><span class ="modelSpanClass" id="othEmailId"> </span><br>
+            <span class="modelsp">Other Mobile Number :</span><span class ="modelSpanClass"id="othMobileNumber"> </span><br>
+             <span class="modelsp">CTC:</span><span class ="modelSpanClass" id="ctcId"> </span><br>
+             <span class="modelsp">ECTC:</span><span class ="modelSpanClass" id="ectcId"> </span><br>
+             <span class="modelsp">Created By :</span><span class ="modelSpanClass" id="createdBy"> </span><br>
+        </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  
+  <!-- Modal -->
+  <div class="modal fade" id="myModal1" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+         <h1 class="modal-title">Feedback Info</h1>
+        </div>
+        <div class="modal-body">
+          <div style='font-family: cambria, sans-serif'class="modal-body">
+             <span class="modelsp">Feedback Id:</span><span class ="modelSpanClass" id="spanFeedId"> </span><br>
+            <span class="modelsp">Overall Rating :</span><span class ="modelSpanClass"id="spanOverallRatings"> </span><br>
+            <span class="modelsp">Feedback:</span><span class ="modelSpanClass" id="spanFeedback"> </span><br>
+            <span class="modelsp">Interviewer Status:</span><span class ="modelSpanClass"id="spanInterviewerStatus"> </span><br>
+             <span class="modelsp">HRHead Status:</span><span class ="modelSpanClass" id="spanHr"> </span><br>
+             <span class="modelsp">Sub Domain Ratings:</span><span class ="modelSpanClass" id="spanDomRatings"> </span><br>
+            
+        </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  
+
+		<script type="text/javascript">
+	function upload(id,name,otherMobileNo,otherEmailId,createdBy,ctc,ectc,cgpa){
+		 console.log("obj"+otherMobileNo);
+		
+		console.log("data type"+typeof candidate);
+		 document.getElementById('spanId').innerText=id;
+		 document.getElementById('spanName').innerText=name;
+		 document.getElementById('othMobileNumber').innerText =otherMobileNo;
+		 document.getElementById('othEmailId').innerText=otherEmailId;
+		 document.getElementById('createdBy').innerText=createdBy;
+		 document.getElementById('ctcId').innerText=ctc+'LPA';
+		 document.getElementById('ectcId').innerText=0+'LPA';
+		 document.getElementById('cgpaId').innerText=cgpa;
+	} 
+	function uploadFeedback(id,rating,feedback,interviewerStatus,hrHeadStatus,subDomainRatings){
+		console.log("fffffffffffffeedback Model")
+		 console.log("obj"+id);
+		console.log("data type"+typeof candidate);
+		var hrStatus;
+		if(hrHeadStatus===null){
+			hrStatus='None';
+		}else{
+			hrStatus=hrHeadStatus;
+		}
+		var subDomRate=subDomainRatings.replaceAll('=',' : ').replaceAll('{',' ').replaceAll('}',' ').replaceAll('"','');
+		 document.getElementById('spanFeedId').innerText=id;
+		 document.getElementById('spanOverallRatings').innerText=rating;
+		 document.getElementById('spanFeedback').innerText =feedback;
+		 document.getElementById('spanInterviewerStatus').innerText=interviewerStatus;
+		 document.getElementById('spanHr').innerText=hrStatus;
+		 document.getElementById('spanDomRatings').innerText=subDomRate;
+		
+	} 
+	</script>
+	<!-- <script>
 	$(document).ready(function() {
 		$("table td:nth-child(4)").each(function(index, element) {
 			$(element).attr("data-title",$(element).attr("data-title").replaceAll('&amp;', '\n'));
@@ -331,7 +372,7 @@ td {
 	
 	$("#yourDivId span").mouseenter(function(){$(this).show()}); 
 		
-	</script>
+	</script> -->
 </body>
 
 </html>

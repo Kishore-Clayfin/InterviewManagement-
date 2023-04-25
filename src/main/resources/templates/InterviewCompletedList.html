@@ -26,7 +26,11 @@
 	href="https://cdn.datatables.net/searchbuilder/1.4.0/css/searchBuilder.dataTables.min.css">
 <link rel="stylesheet"
 	href="https://cdn.datatables.net/datetime/1.2.0/css/dataTables.dateTime.min.css">
-
+<!-- added for  model starts-->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<!--  model ends -->
 <script>
 	$(document).ready(function() {
 		$('#Table').DataTable({
@@ -39,7 +43,11 @@
 </script>
 
 <!--Search builder code ends--> 
-
+<!-- added for  model starts-->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<!--  model ends -->
 
 <!-- <script
 	src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
@@ -134,6 +142,82 @@ td {
                                   
             visibility: hidden;
         }
+        
+        /* Button used to open the contact form - fixed at the bottom of the page */
+.open-button {
+  background-color: #555;
+  color: white;
+  padding: 16px 20px;
+  border: none;
+  cursor: pointer;
+  opacity: 0.8;
+  position: fixed;
+  bottom: 23px;
+  right: 28px;
+  width: 280px;
+}
+
+/* The popup form - hidden by default */
+.form-popup {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  right: 15px;
+  border: 3px solid #f1f1f1;
+  z-index: 9;
+}
+
+/* Add styles to the form container */
+.form-container {
+  max-width: 300px;
+  padding: 10px;
+  background-color: white;
+}
+
+/* Full-width input fields */
+.form-container input[type=text], .form-container input[type=password] {
+  width: 100%;
+  padding: 15px;
+  margin: 5px 0 22px 0;
+  border: none;
+  background: #f1f1f1;
+}
+
+/* When the inputs get focus, do something */
+.form-container input[type=text]:focus, .form-container input[type=password]:focus {
+  background-color: #ddd;
+  outline: none;
+}
+
+/* Set a style for the submit/login button */
+.form-container .btn {
+  background-color: #04AA6D;
+  color: white;
+  padding: 16px 20px;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  margin-bottom:10px;
+  opacity: 0.8;
+}
+.filter {
+	position: absolute;
+	border: solid 1px;
+	top: 20px;
+	background-color: white;
+	width: 100px;
+	right: 0;
+	display: none;
+}
+/* Add a red background color to the cancel button */
+.form-container .cancel {
+  background-color: red;
+}
+
+/* Add some hover effects to buttons */
+.form-container .btn:hover, .open-button:hover {
+  opacity: 1;
+}
 </style>
 
 <script
@@ -174,6 +258,7 @@ td {
 						<th>Overall Rating</th>
 						<th>Feedback</th>
 						<th>Interviewer Status</th>
+						<th>HRHead Status<div class="filter"></div></th>
 						<th>Domain Name</th>
 						<th>Sub Category Ratings</th>
 						<th>Schedule For</th>
@@ -191,8 +276,63 @@ td {
 								th:text="${oneDoc.getCandidateName()}"> </span>
 						</span></td>
 						
-						<td><span th:each="oneDoc:${Feedback.candidate}"> <span
-								th:text="${oneDoc.getExpectedCtc()}"> </span>
+						<td>
+						<!-- <div th:each="oneDoc:${Feedback.candidate}">
+						<div class="form-popup" id="myForm">
+  <form th:action="@{/addEctc}" id="basic-form" method="post"
+					th:object="${candidate}">
+    <h1>ECTC</h1>
+
+    <label for="email"><b>Email</b></label>
+    <input type="text" th:field="*{expectedCtc}" required placeholder="Enter Ectc" name="email" required>
+    <button type="submit" class="btn btn-success ml-2">save</button>
+    <button type="button" class="btn btn-danger ml-2" onclick="closeForm()">Close</button>
+  </form>
+</div>
+</div> -->
+
+						<span th:each="oneDoc:${Feedback.candidate}"> <span th:if="${oneDoc.getExperience()>0&&oneDoc.getExpectedCtc()!=0.0&&oneDoc.getExpectedCtc()!=null}"
+								th:text="${oneDoc.getExpectedCtc()}">  </span>
+								<span th:if="${oneDoc.getExperience()==0&&oneDoc.getExpectedCtc()==0.0||oneDoc.getExpectedCtc()==null}"
+								th:text="${oneDoc.getExpectedCtc()}">  </span>
+								<span th:if="${oneDoc.getExperience()>0&&oneDoc.getExpectedCtc()==0.0||oneDoc.getExpectedCtc()==null}"> 
+								<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-body">
+          <form  id="basic-form" method="post"
+				class="form-container"	th:object="${candidate}">
+<span id="sp"></span>
+    <label for="email"><b>Enter Ectc</b></label>
+    <input type="text" th:field="*{expectedCtc}" placeholder="Enter Ectc" name="email" required>
+    <button type="submit" class="btn btn-success ml-2">save</button>
+  </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      </div>
+      </div>
+								<!-- <div class="form-popup" id="myForm">
+								
+  <form th:action="@{/addEctc(candidateId=${oneDoc.getCandidateId()})}" id="basic-form" method="post"
+				class="form-container"	th:object="${candidate}">
+    <h1>ECTC</h1>
+<span th:text="${oneDoc.getCandidateId()}"></span>
+    <label for="email"><b>Enter Ectc</b></label>
+    <input type="text" th:field="*{expectedCtc}" placeholder="Enter Ectc" name="email" required>
+    <button type="submit" class="btn btn-success ml-2">save</button>
+    <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
+  </form>
+</div> -->
+<!-- Modal -->
+  
+								<!-- <button class="btn btn-info ml-2" onclick="openForm()">Ectc</button> -->
+								<button type="button" th:attr="onclick=|upload('${oneDoc.getCandidateId()}')|"  class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">ectc</button>
+								</span>
 						</span></td>
 						
 						<td th:text="${Feedback.rating}" />
@@ -200,7 +340,7 @@ td {
 						<td th:text="${Feedback.feed_back}" />
 						
 						<td th:text="${Feedback.interviewerFbStatus}" />
-						
+						<td th:text="${Feedback.hrFbStatus}" />
 						<td><span th:each="oneDoc:${Feedback.candidate}"> <span
 								th:text="${oneDoc.domain.getDomainName()}"> </span>
 						</span></td>
@@ -212,12 +352,12 @@ td {
 							class="btn btn-success ml-2">HrRound</a> <a
 							th:href="@{/addschedule2(candidateId=${Feedback.candidate.getCandidateId()},status=nextTechnicalRound)} "
 							class="btn btn-primary ml-2">NextLevel</a>
-							<span th:if="${Feedback.candidate.getExperience()} > 0.0">
+							<!-- <span th:if="${Feedback.candidate.getExperience()} > 0.0">
 							<a 
 						
 							th:href="@{/updateExpectedCtc(candidateId=${Feedback.candidate.getCandidateId()})} "
 							class="btn btn-success ml-2">ExpectedCtc</a>
-							</span>
+							</span> -->
 							</td>
 							
 					</tr>
@@ -226,6 +366,22 @@ td {
 		</div>
 		<br> <br> <a th:href="@{/home}" class="btn btn-danger ml-2">Home</a>
 	</div>
+	<script type="text/javascript">
+	function upload(id){
+		var url='addEctc'+'?'+'candidateId='+id;
+		 document.getElementById('basic-form').action = url;
+		 document.getElementById('sp').value=id;
+	} 
+	</script>
+	<!-- <script>
+function openForm() {
+  document.getElementsByClassName("form-popup").style.display = "block";
+}
+
+function closeForm() {
+  document.getElementsByClassName("form-popup").style.display = "none";
+}
+</script> -->
 <script>
 /* var replacementRegexp = " "; */
 $(document).ready(function(){
@@ -252,7 +408,7 @@ $("table td:nth-child(6)").each(function(index, element) {
 
 });
 $(document).ready(function(){
-	$("table td:nth-child(8)").each(
+	$("table td:nth-child(9)").each(
 
 	function(index, element) {
 		var title1=$(".zoom").attr(("data-title"));

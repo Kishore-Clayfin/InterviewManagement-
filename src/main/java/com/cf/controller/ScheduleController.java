@@ -408,7 +408,7 @@ System.out.println("Checkuu"+status);
 			LocalTime tempTime = LocalTime.parse(temp);
 		}
 
-		return "redirect:/showInterviewCompleted";
+		return "redirect:/viewschedules";
 	}
 
 	@GetMapping({ "/viewschedules" })
@@ -485,7 +485,8 @@ System.out.println("<----------------------view Schedule entered----------------
 		}
 
 		Schedule schedule = ischeduleService.updateSchedule(scheduleId);
-		List<Candidate> Candidate = icandidateService.viewCandidateList();
+		List<Candidate> Candidate = schedule.getCandidate();
+//		List<Candidate> Candidate = icandidateService.viewCandidateList();
 		List<User> user = iUserService.viewUserList();
 
 		List<User> list = user.stream().filter(c -> c.getRole().equalsIgnoreCase("interviewer"))
@@ -551,7 +552,10 @@ System.out.println("<----------------------view Schedule entered----------------
 		}
 
 		ModelAndView mav = new ModelAndView("InterviewCompletedList");
+		
+		Candidate candidate=new Candidate();
 		mav.addObject("feedback", iFeedbackService.viewFeedbackList());
+		mav.addObject("candidate", candidate);
 		return mav;
 
 	}

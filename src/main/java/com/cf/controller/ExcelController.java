@@ -1,6 +1,7 @@
 package com.cf.controller;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -68,7 +69,7 @@ public class ExcelController {
 				e.printStackTrace();
 			}
 		}
-
+		LocalDate today=LocalDate.now();
 		User user = (User) session.getAttribute("loginDetails");
 		int count = 0;
 		List<Candidate> tempStudentList = new ArrayList<Candidate>();
@@ -82,6 +83,7 @@ public class ExcelController {
 				Candidate candidate = new Candidate();
 				candidate.setUser(user);
 				candidate.setStatus("ResumeShortlisted");
+				candidate.setCreatedAt(today);
 				int i = 0;
 				if (count == 0) {
 					rowIterator.next();

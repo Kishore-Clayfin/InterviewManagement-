@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -34,6 +35,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.view.RedirectView;
 
 import com.cf.model.Candidate;
 import com.cf.model.Domain;
@@ -208,6 +210,8 @@ try {
 		System.out.println("firebaseUploadStarts");
 		//candidate.setDownloadUrl(download);
 //		System.out.println(download);
+		LocalDate today=LocalDate.now();
+		candidate.setCreatedAt(today);
 		if(candidate.getCandidateId()!=null)
 		iCandidateService.saveCandidate(candidate);
 		else 
@@ -248,12 +252,12 @@ try {
 			
 		}
 		
-		iCandidateService.saveCandidate(candidate);
+//		iCandidateService.saveCandidate(candidate);
 		return "redirect:/viewCandidates";
 	}
 	
 	@PostMapping("/deleteCandidateByIds")
-	public String deleteCandidateByIds(@RequestBody List<Integer> list1, HttpSession session, HttpServletResponse redirect) {
+	public void deleteCandidateByIds(@RequestBody List<Integer> list1, HttpSession session, HttpServletResponse redirect) {
 		if (LoginController.checkUser == null) {
 			try {
 				redirect.sendRedirect("/login");
@@ -272,7 +276,13 @@ try {
 			}
 		}
 		iCandidateService.deleteAllCandidates(list1);
-		return "redirect:/viewCandidates";
+//		RedirectView redirectView = new RedirectView();
+//	    redirectView.setUrl("/viewCandidates");
+//	    return redirectView;
+//		ModelAndView mav = new ModelAndView("candidateList");
+//		mav.addObject("candidate", iCandidateService.viewCandidateList());
+//		return mav;
+//		return "redirect:/viewCandidates";
 
 	}
 	
@@ -519,6 +529,39 @@ try {
     System.out.println("updated candidate"+dummy);
 		return "redirect:/showInterviewCompleted";
 	}
+	
+	@PostMapping("/addEctc")
+	public String addEctc(@ModelAttribute Candidate candidate, @RequestParam Integer candidateId,HttpSession session, RedirectAttributes attributes,
+			HttpServletResponse redirect) throws IOException {
+
+		if (LoginController.checkUser == null) {
+			try {
+				redirect.sendRedirect("/login");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+		User checkUser = (User) session.getAttribute("loginDetails");
+		if (!checkUser.getRole().equals("hr")) {
+			try {
+				redirect.sendRedirect("/login");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		System.out.println("candidate from model and view"+candidate.getExpectedCtc());
+      Candidate candidate1=iCandidateService.updateCandidate(candidateId);
+      System.out.println("candidate from jpa repo"+candidate1);
+      candidate1.setExpectedCtc(candidate.getExpectedCtc());
+      System.out.println("candidate after setting expected ctc"+candidate1.getExpectedCtc());
+    Candidate dummy= iCandidateDao.save(candidate1);
+    System.out.println("updated candidate"+dummy);
+		return "redirect:/showInterviewCompleted";
+	}
 
 	@Transactional
 	@GetMapping("/updateStatus")
@@ -592,6 +635,7 @@ try {
 		}
 
 		iCandidateService.deleteCandidate(candidateId);
+		
 		return "redirect:/viewCandidates";
 	}
 

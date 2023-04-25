@@ -1,6 +1,7 @@
 package com.cf.model;
 
 import java.sql.Blob;
+import java.time.LocalDate;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -20,6 +21,7 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.Length;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -88,7 +90,8 @@ public class Candidate
 	@JoinColumn(name = "domainId")
 	@OneToOne
 	private Domain domain;
-
+	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+	private LocalDate createdAt;
 	@Override
 	public String toString() {
 		return "Candidate [candidateId=" + candidateId + ", candidateName=" + candidateName + ", email=" + email

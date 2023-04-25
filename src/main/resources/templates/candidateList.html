@@ -17,7 +17,9 @@
 	href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
 	integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l"
 	crossorigin="anonymous" /> -->
-
+	<!--added for drop down  -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <!--Search builder code starts-->
 
 
@@ -93,9 +95,9 @@ td {
   padding: 2px 4px;
   cursor: pointer;
 }
- input[type="file"] {
+/*  input[type="file"] {
    width:220px;
-} 
+} */ 
 .resumeBlock{
 
 justify-content: center;
@@ -104,6 +106,13 @@ justify-content: center;
 display:flex;
 text-align: center; 
 
+}
+.modelsp{
+font-size: 20.8px;
+font-weight: bold;
+}
+.modelSpanClass{
+font-size: 20.8px;
 }
 </style>
 
@@ -127,6 +136,69 @@ text-align: center;
 			</div>
 		</div>
 	</nav>
+					<div class="modal fade" id="myModal1" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content" style="font-size: larger;">
+        <div class="modal-body">
+        <div class="modal-header">
+        <h5 class="modal-title"><strong>Resume Upload :</strong><span id="uploadForName"></span></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+          <form class="resumeBlock"id="basic-form" method="post"
+					th:object="${candidate}" enctype='multipart/form-data'>
+		<input type="file" class="form-control" name="file" autofocus="autofocus" required/>
+		<br>
+					 <button type="submit" id="fileUpload"class="btn btn-dark">upload</button>
+					 </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      </div>
+      </div>
+	
+	<div style ='padding:80px' class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">     
+      
+      <!-- Modal content for additional information-->
+      <div class="modal-content">
+      <div class="modal-header">
+     <h1 class="modal-title">Additional Info</h1>
+      </div>
+        <div style='font-family: cambria, sans-serif'class="modal-body">
+       <!--  <span class="modelsp">Candidate Id:</span><span class ="modelSpanClass"id="modelspanId"> </span><br>
+            <span class="modelsp">Name :</span><span class ="modelSpanClass" id="modelspanName"> </span><br>
+             <span class="modelsp">Email:</span><span class ="modelSpanClass" id="modelspanEmail"> </span><br>
+             <span class="modelsp">Mobile:</span><span class ="modelSpanClass" id="modelspanMobile"> </span><br>
+             <span class="modelsp">Qualification:</span><span class ="modelSpanClass" id="modelspanQualification"> </span><br>
+              <span class="modelsp">cgpa:</span><span class ="modelSpanClass" id="cgpaId"> </span><br>
+              <span class="modelsp">Role:</span><span class ="modelSpanClass" id="modelspanRole"> </span><br>
+           <span class="modelsp">Experience :</span><span class ="modelSpanClass"id="modelspanExperience"> </span><br>
+            
+            <span class="modelsp">Other Mobile Number :</span><span class ="modelSpanClass"id="othMobileNumber"> </span><br> -->
+             <span class="modelsp">Candidate Id:</span><span class ="modelSpanClass" id="spanId"> </span><br>
+            <span class="modelsp">Name :</span><span class ="modelSpanClass"id="spanName"> </span><br>
+            <span class="modelsp">Other EmailId :</span><span class ="modelSpanClass" id="othEmailId"> </span><br>
+            <span class="modelsp">Other Mobile Number :</span><span class ="modelSpanClass"id="othMobileNumber"> </span><br>
+             <span class="modelsp">CTC:</span><span class ="modelSpanClass" id="ctcId"> </span><br>
+             <span class="modelsp">ECTC:</span><span class ="modelSpanClass" id="ectcId"> </span><br>
+             <!-- <span class="modelsp">Other Mobile Number :</span><span class ="modelSpanClass"id="othMobileNumber"> </span><br> -->
+             <!-- <span class="modelsp">status:</span><span class ="modelSpanClass"id="modelspanStatus"> </span><br> -->
+             <span class="modelsp">Created By :</span><span class ="modelSpanClass" id="createdBy"> </span><br>
+          <!--   <span class="modelsp">Domain :</span><span class ="modelSpanClass"id="modelspanDomain"> </span><br> -->
+             
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      </div>
+      </div>
 	<br>
 	<br>
 	<br>
@@ -148,15 +220,15 @@ text-align: center;
 					<th>EmailId</th>
 					<th>Mobile Number</th>
 					<th>Qualification</th>
-					<th>Cgpa</th>
+					<th hidden='true'>Cgpa</th>
 					<th>Role</th>
-					<th>Other EmailId</th>
+					<th hidden='true'>Other EmailId</th>
 					<th>Experience</th>
-					<th>CTC</th>
-					<th>ECTC</th>
-					<th>Other Mobile Number</th>
+					<th hidden='true'>CTC</th>
+					<th hidden='true'>ECTC</th>
+					<th hidden='true'>Other Mobile Number</th>
 					<th>Status</th>
-					<th>Created By</th>
+					<th hidden='true'>Created By</th>
 					<th>Domain</th>
 					<th>Resume</th>
 					<th>Actions</th>
@@ -164,22 +236,21 @@ text-align: center;
 			</thead>
 			<tbody>
 				<tr th:each="candidate : ${candidate}">
-
 					<td class="customerIDCell"><input type="checkbox" class="checkBoxClass"
 						th:value="${candidate.getCandidateId}"></td>
 					<td class="customerIDCell"th:text="${candidate.candidateName}" />
 					<td class="customerIDCell"th:text="${candidate.email}" />
 					<td class="customerIDCell"th:text="${candidate.mobileNumber}" />
 					<td class="customerIDCell"th:text="${candidate.highQualification}" />
-			 		<td class="customerIDCell"th:text="${candidate.cgpa}" />
+			 		<td class="customerIDCell"th:text="${candidate.cgpa}" hidden='true'/>
 					<td class="customerIDCell"th:text="${candidate.roleAppliedFor}" />
-					<td class="customerIDCell"th:text="${candidate.alternateEmail}" />
+					<td class="customerIDCell"th:text="${candidate.alternateEmail}" hidden='true'/>
 					<td class="customerIDCell"th:text="${candidate.experience}" />
-					<td class="customerIDCell" style="white-space: nowrap;" th:text="${candidate.currentCtc} +' LPA'" />
-					<td class="customerIDCell" style="white-space: nowrap;" id="expectedCtcLength"th:text="${candidate.expectedCtc}+' LPA'" />
-					<td class="customerIDCell" th:text="${candidate.alternateMobileNumber}" />
+					<td class="customerIDCell" style="white-space: nowrap;" th:text="${candidate.currentCtc} +' LPA'" hidden='true' />
+					<td class="customerIDCell" style="white-space: nowrap;" id="expectedCtcLength"th:text="${candidate.expectedCtc}+' LPA'" hidden='true' />
+					<td class="customerIDCell" th:text="${candidate.alternateMobileNumber}" hidden='true'/>
 					<td class="customerIDCell" th:text="${candidate.status}" />
-					<td class="customerIDCell"th:text="${candidate.user.getUsername()}" />
+					<td class="customerIDCell"th:text="${candidate.user.getUsername()}" hidden='true'/>
 					<td class="customerIDCell" th:text="${candidate.domain.domainName}" />
 					
 					<td class="customerIDCell">
@@ -195,26 +266,27 @@ text-align: center;
 						
 					</div>
 					<div class="resumeBlock" th:if="${candidate.resumeName == null}">
+					<button type="button" class="btn btn-info btn-sm" data-toggle="modal" th:attr="onclick=|uploadResume('${candidate.candidateId}','${candidate.candidateName}','${candidate.cgpa}')|" data-target="#myModal1">resume</button>
 					<!-- <span>No Resume</span> -->
-					<form class="resumeBlock"th:action="@{/uploadOrEditResume(candidateId=${candidate.candidateId})}" id="basic-form" method="post"
-					th:object="${candidate}" enctype='multipart/form-data'>
+					<!-- <form class="resumeBlock"th:action="@{/uploadOrEditResume(candidateId=${candidate.candidateId})}" id="basic-form" method="post"
+					th:object="${candidate}" enctype='multipart/form-data'> -->
 					<!-- <label for="file-upload" class="custom-file-upload">
                      <i class="fa fa-cloud-upload"></i> Upload Image 
                      <input id="file-upload" name='upload_cont_img' type="file" style="display:none;">
                       </label>-->
                    
   <!-- <input id="file-upload" name='upload_cont_img' type="file">&nbsp; -->
-<input
+<!-- <input
 							type="file" id="role" class="form-control" name="file" 
-							autofocus="autofocus" required/>
+							autofocus="autofocus" required/> -->
 			<!-- <input
 							type="file" id="role" class="form-control" name="file" 
 							/>
 							<input type ="file"id="role" class="form-control">
 							<label for="role" id="labelResume"class="custom-file-upload">Browse</label>
 							<span id="spanRes"></span>-->
-					 <button type="submit" id="fileUpload"class="btn btn-dark">upload</button>
-					 </form>
+					 <!-- <button type="submit" id="fileUpload"class="btn btn-dark">upload</button>
+					 </form> -->
 <!-- <button type="submit" class="btn btn-success">upload</button>
                        <input type="file" class="form-control-file">
                        
@@ -254,7 +326,11 @@ text-align: center;
 						th:href="@{/showUpdateCandidate(candidateId=${candidate.candidateId})}"
 						class="btn btn-info">Edit</a> <a
 						th:href="@{/deleteCandidate(candidateId=${candidate.candidateId})}"
-						class="btn btn-danger ml-2">Delete</a>
+						class="btn btn-danger ml-2">Delete</a>&nbsp;
+<!-- <button type="button" th:attr="onclick=|upload('${candidate.alternateMobileNumber}',\'' + ${candidate.alternateEmail}+ '\',\''+ ${candidate.user.Username} + '\')|" class="btn btn-info btn-sm"
+ data-toggle="modal" data-target="#myModal" > -->
+ <button data-toggle="modal" th:attr="onclick=|upload('${candidate.candidateId}','${candidate.candidateName}','${candidate.alternateMobileNumber}','${candidate.alternateEmail}','${candidate.user.getUsername()}','${candidate.currentCtc}','${candidate.expectedCtc}')|" class="btn btn-info btn-sm" data-target="#myModal" >
+more</button>&nbsp;
   <div th:if="${candidate.status=='FirstTechnicalSelected'||candidate.status=='ThirdTechnicalSelected'||candidate.status=='SecondTechnicalSelected'||candidate.status=='FourthTechnicalSelected'}" class="dropdown">
     <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Schedule</button>
     <ul class="dropdown-menu">
@@ -274,8 +350,46 @@ text-align: center;
 			href="javascript:delay('/addschedule')">Schedule</a>&nbsp;
 			<a
 			id="delete_value" class="btn btn-danger"
-			href="javascript:delay('/deleteCandidateByIds')">Delete</a>
+			href="javascript:delay1('/viewCandidates')">Delete</a>
 		</div>
+	<script type="text/javascript">
+	function uploadResume(id,name){
+		
+		var url='uploadOrEditResume'+'?'+'candidateId='+id;
+		 document.getElementById('uploadForName').innerText=name;
+		 document.getElementById('basic-form').action = url;
+	} 
+	</script>
+		<script type="text/javascript">
+	function upload(id,name,otherMobileNo,otherEmailId,createdBy,ctc,ectc,cgpa){
+		//console.log(altMobileNumber+altEmailId+createdBy)
+		 console.log("obj"+otherMobileNo);
+	//	console.log(emailId)
+		console.log("data type"+typeof candidate);
+		//const can=JSON.parse(JSON.stringify(candidate));
+		//console.log("data type"+typeof can);
+	//var url='addEctc'+'?'+'candidateId='+id;
+		/* document.getElementById('"modelspanId"').innerText =candidateId;
+		// console.log("alt"+candidate["alternateMobileNumber"]);
+		 document.getElementById('modelspanName').innerText=candiName;
+		 document.getElementById('modelspanEmail').innerText=email;
+		 document.getElementById('"modelspanMobile"').innerText =mobileNumber;
+			 document.getElementById('modelspanQualification').innerText=qualification;
+			 document.getElementById('modelspanEmail').innerText=email;
+		 document.getElementById('ctcId').innerText=ctc+'LPA';
+		 document.getElementById('ectcId').innerText=ectc+'LPA';
+		 document.getElementById('cgpaId').innerText=cgpa; */
+		 document.getElementById('spanId').innerText=id;
+		 document.getElementById('spanName').innerText=name;
+		 document.getElementById('othMobileNumber').innerText =otherMobileNo;
+		// console.log("alt"+candidate["alternateMobileNumber"]);
+		 document.getElementById('othEmailId').innerText=otherEmailId;
+		 document.getElementById('createdBy').innerText=createdBy;
+		 document.getElementById('ctcId').innerText=ctc+'LPA';
+		 document.getElementById('ectcId').innerText=ectc+'LPA';
+		 document.getElementById('cgpaId').innerText=cgpa;
+	} 
+	</script>
 <script>
 		$(function() {
 			$('#save_value').click(function() {
@@ -360,7 +474,7 @@ text-align: center;
 
 		});
 	</script>
-	<script type="text/javascript">
+	<!-- <script type="text/javascript">
 	window.onload =   function setup() {
             	document.getElementById('buttonid').addEventListener('click', openDialog);
 
@@ -376,7 +490,7 @@ text-align: center;
                     document.getElementById('formid').submit();
                 } */
             }
-        </script> 
+        </script>  -->
 	<!-- <script type="text/javascript">
     $(document).ready(
 function(){
@@ -498,6 +612,11 @@ window.onload = function () {
 			setTimeout(function() {
 				window.location = URL
 			}, 2000);
+		}
+		function delay1(URL) {
+			setTimeout(function() {
+				window.location = URL
+			}, 500);
 		}
 		
 	</script>

@@ -253,15 +253,12 @@ td {
 				<thead>
 					<tr>
 						<th>Candidate Id</th>
-						<th>Candidate Name</th>					
+						<th>Candidate Name</th>
+						<th>ECTC</th>
 						<th>Overall Rating</th>
 						<th>Feedback</th>
 						<th>Interviewer Status</th>
-<<<<<<< HEAD
 						<th>HRHead Status<div class="filter"></div></th>
-=======
-						<th>HRHead Status</th>
->>>>>>> branch 'child-1' of https://github.com/Kishore-Clayfin/InterviewManagement-.git
 						<th>Domain Name</th>
 						<th>Sub Category Ratings</th>
 						<th>Schedule For</th>
@@ -279,7 +276,6 @@ td {
 								th:text="${oneDoc.getCandidateName()}"> </span>
 						</span></td>
 						
-<<<<<<< HEAD
 						<td>
 						<!-- <div th:each="oneDoc:${Feedback.candidate}">
 						<div class="form-popup" id="myForm">
@@ -338,25 +334,13 @@ td {
 								<button type="button" th:attr="onclick=|upload('${oneDoc.getCandidateId()}')|"  class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">ectc</button>
 								</span>
 						</span></td>
-=======
-						<!-- <td><span th:each="oneDoc:${Feedback.candidate}"> <span
-								th:text="${oneDoc.getExpectedCtc()}"> </span>
-						</span></td> -->
->>>>>>> branch 'child-1' of https://github.com/Kishore-Clayfin/InterviewManagement-.git
 						
 						<td th:text="${Feedback.rating}" />
 						
-						<td style="white-space: nowrap;" th:text="${Feedback.feed_back}" />
+						<td th:text="${Feedback.feed_back}" />
 						
-<<<<<<< HEAD
 						<td th:text="${Feedback.interviewerFbStatus}" />
 						<td th:text="${Feedback.hrFbStatus}" />
-=======
-						<td style="white-space: nowrap;" th:text="${Feedback.interviewerFbStatus}" />
-						
-						<td th:text="${Feedback.hrFbStatus}" />
-						
->>>>>>> branch 'child-1' of https://github.com/Kishore-Clayfin/InterviewManagement-.git
 						<td><span th:each="oneDoc:${Feedback.candidate}"> <span
 								th:text="${oneDoc.domain.getDomainName()}"> </span>
 						</span></td>
@@ -401,20 +385,20 @@ function closeForm() {
 <script>
 /* var replacementRegexp = " "; */
 $(document).ready(function(){
-$("table td:nth-child(4)").each(
+$("table td:nth-child(5)").each(
 
 function(index, element) {
 	console.log(index+'  00')
 	console.log($(element).text())
-    $(element).html($(element).html().replaceAll('&amp;','<br>'));
+    $(element).html($(element).html().replaceAll('&amp;','<br><br>'));
 	$(element).html($(element).html().replace('First-Interviewer:','<strong>First-Interviewer:</strong>'));
 	$(element).html($(element).html().replace('Second-Interviewer:','<strong>Second-Interviewer:</strong>'));
 	$(element).html($(element).html().replace('Third-Interviewer:','<strong>Third-Interviewer:</strong>'));
 	$(element).html($(element).html().replace('Fourth-Interviewer:','<strong>Fourth-Interviewer:</strong>'));
 	$(element).html($(element).html().replace('HrHead-Feedback:','<strong>HrHead-Feedback:</strong>'));
 });
-$("table td:nth-child(5)").each(function(index, element) {
-	$(element).html($(element).html().replaceAll('&amp;', '<br>'));
+$("table td:nth-child(6)").each(function(index, element) {
+	$(element).html($(element).html().replaceAll('&amp;', '<br><br>'));
 	$(element).html($(element).html().replace('First-Interviewer:', '<strong>First-Interviewer:</strong>'));
 	$(element).html($(element).html().replace('Second-Interviewer:', '<strong>Second-Interviewer:</strong>'));
 	$(element).html($(element).html().replace('Fourth-Interviewer:', '<strong>Fourth-Interviewer:</strong>'));

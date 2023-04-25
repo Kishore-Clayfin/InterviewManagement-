@@ -138,9 +138,8 @@ try {
 
 		boolean b = result.hasErrors();
 		System.err.println(b);
-		String name=null;
-		if(!file.isEmpty())			
-		 name = file.getOriginalFilename();
+
+		String name = file.getOriginalFilename();
 		
 		System.err.println("hiiiiiii" + name);
 
@@ -157,12 +156,10 @@ try {
 		mob = candidate.getMobileNumber().toString();
 
 		boolean mobv = Pattern.matches("^[9876]\\d{9}$", mob);
-		System.out.println("*******************" + iCandidateService.existsCandidateByEmail(candidate.getEmail()));
-		if(iCandidateService.existsCandidateByEmail(candidate.getEmail())) {
+		if(!iCandidateService.existsCandidateByEmail(candidate.getEmail())) {
 			attributes.addAttribute("uniqueEmail", "The entered Email already exist");
 			return "redirect:/addCandidate";
 		}
-		System.out.println("it is entering here");
 		if (!mobv == true) {
 			attributes.addAttribute("numberError", "Please enter a valid mobile number");
 			return "redirect:/addCandidate";

@@ -1,7 +1,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-<title>Users LIST</title>
+<title>User List</title>
 
 <link rel="stylesheet" type="text/css"
 	href="https://cdn.datatables.net/v/bs4/dt-1.10.25/datatables.min.css" />
@@ -80,12 +80,12 @@ td {
 
 <body class="image">
 	<nav class="navbar navbar-inverse navbar-fixed-top"
-		style="background-color: black;">
+		style="background-color: black;padding:5px">
 		<div class="container">
 			<div class="navbar-header">
 				<button id="back" onclick="history.back()">&laquo;</button>
-				<a class="navbar-brand"style="margin-left:-250;" id="anchor" th:href="@{/home}">
-					Home</a> <a class="navbar-brand"style="margin-left:1400;" id="anchor" th:href="@{/logout}">Logout
+				<a class="navbar-brand"style="margin-left:-250;color: white;"  th:href="@{/home}">
+					<b>Home</b></a> <a class="navbar-brand"style="margin-left:1400;color: white;"  th:href="@{/logout}"><b>Logout</b>
 				</a>
 
 
@@ -107,7 +107,6 @@ td {
 			<thead>
 				<tr>
 					<th>User Name</th>
-					<th>Password</th>
 					<th>Role</th>
 					<th>EmailId</th>
 					<th>Mobile Number</th>
@@ -120,7 +119,6 @@ td {
 			<tbody>
 				<tr th:each="user : ${user}">
 					<td th:text="${user.username}" />
-					<td th:text="${user.password}" />
 					<td th:text="${user.role}" />
 					<td th:text="${user.email}" />
 
@@ -147,7 +145,7 @@ td {
 			</tbody>
 
 		</table>
-		<a th:href="@{/home}" class="btn btn-danger ml-2">Home</a>
+		<!-- <a th:href="@{/home}" class="btn btn-danger ml-2">Home</a> -->
 	</div>
 
 

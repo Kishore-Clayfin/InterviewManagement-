@@ -6,7 +6,42 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+	integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+	crossorigin="anonymous">
 <!--  model ends -->
+<!--Search builder code starts-->
+<link rel="stylesheet" type="text/css"
+	href="https://cdn.datatables.net/v/bs4/dt-1.10.25/datatables.min.css" />
+
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script
+	src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+<script
+	src="https://cdn.datatables.net/searchbuilder/1.4.0/js/dataTables.searchBuilder.min.js"></script>
+<script
+	src="https://cdn.datatables.net/datetime/1.2.0/js/dataTables.dateTime.min.js"></script>
+<link rel="stylesheet"
+	href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css">
+<link rel="stylesheet"
+	href="https://cdn.datatables.net/searchbuilder/1.4.0/css/searchBuilder.dataTables.min.css">
+<link rel="stylesheet"
+	href="https://cdn.datatables.net/datetime/1.2.0/css/dataTables.dateTime.min.css">
+
+<script>
+	$(document).ready(function() {
+		$('#table').DataTable({
+			dom : 'Qlfrtip',
+			searchBuilder : {
+				columns : [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14 ]
+			}
+		});
+	});
+</script>
+
+<!--Search builder code ends-->
+
 <style>
 #back 
 {
@@ -117,13 +152,13 @@ td {
 
 <body class="image">
 	<nav class="navbar navbar-inverse navbar-sticky-top"
-		style="background-color: black;padding:0.5rem 100rem;">
+		style="background-color: black;padding:0.5rem 20rem;">
 		<div class="container">
 			<div class="navbar-header">
 				<button id="back" onclick="history.back()">&laquo;</button>
 				<a class="navbar-brand" id="anchor"
-					style="color: white; margin-left:-1518px;" th:href="@{/home}">Home</a>
-				<a class="navbar-brand" id="anchor" style="margin-left: 2937px;"
+					style="color: white; margin-left:-300px;" th:href="@{/home}">Home</a>
+				<a class="navbar-brand" id="anchor" style="margin-left: 1409px;"
 					th:href="@{/logout}">Logout </a>
 
 
@@ -141,7 +176,7 @@ td {
     
       </div>
       
-			<h3>HISTORY LIST</h3>
+			<h1 >[[${title}]]</h1>
 
 			<hr />
 
@@ -158,8 +193,8 @@ td {
 					<th>Experience</th>
 					<th>Status</th>
 					<!-- <th>Domain</th> -->
-					<th>more</th>
-					<th>Feedbacks</th>
+					<th>Actions</th>
+				<!-- 	<th>Feedbacks</th> -->
 					</tr>
 				</thead>
 				<tbody>
@@ -172,10 +207,18 @@ td {
 							<td class="customerIDCell"th:text="${history.experience}" />
 							<td class="customerIDCell" th:text="${history.status}" />
 						<!-- 	<td class="customerIDCell" th:text="${history.domainName}"></td>	 -->
-							<td><button data-toggle="modal" th:attr="onclick=|upload('${history.candidateId}','${history.candidateName}','${history.alternateMobileNumber}','${history.alternateEmail}','${history.userName}','${history.currentCtc}','${history.expectedCtc}')|" class="btn btn-info btn-sm" data-target="#myModal" >
-more</button>  </td>
-							<td><button data-toggle="modal" th:attr="onclick=|uploadFeedback('${history.feedbackId}','${history.rating}','${history.feed_back}','${history.interviewerFbStatus}','${history.hrFbStatus}','${history.domainRatings}')|" class="btn btn-info btn-sm" data-target="#myModal1" >
-feedback</button>&nbsp;</td>
+							<td style="display:flex;"><button data-toggle="modal" th:attr="onclick=|upload('${history.candidateId}','${history.candidateName}','${history.alternateMobileNumber}','${history.alternateEmail}','${history.userName}','${history.currentCtc}','${history.expectedCtc}','${history.cgpa}')|" class="btn btn-warning btn-sm" data-target="#myModal" >
+more</button>&nbsp; <button data-toggle="modal" th:attr="onclick=|uploadFeedback('${history.feedbackId}','${history.rating}','${history.feed_back}','${history.interviewerFbStatus}','${history.hrFbStatus}','${history.domainRatings}')|" class="btn btn-info btn-sm" data-target="#myModal1" >
+feedback</button>&nbsp; 
+<div class="resumeMiddle"th:if= "${history.resumeName != null}">
+<a
+						th:href="@{/viewHistoryResume(historyId=${history.historyId})}"
+						class="btn btn-primary btn-sm"target="_blank">View &nbsp;<i class="fa fa-eye" style="font-size:15px;color:black;"></i></a>&nbsp;
+						<a
+						th:href="@{/downloadHistoryResume(historyId=${history.historyId})}"
+						class="btn btn-success btn-sm">Download &nbsp;<i class="fa fa-download" style="font-size:15px;color:black;"></i></a>
+						</div></td>
+							<!-- <td></td> -->
 						<!-- <td th:text="${history.rating}" />
 						<td th:data-title="${history.feed_back}">Feedback</td>
 						<td th:text="${history.interviewerFbStatus}">
@@ -198,9 +241,9 @@ feedback</button>&nbsp;</td>
 
 		</div>
 <div>
-		<a th:href="@{/generateAllPdfFile} " target="_blank"
-			class="btn btn-primary ml-2">PrintAll</a> <br> <br> <a
-			th:href="@{/home}" class="btn btn-danger ml-2">Home</a>
+		<a th:href="@{/generateAllPdfHistory} " target="_blank"
+			class="btn btn-primary ml-2">PrintAll</a> <!-- <br> <br> <a
+			th:href="@{/home}" class="btn btn-danger ml-2">Home</a> -->
 	</div>     
        <!-- Modal -->
   <div class="modal fade" id="myModal" role="dialog">
@@ -221,6 +264,7 @@ feedback</button>&nbsp;</td>
              <span class="modelsp">CTC:</span><span class ="modelSpanClass" id="ctcId"> </span><br>
              <span class="modelsp">ECTC:</span><span class ="modelSpanClass" id="ectcId"> </span><br>
              <span class="modelsp">Created By :</span><span class ="modelSpanClass" id="createdBy"> </span><br>
+             <span class="modelsp">Cgpa :</span><span class ="modelSpanClass" id="cgpaId"> </span><br>
         </div>
         </div>
         <div class="modal-footer">
@@ -263,22 +307,30 @@ feedback</button>&nbsp;</td>
 
 		<script type="text/javascript">
 	function upload(id,name,otherMobileNo,otherEmailId,createdBy,ctc,ectc,cgpa){
-		 console.log("obj"+otherMobileNo);
-		
-		console.log("data type"+typeof candidate);
+		// console.log("obj"+otherMobileNo);
+		 //console.log("ectc+++++"+ectc)
+		 //console.log("ectc check"+ectc=='null')
+		 if(!ectc){
+			 console.log("eeeccctttccc");
+		 }else{
+			 ectc=0.0;
+			 console.log("inside else"+ectc)
+		 }
+		/* console.log("data type"+typeof candidate); */
 		 document.getElementById('spanId').innerText=id;
 		 document.getElementById('spanName').innerText=name;
 		 document.getElementById('othMobileNumber').innerText =otherMobileNo;
 		 document.getElementById('othEmailId').innerText=otherEmailId;
 		 document.getElementById('createdBy').innerText=createdBy;
 		 document.getElementById('ctcId').innerText=ctc+'LPA';
-		 document.getElementById('ectcId').innerText=0+'LPA';
+		 document.getElementById('ectcId').innerText=ectc+'LPA';
 		 document.getElementById('cgpaId').innerText=cgpa;
 	} 
 	function uploadFeedback(id,rating,feedback,interviewerStatus,hrHeadStatus,subDomainRatings){
 		console.log("fffffffffffffeedback Model")
 		 console.log("obj"+id);
 		console.log("data type"+typeof candidate);
+		
 		var hrStatus;
 		if(hrHeadStatus===null){
 			hrStatus='None';

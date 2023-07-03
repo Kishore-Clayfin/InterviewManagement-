@@ -6,13 +6,19 @@
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
 	integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
 	crossorigin="anonymous">
+ <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+<!--added for home and logout button styling-->
+ <link rel="stylesheet" th:href="@{/css/Navbar.css}" />
+ <!-- ends -->
 
-<link rel="stylesheet" type="text/css" th:href="@{~/css/home.css}">
-
-<script
-	src="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/choices.min.js"></script>
-
-<style type="text/css">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script> -->
+  <style>
+  .image {
+	background-image: url('/image/ListBackground.jpg');
+	background-repeat: no-repeat;
+	background-size: 3000px;
+}
 #back 
 {
 
@@ -27,160 +33,174 @@
     background: black;
     color: white;
 }
-
-h1 {
-	font-family: inherit;
-	font-weight: bold;
-	line-height: 6.1;
-	color: inherit;
-	padding-right: 331px;
-}
-
-label {
-	color: infobackground;
-}
-
-label.error {
-	color: red;
-	font-size: 1rem;
-	display: block;
-}
-
-h5 {
-	color: yellow;
-}
-
-body {
-	color: #fff;
-
- font-family: cambria , sans-serif;
-
-}
-
-#anchor {
-	padding-left: 400;
-	font-weight: bold;
-	color: white;
-}
-
 .openbutton {
-	background-color: lightskyblue;
-	color: black;
-	margin-top: -379px;
+    font-size: 22px;
+    cursor: pointer;
+    color: rgb(10, 6, 6);
+    padding: 14px 15px;
+    border: none;
+    margin-top: 55;
 }
-.upload-container {
-    position: relative;
-}
-.upload-container input {
-background:linear-gradient(45deg, black, transparent);
-    border: 1px solid #92b0b3;
-    background: #f1f1f1;
-    outline: 2px dashed #92b0b3;
-    outline-offset: -10px;
-    padding: 100px 0px 100px 250px;
-    text-align: center !important;
-    width: 500px;
-}
+ .dropzone {
  
-.upload-container input:hover {
-    background:linear-gradient(45deg, black, transparent);
+  border: 7px dashed;
+  border-color:grey;
+  border-radius: 5px;
+  padding: 200px;
+  text-align: center;
+  margin-left: 200px;
+  margin-right: 200px;
+  background-color: transparent;
 }
- 
-.upload-container:before {
-    position: absolute;
-    bottom: 50px;
-    left: 245px;
-    content: " (or) Drag and Drop files here. ";
-    color: #3f8188;
-    font-weight: 900;
+
+.dragover {
+  border-color: #1e87f0;
 }
- 
-.upload-btn {
-    margin-left: 300px;
-    padding: 7px 20px;
+
+.file-input-label {
+  padding: 10px 20px;
+  background-color: #f0f0f0;
+  cursor: pointer;
 }
-#file_upload{
- background:linear-gradient(35deg, black, transparent);
+
+.file-names-label {
+  display: flex;
+  margin-top: 20px;
+  margin-left: 200px;
+   font-size:large;
+}
+
+.file-names {
+  display: flex;
+  margin-top: 5px;
+  font-weight: bold;
+  margin-left: 200px;
+  font-size:medium;
+}
+
+.submit-btn {
+  display: flex;
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #4caf50;
+  border: none;
+  color: white;
+  cursor: pointer;
+  margin-left: 200px;
+}
+
+.submit-btn:hover {
+  background-color: #45a049;
+}
+
+.output {
+  margin-top: 20px;
+}
+#headId{
+display:flex;
+margin-top:200px
 }
 #errorNames{
-font-size: large;
-    background:linear-gradient(35deg, black, transparent);
-    width: 477px;
-    border: 4px solid red;
-    padding: 38px;
-    margin: 5px;
- }
+margin-left: 200px;
+font-size:medium;
+color:red;
+border: 4px solid red;
+margin-right:200px;
+}
 </style>
-
-<script>
-	$(document).ready(function() {
-		$("#basic-form").validate();
-	});
-</script>
-
-
-<link rel="stylesheet"
-	href="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/choices.min.css">
-
-
 </head>
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.min.js">
-	
-</script>
-<script src="/path/to/cdn/jquery.min.js"></script>
 
-<script src="/path/to/dist/file-dropzone.js"></script>
-
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js">
-	
-</script>
-<body class="background2">
-
-	<nav class="navbar navbar-inverse navbar-fixed-top" style="background-color: black;">
+<body class="image">
+<div th:insert="sideBar :: header"></div>
+	<nav class="navbar navbar-inverse navbar-fixed-top">
 		<div class="container">
-			<div class="navbar-header"
-				style="font-family: sans-serif; font-style: normal;">
+			<div class="navbar-header">
 				<button id="back" onclick="history.back()">&laquo;</button>
-				<a class="navbar-brand" href="#" th:href="@{/home}"
-					style="margin-left:-250; color: white;"><b><i
-						style="font-family: sans-serif; font-style: normal;"> Home</i></b></a> <a
-					class="navbar-brand" style="font-family: sans-serif; color: white;margin-left:1300;"
-					href="https://www.clayfin.com;"><b><i
-						style="font-family: sans-serif; font-style: normal; padding-left: 1 0px">
-							Logout </i></b></a>
+				<a class="navbar-brand" id="anchor" th:href="@{/home}">
+					<b>Home</b></a> 
+				<a class="navbar-brand" id="anchor1" th:href="@{/logout}"><b>Logout</b>
+				</a>
+
 
 			</div>
 		</div>
 	</nav>
+<center><h1>Upload Resume</h1></center>
+<form th:action="@{/saveBulkResume}" method="post"
+					enctype="multipart/form-data">
 
-	<br>
-	<br>
-	<div th:insert="sideBar :: header"></div>
-	<div class="container">
-		<div class="row">
-			<div class="col-md-6 col-md-offset-3" style="margin-top: -200px;">
+<div id="dropzone" class="dropzone">
 
-				<h1 style="color: white; text-align: center; margin-top: 0px">ResumeUpload</h1>
-				<form th:action="@{/saveBulkResume}" method="post"
-					enctype="multipart/form-data" >
-					<div id="errorNames"th:unless=${#strings.isEmpty(notFound)}>
+  <input type="file" id="fileInput" th:name="file" multiple style="display:none;" required>
+  <label for="fileInput" class="file-input-label">
+    <span>Drag and drop files to select resume or click to browse</span>
+  </label>
+</div>
+
+<label for="fileNames" class="file-names-label">Selected Files:</label>
+<label id="fileNames" class="file-names"></label>
+<div id="errorNames"th:unless=${#strings.isEmpty(notFound)}>
 					<p  th:text="${notFound}"></p>
 					</div>
-					<br><br>
-					<div class="upload-container">
-					 
-                    <input type="file" id="file_upload" th:name="file" multiple required/>
-                    </div>
-<br>
-<button class="btn btn-danger ml-2">Submit</button>
+<button id="submitBtn" type="submit" value="submit" class="submit-btn">upload</button>
+</form>
+<!-- <div id="output" class="output"></div> -->
+<script>
+var dropzone = document.getElementById('dropzone');
+var fileInput = document.getElementById('fileInput');
+var fileNamesLabel = document.getElementById('fileNames');
+var submitBtn = document.getElementById('submitBtn');
+var output = document.getElementById('output');
+var fileN=[];
+// Prevent default behavior when dragging over the drop zone
+dropzone.addEventListener('dragover', function (e) {
+  e.preventDefault();
+  e.stopPropagation();
+  dropzone.classList.add('dragover');
+});
 
-					
-				</form>
-			</div>
-		</div>
-	</div>
+// Prevent default behavior, handle file drop, and remove class on leave
+dropzone.addEventListener('drop', function (e) {
+  e.preventDefault();
+  e.stopPropagation();
+  dropzone.classList.remove('dragover');
+  fileInput.files = e.dataTransfer.files;
+  showSelectedFileNames();
+});
+
+dropzone.addEventListener('dragleave', function () {
+  dropzone.classList.remove('dragover');
+});
+// Show the selected file names
+function showSelectedFileNames() {
+  var fileNames = Array.from(fileInput.files).map(function (file) {
+	  let nameVal;
+	  if(fileN.length)
+	   nameVal=', '+file.name;
+	  else
+		  nameVal= file.name;
+	   fileN.push(nameVal);
+    return file.name;
+  });
+  fileNamesLabel.textContent = fileN.join(' ');
+console.log(fileNames);
+ // output.textContent = fileN.toString(); // Display file names in output div
+}
+
+// Handle file selection via input file
+fileInput.addEventListener('change', function () {
+  showSelectedFileNames();
+  console.log("is file exist"+fileInput.files);
+});
+
+// Handle form submission
+/* submitBtn.addEventListener('click', function (e) {
+  e.preventDefault();
+  output.textContent = 'Form submitted!'; // Displaying page output
+  // You can perform additional form submission logic here
+}); */
+
+</script>
 </body>
 </html>
 <html>

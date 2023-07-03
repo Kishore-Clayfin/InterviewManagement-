@@ -158,9 +158,11 @@ try {
 
 		boolean mobv = Pattern.matches("^[9876]\\d{9}$", mob);
 		System.out.println("*******************" + iCandidateService.existsCandidateByEmail(candidate.getEmail()));
+		if(candidate.getCandidateId()==null) {
 		if(iCandidateService.existsCandidateByEmail(candidate.getEmail())) {
 			attributes.addAttribute("uniqueEmail", "The entered Email already exist");
 			return "redirect:/addCandidate";
+		}
 		}
 		System.out.println("it is entering here");
 		if (!mobv == true) {
@@ -255,7 +257,7 @@ try {
 			
 		}
 		
-//		iCandidateService.saveCandidate(candidate);
+		iCandidateService.saveCandidate(candidate);
 		return "redirect:/viewCandidates";
 	}
 	
@@ -350,7 +352,7 @@ try {
 	@PostMapping("/saveBulkResume")
 	public String saveBulkResume(@RequestParam("file") MultipartFile[] file, HttpSession session,
 			HttpServletResponse redirect,RedirectAttributes attributes) {
-		
+		System.out.println("entered save Bulk Resume");
 		if (LoginController.checkUser == null) {
 			try {
 				redirect.sendRedirect("/login");
@@ -425,6 +427,34 @@ try {
 		}
 		ModelAndView mav = new ModelAndView("candidateList");
 		mav.addObject("candidate", iCandidateService.viewCandidateList());
+		mav.addObject("showSchedule", false);
+		return mav;
+	}
+	
+	@GetMapping("/filterByRole")
+	public ModelAndView filterByRole(@RequestParam String status,HttpSession session, HttpServletResponse redirect) {
+		if (LoginController.checkUser == null) {
+			try {
+				redirect.sendRedirect("/login");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+		User checkUser = (User) session.getAttribute("loginDetails");
+		if ((!checkUser.getRole().equals("hr"))) {
+			try {
+				redirect.sendRedirect("/login");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		System.out.println("status to filter: "+status);
+		ModelAndView mav = new ModelAndView("candidateList");
+		mav.addObject("candidate", iCandidateService.filterByStatus(status));
+		mav.addObject("showSchedule", true);
 		return mav;
 	}
 
@@ -590,13 +620,16 @@ try {
 				e.printStackTrace();
 			}
 		}
-
+		System.out.println("change status"+status);
 		Candidate candi = iCandidateService.updateCandidateStatus(candidateId, status);
+		if(status.equalsIgnoreCase("Offered")||status.equalsIgnoreCase("Joined")||status.equalsIgnoreCase("OfferedDeclined"))
+			return "redirect:/viewCandidates";
+		else
 		return "redirect:/viewschedules";
 	}
 	
 //	@GetMapping("/download1")
-//    public StreamingResponseBody downloadFile1(String candidateEmail) throws IOException {
+//    public StreamingResponseBody downloadFile1(String candidateEmail) throws IOException {t
 //		//ResponseEntity<InputStreamResource>
 ////		firebase.download(candidateEmail);
 ////       File file = new File(FILE_PATH);
@@ -737,5 +770,5 @@ try {
 //		System.out.println("Downloaded File" + download);
 		
 	}
-
+	
 }

@@ -1,5 +1,6 @@
 package com.cf.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -87,8 +88,25 @@ public class ScheduleServiceImpl implements IScheduleService {
 	@Override
 	public List<Schedule> findScheduleByUser(User user) {
 		// TODO Auto-generated method stub
+		List<Schedule> finalSchedule=new ArrayList<>();
 		List<Schedule> listOfSchedule=iScheduleDao.findScheduleByUser(user);
-		return listOfSchedule;
+		for(Schedule schedule:listOfSchedule) {
+			Candidate candi=new Candidate();
+			candi=schedule.getCandidate().get(0);
+			if(!candi.getStatus().endsWith("Selected"))
+				finalSchedule.add(schedule);
+		}
+		return finalSchedule;
+	}
+
+	@Override
+	public String deleteScheduleAfterFeedback(Candidate candidate) {
+		// TODO Auto-generated method stub
+		List<Candidate> listOfCandi=new ArrayList<>();
+		listOfCandi.add(candidate);
+		Schedule schedule=findByCandidate(listOfCandi);
+		deleteSchedule(schedule.getScheduleId());
+		return schedule.getScheduleId().toString();
 	}
 
 }

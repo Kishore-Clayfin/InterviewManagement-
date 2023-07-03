@@ -9,6 +9,8 @@
 	crossorigin="anonymous">
 <script type="text/javascript"
 	src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+	<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 <style>
 body {
 	color: #fff;
@@ -77,7 +79,7 @@ body {
 				<!-- <br> <span style='color: red' class="alert alert-info"
 					th:text="${param.errorMessage}">err</span> <br> <br> -->
 
-				<form th:action="@{/saveschedule}" method="post"
+				<form th:action="@{/saveschedule(status=${status})}" method="post"
 					th:object="${schedule}">
 
 
@@ -137,7 +139,7 @@ body {
 
 					<div class="form-group">
 						<label class="control-label" for="roleApplied">Schedule
-							Time </label> <input type="time" id="roleApplied" class="form-control"
+							Time </label> <input type="text" id="timeInput" class="form-control" 
 							th:field="*{scheduleTime}" required autofocus="autofocus" />
 					</div>
 
@@ -149,6 +151,8 @@ body {
 							autofocus="autofocus">
 							<!-- <option  th:value="--- Select ---" th:text="--- Select ---" disabled selected></option> -->
 							<option th:value="0" selected="selected">--- Select ---</option>
+							<option th:value="5" th:text="5-minutes"></option>
+							<option th:value="10" th:text="10-minutes"></option>
 							<option th:value="15" th:text="15-minutes"></option>
 							<option th:value="30" th:text="30-minutes"></option>
 							<option th:value="45" th:text="45-minutes"></option>
@@ -215,5 +219,57 @@ $(document).ready(function()
 	});
 	//  }); });
 </script>
+<script>
+  var timeInput = document.getElementById("timeInput");
+  var currentTime = new Date();
+  var hours = currentTime.getHours();
+  var minutes = currentTime.getMinutes();
+
+  // Adjust the current time to the nearest 15-minute interval
+  minutes = Math.ceil(minutes / 15) * 15;
+  if (minutes === 60) {
+    hours++;
+    minutes = 0;
+  }
+
+  // Set the minimum and maximum time to restrict the selectable range
+  var minTime = new Date();
+  minTime.setHours(hours, minutes);
+
+  // Format the minimum time as a string
+  var minTimeString = minTime.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+
+  // Set the minimum and maximum time for the input field
+  timeInput.min = minTimeString;
+  timeInput.max = "18:00"; // Example maximum time
+</script>
+<script>
+    flatpickr("#timeInput", {
+      enableTime: true,
+      noCalendar: true,
+      dateFormat: "H:i",
+      minTime: "10:00",
+      maxTime: "18:00"
+    });
+    function generateTimeOptions(instance) {
+        var minTime = instance.config.minTime;
+        var maxTime = instance.config.maxTime;
+        var interval = 30; // Set the desired minute increment
+        var timeOptions = '';
+
+        var currentTime = flatpickr.parseDate(minTime, "H:i");
+        var endTime = flatpickr.parseDate(maxTime, "H:i");
+
+        while (currentTime <= endTime) {
+          timeOptions += '<span class="flatpickr-time">' + currentTime.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }) + '</span>';
+          currentTime = new Date(currentTime.getTime() + interval * 60000);
+        }
+
+        return timeOptions;
+      }
+  </script>
+
+
+
 </html>
 

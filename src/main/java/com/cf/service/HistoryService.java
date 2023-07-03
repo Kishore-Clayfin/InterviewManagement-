@@ -1,4 +1,5 @@
 package com.cf.service;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +44,19 @@ public class HistoryService implements IHistoryService{
 		// TODO Auto-generated method stub
 		List<History> ListOfHistory=iHistoryDao.findAll();
 		return ListOfHistory;
+	}
+
+	@Override
+	public List<History> findAllDeletedCandidates() {
+		// TODO Auto-generated method stub
+		List<History> listOfHistory=findAllHistory();
+		List<History> deletedHistory=new ArrayList<>();
+		for(History history:listOfHistory) {
+			if(history.getStatus().contains("Rejected")) {
+				deletedHistory.add(history);
+			}
+		}
+		return deletedHistory;
 	}
 
 }

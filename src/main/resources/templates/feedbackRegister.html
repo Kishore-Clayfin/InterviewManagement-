@@ -60,17 +60,16 @@ textarea {
 body {
 
  font-family: cambria , sans-serif;
-
-    background: #442d2d;
 }
 h1{
 color:white;
 }
 .image {
-	background-image: url('/image/jared.jpg');
+	background-image: url('/image/RatingTop.gif');
 	background-repeat: no-repeat;
 	background-size: cover;
 }
+
 </style>
 </head >
 <body class="image" style="font-size: large;">
@@ -92,8 +91,6 @@ color:white;
 	<div class="container">
 		<div class="row">
 			<div class="col-md-6 col-md-offset-3">
-
-
 				<div class="alert alert-danger alert-dismissible"
 					th:if="${FB_MSG != null && FB_MSG.FEEDBACK_SUCCESS_MSG != null}">
 					<a href="#" class="close" data-dismiss="alert"
@@ -101,9 +98,7 @@ color:white;
 						th:text="${FB_MSG.FEEDBACK_SUCCESS_MSG}">Static summary</span>
 
 				</div>
-
-
-
+<br><br><br>
 				<h1>Feedback Submission</h1>
 
 				<form th:action="@{/saveFeedback(candidateId=${candidateId})}"
@@ -132,7 +127,7 @@ color:white;
 					</div>
 					<div th:object="${role}" th:if="${role=='interviewer'}">
 						<h3 th:object="${fcandidate}" style="color: white;">
-							<b th:text="${candidate.domain.getDomainName()}"></b>
+						  <span > Domain: </span>	<b th:text="${candidate.domain.getDomainName()}" class="upperCaseBold"></b>
 						</h3>
 
 						<div class="form-group mt-3" th:each="domSub : ${subCategory}">
@@ -142,7 +137,7 @@ color:white;
 								class="skill" /> <span th:class="${domSub.getDomSubCatName()}">1</span>
 						</div>
 					</div>
-				
+				 <br>					 
 					<!------------------------------ HrHead ratings --------------------------------------->
 					
 					<div th:object="${role}" th:if="${role=='hrHead'}">
@@ -157,67 +152,50 @@ color:white;
 								class="skill" /> <span th:class="${domSub.getDomSubCatName()}">1</span>
 						</div>
 					</div>
-					
+					 <br>				
 					<!------------------------------------------------------------------------------------------>
 					
 					<div class="form-group">
 						<div class="rating" th:object="${role}"
 							th:if="${role=='interviewer'}">
-							<label> Interviewer Status</label> <br>
+							<label> Interviewer Status</label>
 							<br>
 							<p>
 								<label class="radio-inline"> <input type="radio"
 									class="control-label" id="radio_experience"
 									th:field="${feedback.interviewerFbStatus}" th:value="selected"
-									required autofocus="autofocus"> selected
+									required autofocus="autofocus"> Selected
 								</label> <label class="radio-inline"> <input type="radio"
 									name="experience" id="radio_experience"
 									th:field="${feedback.interviewerFbStatus}" th:value="waiting"
-									required autofocus="autofocus"> waiting
+									required autofocus="autofocus"> Waiting
 								</label> <label class="radio-inline"> <input type="radio"
 									name="experience" id="radio_experience"
 									th:field="${feedback.interviewerFbStatus}" required
-									autofocus="autofocus" value="rejected"> rejected
-								</label> <label class="radio-inline"> <input type="radio"
-									name="experience" id="radio_experience"
-									th:field="${feedback.interviewerFbStatus}" required
-									autofocus="autofocus" value="disconnected">
-									disconnected
-								</label> <label class="radio-inline"> <input type="radio"
-									name="experience" id="radio_experience"
-									th:field="${feedback.interviewerFbStatus}" required
-									autofocus="autofocus" value="notAttended"> notAttended
-								</label>
+									autofocus="autofocus" value="rejected"> Rejected
+								</label> 
 							</p>
 							<br>
 						</div>
 					</div>
+					<br>
 					<div class="form-group">
 						<div class="rating" th:object="${role}" th:if="${role=='hrHead'}">
-							<label>HRHead Status</label> <br> <br>
+							<label>HRHead Status</label> <br>
 							<p>
 								<label class="radio-inline"> <input type="radio"
 									class="control-label" id="radio_experience"
 									th:field="${feedback.hrFbStatus}" th:value="selected" required
-									autofocus="autofocus"> selected
+									autofocus="autofocus"> Selected
 								</label> <label class="radio-inline"> <input type="radio"
 									name="experience" id="radio_experience"
 									th:field="${feedback.hrFbStatus}" th:value="waiting" required
-									autofocus="autofocus"> waiting
+									autofocus="autofocus"> Waiting
 								</label> <label class="radio-inline"> <input type="radio"
 									name="experience" id="radio_experience"
 									th:field="${feedback.hrFbStatus}" required
-									autofocus="autofocus" value="rejected"> rejected
-								</label> <label class="radio-inline"> <input type="radio"
-									name="experience" id="radio_experience"
-									th:field="${feedback.hrFbStatus}" required
-									autofocus="autofocus" value="disconnected">
-									disconnected
-								</label> <label class="radio-inline"> <input type="radio"
-									name="experience" id="radio_experience"
-									th:field="${feedback.hrFbStatus}" required
-									autofocus="autofocus" value="notAttended"> notAttended
-								</label>
+									autofocus="autofocus" value="rejected"> Rejected
+								</label> 
 							</p>
 							<br>
 						</div>
@@ -237,7 +215,7 @@ color:white;
 				</form>
 			</div>
 		</div>
-		<a th:href="@{/home}" class="btn btn-danger ml-2">Home</a>
+		<!-- <a th:href="@{/home}" class="btn btn-danger ml-2">Home</a> -->
 	</div>
 </body>
 <script>

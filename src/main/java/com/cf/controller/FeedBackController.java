@@ -97,6 +97,33 @@ public class FeedBackController {
 		mav.addObject("hrRating", domCat);
 		return mav;
 	}
+	
+	@GetMapping("/getFeedback")
+	public Feedback getFeedback(@RequestParam Integer candidateId, HttpSession session,
+			HttpServletResponse redirect) {
+
+		if (LoginController.checkUser == null) {
+			try {
+				redirect.sendRedirect("/login");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+		User checkUser = (User) session.getAttribute("loginDetails");
+		if (!(checkUser.getRole().equals("interviewer") || checkUser.getRole().equals("hrHead"))) {
+			try {
+				redirect.sendRedirect("/login");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		Candidate candidate=iCandidateService.updateCandidate(candidateId);
+		Feedback feedback=iFeedbackService.findByCandidate(candidate);	
+		return feedback;
+	}
 
 	@PostMapping("/saveFeedback")
 	public String saveFeedBack(@Valid @ModelAttribute Feedback feedback, BindingResult result, Model model,

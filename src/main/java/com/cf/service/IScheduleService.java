@@ -21,4 +21,6 @@ public interface IScheduleService {
 	boolean existsScheduleByCandidate(List<Candidate> candidateList);
 	
 	List<Schedule> findScheduleByUser(User user);
+	
+	String deleteScheduleAfterFeedback(Candidate candidate);
 }

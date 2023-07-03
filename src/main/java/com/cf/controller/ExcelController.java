@@ -126,7 +126,10 @@ public class ExcelController {
 							else if (i == 11) {
 								candidate.setExpectedCtc(((float) cell.getNumericCellValue()));
 //		        		  System.out.print(cell.getNumericCellValue() + "\t");
-							}
+							}else if (i == 13) {
+								candidate.setMaxRound(((int) cell.getNumericCellValue()));
+//				        		  System.out.print(cell.getNumericCellValue() + "\t");
+									}
 							i++;
 							break; 
 						case Cell.CELL_TYPE_STRING:

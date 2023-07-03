@@ -23,6 +23,16 @@ public interface ICandidateService {
 	List<Candidate> bulkSaveCandidate(List<Candidate> candidateList);
 	
 	boolean existsCandidateByEmail(String email);
+	
 	Candidate findCandidateByEmail(String email);
+	
 	void deleteAllCandidates(List<Integer> candiIds);
+	
+	public String sendApplicationViaMail();
+	
+	public Candidate changeCandidateStatus(Candidate candidate,String status);
+	
+	public List<Candidate> filterByStatus(String status);
+	
+	public List<Candidate> changeCandidateListStatus(List<Candidate> listOfCandidate,String status);
 }

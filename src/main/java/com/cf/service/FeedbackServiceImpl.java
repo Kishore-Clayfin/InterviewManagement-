@@ -17,9 +17,12 @@ public class FeedbackServiceImpl implements IFeedbackService {
 	@Autowired
 	private IFeedbackDao iFeedbackDao;
 	@Autowired private ICandidateService candidateService;
+	@Autowired private IScheduleService scheduleService;
 	@Override
 	public Feedback saveFeedback(Feedback feedback) {
 		Feedback feed=iFeedbackDao.save(feedback);
+		candidateService.updateCandidateStatus(feed.getCandidate().getCandidateId(),"HRRound"+feed.getHrFbStatus());
+		scheduleService.deleteScheduleAfterFeedback(feed.getCandidate());
 		log.info("Feedback added successfully");
 		return feed;
 	}

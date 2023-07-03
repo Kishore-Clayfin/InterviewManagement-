@@ -66,7 +66,7 @@ public class ScheduleController {
 	}
 
 	@GetMapping("/addschedule")
-	public ModelAndView addhr(HttpSession session, HttpServletResponse redirect) {
+	public ModelAndView addhr(@RequestParam String status,HttpSession session, HttpServletResponse redirect) {
 
 		if (LoginController.checkUser == null) {
 			try {
@@ -92,9 +92,73 @@ public class ScheduleController {
 		mv.addObject("schedule", Schedule);
 		mv.addObject("candidate", li);
 		mv.addObject("interviewer", list);
+		mv.addObject("status", status);
 		return mv;
 	}
+	
+	
+	@GetMapping("/reschedule")
+	public ModelAndView reschedule(@RequestParam Integer candidateId, @RequestParam String status,HttpSession session,
+			HttpServletResponse redirect) {
+System.out.println("Checkuu"+status);
+		if (LoginController.checkUser == null) {
+			try {
+				redirect.sendRedirect("/login");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 
+		User checkUser = (User) session.getAttribute("loginDetails");
+		if (!checkUser.getRole().equals("hr")) {
+			try {
+				redirect.sendRedirect("/login");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+		
+		Candidate candidate = icandidateService.findResumeCandidate(candidateId);
+		List<User> user = iUserService.viewUserList();
+		List<Candidate> listOfCandi=new ArrayList<>();
+		listOfCandi.add(candidate);
+		Schedule schedule = new Schedule();
+		schedule=ischeduleService.findByCandidate(listOfCandi);
+		schedule.setScheduleDate(null);
+		schedule.setScheduleTime(null);
+		List<User> list=new ArrayList<>();
+		if(status.equalsIgnoreCase("nextTechnicalRound")) {
+			list = user.stream()
+					.filter(c -> c.getRole().equalsIgnoreCase("interviewer"))
+					.collect(Collectors.toList());
+
+		}
+		else if(status.equalsIgnoreCase("HrRound")) {
+			 list = user.stream()
+					.filter(c ->c.getRole().equalsIgnoreCase("hrHead"))
+					.collect(Collectors.toList());
+		}else if(status.contains("Technical")){
+			list = user.stream()
+					.filter(c -> c.getRole().equalsIgnoreCase("interviewer"))
+					.collect(Collectors.toList());
+		}else {
+			 list = user.stream()
+						.filter(c ->c.getRole().equalsIgnoreCase("hrHead"))
+						.collect(Collectors.toList());
+		}
+		ModelAndView mv = new ModelAndView("hrRoundScheduleRegistration");
+		mv.addObject("schedule", schedule);
+
+		mv.addObject("candidateId", candidateId);
+		mv.addObject("candidate", candidate);
+		mv.addObject("interviewer", list);
+		mv.addObject("status",status);
+		return mv;
+	}
+	
 	@GetMapping("/scheduleInterview")
 	public ModelAndView addhr(HttpServletResponse redirect) {
 
@@ -121,7 +185,7 @@ public class ScheduleController {
 		mv.addObject("interviewer", list);
 		return mv;
 	}
-
+	
 	@GetMapping("/addschedule2")
 	public ModelAndView addschedule2(@RequestParam Integer candidateId, @RequestParam String status,HttpSession session,
 			HttpServletResponse redirect) {
@@ -146,7 +210,7 @@ System.out.println("Checkuu"+status);
 		}
 
 		Schedule Schedule = new Schedule();
-
+		
 		Candidate candidate = icandidateService.findResumeCandidate(candidateId);
 		List<User> user = iUserService.viewUserList();
 		List<Candidate> listOfCandi=new ArrayList<>();
@@ -175,7 +239,7 @@ System.out.println("Checkuu"+status);
 	}
 
 	@PostMapping("/saveschedule")
-	public String saveschedule(@Valid @ModelAttribute Schedule schedule, BindingResult result, Model model,
+	public String saveschedule(@Valid @ModelAttribute Schedule schedule,@RequestParam String status, BindingResult result, Model model,
 			RedirectAttributes ra, HttpSession session, HttpServletResponse redirect) {
 
 		if (LoginController.checkUser == null) {
@@ -196,7 +260,7 @@ System.out.println("Checkuu"+status);
 				e.printStackTrace();
 			}
 		}
-		List<Candidate> candidateList = schedule.getCandidate();
+		List<Candidate> candidateList = icandidateService.changeCandidateListStatus(schedule.getCandidate(),status) ;
 		List<Schedule> schedules = ischeduleService.viewScheduleList();
 		int id = schedule.getUser().getUserId();
 		List<Schedule> interviewer = schedules.stream().filter(x -> x.getUser().getUserId() == id)
@@ -315,22 +379,8 @@ System.out.println("Checkuu"+status);
 		System.out.println(candidateId);
 		System.out.println(candidate.getStatus());
 		System.out.println(candidate.getStatus()=="TechnicalCompleted");
-		if(status1.equalsIgnoreCase("nextTechnicalRound")) {
-		if(candidate.getStatus().equalsIgnoreCase("TechnicalCompleted")) {
-			candidate.setStatus("SecondTechnicalScheduled");
-		}
-		if(candidate.getStatus().equalsIgnoreCase("FirstTechnicalSelected")) {
-			candidate.setStatus("SecondTechnicalScheduled");
-		}
-		else if(candidate.getStatus().equalsIgnoreCase("SecondTechnicalSelected")) {
-			candidate.setStatus("ThirdTechnicalScheduled");
-		}
-		else if(candidate.getStatus().equalsIgnoreCase("ThirdTechnicalSelected")) {
-			candidate.setStatus("FourthTechnicalScheduled");
-		}
-		}else if(status1.equalsIgnoreCase("hrRound")) {
-			candidate.setStatus("HRRoundScheduled");
-		}
+		//added for updating candidate status based on current candidate status
+		candidate=icandidateService.changeCandidateStatus(candidate, status1);
 		candidateList.add(candidate);
 		log.info("list" + candidateList);
 
@@ -410,6 +460,8 @@ System.out.println("Checkuu"+status);
 
 		return "redirect:/viewschedules";
 	}
+	
+	
 
 	@GetMapping({ "/viewschedules" })
 	public ModelAndView getAllschedules(HttpSession session, HttpServletResponse redirect) {

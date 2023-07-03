@@ -9,4 +9,5 @@ public void deleteHistory(Integer historyId);
 public History updateHistory(Integer historyId);
 public History findHistoryById(Integer historyId);
 public List<History> findAllHistory();
+public List<History> findAllDeletedCandidates();
 }

@@ -37,6 +37,8 @@ public class CandidateServiceImpl implements ICandidateService {
 	private IScheduleService scheduleService;
 	@Autowired
 	private IScheduleDao scheduleDao;
+	@Autowired 
+	private EmailService email;
 	@Override
 	public void saveCandidate(Candidate candidate) {
 
@@ -54,6 +56,9 @@ public class CandidateServiceImpl implements ICandidateService {
 		{
 			Candidate can=iCandidateDao.findById(candidate.getCandidateId()).orElseThrow(null);
 			candidate.setStatus(can.getStatus());
+		}
+		if(candidate.getExperience()==0) {
+			candidate.setMaxRound(2);
 		}
 		iCandidateDao.save(candidate);
 		log.info("new candidate added successfully");
@@ -172,7 +177,7 @@ public class CandidateServiceImpl implements ICandidateService {
 		LocalDate today=LocalDate.now();
 		LocalDate thirtyDay=today.minusDays(30);
 		for(Candidate candi:candiList) {
-			if(candi.getCreatedAt().equals(thirtyDay)) {
+			if(candi.getCreatedAt().equals(thirtyDay)&&(candi.getStatus().contains("Rejected"))) {
 				candidateToDelete.add(candi.getCandidateId());
 			}
 //			deleteAllCandidates(candidateToDelete);
@@ -228,4 +233,180 @@ public class CandidateServiceImpl implements ICandidateService {
 		if(historyList.size()==candiList.size())
 		iCandidateDao.deleteAllByIdInBatch(candiIds);
 	}
+	
+public String sendApplicationViaMail() {
+	String text="<a href=\"http://localhost:9091/candidateForm\">Open Form</a>";
+	String to="shrikiranyogi@gmail.com";
+	 System.out.println(to);
+		email.sendSimpleMessage(to, "Interview", text);
+//		email.sendSimpleMessage(schedule.getUser().getEmail(), "Meeting", s.getMeetingLink());
+	return null;
+	}
+
+public String uiShowStatus(String status) {
+	String uiStatus="";
+	System.out.println("status before : "+status);
+	 if(status.endsWith("Absent")) {
+		uiStatus="Absent";
+	}
+	else if(status.contains("Waiting")) {
+		uiStatus="Hold";
+	}
+	else if(status.contains("Disconnected")) {
+		uiStatus="Disconnected";
+	}
+//	if(status!=null) {
+//		String firstWord="";
+//		String lastWord="";
+//		if(status.startsWith("Technical")) {
+//			firstWord="1st"+" "+"Level"+" "+
+//		}else if(status.startsWith("Second")) {
+//			
+//		}else if(status.startsWith("Third")) {
+//			
+//		}else if(status.startsWith("Fourth")) {
+//			
+//		}else if(status.startsWith("HR")) {
+//			
+//		}
+//	}
+	if(!(status.contains("Absent")&&status.contains("Waiting")&&status.contains("Disconnected"))) {
+	switch(status) {
+	case "ResumeShortlisted":
+		uiStatus="Resume Shortlisted";
+		break;
+	case "TechnicalScheduled":
+		uiStatus="1st Level Scheduled";
+		break;
+	case "SecondTechnicalScheduled":
+		uiStatus="2nd Level Scheduled";
+		break;
+	case "ThirdTechnicalScheduled":
+		uiStatus="3rd Level Scheduled";
+		break;
+	case "FourthTechnicalScheduled":
+		uiStatus="4th Level Scheduled";
+		break;	
+	case "HRRoundScheduled":
+		uiStatus="HR Round Scheduled";
+		break;
+	case "TechnicalCompleted":
+		uiStatus="1st Level Completed";
+		break;
+	case "SecondTechnicalCompleted":
+		uiStatus="2nd Level Completed";
+		break;
+	case "ThirdTechnicalCompleted":
+		uiStatus="3rd Level Scheduled";
+		break;
+	case "FourthTechnicalCompleted":
+		uiStatus="4th Level Completed";
+		break;	
+	case "HRRoundCompleted":
+		uiStatus="HR Round Completed";
+		break;
+	case "FirstTechnicalSelected":
+		uiStatus="1st Level Selected";
+		break;
+	case "SecondTechnicalSelected":
+		uiStatus="2nd Level Selected";
+		break;
+	case "ThirdTechnicalSelected":
+		uiStatus="3rd Level Selected";
+		break;
+	case "FourthTechnicalSelected":
+		uiStatus="4th Level Selected";
+		break;	
+	case "HRRoundSelected":
+		uiStatus="HR Round Selected";
+		break;	
+	case "TechnicalRejected":
+		uiStatus="1st Level Rejected";
+		break;
+	case "SecondTechnicalRejected":
+		uiStatus="2nd Level Rejected";
+		break;	
+	case "ThirdTechnicalRejected":
+		uiStatus="3rd Level Rejected";
+		break;
+	case "FourthTechnicalRejected":
+		uiStatus="4th Level Rejected";
+		break;	
+	case "HRRoundRejected":
+		uiStatus="HR Round Rejected";
+		break;
+	case "Offered":
+		uiStatus="Offered";
+		break;
+	case "Joined":
+		uiStatus="Joined";
+		break;
+	case "OfferDeclined":
+		uiStatus="Offered Declined";
+		break;
+	}
+	}
+	
+	System.err.println("changed status"+uiStatus);
+	return uiStatus;
+}
+
+@Override
+public Candidate changeCandidateStatus(Candidate candidate,String status) {
+	int currentRound=candidate.getCurrentRound();
+	if(status.equalsIgnoreCase("FirstRound")) {
+		candidate.setStatus("TechnicalScheduled");
+		currentRound++;
+	}else if(status.equalsIgnoreCase("nextTechnicalRound")) {
+		if(candidate.getStatus().equalsIgnoreCase("TechnicalCompleted")) {
+			candidate.setStatus("SecondTechnicalScheduled");
+		}
+		if(candidate.getStatus().equalsIgnoreCase("FirstTechnicalSelected")) {
+			candidate.setStatus("SecondTechnicalScheduled");
+		}
+		else if(candidate.getStatus().equalsIgnoreCase("SecondTechnicalSelected")) {
+			candidate.setStatus("ThirdTechnicalScheduled");
+		}
+		else if(candidate.getStatus().equalsIgnoreCase("ThirdTechnicalSelected")) {
+			candidate.setStatus("FourthTechnicalScheduled");
+		}
+		currentRound++;
+		}else if(status.equalsIgnoreCase("hrRound")) {
+			candidate.setStatus("HRRoundScheduled");
+			currentRound++;
+		}else if(candidate.getStatus().endsWith("Disconnected")) {
+			String status3=candidate.getStatus().replace("Disconnected", "Scheduled");
+			candidate.setStatus(status3);
+		}
+		else if(candidate.getStatus().endsWith("Absent")) {
+			System.out.println("when absent : "+candidate.getStatus());
+			String status3=candidate.getStatus().replace("Absent", "Scheduled");
+			System.err.println("after changing to scheduled: "+status3);
+			candidate.setStatus(status3);
+		}
+	candidate.setCurrentRound(currentRound);
+	return candidate;
+}
+@Override
+public List<Candidate> filterByStatus(String status){
+	List<Candidate> candidatesFromDB=viewCandidateList();
+	List<Candidate> candidatesFiltered=new ArrayList<>();
+	for(Candidate candidate:candidatesFromDB) {
+		if(candidate.getStatus()==status) {
+			candidatesFiltered.add(candidate);
+		}
+	}
+	return candidatesFiltered;
+}
+
+@Override
+public List<Candidate> changeCandidateListStatus(List<Candidate> listOfCandidate, String status) {
+	List<Candidate> candidateListAfterUpdate=new ArrayList<>();
+	for(Candidate candidate:listOfCandidate) {
+		candidate=changeCandidateStatus(candidate, status);
+		candidateListAfterUpdate.add(candidate);
+	}
+	return candidateListAfterUpdate;
+}
+
 }

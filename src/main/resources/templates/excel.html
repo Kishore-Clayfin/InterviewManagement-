@@ -1,7 +1,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="ISO-8859-1">
-<title>Registration</title>
+<title>ExcelUpload</title>
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
 	integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
@@ -68,6 +68,48 @@ body {
 	color: black;
 	margin-top: -379px;
 }
+.upload-container {
+    position: relative;
+}
+.upload-container input {
+background:linear-gradient(45deg, black, transparent);
+    border: 1px solid #92b0b3;
+    background: #f1f1f1;
+    outline: 2px dashed #92b0b3;
+    outline-offset: -10px;
+    padding: 100px 0px 100px 250px;
+    text-align: center !important;
+    width: 500px;
+}
+ 
+.upload-container input:hover {
+    background:linear-gradient(45deg, black, transparent);
+}
+ 
+.upload-container:before {
+    position: absolute;
+    bottom: 50px;
+    left: 245px;
+    content: " (or) Drag and Drop files here. ";
+    color: #3f8188;
+    font-weight: 900;
+}
+ 
+.upload-btn {
+    margin-left: 300px;
+    padding: 7px 20px;
+}
+#file_upload{
+ background:linear-gradient(35deg, black, transparent);
+}
+#errorNames{
+font-size: large;
+    background:linear-gradient(35deg, black, transparent);
+    width: 477px;
+    border: 4px solid red;
+    padding: 38px;
+    margin: 5px;
+ }
 </style>
 
 <script>
@@ -86,6 +128,9 @@ body {
 	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.min.js">
 	
 </script>
+<script src="/path/to/cdn/jquery.min.js"></script>
+
+<script src="/path/to/dist/file-dropzone.js"></script>
 
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js">
@@ -117,12 +162,21 @@ body {
 		<div class="row">
 			<div class="col-md-6 col-md-offset-3" style="margin-top: -200px;">
 
-				<h1 style="color: white; text-align: center; margin-top: 0px">Bulk
-					Upload</h1>
+				<h1 style="color: white; text-align: center; margin-top: 0px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Excel&nbsp;&nbsp;Upload</h1>
 				<form th:action="@{/import}" method="post"
-					enctype="multipart/form-data">
-					<input type="file" th:name="file" /> <br>
-					<input th:type="submit" style="color: black;" value="Import" />
+					enctype="multipart/form-data" >
+					<div id="errorNames"th:unless=${#strings.isEmpty(notFound)}>
+					<p  th:text="${notFound}"></p>
+					</div>
+					<br><br>
+					<div class="upload-container">
+					 
+                    <input type="file" id="file_upload" th:name="file" required/>
+                    </div>
+<br>
+<button class="btn btn-danger ml-2">Submit</button>
+
+					
 				</form>
 			</div>
 		</div>

@@ -2,14 +2,24 @@
 
 <head>
 <title>SELECTED LIST</title>
-
-<link rel="stylesheet" type="text/css"
-	href="https://cdn.datatables.net/v/bs4/dt-1.10.25/datatables.min.css" />
 <link rel="stylesheet"
 	href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
 	integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l"
 	crossorigin="anonymous" />
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+	integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+	crossorigin="anonymous">
 
+<link rel="stylesheet" type="text/css"
+	href="https://cdn.datatables.net/v/bs4/dt-1.10.25/datatables.min.css" />
+<!-- <link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+	integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l"
+	crossorigin="anonymous" /> -->
+	<!--added for drop down  -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <!--Search builder code starts-->
 
 
@@ -26,11 +36,7 @@
 	href="https://cdn.datatables.net/searchbuilder/1.4.0/css/searchBuilder.dataTables.min.css">
 <link rel="stylesheet"
 	href="https://cdn.datatables.net/datetime/1.2.0/css/dataTables.dateTime.min.css">
-<!-- added for  model starts-->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-<!--  model ends -->
+
 <script>
 	$(document).ready(function() {
 		$('#Table').DataTable({
@@ -42,7 +48,7 @@
 	});
 </script>
 
-<!--Search builder code ends--> 
+<!--Search builder code ends-->
 <!-- added for  model starts-->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
@@ -218,6 +224,10 @@ td {
 .form-container .btn:hover, .open-button:hover {
   opacity: 1;
 }
+.btn-outline-info {
+      border-color: #17a2b8;
+      color: #343a40; /* Change text color to dark */
+    }
 </style>
 
 <script
@@ -232,7 +242,7 @@ td {
 			<div class="navbar-header">
 				<button id="back" onclick="history.back()">&laquo;</button>
 				<a class="navbar-brand" id="anchor" style="color:white;margin-left:-250;" th:href="@{/home}">
-					Home</a> <a class="navbar-brand" id="anchor" style="color:white;margin-left:1500;" th:href="@{/logout}">Logout
+					Home</a> <a class="navbar-brand" id="anchor" style="color:white;margin-left:1300;" th:href="@{/logout}">Logout
 				</a>
 
 
@@ -253,15 +263,12 @@ td {
 				<thead>
 					<tr>
 						<th>Candidate Id</th>
-						<th>Candidate Name</th>					
+						<th>Candidate Name</th>
+						<th>ECTC</th>
 						<th>Overall Rating</th>
 						<th>Feedback</th>
 						<th>Interviewer Status</th>
-<<<<<<< HEAD
 						<th>HRHead Status<div class="filter"></div></th>
-=======
-						<th>HRHead Status</th>
->>>>>>> branch 'child-1' of https://github.com/Kishore-Clayfin/InterviewManagement-.git
 						<th>Domain Name</th>
 						<th>Sub Category Ratings</th>
 						<th>Schedule For</th>
@@ -279,7 +286,6 @@ td {
 								th:text="${oneDoc.getCandidateName()}"> </span>
 						</span></td>
 						
-<<<<<<< HEAD
 						<td>
 						<!-- <div th:each="oneDoc:${Feedback.candidate}">
 						<div class="form-popup" id="myForm">
@@ -309,7 +315,7 @@ td {
           <form  id="basic-form" method="post"
 				class="form-container"	th:object="${candidate}">
 <span id="sp"></span>
-    <label for="email"><b>Enter Ectc</b></label>
+    <label for="email"><b>Enter Ectc For: <span id="candiNameEctc" style="font-weight:bold;color:green;"></span></b></label>
     <input type="text" th:field="*{expectedCtc}" placeholder="Enter Ectc" name="email" required>
     <button type="submit" class="btn btn-success ml-2">save</button>
   </form>
@@ -335,28 +341,16 @@ td {
 <!-- Modal -->
   
 								<!-- <button class="btn btn-info ml-2" onclick="openForm()">Ectc</button> -->
-								<button type="button" th:attr="onclick=|upload('${oneDoc.getCandidateId()}')|"  class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">ectc</button>
+								<button type="button" th:attr="onclick=|upload('${oneDoc.getCandidateId()}','${oneDoc.getCandidateName}')|"  class="btn btn-outline-info btn-lg" data-toggle="modal" data-target="#myModal">ectc</button>
 								</span>
 						</span></td>
-=======
-						<!-- <td><span th:each="oneDoc:${Feedback.candidate}"> <span
-								th:text="${oneDoc.getExpectedCtc()}"> </span>
-						</span></td> -->
->>>>>>> branch 'child-1' of https://github.com/Kishore-Clayfin/InterviewManagement-.git
 						
 						<td th:text="${Feedback.rating}" />
 						
-						<td style="white-space: nowrap;" th:text="${Feedback.feed_back}" />
+						<td th:text="${Feedback.feed_back}" />
 						
-<<<<<<< HEAD
 						<td th:text="${Feedback.interviewerFbStatus}" />
 						<td th:text="${Feedback.hrFbStatus}" />
-=======
-						<td style="white-space: nowrap;" th:text="${Feedback.interviewerFbStatus}" />
-						
-						<td th:text="${Feedback.hrFbStatus}" />
-						
->>>>>>> branch 'child-1' of https://github.com/Kishore-Clayfin/InterviewManagement-.git
 						<td><span th:each="oneDoc:${Feedback.candidate}"> <span
 								th:text="${oneDoc.domain.getDomainName()}"> </span>
 						</span></td>
@@ -383,10 +377,11 @@ td {
 		<br> <br> <a th:href="@{/home}" class="btn btn-danger ml-2">Home</a>
 	</div>
 	<script type="text/javascript">
-	function upload(id){
+	function upload(id,name){
 		var url='addEctc'+'?'+'candidateId='+id;
 		 document.getElementById('basic-form').action = url;
 		 document.getElementById('sp').value=id;
+		 document.getElementById('candiNameEctc').innerText=name;
 	} 
 	</script>
 	<!-- <script>
@@ -401,7 +396,7 @@ function closeForm() {
 <script>
 /* var replacementRegexp = " "; */
 $(document).ready(function(){
-$("table td:nth-child(4)").each(
+$("table td:nth-child(5)").each(
 
 function(index, element) {
 	console.log(index+'  00')
@@ -413,7 +408,7 @@ function(index, element) {
 	$(element).html($(element).html().replace('Fourth-Interviewer:','<strong>Fourth-Interviewer:</strong>'));
 	$(element).html($(element).html().replace('HrHead-Feedback:','<strong>HrHead-Feedback:</strong>'));
 });
-$("table td:nth-child(5)").each(function(index, element) {
+$("table td:nth-child(6)").each(function(index, element) {
 	$(element).html($(element).html().replaceAll('&amp;', '<br>'));
 	$(element).html($(element).html().replace('First-Interviewer:', '<strong>First-Interviewer:</strong>'));
 	$(element).html($(element).html().replace('Second-Interviewer:', '<strong>Second-Interviewer:</strong>'));

@@ -29,7 +29,9 @@
 	href="https://cdn.datatables.net/searchbuilder/1.4.0/css/searchBuilder.dataTables.min.css">
 <link rel="stylesheet"
 	href="https://cdn.datatables.net/datetime/1.2.0/css/dataTables.dateTime.min.css">
-
+<!--added for home and logout button styling-->
+ <link rel="stylesheet" th:href="@{/css/Navbar.css}" />
+ <!-- ends -->
 <script>
 	$(document).ready(function() {
 		$('#Table').DataTable({
@@ -87,8 +89,8 @@ td {
 		<div class="container">
 			<div class="navbar-header">
 				<button id="back" onclick="history.back()">&laquo;</button>
-				<a class="navbar-brand" style="color:white;margin-left:-250;" id="anchor" th:href="@{/home}">
-					Home</a> <a class="navbar-brand" style="color:white;margin-left:1400;" id="anchor" th:href="@{/logout}">Logout
+				<a class="navbar-brand" id="anchor" th:href="@{/home}">
+					Home</a> <a class="navbar-brand" id="anchor1" th:href="@{/logout}">Logout
 				</a>
 
 

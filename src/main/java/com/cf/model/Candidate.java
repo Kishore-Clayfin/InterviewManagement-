@@ -73,7 +73,9 @@ public class Candidate
 	private byte[] resume;
 	private String resumeName;
 	private String status;
-	
+	@Max(value=4,message="Candidate Round Cannot be more than 4")
+	private int maxRound;
+	private int currentRound;
 	@Min(value=0,message="ctc can't be -ve ")
 	private Float expectedCtc;
 	@Min(value=0,message="ctc can't be -ve ")

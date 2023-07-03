@@ -2,7 +2,10 @@
 
 <head>
 <title>SCHEDULE LIST</title>
-
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+	integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l"
+	crossorigin="anonymous" />
 <link rel="stylesheet" type="text/css"
 	href="https://cdn.datatables.net/v/bs4/dt-1.10.25/datatables.min.css" />
 <link rel="stylesheet"
@@ -11,31 +14,24 @@
 	crossorigin="anonymous" />
 <!--Search builder code starts-->
 
-
-<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-<script
-	src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
-<script
-	src="https://cdn.datatables.net/searchbuilder/1.4.0/js/dataTables.searchBuilder.min.js"></script>
-<script
-	src="https://cdn.datatables.net/datetime/1.2.0/js/dataTables.dateTime.min.js"></script>
-<link rel="stylesheet"
-	href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css">
-<link rel="stylesheet"
-	href="https://cdn.datatables.net/searchbuilder/1.4.0/css/searchBuilder.dataTables.min.css">
-<link rel="stylesheet"
-	href="https://cdn.datatables.net/datetime/1.2.0/css/dataTables.dateTime.min.css">
-
-<script>
-	$(document).ready(function() {
-		$('#Table').DataTable({
-			dom : 'Qlfrtip',
-			searchBuilder : {
-				columns : [ 1, 2, 3, 4, 5, 6, 7]
-			}
-		});
-	});
+ <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.datatables.net/v/bs5/dt-1.11.3/datatables.min.js"></script>
+   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs5/dt-1.11.3/datatables.min.css">
+  <script>
+  $(document).ready(function() {
+    // Initialize DataTable
+    var table = $('#Table').DataTable();
+    
+    // Add a global search input above the table
+    $('<input type="text" placeholder="Search..." id="globalSearch">').appendTo('#Table_wrapper .dataTables_filter');
+    
+    // Apply search on keyup event of the search input
+    $('#globalSearch').on('keyup', function() {
+      table.search(this.value).draw();
+    });
+  });
 </script>
+<!--Search builder code ends-->
 
 <!--Search builder code ends-->
 
@@ -97,6 +93,30 @@ white-space: nowrap;
 </head>
 
 <body class="image">
+<script>
+	function hello(id){
+		//var id=button.getAttribute("data-value");
+		console.log(id);
+		var urlValue='getFeedback'+'?'+'candidateId='+id;
+		 $(document).ready(function() {
+		 $.ajax({
+             url: urlValue, // Replace with your backend endpoint
+             type: 'GET',
+             success: function(response) {
+                 // The response variable contains the returned Java object as JSON
+                 // You can access its properties and use them as needed.
+                 console.log(response.feed_back);
+                 // Example: Display the name property of the Java object in a div with id 'javaObjectName'
+                 
+             },
+             error: function(error) {
+                 console.error(error);
+             }
+         });
+        
+		 });
+	}
+	</script>
 	<nav class="navbar navbar-inverse navbar-fixed-top"
 		style="background-color: black;">
 		<div class="container">
@@ -110,6 +130,27 @@ white-space: nowrap;
 			</div>
 		</div>
 	</nav>
+	<div style ='padding:80px' class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">     
+      
+      <!-- Modal content for additional information-->
+      <div class="modal-content">
+      <div class="modal-header">
+     <h1 class="modal-title">Feedback Info</h1>
+      </div>
+        <div style='font-family: cambria, sans-serif'class="modal-body">
+    
+            <span class="modelsp">Overall Rating:</span><span class ="modelSpanClass" id="overallRating"> </span><br>
+             <span class="modelsp">Feedbacks:</span><span class ="modelSpanClass" id="interviewerComments"> </span><br>
+            <span class="modelsp">Rating :</span><span class ="modelSpanClass"id="spanName"> </span><br>
+        
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      </div>
+      </div>
 	<br>
 	<br>
 	<div th:insert="sideBar :: header" th:object="${role}"
@@ -174,47 +215,88 @@ white-space: nowrap;
 					<td>
 					<div th:each="candid : ${schedule.candidate}">
 					<!-- <div  th:if="${candid.getStatus()=='FirstTechnicalSelected'||candid.getStatus()=='SecondTechnicalSelected'||candid.getStatus()=='ThirdTechnicalSelected'||candid.getStatus()=='FourthTechnicalSelected'||candid.getStatus()=='HRRoundCompleted'}"class="dropdown"> -->
-					 <div  th:if="${#strings.containsIgnoreCase(candid.getStatus(),'selected')||#strings.containsIgnoreCase(candid.getStatus(),'completed')}" class="dropdown">
+					 <div  th:if="${#strings.containsIgnoreCase(candid.getStatus(),'selected')||#strings.containsIgnoreCase(candid.getStatus(),'completed')||#strings.containsIgnoreCase(candid.getStatus(),'Absent')||#strings.containsIgnoreCase(candid.getStatus(),'Disconnected')}" class="dropdown">
 					<button type="button" class="btn btn-info dropdown-toggle"
 								data-toggle="dropdown" disabled><span th:each="candidate : ${schedule.candidate}">
-							<span th:text=${candidate.status}> </span>
+							<span th:text="${@candidateServiceImpl.uiShowStatus(candid.getStatus())}"> </span>
 					</span></button>
 					</div>
-					<div th:unless="${#strings.containsIgnoreCase(candid.getStatus(),'selected')||#strings.containsIgnoreCase(candid.getStatus(),'completed')}" class="dropdown">
+					<div th:unless="${#strings.containsIgnoreCase(candid.getStatus(),'selected')||#strings.containsIgnoreCase(candid.getStatus(),'completed')||#strings.containsIgnoreCase(candid.getStatus(),'Absent')||#strings.containsIgnoreCase(candid.getStatus(),'Disconnected')}" class="dropdown">
 						
 							<button type="button" class="btn btn-info dropdown-toggle"
 								data-toggle="dropdown"><!-- <span th:each="candidate : ${schedule.candidate}"> -->
-							<span th:text=${candid.status}> </span>
+							<span th:text="${@candidateServiceImpl.uiShowStatus(candid.getStatus())}"> </span>
 					<!-- </span> --></button>
 								
 							<div  class="dropdown-menu">
+							<div th:if="${candid.getStatus()=='TechnicalScheduled'}">
+							<a 
+									th:href="@{/updateStatus(candidateId=${candid.candidateId},status=TechnicalCompleted)}"
+									class="dropdown-item">1st Level Completed</a>
+							<a 
+									th:href="@{/updateStatus(candidateId=${candid.candidateId},status=TechnicalAbsent)}"
+									class="dropdown-item">Absent</a>
+							<a 
+									th:href="@{/updateStatus(candidateId=${candid.candidateId},status=TechnicalDisconnected)}"
+									class="dropdown-item">Disconnected</a>				
+							</div>
 							<div th:if="${candid.getStatus()=='SecondTechnicalScheduled'}">
 							<a 
 									th:href="@{/updateStatus(candidateId=${candid.candidateId},status=SecondTechnicalCompleted)}"
-									class="dropdown-item">SecondTechnicalCompleted</a>
+									class="dropdown-item">2nd Level Completed</a>
+							<a 
+									th:href="@{/updateStatus(candidateId=${candid.candidateId},status=SecondTechnicalAbsent)}"
+									class="dropdown-item">Absent</a>
+							<a 
+									th:href="@{/updateStatus(candidateId=${candid.candidateId},status=SecondTechnicalDisconnected)}"
+									class="dropdown-item">Disconnected</a>				
 							</div>
 							
 							<div th:if="${candid.getStatus()=='ThirdTechnicalScheduled'}">
 							<a 
 									th:href="@{/updateStatus(candidateId=${candid.candidateId},status=ThirdTechnicalCompleted)}"
-									class="dropdown-item">ThirdTechnicalCompleted</a>
+									class="dropdown-item">3rd Level Completed</a>
+							<a 
+									th:href="@{/updateStatus(candidateId=${candid.candidateId},status=ThirdTechnicalAbsent)}"
+									class="dropdown-item">Absent</a>
+							<a 
+									th:href="@{/updateStatus(candidateId=${candid.candidateId},status=ThirdTechnicalDisconnected)}"
+									class="dropdown-item">Disconnected</a>			
 							</div>
 							
 							<div th:if="${candid.getStatus()=='FourthTechnicalScheduled'}">
 							<a 
 									th:href="@{/updateStatus(candidateId=${candid.candidateId},status=FourthTechnicalCompleted)}"
-									class="dropdown-item">FourthTechnicalCompleted</a>
+									class="dropdown-item">4th Level Completed</a>
+							<a 
+									th:href="@{/updateStatus(candidateId=${candid.candidateId},status=FourthTechnicalAbsent)}"
+									class="dropdown-item">Absent</a>
+							<a 
+									th:href="@{/updateStatus(candidateId=${candid.candidateId},status=FourthTechnicalDisconnected)}"
+									class="dropdown-item">Disconnected</a>			
 							</div>
 							<div th:if="${#strings.equalsIgnoreCase(candid.getStatus(),'ResumeShortlisted')}">
 								<a 
 									th:href="@{/updateStatus(candidateId=${candid.candidateId},status=TechnicalCompleted)}"
-									class="dropdown-item">TechnicalCompleted</a>
+									class="dropdown-item">1st Level Completed</a>
+								<a 
+									th:href="@{/updateStatus(candidateId=${candid.candidateId},status=TechnicalAbsent)}"
+									class="dropdown-item">Absent</a>
+								<a 
+									th:href="@{/updateStatus(candidateId=${candid.candidateId},status=TechnicalDisconnected)}"
+									class="dropdown-item">Disconnected</a>		
 									</div>
 							<div th:if="${candid.getStatus()=='HRRoundScheduled'}">		
 							<a
 									
 									th:href="@{/updateStatus(candidateId=${candid.candidateId},status=HRRoundCompleted)}"
 									class="dropdown-item">HrRoundCompleted</a>
+							<a 
+									th:href="@{/updateStatus(candidateId=${candid.candidateId},status=HRRoundAbsent)}"
+									class="dropdown-item">Absent</a>
+							<a 
+									th:href="@{/updateStatus(candidateId=${candid.candidateId},status=HRRoundDisconnected)}"
+									class="dropdown-item">Disconnected</a>			
 							</div>	
 													 
 							</div>
@@ -231,12 +313,17 @@ white-space: nowrap;
 						<div th:if="${role.getRole()=='hr'}" style="display: flex;">
 							&nbsp;&nbsp;<a
 								th:href="@{/showUpdateSchedule(scheduleId=${schedule.scheduleId})}"
-								class="btn btn-info">Edit</a> <!-- <a
+								class="btn btn-primary">Edit</a> <!-- <a
 								th:href="@{/deleteSchedule(scheduleId=${schedule.scheduleId})}"
 								class="btn btn-danger ml-2">Delete</a> -->
 						</div>
-
-
+						&nbsp;&nbsp;
+						<!-- <div th:each="candidate : ${schedule.candidate}">
+						<div th:if="${candidate.status!='TechnicalScheduled'||candidate.status!='ResumeShortlisted'||candidate.status!='TechnicalCompleted'}">
+						<span th:text="${candidate.candidateId}"></span>
+						<button data-toggle="modal" data-value="${candidate.candidateId}" th:attr="onclick=|hello('${candidate.candidateId}')|" class="btn btn-info btn-sm" data-target="#myModal" >FeedbackInfo</button>
+						</div>
+						</div> -->
 					</td>
 				</tr>
 			</tbody>
@@ -246,16 +333,48 @@ white-space: nowrap;
 				<a th:href="@{/giveFeedback}" class="btn btn-success ml-2">Give
 					FeedBack</a>
 			</div>
-			<a th:href="@{/home}" class="btn btn-danger ml-2">Home</a>
+			<!-- <a th:href="@{/home}" class="btn btn-danger ml-2">Home</a> -->
 		</div>
 	</div>
-
-	<script
+	
+		<script
 		src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
 	<script
 		src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
+		<script type="text/javascript">
+		function hello(){
+			
+		}
+	function upload(button){
+		console.log("entered upload method")
+		var id=button.getAttribute("data-value");
+		console.log(id);
+		var url='getFeedback'+'?'+'candidateId='+id;
+		 fetch(url)
+         .then(response => response.json())
+         .then(data => {
+             // 'data' now contains the Java object as a JavaScript object
+             var js={
+            		 rating:data.rating
+            			 feed_back:data.feed_back
+            			 domainRatings:data.domainRatings	 
+             }
+             console.log(data);
+             console.log(data.rating)
+             console.log(data.feed_back)
+
+             // You can use the object properties in your JavaScript code
+             // For example, display the name and age in an alert:
+             alert("Name: " + data.name + ", Age: " + data.age);
+         })
+         .catch(error => {
+             console.error('Error:', error);
+         });
+	}
+	</script>
+		
 </body>
 
 </html>

@@ -13,6 +13,8 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -20,6 +22,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.cf.FeedbackConstants;
@@ -99,9 +102,9 @@ public class FeedBackController {
 	}
 	
 	@GetMapping("/getFeedback")
-	public Feedback getFeedback(@RequestParam Integer candidateId, HttpSession session,
+	public ResponseEntity<String> getFeedback(@RequestParam Integer candidateId, HttpSession session,
 			HttpServletResponse redirect) {
-
+   System.out.println("Entered getFeedback: "+candidateId);
 		if (LoginController.checkUser == null) {
 			try {
 				redirect.sendRedirect("/login");
@@ -112,17 +115,19 @@ public class FeedBackController {
 		}
 
 		User checkUser = (User) session.getAttribute("loginDetails");
-		if (!(checkUser.getRole().equals("interviewer") || checkUser.getRole().equals("hrHead"))) {
-			try {
-				redirect.sendRedirect("/login");
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
+//		if (!(checkUser.getRole().equals("interviewer") || checkUser.getRole().equals("hrHead"))) {
+//			try {
+//				redirect.sendRedirect("/login");
+//			} catch (IOException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//		}
 		Candidate candidate=iCandidateService.updateCandidate(candidateId);
 		Feedback feedback=iFeedbackService.findByCandidate(candidate);	
-		return feedback;
+		String feedbackValue=feedback.getRating()+"+"+feedback.getFeed_back()+"+"+feedback.getDomainRatings();
+		System.out.println("feedback"+feedback);
+		return new ResponseEntity<>(feedbackValue,HttpStatus.OK);
 	}
 
 	@PostMapping("/saveFeedback")
